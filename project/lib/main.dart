@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: const MyHomePage(title: 'UniVerse'),
     );
@@ -70,10 +71,52 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(10),
+        //height: 60,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(0, 128, 255, 1),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [ BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(0,0),
+          ),
+          ]
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+          child: GNav(
+            backgroundColor: Color.fromRGBO(0, 128, 255, 1),
+            color: Colors.white60,
+            activeColor: Colors.white,
+            gap:5,
+            padding: EdgeInsets.all(8),
+            tabs: const [
+              GButton(
+                icon: Icons.home_rounded,
+                text: 'Início',
+              ),
+              GButton(
+                icon: Icons.search_rounded,
+                text: 'Encontrar',
+              ),
+              GButton(
+                icon: Icons.newspaper_rounded,
+                text: 'Feed',
+              ),
+              GButton(
+                icon: Icons.qr_code_scanner,
+                text: 'Scan',
+              ),
+              GButton(
+                icon: Icons.person_rounded,
+                text: 'Área Pessoal',
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
