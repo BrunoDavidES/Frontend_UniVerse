@@ -1,4 +1,5 @@
 
+import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -10,7 +11,7 @@ class CustomAppBar extends StatelessWidget {
       margin: EdgeInsets.all(10),
       //height: 60,
       decoration: BoxDecoration(
-          color: Color.fromRGBO(0, 128, 255, 1),
+          color: cPrimaryColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [ BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
         child: GNav(
-          backgroundColor: Color.fromRGBO(0, 128, 255, 1),
+          backgroundColor: cPrimaryColor,
           color: Colors.white60,
           activeColor: Colors.white,
           gap:5,
@@ -41,13 +42,17 @@ class CustomAppBar extends StatelessWidget {
               icon: Icons.newspaper_rounded,
               text: 'Feed',
             ),
-            GButton(
+            /*GButton(
               icon: Icons.qr_code_scanner,
               text: 'Scan',
-            ),
+            ),*/
             GButton(
               icon: Icons.person_rounded,
               text: 'Área Pessoal',
+            ),
+            GButton(
+              icon: Icons.settings_rounded,
+              text: 'Definições',
             ),
           ],
         ),

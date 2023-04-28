@@ -1,6 +1,8 @@
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/list_item.dart';
+
 class WelcomeBodyApp extends StatelessWidget {
 
   @override
@@ -29,24 +31,50 @@ class WelcomeBodyApp extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 130),
             child: Image.asset("assets/app/logo_nova_horiz.png", scale: 12),
           ),
-          Container(
-            child: Stack(
-              children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top:130),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      /*Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Text(
+                              "Redes Sociais FCT NOVA:",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15
+                              )
+                          )
+                      ),*/
 
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.facebook_rounded,
-                  ),
-                ),
+                      ListItem(
+                        title: "Facebook",
+                        press: () {},
+                      ),
+                      ListItem(
+                        title: "Instagram",
+                        press: () {},
+                      ),
+                      ListItem(
+                        title: "Twitter",
+                        press: () {},
+                      ),
+                      ListItem(
+                        title: "LinkedIn",
+                        press: () {},
+                      ),
+                      ListItem(
+                        title: "Whatsapp",
+                        press: () {},
+                      ),
+                    ],
+                  )
 
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.facebook_rounded,)
-                ),
-              ],
-            )
-
+              ),
+            ),
           ),
           /*Padding(
             padding: const EdgeInsets.only(right:20),
