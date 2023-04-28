@@ -1,7 +1,6 @@
-import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
-import '../../../Components/default_button.dart';
-import 'menu_Item.dart';
+import '../Components/default_button.dart';
+import 'components/menu_Item.dart';
 
 
 class CustomWebBar extends StatelessWidget {
