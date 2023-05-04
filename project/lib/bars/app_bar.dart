@@ -6,10 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatefulWidget {
+
+  const CustomAppBar({super.key});
 
   @override
+  State<CustomAppBar> createState() => _MyCustomAppBar();
+}
+class _MyCustomAppBar extends State<CustomAppBar> {
+  @override
   Widget build(BuildContext context) {
+    int selectedIndex=0;
     return Container(
       margin: EdgeInsets.all(10),
       //height: 60,
@@ -68,6 +75,10 @@ class CustomAppBar extends StatelessWidget {
                 },
             ),
           ],
+          selectedIndex: selectedIndex,
+          onTabChange: (index) {
+            setState(() => selectedIndex=index);
+          },
         ),
       ),
     );
@@ -84,5 +95,6 @@ class CustomAppBar extends StatelessWidget {
   void _navigateToNextScreenFind(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FindPageApp()));
   }
+
 
 }

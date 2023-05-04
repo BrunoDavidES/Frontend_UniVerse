@@ -31,8 +31,8 @@ class _MyHomePageState extends State<AppHomePage> {
        child: Column(
          children: <Widget>[
            WelcomeBodyApp(),
-           Spacer(),
-           CustomAppBar(),
+           const Spacer(),
+           const CustomAppBar(),
          ],
        ),
         ),

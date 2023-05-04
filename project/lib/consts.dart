@@ -5,7 +5,6 @@ const cDarkBlueColor = Color.fromRGBO(64, 126, 201, 1);
 const cDarkBlueColorTransparent = Color.fromRGBO(64, 126, 201, 0.75);
 const cDirtyWhite = Color.fromRGBO(237, 233, 232, 1);
 const cBlackOp = Color.fromRGBO(0, 0, 0, 0.15);
-
 const cPrimaryLightColor = Color.fromRGBO(79, 167, 255, 1);
 const cPrimaryOverLightColor = Color.fromRGBO(193, 224, 255, 1);
 const cDarkLightBlueColor = Color.fromRGBO(99, 150, 211, 1);

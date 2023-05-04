@@ -24,11 +24,9 @@ class _MyFindPageState extends State<FindPageApp> {
         decoration: BoxDecoration(
           color: Colors.white70,
         ),
-        child: Column(
+        child: Stack(
           children: <Widget>[
             FindPageBodyApp(),
-            Spacer(),
-            CustomAppBar(),
           ],
         ),
       ),
