@@ -1,7 +1,10 @@
 
 import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/faq_screen/faq_app.dart';
+import 'package:UniVerse/find_screen/find_page_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+
 
 class CustomAppBar extends StatelessWidget {
 
@@ -29,14 +32,18 @@ class CustomAppBar extends StatelessWidget {
           activeColor: Colors.white,
           gap:5,
           padding: EdgeInsets.all(8),
-          tabs: const [
+          tabs: [
             GButton(
               icon: Icons.home_rounded,
               text: 'Início',
+
             ),
             GButton(
               icon: Icons.search_rounded,
               text: 'Encontrar',
+              onPressed: (){
+                _navigateToNextScreenFind(context);
+              },
             ),
             GButton(
               icon: Icons.newspaper_rounded,
@@ -49,15 +56,33 @@ class CustomAppBar extends StatelessWidget {
             GButton(
               icon: Icons.person_rounded,
               text: 'Área Pessoal',
+              /*onPressed: (){
+                _navigateToNextScreenPersonal(context);
+              },*/
             ),
             GButton(
               icon: Icons.settings_rounded,
               text: 'Definições',
+              onPressed: (){
+                _navigateToNextScreenSettings(context);
+                },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _navigateToNextScreenSettings(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FaqApp()));
+  }
+
+  /*void _navigateToNextScreenPersonal(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalPageApp()));
+  }*/
+
+  void _navigateToNextScreenFind(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FindPageApp()));
   }
 
 }

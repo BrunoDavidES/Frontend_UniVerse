@@ -1,4 +1,5 @@
 import 'package:UniVerse/bars/app_bar.dart';
+import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class _MyHomePageState extends State<AppHomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
    return Scaffold(
      body: Container(
         height: size.height,

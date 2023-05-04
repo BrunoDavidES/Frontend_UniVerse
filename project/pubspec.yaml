@@ -72,6 +72,8 @@ flutter_icons:
 flutter:
 
   assets:
+    - assets/app/find_title.png
+    - assets/app/faq_title.png
     - assets/app/logo_full_background.png
     - assets/web/icon.ico
     - assets/app/welcome_app.jpg

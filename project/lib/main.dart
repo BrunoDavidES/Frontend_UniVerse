@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blue,
         ),
         home: WebHomePage(),
       );
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blue,
         ),
         home: const AppHomePage(title: 'UniVerse'),
       );
