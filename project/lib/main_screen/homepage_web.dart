@@ -6,6 +6,7 @@ import 'components/bodyAbout.dart';
 import 'components/newsMain.dart';
 
 class WebHomePage extends StatelessWidget {
+  const WebHomePage({super.key});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -14,7 +15,7 @@ class WebHomePage extends StatelessWidget {
         thumbVisibility: true, //always show scrollbar
         thickness: 8, //width of scrollbar
         interactive: true,
-        radius: Radius.circular(20), //corner radius of scrollbar
+        radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
         child: SingleChildScrollView(
           child: Column(
@@ -68,9 +69,9 @@ class WebHomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Spacer(),
+                      const Spacer(),
                       BodyAbout(),
-                      Spacer(), Spacer(), Spacer(), Spacer(),
+                      const Spacer(), const Spacer(), const Spacer(), const Spacer(),
                       const Spacer(
                         flex: 2,
                       ),

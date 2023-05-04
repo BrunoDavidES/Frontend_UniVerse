@@ -1,20 +1,24 @@
+import 'package:UniVerse/components/default_button_simple.dart';
+import 'package:UniVerse/faq_screen/faq_web.dart';
 import 'package:flutter/material.dart';
 import '../Components/default_button.dart';
-import 'components/menu_Item.dart';
-
+import '../consts.dart';
+import '../main_screen/components/body.dart';
+import '../main_screen/homepage_web.dart';
 
 class CustomWebBar extends StatelessWidget {
+  const CustomWebBar({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
-      padding: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 0),
+            offset: const Offset(0, 0),
             blurRadius: 30,
             color: Colors.black.withOpacity(0.5),
           ),
@@ -25,25 +29,41 @@ class CustomWebBar extends StatelessWidget {
           Image.asset("assets/web/combo_logo.png",
               scale: 6,
               alignment: Alignment.center,),
-          SizedBox(width: 5),
-          Spacer(),
-          MenuItem(
-              title: "Início",
-              press: () {},
+          const SizedBox(width: 5),
+          const Spacer(),
+          DefaultButtonSimple(
+              text: "Início",
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WebHomePage()),
+                );
+              },
           ),
-          MenuItem(
-            title: "Notícias",
+          DefaultButtonSimple(
+            text: "Notícias",
             press: () {},
           ),
-          MenuItem(
-            title: "Eventos",
+          DefaultButtonSimple(
+            text: "Eventos",
             press: () {},
           ),
-          MenuItem(
-            title: "Ajuda",
-            press: () {},
+          DefaultButtonSimple(
+            text: "Ajuda",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FAQWebPage()),
+              );
+            },
           ),
-          DefaultButton(text: "Área Pessoal", press: (){}),
+          DefaultButton(text: "Área Pessoal",
+              press: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Body()),
+                );
+              }),
         ],
 
       ),

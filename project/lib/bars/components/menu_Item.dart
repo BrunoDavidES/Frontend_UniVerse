@@ -11,7 +11,7 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      //onTap: press,
+      onTap: press(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(

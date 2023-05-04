@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../consts.dart';
+import '../main_screen/components/body.dart';
 
 class DefaultButton extends StatelessWidget {
   final String text;
@@ -11,15 +12,23 @@ class DefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: cPrimaryColor,
+          width: 3,
+        )
+      ),
       child: TextButton(
         style: TextButton.styleFrom(
             foregroundColor: cDarkBlueColor,
             backgroundColor: cDirtyWhite,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
         ),
-        onPressed: (){},
+        onPressed: (){
+          press();
+        },
         child: Text(
           text,
         ),

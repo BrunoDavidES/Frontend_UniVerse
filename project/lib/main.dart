@@ -1,5 +1,3 @@
-import 'package:UniVerse/consts.dart';
-import 'package:UniVerse/main_screen/test_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'main_screen/app/homepage_app.dart';
