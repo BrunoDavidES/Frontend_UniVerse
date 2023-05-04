@@ -77,6 +77,8 @@ flutter:
     - assets/app/welcome_app.jpg
     - assets/web/BackGround.jpg
     - assets/web/combo_logo.png
+    - assets/web/FCT-NOVA.jpg
+    - assets/web/logoNovaBranco.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../consts.dart';
 
@@ -15,7 +16,7 @@ class DefaultButton extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
             foregroundColor: cDarkBlueColor,
-            backgroundColor: Colors.black,
+            backgroundColor: cDirtyWhite,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
         ),
         onPressed: (){},

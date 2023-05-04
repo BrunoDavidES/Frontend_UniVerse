@@ -16,8 +16,9 @@ class MenuItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
           title,
-          style: TextStyle(
-            color: cDarkBlueColor,
+          style: const TextStyle(
+            color: cPrimaryColor,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),

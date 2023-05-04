@@ -1,3 +1,5 @@
+import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/main_screen/test_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'main_screen/homepage_app.dart';
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blue,
         ),
         home: WebHomePage(),
       );
@@ -25,11 +27,10 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blue,
         ),
         home: const AppHomePage(title: 'UniVerse'),
       );
     }
-
-    }
   }
+}
