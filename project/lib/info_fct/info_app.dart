@@ -18,7 +18,7 @@ class FCTinfoApp extends StatelessWidget {
             return IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () {Navigator.pop(context);},
-                color: cDarkBlueColor);
+                color: cDarkBlueColorTransparent);
           }
         ),
         backgroundColor: cDirtyWhiteColor,

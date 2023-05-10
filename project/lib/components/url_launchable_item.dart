@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../consts.dart';
 
-class SocialMediaListItem extends StatelessWidget {
+class UrlLaunchableItem extends StatelessWidget {
   final Icon icon;
   final String text;
   final String url;
 
-  const SocialMediaListItem({
+  const UrlLaunchableItem({
     super.key, required this.icon, required this.text, required this.url });
 
   @override

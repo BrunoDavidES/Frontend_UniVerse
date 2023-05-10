@@ -1,4 +1,4 @@
-import 'package:UniVerse/components/social_media_list_item.dart';
+import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
@@ -51,19 +51,19 @@ class UniverseInfoBodyApp extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left:135),
-                child: SocialMediaListItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
+                child: UrlLaunchableItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:135),
-                child: SocialMediaListItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
+                child: UrlLaunchableItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:135),
-                child: SocialMediaListItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
+                child: UrlLaunchableItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:135, bottom: 40),
-                child: SocialMediaListItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
+                child: UrlLaunchableItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
               ),
               Text(
                   "Brevemente disponível em iOS"

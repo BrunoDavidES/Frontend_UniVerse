@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_nav_bar: ^5.0.6
   url_launcher: ^6.1.8
+  http: ^0.13.6
+  sqflite: ^2.2.8
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +76,7 @@ flutter:
 
   assets:
     - assets/app/find_title.png
+    - assets/app/login.png
     - assets/icon_no_white.png
     - assets/app/services.png
     - assets/app/about_us.png

@@ -3,6 +3,7 @@ import 'package:UniVerse/consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
 import 'package:UniVerse/info/universe_info_app.dart';
+import 'package:UniVerse/login_screen/login_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -64,9 +65,9 @@ class CustomAppBar extends StatelessWidget {
             GButton(
               icon: Icons.person_rounded,
               text: 'Área Pessoal',
-              /*onPressed: (){
+              onPressed: (){
                 _navigateToNextScreenPersonal(context);
-              },*/
+              },
             ),
             GButton(
               icon: Icons.settings_rounded,
@@ -90,9 +91,9 @@ class CustomAppBar extends StatelessWidget {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => UniverseInfoApp()));
   }
 
-  /*void _navigateToNextScreenPersonal(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalPageApp()));
-  }*/
+  void _navigateToNextScreenPersonal(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPageApp()));
+  }
 
   void _navigateToNextScreenFind(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServicesBodyApp()));
