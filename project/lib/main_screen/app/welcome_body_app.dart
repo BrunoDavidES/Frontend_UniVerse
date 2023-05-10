@@ -1,4 +1,5 @@
 import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/info_fct/info_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/list_item.dart';
@@ -11,18 +12,6 @@ class WelcomeBodyApp extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal:20),
       child: Column(
         children: <Widget>[
-          /*Padding(
-            padding: const EdgeInsets.only(right: 255, top: 40),
-            child: Text(
-              "Sobre Nós"
-            )
-          ),
-          Padding(
-              padding: const EdgeInsets.only(right: 283),
-              child: Text(
-                  "Ajuda"
-              )
-          ),*/
           Padding(
             padding: const EdgeInsets.only(top:60, bottom: 20),
             child:Image.asset("assets/app/logo_no_reference_no_white.png", scale: 3.5),
@@ -32,11 +21,26 @@ class WelcomeBodyApp extends StatelessWidget {
             child: Image.asset("assets/app/logo_nova_horiz.png", scale: 12),
           ),
           Padding(
-            padding: const EdgeInsets.only(top:130),
+            padding: const EdgeInsets.only(top:170),
             child: Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.bottomRight,
               child: Container(
-                  child: Column(
+                width: 50,
+                  decoration: BoxDecoration(
+                    color: cDarkBlueColorTransparent,
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+
+                  child: TextButton(
+                    onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FCTinfoApp()));},
+                    child:
+                      Icon(
+                          Icons.info_outline,
+                        color: Colors.white,
+                        size:25
+                      ),
+                  ),
+                  /*Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       /*Padding(
@@ -71,7 +75,7 @@ class WelcomeBodyApp extends StatelessWidget {
                         press: () {},
                       ),
                     ],
-                  )
+                  )*/
 
               ),
             ),
@@ -86,7 +90,8 @@ class WelcomeBodyApp extends StatelessWidget {
                   color: cPrimaryColor,
                 )
             ),
-          ),*/
+          ),
+          */
         ],
       ),
     );

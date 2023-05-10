@@ -19,13 +19,14 @@ class FAQlist extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
+                color: cHeavyGrey,
               )),
           trailing: const Icon(Icons.arrow_drop_down_circle_rounded),
           controlAffinity: ListTileControlAffinity.trailing,
-          backgroundColor: Colors.white70,
+          backgroundColor: cDirtyWhiteColor,
           collapsedBackgroundColor: cPrimaryOverLightColor,
           textColor: Colors.black,
-          iconColor: Colors.white60,
+          iconColor: cHeavyGrey,
           collapsedIconColor: cHeavyGrey,
           collapsedTextColor: cHeavyGrey,
           shape: RoundedRectangleBorder(
@@ -35,7 +36,7 @@ class FAQlist extends StatelessWidget {
           children: const [
             FAQbox(
               question: 'É necessário criar uma conta?',
-              answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+              answer: 'Não! \nSe és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito. \n',
             ),
             FAQbox(
               question: 'É necessário criar uma conta?',

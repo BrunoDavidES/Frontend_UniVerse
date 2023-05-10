@@ -22,11 +22,15 @@ class _MyFindPageState extends State<FindPageApp> {
         height: size.height,
         width: size.width,
         decoration: BoxDecoration(
-          color: Colors.white70,
+          color: cDirtyWhiteColor,
         ),
         child: Stack(
           children: <Widget>[
             FindPageBodyApp(),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child:CustomAppBar(i:1),
+            )
           ],
         ),
       ),

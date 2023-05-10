@@ -3,15 +3,8 @@ import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
 import 'package:flutter/material.dart';
 
-class AppHomePage extends StatefulWidget {
-  const AppHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<AppHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<AppHomePage> {
+class AppHomePage extends StatelessWidget {
+  const AppHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class _MyHomePageState extends State<AppHomePage> {
          children: <Widget>[
            WelcomeBodyApp(),
            const Spacer(),
-           const CustomAppBar(),
+           CustomAppBar(i:0),
          ],
        ),
         ),

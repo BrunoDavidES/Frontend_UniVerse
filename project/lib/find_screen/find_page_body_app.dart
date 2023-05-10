@@ -5,9 +5,7 @@ class FindPageBodyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-      body: NestedScrollView(
+    return NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool isScrolled) {
           return [
@@ -20,29 +18,45 @@ class FindPageBodyApp extends StatelessWidget {
           ];
         },
         body: GridView.builder(
-          itemCount: 18,
+          itemCount: 14,
           gridDelegate:
               SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 250,
-                childAspectRatio: 3/2,
+                childAspectRatio: 4/2,
                 crossAxisSpacing: 3,
                 mainAxisSpacing: 3
               ),
          // SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (context, index) {
             if(index == 0) {
-            return GridBox(text: "Mapa", icon: Icons.location_on_outlined);
+            return GridBox(text: "Mapas", icon: Icons.location_on_outlined);
             } else if(index==1) {
-              return GridBox(text: "Contactos", icon: Icons.local_phone);
+              return GridBox(text: "Serviços", icon: Icons.work_outline_rounded);
             }else if(index==2) {
-              return GridBox(text: "Departamentos", icon: Icons.account_balance_outlined);
+              return GridBox(text: "Contactos", icon: Icons.local_phone);
             }else if(index==3) {
-              return GridBox(text: "Serviços", icon: Icons.location_on_outlined);
+              return GridBox(text: "Links", icon: Icons.link_outlined);
+
+            }else if(index==4) {
+              return GridBox(text: "Departamentos", icon: Icons.account_balance_outlined);
+            }else if(index==5) {
+             return GridBox(text: "Edifícios", icon: Icons.home_work_outlined);
+            } else if(index==6) {
+              return GridBox(text: "Restaurantes", icon: Icons.restaurant_outlined);
+            }else if(index==7) {
+              return GridBox(text: "Núcleos", icon: Icons.local_activity_outlined);
+            }else if(index==8) {
+              return GridBox(text: "Galeria", icon: Icons.camera_alt_outlined);
+            }else if(index==9) {
+              return GridBox(text: "Transportes", icon: Icons.directions_bus);
+            }else if(index==10) {
+              return GridBox(text: "Pessoas", icon: Icons.person_search_outlined);
+            }else if(index==11) {
+              return GridBox(text: "Regras", icon: Icons.rule_outlined);
             }
           },
         )
-      )
-    );
+      );
 
   }
 }
@@ -72,11 +86,11 @@ class GridBox extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size:45, color: cDarkBlueColor),
+            Icon(icon, size:40, color: cDarkBlueColor),
             Text(
                 text,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 15,
                   color: cHeavyGrey
                 ),
             )

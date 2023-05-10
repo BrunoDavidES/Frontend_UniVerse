@@ -2,21 +2,20 @@
 import 'package:UniVerse/consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
+import 'package:UniVerse/info/universe_info_app.dart';
+import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../find_screen/services_screen/services_body_app.dart';
 
-class CustomAppBar extends StatefulWidget {
+class CustomAppBar extends StatelessWidget {
+  final int i;
 
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key, required this.i});
 
-  @override
-  State<CustomAppBar> createState() => _MyCustomAppBar();
-}
-class _MyCustomAppBar extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex=0;
     return Container(
       margin: EdgeInsets.all(10),
       //height: 60,
@@ -43,11 +42,13 @@ class _MyCustomAppBar extends State<CustomAppBar> {
             GButton(
               icon: Icons.home_rounded,
               text: 'Início',
-
+              onPressed: (){
+                _navigateToNextScreenHome(context);
+              },
             ),
             GButton(
               icon: Icons.search_rounded,
-              text: 'Encontrar',
+              text: 'Procurar',
               onPressed: (){
                 _navigateToNextScreenFind(context);
               },
@@ -75,17 +76,18 @@ class _MyCustomAppBar extends State<CustomAppBar> {
                 },
             ),
           ],
-          selectedIndex: selectedIndex,
-          onTabChange: (index) {
-            setState(() => selectedIndex=index);
-          },
+          selectedIndex: i,
         ),
       ),
     );
   }
 
+  void _navigateToNextScreenHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppHomePage()));
+  }
+
   void _navigateToNextScreenSettings(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FaqApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => UniverseInfoApp()));
   }
 
   /*void _navigateToNextScreenPersonal(BuildContext context) {
@@ -93,7 +95,7 @@ class _MyCustomAppBar extends State<CustomAppBar> {
   }*/
 
   void _navigateToNextScreenFind(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FindPageApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServicesBodyApp()));
   }
 
 

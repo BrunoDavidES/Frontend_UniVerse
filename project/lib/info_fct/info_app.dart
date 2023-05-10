@@ -1,13 +1,14 @@
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
-import 'faq_item.dart';
-import 'list_faqs.dart';
+import 'info_body_app.dart';
 
-class FaqApp extends StatelessWidget {
+class FCTinfoApp extends StatelessWidget {
+  const FCTinfoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -20,19 +21,11 @@ class FaqApp extends StatelessWidget {
                 color: cDarkBlueColor);
           }
         ),
-        title: Image.asset('assets/app/faq_title.png', scale: 5),
         backgroundColor: cDirtyWhiteColor,
 
       ),
 
-      body: Container(                //Zona das Perguntas
-        color: Colors.white,
-        child: ListView(
-          children: const [
-            FAQlist(question: 'FAQ:'),
-          ],
-        ),
-      ),
+      body: const FCTinfoBodyApp(),
     );
   }
 }
