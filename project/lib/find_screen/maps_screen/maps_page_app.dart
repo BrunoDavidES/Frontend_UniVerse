@@ -1,8 +1,6 @@
 import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../../bars/app_bar.dart';
 import '../../consts.dart';
 
 class MapsPageApp extends StatefulWidget {

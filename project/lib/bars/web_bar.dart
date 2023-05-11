@@ -64,7 +64,7 @@ class CustomWebBar extends StatelessWidget {
           ),
           DefaultButton(text: "Área Pessoal",
             press: () {
-              Navigator.pushNamed(context, '/help');
+              Navigator.pushNamed(context, '/login');
             },
           ),
         ],

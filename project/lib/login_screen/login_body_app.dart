@@ -74,7 +74,6 @@ class _LoginPageState extends State<LoginPageBodyApp> {
                       ),
                     ),
                     SizedBox(height: 25),
-                    DefaultButtonSimple(text: "Entrar", press: (){}, height: 20),
                     DefaultButtonSimple(text: "ENTRAR", press: (){}, height: 20),
                   ],
                 ),

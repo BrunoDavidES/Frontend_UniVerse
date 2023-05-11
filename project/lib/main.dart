@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'faq_screen/faq_web.dart';
 import 'find_screen/find_page_web.dart';
+import 'find_screen/maps_screen/maps_page_app.dart';
 import 'info/universe_info_app.dart';
+import 'login_screen/login_web.dart';
 import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
@@ -32,8 +34,9 @@ class MyApp extends StatelessWidget {
           '/find': (context) => FindWebPage(),
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
-          '/login': (context) => FAQWebPage(),
+          '/login': (context) => LoginPageWeb(),
           '/aboutUs': (context) => UniverseInfoWeb(),
+          '/map': (context) => MapsPageApp(),
         },
       );
     } else {
