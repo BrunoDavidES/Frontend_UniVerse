@@ -2,24 +2,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Authentication {
-  static bool isPasswordCompliant(String password, [int minLength = 6]) {
+  static bool isPasswordCompliant(String password) {
     //Null-safety ensures that password is never null
     if (password.isEmpty) {
       return false;
     }
 
-    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    bool hasDigits = password.contains(RegExp(r'[0-9]'));
-    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-    bool hasSpecialCharacters =
-        password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-    bool hasMinLength = password.length > minLength;
+    //bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
+    //bool hasDigits = password.contains(RegExp(r'[0-9]'));
+    //bool hasLowercase = password.contains(RegExp(r'[a-z]'));
+    //bool hasSpecialCharacters =
+        //password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    //bool hasMinLength = password.length > minLength;
 
-    return hasDigits &
-        hasUppercase &
-        hasLowercase &
-        //hasSpecialCharacters &
-        hasMinLength;
+    return true;
   }
 
   static bool loginUser(String email, String password) {
@@ -41,7 +37,7 @@ class Authentication {
 
   static Future<bool> fetchAuthenticate(String email, String password) async {
     final response = await http.post(
-      Uri.parse('https://dummyjson.com/auth/login'),
+      Uri.parse('https://vital-defender-379310.oa.r.appspot.com/rest/login/op6'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -62,7 +58,7 @@ class Authentication {
   }
 }
 
-void main() async {
+//void main() async {
   // Users lists: https://dummyjson.com/users
-  Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
-}
+  //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
+//}

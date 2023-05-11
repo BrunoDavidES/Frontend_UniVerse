@@ -1,11 +1,14 @@
 import 'package:UniVerse/Components/default_button.dart';
 import 'package:UniVerse/components/text_field.dart';
+import 'package:UniVerse/main_screen/homepage_web.dart';
 import 'package:flutter/material.dart';
 
 import '../components/default_button_simple.dart';
 import '../components/url_launchable_icon_item.dart';
 import '../components/url_launchable_item.dart';
 import '../consts.dart';
+import 'functions/auth.dart';
+import 'login_app.dart';
 import 'login_screen.dart';
 
 class LoginPageBodyApp extends StatefulWidget {
@@ -25,6 +28,51 @@ class _LoginPageState extends State<LoginPageBodyApp> {
     passwordController = TextEditingController();
 
     super.initState();
+  }
+
+  void logInButtonPressed(String email, String password) {
+    //TODO: Also check the email
+    bool pwCompliant = Authentication.isPasswordCompliant(password);
+
+    if (!pwCompliant) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: LoginPageApp(),
+          );
+        },
+      );
+    }
+    // TODO: Check if the User can be logged in.
+    //  API Call to your GoogleAppEngine or Dummy API
+    else if (Authentication.loginUser(email, password)) {
+
+      // TODO: Update the DB with the last active time of the user
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text("Logged In successfully"),
+          );
+        },
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WebHomePage()),
+      );
+    } else {
+      // Wrong credentials
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text("Wrong Password!"),
+          );
+        },
+      );
+    }
+
   }
 
   @override
@@ -74,7 +122,10 @@ class _LoginPageState extends State<LoginPageBodyApp> {
                       ),
                     ),
                     SizedBox(height: 25),
-                    DefaultButtonSimple(text: "ENTRAR", press: (){}, height: 20),
+                    DefaultButtonSimple(
+                        text: "ENTRAR"
+                        , press: () => logInButtonPressed(idController.text, passwordController.text)
+                        , height: 20),
                   ],
                 ),
               ),

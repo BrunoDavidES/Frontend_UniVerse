@@ -6,8 +6,9 @@ import 'components/bodyAbout.dart';
 import 'components/newsMain.dart';
 
 class WebHomePage extends StatelessWidget {
-  const WebHomePage({super.key});
+  WebHomePage({super.key});
   @override
+  final yourScrollController = ScrollController();
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -17,7 +18,9 @@ class WebHomePage extends StatelessWidget {
         interactive: true,
         radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+        controller: yourScrollController,
         child: SingleChildScrollView(
+          controller: yourScrollController,
           child: Column(
               children: <Widget>[
                 Container(                    //Zona principal
