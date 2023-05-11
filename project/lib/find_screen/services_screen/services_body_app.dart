@@ -2,6 +2,9 @@
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/default_button_simple.dart';
+import '../../components/list_button_simple.dart';
+
 class ServicesBodyApp extends StatelessWidget {
 
   const ServicesBodyApp({super.key});
@@ -9,6 +12,7 @@ class ServicesBodyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: cDirtyWhiteColor,
       body: CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -39,18 +43,36 @@ class ServicesBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 10,
+            childCount: 14,
               (BuildContext context, int index) {
-                return Padding(
-                    padding: EdgeInsets.all(8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.blue
-                    ),
-                    height: 200,
-                  ),
-                );
+              if(index==0)
+                return ListButtonSimple(text: "Divisão Académica", press: (){});
+              else if(index==1)
+              return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==2)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==3)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==4)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==5)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==6)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==7)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==8)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==9)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==10)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==11)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==12)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+              else if(index==13)
+                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
               }
 
           ),

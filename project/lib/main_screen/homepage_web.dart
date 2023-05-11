@@ -26,6 +26,7 @@ class WebHomePage extends StatelessWidget {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                        colorFilter: ColorFilter.mode(Colors.white, BlendMode.saturation),
                         fit: BoxFit.cover
                     ),
                     color: cDirtyWhite,

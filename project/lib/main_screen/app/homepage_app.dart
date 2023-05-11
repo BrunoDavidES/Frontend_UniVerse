@@ -1,4 +1,5 @@
 import 'package:UniVerse/bars/app_bar.dart';
+import 'package:UniVerse/consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class AppHomePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white70,
             /*image: DecorationImage(
-              image: AssetImage("assets/app/welcome_app.jpg"),
+              image: AssetImage("assets/web/FCT-NOVA.jpg"),
+              colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
               fit: BoxFit.cover,
             ),*/
           ),

@@ -3,19 +3,33 @@ import 'package:UniVerse/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../components/default_button_simple.dart';
+import '../components/url_launchable_icon_item.dart';
 import '../components/url_launchable_item.dart';
 import '../consts.dart';
 import 'login_screen.dart';
 
-class LoginPageBodyApp extends StatelessWidget {
+class LoginPageBodyApp extends StatefulWidget {
 
-  final idController = TextEditingController();
-  final passwordController = TextEditingController();
+  const LoginPageBodyApp({super.key});
+
+  @override
+  State<LoginPageBodyApp> createState() => _LoginPageState();
+}
+class _LoginPageState extends State<LoginPageBodyApp> {
+  late TextEditingController idController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    idController = TextEditingController();
+    passwordController = TextEditingController();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
         title: Image.asset("assets/app/login.png", scale:6),
@@ -34,7 +48,7 @@ class LoginPageBodyApp extends StatelessWidget {
                       child: Image.asset('assets/icon_no_white.png', scale:3),
                     ),
                     Text(
-                        "Junta-te ao universo!",
+                        "Junta-te ao Universo!",
                       style: TextStyle(
                         fontSize: 25
                       ),
@@ -54,13 +68,14 @@ class LoginPageBodyApp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           UrlLaunchableItem(
-                              text:"Esqueceste-te da senha?", icon: Icon(Icons.question_mark), url: 'https://clip.fct.unl.pt/recuperar_senha',
+                              text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 25),
                     DefaultButtonSimple(text: "Entrar", press: (){}, height: 20),
+                    DefaultButtonSimple(text: "ENTRAR", press: (){}, height: 20),
                   ],
                 ),
               ),

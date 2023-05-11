@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
             "Finalmente, tão perto!".toUpperCase(),
             style: const TextStyle(
               fontSize: 80,
-              color: cDarkBlueColor,
+              color: cPrimaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),

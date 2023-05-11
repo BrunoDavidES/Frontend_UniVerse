@@ -1,4 +1,4 @@
-import 'package:UniVerse/components/url_launchable_item.dart';
+import 'package:UniVerse/components/url_launchable_icon_item.dart';
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
@@ -64,31 +64,31 @@ class FCTinfoBodyApp extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child:UrlLaunchableItem(icon: const Icon(Icons.account_circle_outlined), text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/"),
+              child:UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.web), text: "Youtube", url: "https://www.youtube.com/user/fctunltv"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Youtube", url: "https://www.youtube.com/user/fctunltv"),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableItem(icon: const Icon(Icons.web), text: "Whatsapp", url: "https://wa.me/+351924008005"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Whatsapp", url: "https://wa.me/+351924008005"),
             ),
             ],
           ),
