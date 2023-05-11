@@ -1,27 +1,23 @@
+import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 
-import '../bars/app_bar.dart';
-import '../consts.dart';
-import 'login_body_app.dart';
+import '../../bars/app_bar.dart';
+import '../../consts.dart';
 
-class LoginPageApp extends StatefulWidget {
+class ServicesPageApp extends StatefulWidget {
 
-  const LoginPageApp({super.key});
+  const ServicesPageApp({super.key});
 
   @override
-  State<LoginPageApp> createState() => _MyLoginPageState();
+  State<ServicesPageApp> createState() => _MyServicesPageState();
 }
 
-class _MyLoginPageState extends State<LoginPageApp> {
-
-
+class _MyServicesPageState extends State<ServicesPageApp> {
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: cDirtyWhiteColor,
       body: Container(
         height: size.height,
         width: size.width,
@@ -30,10 +26,10 @@ class _MyLoginPageState extends State<LoginPageApp> {
         ),
         child: Stack(
           children: <Widget>[
-            LoginPageBodyApp(),
+            ServicesBodyApp(),
             Container(
               alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:3),
+              child:CustomAppBar(i:1),
             )
           ],
         ),

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../consts.dart';
 
-class UrlLaunchableItem extends StatelessWidget {
+class UrlLaunchableIconItem extends StatelessWidget {
+  final Icon icon;
   final String text;
   final String url;
 
-  const UrlLaunchableItem({
-    super.key, required this.text, required this.url });
+  const UrlLaunchableIconItem({
+    super.key, required this.icon, required this.text, required this.url });
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class UrlLaunchableItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
           children: [
+            icon,
             Text(
               text,
               ),

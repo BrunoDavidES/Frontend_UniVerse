@@ -39,14 +39,17 @@ class CustomWebBar extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => WebHomePage()),
                 );
               },
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Notícias",
             press: () {},
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Eventos",
             press: () {},
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Ajuda",
@@ -56,6 +59,7 @@ class CustomWebBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => FAQWebPage()),
               );
             },
+            height: 20,
           ),
           DefaultButton(text: "Área Pessoal",
               press: (){

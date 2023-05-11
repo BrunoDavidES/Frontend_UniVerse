@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts.dart';
 
+import 'services_screen/services_body_app.dart';
+
 class FindPageBodyApp extends StatelessWidget {
 
   @override
@@ -31,7 +33,12 @@ class FindPageBodyApp extends StatelessWidget {
             if(index == 0) {
             return GridBox(text: "Mapas", icon: Icons.location_on_outlined);
             } else if(index==1) {
-              return GridBox(text: "Serviços", icon: Icons.work_outline_rounded);
+              return InkWell(
+                child: GridBox(text: "Serviços", icon: Icons.work_outline_rounded),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServicesBodyApp()));
+                },
+              );
             }else if(index==2) {
               return GridBox(text: "Contactos", icon: Icons.local_phone);
             }else if(index==3) {
@@ -70,32 +77,34 @@ class GridBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Container(
-        height: 10,
-        width: 100,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: cDirtyWhite,
-            border: Border.all(
-              color: cPrimaryLightColor,
-              width:2,
-            )
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Container(
+          height: 10,
+          width: 100,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: cDirtyWhite,
+              border: Border.all(
+                color: cPrimaryLightColor,
+                width:2,
+              )
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size:40, color: cDarkBlueColor),
+              Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: cHeavyGrey
+                  ),
+              )
+            ],
+          )
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size:40, color: cDarkBlueColor),
-            Text(
-                text,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: cHeavyGrey
-                ),
-            )
-          ],
-        )
       ),
     );
   }
