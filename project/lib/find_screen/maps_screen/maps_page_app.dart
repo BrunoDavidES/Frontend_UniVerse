@@ -1,10 +1,7 @@
-import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/data/locations/locations.dart' as locations;
-
-import '../../bars/app_bar.dart';
-import '../../consts.dart';
 
 class MapsPageApp extends StatefulWidget {
 
@@ -17,19 +14,19 @@ class MapsPageApp extends StatefulWidget {
 class _MapsPageState extends State<MapsPageApp> {
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
+    final fctplaces = await locations.getFCTplaces();
     setState(() {
       _markers.clear();
-      for (final office in googleOffices.offices) {
+      for (final place in fctplaces.places) {
         final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
+          markerId: MarkerId(place.name),
+          position: LatLng(place.lat, place.lng),
           infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
+            title: place.name,
+            snippet: place.address,
           ),
         );
-        _markers[office.name] = marker;
+        _markers[place.name] = marker;
       }
     });
   }
@@ -49,8 +46,8 @@ class _MapsPageState extends State<MapsPageApp> {
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-            zoom: 2,
+            target:  LatLng(38.660992, -9.205782),
+            zoom: 16,
           ),
           markers: _markers.values.toSet(),
         ),

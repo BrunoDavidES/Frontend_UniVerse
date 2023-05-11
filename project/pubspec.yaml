@@ -80,7 +80,7 @@ flutter_icons:
 flutter:
 
   assets:
-    - assets/locations.json
+    - assets/locations/locations.json
     - assets/app/find_title.png
     - assets/app/login.png
     - assets/icon_no_white.png
