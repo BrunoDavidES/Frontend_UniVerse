@@ -50,29 +50,29 @@ class ServicesBodyApp extends StatelessWidget {
               else if(index==1)
               return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
               else if(index==2)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Apoio à Formação Avançada", press: (){});
               else if(index==3)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Apoio Geral", press: (){});
               else if(index==4)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Apoio Técnico", press: (){});
               else if(index==5)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Comunicação e Relações Exteriores", press: (){});
               else if(index==6)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Documentação e Cultura", press: (){});
               else if(index==7)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Eventos e Apoio ao Estudante Diplomado", press: (){});
               else if(index==8)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Infraestruturas Informáticas", press: (){});
               else if(index==9)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Planeamento e Gestão de Qualidade", press: (){});
               else if(index==10)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Recursos Financeiros", press: (){});
               else if(index==11)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Recursos Humanos", press: (){});
               else if(index==12)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Divisão de Relações Internacionais", press: (){});
               else if(index==13)
-                return ListButtonSimple(text: "Divisão de Acompanhamento de Parcerias", press: (){});
+                return ListButtonSimple(text: "Gabinete de Apoio à Direção", press: (){});
               }
 
           ),
