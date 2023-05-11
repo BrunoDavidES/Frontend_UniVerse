@@ -1,10 +1,7 @@
 import 'package:UniVerse/components/default_button_simple.dart';
-import 'package:UniVerse/faq_screen/faq_web.dart';
 import 'package:flutter/material.dart';
 import '../Components/default_button.dart';
-import '../consts.dart';
 import '../main_screen/components/body.dart';
-import '../main_screen/homepage_web.dart';
 
 class CustomWebBar extends StatelessWidget {
   const CustomWebBar({super.key});
@@ -27,47 +24,49 @@ class CustomWebBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Image.asset("assets/web/combo_logo.png",
-            scale: 6,
-            alignment: Alignment.center,),
+              scale: 6,
+              alignment: Alignment.center,),
           const SizedBox(width: 5),
           const Spacer(),
           DefaultButtonSimple(
-            text: "Início",
+              text: "Início",
+              press: () {
+                Navigator.pushNamed(context, '/');
+              }, height: 20,
+          ),
+          DefaultButtonSimple(
+            text: "Procurar",
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WebHomePage()),
-              );
+              Navigator.pushNamed(context, '/find');
             },
             height: 20,
           ),
           DefaultButtonSimple(
             text: "Notícias",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/news');
+            },
             height: 20,
           ),
           DefaultButtonSimple(
             text: "Eventos",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/events');
+            },
             height: 20,
           ),
           DefaultButtonSimple(
             text: "Ajuda",
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FAQWebPage()),
-              );
+              Navigator.pushNamed(context, '/help');
             },
             height: 20,
           ),
           DefaultButton(text: "Área Pessoal",
-              press: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Body()),
-                );
-              }),
+            press: () {
+              Navigator.pushNamed(context, '/help');
+            },
+          ),
         ],
 
       ),

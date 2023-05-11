@@ -34,7 +34,7 @@ class WebHomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      CustomWebBar(),
+                      const CustomWebBar(),
                       const Spacer(),
                       Body(),
                       const Spacer(
