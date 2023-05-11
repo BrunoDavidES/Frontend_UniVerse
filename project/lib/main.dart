@@ -1,5 +1,11 @@
+import 'package:UniVerse/events_screen/events_web.dart';
+import 'package:UniVerse/info/universe_info_web.dart';
+import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'faq_screen/faq_web.dart';
+import 'find_screen/find_page_web.dart';
+import 'info/universe_info_app.dart';
 import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +25,16 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: WebHomePage(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => WebHomePage(),
+          '/help': (context) => FAQWebPage(),
+          '/find': (context) => FindWebPage(),
+          '/news': (context) => NewsWebPage(),
+          '/events': (context) => EventWebPage(),
+          '/login': (context) => FAQWebPage(),
+          '/aboutUs': (context) => UniverseInfoWeb(),
+        },
       );
     } else {
       return MaterialApp(

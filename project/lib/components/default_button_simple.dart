@@ -4,8 +4,9 @@ import '../consts.dart';
 class DefaultButtonSimple extends StatelessWidget {
   final String text;
   final Function press;
+  final double height;
   const DefaultButtonSimple({
-    super.key, required this.text, required this.press,
+    super.key, required this.text, required this.press, required this.height,
   });
 
   @override
@@ -15,13 +16,17 @@ class DefaultButtonSimple extends StatelessWidget {
       child: TextButton(
         style: TextButton.styleFrom(
             foregroundColor: cPrimaryColor,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: height)
         ),
         onPressed: (){
           press();
         },
         child: Text(
-          text,
+            text,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: cPrimaryColor
+            )
         ),
       ),
     );

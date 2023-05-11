@@ -8,49 +8,45 @@ class mainNews extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Container(
         margin: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: cDirtyWhite,
-          //boxShadow: [
-            //BoxShadow(
-             //offset: const Offset(0, 0),
-             //blurRadius: 30,
-             //color: Colors.black.withOpacity(0.2),
-            //),
-          //],
         ),
-        child: Stack(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 30),
-              child: Text(
-                "Notícias",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50,
+        child: const Column(
+          children: <Widget> [
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 20, left: 30),
+                  child: Text(
+                    "Notícias",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50,
+                    ),
+                  ),
                 ),
+                Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 25, right: 30),
+                      child: Text(
+                        "Ver mais",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                ),
+              ],
+            ),
+            SizedBox(
+              child: Divider(
+                thickness: 2,
+                color: cBlackOp,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 25, left: 1700),
-              child: Text(
-                "Ver mais",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            Container(
-              width: width*0.95,
-              child: const Padding(
-                padding: EdgeInsets.only(top: 80, left: 12),
-                child: Divider(
-                  thickness: 2,
-                  color: cBlackOp,
-                ),
-              ),
-            )
           ],
         ),
     );

@@ -27,26 +27,29 @@ class CustomWebBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Image.asset("assets/web/combo_logo.png",
-              scale: 6,
-              alignment: Alignment.center,),
+            scale: 6,
+            alignment: Alignment.center,),
           const SizedBox(width: 5),
           const Spacer(),
           DefaultButtonSimple(
-              text: "Início",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WebHomePage()),
-                );
-              },
+            text: "Início",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WebHomePage()),
+              );
+            },
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Notícias",
             press: () {},
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Eventos",
             press: () {},
+            height: 20,
           ),
           DefaultButtonSimple(
             text: "Ajuda",
@@ -56,6 +59,7 @@ class CustomWebBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => FAQWebPage()),
               );
             },
+            height: 20,
           ),
           DefaultButton(text: "Área Pessoal",
               press: (){

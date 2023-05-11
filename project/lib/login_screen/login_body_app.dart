@@ -60,7 +60,7 @@ class LoginPageBodyApp extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 25),
-                    DefaultButtonSimple(text: "Entrar", press: (){}),
+                    DefaultButtonSimple(text: "Entrar", press: (){}, height: 20),
                   ],
                 ),
               ),

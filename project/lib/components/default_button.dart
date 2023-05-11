@@ -31,6 +31,10 @@ class DefaultButton extends StatelessWidget {
         },
         child: Text(
           text,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
       ),
     );
