@@ -1,6 +1,9 @@
 import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:UniVerse/data/locations/locations.dart' as locations;
+
+import '../../bars/app_bar.dart';
 import '../../consts.dart';
 
 class MapsPageApp extends StatefulWidget {
@@ -12,31 +15,45 @@ class MapsPageApp extends StatefulWidget {
 }
 
 class _MapsPageState extends State<MapsPageApp> {
-
-  late GoogleMapController mapController;
-  final LatLng center = const LatLng(38.661079, -9.205108);
-
-  void onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  final Map<String, Marker> _markers = {};
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final googleOffices = await locations.getGoogleOffices();
+    setState(() {
+      _markers.clear();
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        _markers[office.name] = marker;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green[700],
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Google Office Locations'),
+          elevation: 2,
         ),
-        child: GoogleMap(
-          onMapCreated: onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: center,
-            zoom:11.0
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(0, 0),
+            zoom: 2,
           ),
-        )
+          markers: _markers.values.toSet(),
+        ),
       ),
     );
   }
