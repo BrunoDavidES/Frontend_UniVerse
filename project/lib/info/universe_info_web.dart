@@ -26,7 +26,7 @@ class UniverseInfoWeb extends StatelessWidget {
               Container(
                 height: size.height/7.5,
                 color: cDirtyWhite,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     CustomWebBar(),

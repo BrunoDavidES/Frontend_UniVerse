@@ -39,6 +39,10 @@ dependencies:
   url_launcher: ^6.1.8
   http: ^0.13.6
   sqflite: ^2.2.8
+  google_maps_flutter: ^2.2.5
+  google_maps_flutter_web: ^0.4.0+7
+  json_serializable: ^6.6.1
+  json_annotation: ^4.8.0
 
 dev_dependencies:
   flutter_test:

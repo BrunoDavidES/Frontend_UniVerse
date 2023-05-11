@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts.dart';
 
+import 'maps_screen/maps_page_app.dart';
 import 'services_screen/services_body_app.dart';
 
 class FindPageBodyApp extends StatelessWidget {
@@ -31,7 +32,12 @@ class FindPageBodyApp extends StatelessWidget {
          // SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (context, index) {
             if(index == 0) {
-            return GridBox(text: "Mapas", icon: Icons.location_on_outlined);
+              return InkWell(
+                child: GridBox(text: "Mapas", icon: Icons.location_on_outlined),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MapsPageApp()));
+                },
+              );
             } else if(index==1) {
               return InkWell(
                 child: GridBox(text: "Serviços", icon: Icons.work_outline_rounded),

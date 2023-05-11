@@ -15,7 +15,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
@@ -31,7 +31,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
               ),
             ],
           ),
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(

@@ -4,6 +4,9 @@
         android:label="UniVerse ּ  FCT NOVA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyAU88oAVq67egEovJ90EjhWm1oHL5Ylpm8"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
