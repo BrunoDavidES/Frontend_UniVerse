@@ -1,4 +1,4 @@
-import 'dart:html';
+
 
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
@@ -25,7 +25,7 @@ class EventWebPage extends StatelessWidget {
                 Container(
                   height: size.height/7.5,
                   color: cDirtyWhite,
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomWebBar(),

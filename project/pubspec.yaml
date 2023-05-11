@@ -43,6 +43,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+7
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
+  build_runner:
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter_icons:
 flutter:
 
   assets:
+    - assets/locations.json
     - assets/app/find_title.png
     - assets/app/login.png
     - assets/icon_no_white.png
