@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import '../components/default_button_simple.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
-import '../consts/api_consts.dart';
 import '../consts/color_consts.dart';
 import '../info/universe_info_app.dart';
 import 'functions/auth.dart';
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void logInButtonPressed(String id, String password) {
+  void logInButtonPressed(String id, String password) async {
     bool areControllersCompliant = Authentication.isCompliant(id, password);
 
     if (!areControllersCompliant) {
@@ -45,74 +44,47 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
-    else
-      loginUser(id, password);
-      /*var statusCode = Authentication.loginUser(id, password);
-      if (statusCode == 200) {
-        // TODO: Update the DB with the last active time of the user
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AppHomePage()),
-        );
-      } else if (statusCode == 403) {
+    else {
+      var response = await Authentication.loginUser(id, password);
+      if (response == 200) {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => UniverseInfoApp()));
+      }else if(response == 404) {
         showDialog(
           context: context,
           builder: (context) {
             return const AlertDialog(
-              content: Text("Wrong Password!"),
+              content: Text("O identificador fornecido não corresponde a nenhuma conta"),
             );
           },
         );
-      }*/
+      } else if(response == 403) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: Text("Palavra-passe errada"),
+            );
+          },
+        );
+      } else if (response == 400) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: Text("Bad request"),
+            );
+          },
+        );
+      }
+      setState(() {
+        isLoading = false;
+      });
     }
-
-    void loginUser(String id, String password) async {
-        try {
-          final response = await http.post(
-            Uri.parse(baseUrl+login),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode(<String, String>{
-              'username': id,
-              'password': password,
-            }),
-          );
-          if (response.statusCode == 200) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Testing 200"),
-                    content: Text("Testing content for dialog"),
-                  );
-                }
-            );
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UniverseInfoApp()));
-            //print(jsonDecode(response.body));
-          } else if(response.statusCode == 403) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Testing 200"),
-                    content: Text("Testing content for dialog"),
-                  );
-                }
-            );
-          }
-        } catch(e) {
-          print(e.toString());
-        }
-        setState(() {
-          isLoading = false;
-        });
     }
 
     @override
     Widget build(BuildContext context) {
-    bool isDone = true;
       return Scaffold(
           backgroundColor: cDirtyWhiteColor,
           appBar: AppBar(

@@ -1,12 +1,11 @@
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
 import 'package:flutter/material.dart';
 
 import 'maps_page_app.dart';
 class mainPageMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
       decoration: const BoxDecoration(
@@ -57,7 +56,7 @@ class mainPageMap extends StatelessWidget {
                     color: cPrimaryLightColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: const MapsPageApp(),
+                  child: MapsPageWeb(),
                 ),
               ),
           ),

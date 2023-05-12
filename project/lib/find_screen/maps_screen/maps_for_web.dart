@@ -1,21 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/for_data/locations/locations.dart' as locations;
 
-import '../../bars/app_bar.dart';
-import '../../consts/color_consts.dart';
-import 'maps_body_app.dart';
+class MapsPageWeb extends StatefulWidget {
 
-class MapsPageApp extends StatefulWidget {
-
-  const MapsPageApp({super.key});
+  const MapsPageWeb({super.key});
 
   @override
-  State<MapsPageApp> createState() => _MapsPageState();
+  State<MapsPageWeb> createState() => _MapsPageState();
 }
 
-class _MapsPageState extends State<MapsPageApp> {
+class _MapsPageState extends State<MapsPageWeb> {
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final fctplaces = await locations.getFCTplaces();
@@ -37,29 +32,6 @@ class _MapsPageState extends State<MapsPageApp> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
-          children: <Widget>[
-            MapApp(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:1),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  /*@override
-  Widget build(BuildContext context) {
 
     return MaterialApp(
       theme: ThemeData(
@@ -77,5 +49,5 @@ class _MapsPageState extends State<MapsPageApp> {
         ),
       ),
     );
-  }*/
-}
+  }
+  }
