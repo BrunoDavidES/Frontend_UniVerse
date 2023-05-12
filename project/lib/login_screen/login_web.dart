@@ -21,11 +21,7 @@ class _MyLoginPageState extends State<LoginPageWeb> {
       child: const Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: cDirtyWhiteColor,
-        body: Stack(
-            children: <Widget>[
-              LoginScreen(),
-            ],
-          ),
+        body: LoginScreen()
     )
     );
   }

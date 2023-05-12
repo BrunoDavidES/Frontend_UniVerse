@@ -12,7 +12,7 @@ class mainPageMap extends StatelessWidget {
       decoration: const BoxDecoration(
         color: cDirtyWhite,
       ),
-      child:  const Column(
+      child:  Column(
         children: <Widget> [
           Row(
             children: <Widget>[

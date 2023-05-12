@@ -82,6 +82,7 @@ flutter_icons:
 flutter:
 
   assets:
+    - assets/app/map.png
     - assets/locations/locations.json
     - assets/app/find_title.png
     - assets/app/login.png
