@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../consts.dart';
-import 'login_body_app.dart';
+import '../consts/color_consts.dart';
+import 'login_screen.dart';
 
 class LoginPageWeb extends StatefulWidget {
 
@@ -23,10 +23,10 @@ class _MyLoginPageState extends State<LoginPageWeb> {
         backgroundColor: cDirtyWhiteColor,
         body: Stack(
             children: <Widget>[
-              LoginPageBodyApp(),
+              LoginScreen(),
             ],
           ),
-      ),
+    )
     );
   }
 }

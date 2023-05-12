@@ -1,11 +1,11 @@
 
 
 class User {
-  final String username, email;
+  final String id, email;
   final DateTime lastLogin;
 
   const User(
-      {required this.username,
+      {required this.id,
         required this.email,
         required this.lastLogin});
 
@@ -13,7 +13,7 @@ class User {
   // columns in the database.
   Map<String, dynamic> toMap() {
     return {
-      'username': username,
+      'username': id,
       'email': email,
       'lastLogin': lastLogin.millisecondsSinceEpoch,
     };
@@ -23,7 +23,7 @@ class User {
   // each user when using the print statement.
   @override
   String toString() {
-    return 'User{username: $username, email: $email, lastLogin: $lastLogin}';
+    return 'User{username: $id, email: $email, lastLogin: $lastLogin}';
   }
 
 }

@@ -43,6 +43,8 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+7
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
+  hash_password: 0.0.3
+  awesome_snackbar_content: ^0.1.1
   build_runner:
 
 dev_dependencies:

@@ -1,8 +1,7 @@
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
 import 'maps_page_app.dart';
-
 class mainPageMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,9 +48,9 @@ class mainPageMap extends StatelessWidget {
               color: cBlackOp,
             ),
           ),
-          SizedBox(
+          /*SizedBox(
             child: MapsPageApp(),
-          ),
+          ),*/
         ],
       ),
     );

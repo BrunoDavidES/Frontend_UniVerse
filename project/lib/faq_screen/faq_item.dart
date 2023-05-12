@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 
 class FAQbox extends StatelessWidget {
   final String question;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 
 import 'maps_screen/maps_page_app.dart';
 import 'services_screen/services_body_app.dart';
