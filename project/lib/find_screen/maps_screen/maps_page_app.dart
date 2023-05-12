@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:UniVerse/data/locations/locations.dart' as locations;
+import 'package:UniVerse/for_data/locations/locations.dart' as locations;
 
 class MapsPageApp extends StatefulWidget {
 

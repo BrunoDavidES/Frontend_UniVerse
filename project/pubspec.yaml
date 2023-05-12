@@ -44,7 +44,7 @@ dependencies:
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
   hash_password: 0.0.3
-  awesome_snackbar_content: ^0.1.1
+  connectivity_plus: ^2.3.0
   build_runner:
 
 dev_dependencies:
