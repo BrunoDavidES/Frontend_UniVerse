@@ -1,4 +1,4 @@
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info/universe_info_body_web.dart';
 import 'package:flutter/material.dart';
 import '../bars/web_bar.dart';

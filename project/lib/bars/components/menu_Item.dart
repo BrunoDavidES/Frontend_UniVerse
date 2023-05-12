@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../consts.dart';
+import '../../consts/color_consts.dart';
 
 class MenuItem extends StatelessWidget {
   final String title;

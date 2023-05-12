@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 import 'User.dart';
 
-const String localDatabaseName = "app.db";
+const String localDatabaseName = "universe-fct.db";
 
 class LocalDB {
   late final String databaseName;
@@ -60,4 +60,10 @@ class LocalDB {
     final tables = await db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;');
     print(tables);
   }
+
+  /*Future<> getUser(final String id) async {
+    final db = await initDB();
+    User u = await db.rawQuery('SELECT ')
+  }*/
+
 }

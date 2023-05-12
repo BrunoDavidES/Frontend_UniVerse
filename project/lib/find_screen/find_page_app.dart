@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 
 import '../bars/app_bar.dart';
 import 'find_page_body_app.dart';

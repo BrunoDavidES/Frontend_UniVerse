@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../consts.dart';
+import '../consts/color_consts.dart';
 
 class UrlLaunchableIconItem extends StatelessWidget {
   final Icon icon;

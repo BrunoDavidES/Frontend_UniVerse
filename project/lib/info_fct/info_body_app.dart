@@ -1,5 +1,5 @@
 import 'package:UniVerse/components/url_launchable_icon_item.dart';
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
 class FCTinfoBodyApp extends StatelessWidget {

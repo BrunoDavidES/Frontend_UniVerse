@@ -1,5 +1,6 @@
 
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/bars/dialog_test.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
 import 'package:UniVerse/info/universe_info_app.dart';
@@ -57,6 +58,9 @@ class CustomAppBar extends StatelessWidget {
             GButton(
               icon: Icons.newspaper_rounded,
               text: 'Feed',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DialogTestPage()));
+              },
             ),
             /*GButton(
               icon: Icons.qr_code_scanner,

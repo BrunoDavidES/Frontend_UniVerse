@@ -1,5 +1,5 @@
 import 'package:UniVerse/bars/app_bar.dart';
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
 import 'package:flutter/material.dart';

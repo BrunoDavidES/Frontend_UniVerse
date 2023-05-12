@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../bars/app_bar.dart';
-import '../consts.dart';
-import 'login_body_app.dart';
+import '../consts/color_consts.dart';
+import 'login_screen.dart';
 
 class LoginPageWeb extends StatefulWidget {
 
@@ -28,7 +28,7 @@ class _MyLoginPageState extends State<LoginPageWeb> {
         ),
         child: Stack(
           children: <Widget>[
-            LoginPageBodyApp(),
+            LoginScreen(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:3),

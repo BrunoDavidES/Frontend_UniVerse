@@ -2,7 +2,7 @@ import 'package:UniVerse/faq_screen/faq_item.dart';
 import 'package:UniVerse/faq_screen/list_faqs.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
-import '../consts.dart';
+import '../consts/color_consts.dart';
 import '../main_screen/components/bodyAbout.dart';
 
 class FAQWebPage extends StatelessWidget {

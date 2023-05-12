@@ -1,48 +1,34 @@
 import 'dart:convert';
+import 'package:UniVerse/bars/dialog_test.dart';
+import 'package:UniVerse/consts/api_consts.dart';
+import 'package:flutter/material.dart';
+import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 
 class Authentication {
-  static bool isPasswordCompliant(String password) {
-    //Null-safety ensures that password is never null
-    if (password.isEmpty) {
-      return false;
-    }
+  static bool isCompliant(String id, String password) {
+    return id.isEmpty || password.isEmpty ? false : true;
+  }
 
-    //bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    //bool hasDigits = password.contains(RegExp(r'[0-9]'));
-    //bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-    //bool hasSpecialCharacters =
-        //password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-    //bool hasMinLength = password.length > minLength;
-
+  static bool loginUser(String id, String password) {
+    /*Password_Hasher(
+      algorithm_number: '512',
+      Hex: true,
+      controller: password,
+      restrict: false,
+    )*/
+    authenticate(id, password);
     return true;
   }
 
-  static bool loginUser(String email, String password) {
-    //  API Call to authenticate an user (GoogleAppEngine endpoint)
-
-    // Note: hash passwords before sending them through the communication channel
-    // Example: https://pub.dev/packages/hash_password
-
-    // In the meanwhile, if you don't have an endpoint to authenticate users in
-    // Google app Engine, send a POST to https://dummyjson.com/docs/auth.
-    // Body should be a json {'username': <username>, 'password': <password>}
-    // Use username: hbingley1 - password: CQutx25i8r
-    // More info: https://dummyjson.com/docs/auth
-
-    fetchAuthenticate(email, password);
-
-    return true;
-  }
-
-  static Future<bool> fetchAuthenticate(String email, String password) async {
+  static Future<bool> authenticate(String id, String password) async {
     final response = await http.post(
-      Uri.parse('https://vital-defender-379310.oa.r.appspot.com/rest/login/op6'),
+      Uri.parse(baseUrl+login),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'username': email,
+        'username': id,
         'password': password,
       }),
     );
@@ -52,13 +38,10 @@ class Authentication {
       // then parse the JSON.
       print(jsonDecode(response.body));
       return true;
-    } else {
+    } else if(response.statusCode == 403) {
+      DialogTestPage();
       return false;
     }
+    return true;
   }
 }
-
-//void main() async {
-  // Users lists: https://dummyjson.com/users
-  //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
-//}

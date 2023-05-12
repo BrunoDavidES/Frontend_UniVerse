@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../bars/app_bar.dart';
-import '../consts.dart';
-import 'login_body_app.dart';
+import '../consts/color_consts.dart';
+import 'login_screen.dart';
 
 class LoginPageApp extends StatefulWidget {
 
@@ -13,8 +13,6 @@ class LoginPageApp extends StatefulWidget {
 }
 
 class _MyLoginPageState extends State<LoginPageApp> {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class _MyLoginPageState extends State<LoginPageApp> {
         ),
         child: Stack(
           children: <Widget>[
-            LoginPageBodyApp(),
+            LoginScreen(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:3),

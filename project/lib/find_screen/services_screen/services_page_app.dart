@@ -2,7 +2,7 @@ import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../bars/app_bar.dart';
-import '../../consts.dart';
+import '../../consts/color_consts.dart';
 
 class ServicesPageApp extends StatefulWidget {
 

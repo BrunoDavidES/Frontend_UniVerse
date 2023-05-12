@@ -1,4 +1,4 @@
-import 'package:UniVerse/consts.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_fct/info_app.dart';
 import 'package:flutter/material.dart';
 

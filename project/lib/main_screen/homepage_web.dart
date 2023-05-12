@@ -1,7 +1,7 @@
 import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
-import '../consts.dart';
+import '../consts/color_consts.dart';
 import 'components/bodyAbout.dart';
 import 'components/newsMain.dart';
 
