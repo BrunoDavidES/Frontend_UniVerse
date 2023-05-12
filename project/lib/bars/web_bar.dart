@@ -2,6 +2,7 @@ import 'package:UniVerse/components/default_button_simple.dart';
 import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:flutter/material.dart';
 import '../Components/default_button.dart';
+import '../consts/color_consts.dart';
 
 class CustomWebBar extends StatelessWidget {
   const CustomWebBar({super.key});
@@ -23,15 +24,24 @@ class CustomWebBar extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          Image.asset("assets/web/combo_logo.png",
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+            child: Image.asset("assets/web/combo_logo.png",
               scale: 6,
-              alignment: Alignment.center,),
+              alignment: Alignment.center,
+            ),
+          ),
+          //Image.asset("assets/web/combo_logo.png",
+          //    scale: 6,
+          //    alignment: Alignment.center,),
           const SizedBox(width: 5),
           const Spacer(),
           DefaultButtonSimple(
               text: "Início",
               press: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/home');
               }, height: 20,
           ),
           DefaultButtonSimple(
@@ -77,7 +87,6 @@ class CustomWebBar extends StatelessWidget {
                     content: LoginPageWeb(),
                   )
               );
-              //Navigator.pushNamed(context, '/login');
             },
           ),
         ],

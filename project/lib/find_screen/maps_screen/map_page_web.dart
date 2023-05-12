@@ -12,9 +12,9 @@ class mainPageMap extends StatelessWidget {
       decoration: const BoxDecoration(
         color: cDirtyWhite,
       ),
-      child:  const Column(
+      child: Column(
         children: <Widget> [
-          Row(
+          const Row(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 20, left: 30),
@@ -42,15 +42,25 @@ class mainPageMap extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             child: Divider(
               thickness: 2,
               color: cBlackOp,
             ),
           ),
-          /*SizedBox(
-            child: MapsPageApp(),
-          ),*/
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Container(
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: cPrimaryLightColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const MapsPageApp(),
+                ),
+              ),
+          ),
         ],
       ),
     );

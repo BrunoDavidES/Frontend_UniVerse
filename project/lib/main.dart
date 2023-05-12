@@ -27,16 +27,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/',
+        initialRoute: '/home',
         routes: {
-          '/': (context) => WebHomePage(),
+          '/home': (context) => WebHomePage(),
           '/help': (context) => FAQWebPage(),
           '/find': (context) => FindWebPage(),
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
-          '/login': (context) => LoginPageWeb(),
           '/aboutUs': (context) => UniverseInfoWeb(),
-          '/map': (context) => MapsPageApp(),
         },
       );
     } else {
