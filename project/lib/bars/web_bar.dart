@@ -1,7 +1,7 @@
 import 'package:UniVerse/components/default_button_simple.dart';
+import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:flutter/material.dart';
 import '../Components/default_button.dart';
-import '../main_screen/components/body.dart';
 
 class CustomWebBar extends StatelessWidget {
   const CustomWebBar({super.key});
@@ -62,9 +62,22 @@ class CustomWebBar extends StatelessWidget {
             },
             height: 20,
           ),
-          DefaultButton(text: "Área Pessoal",
+          DefaultButton(
+            text: "Área Pessoal",
             press: () {
-              Navigator.pushNamed(context, '/login');
+              showDialog(
+                  context: context,
+                  builder: (_) => const AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.all(
+                            Radius.circular(10.0)
+                        )
+                    ),
+                    content: LoginPageWeb(),
+                  )
+              );
+              //Navigator.pushNamed(context, '/login');
             },
           ),
         ],

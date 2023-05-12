@@ -39,10 +39,6 @@ class _MapsPageState extends State<MapsPageApp> {
         colorSchemeSeed: Colors.green[700],
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Google Office Locations'),
-          elevation: 2,
-        ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: const CameraPosition(
