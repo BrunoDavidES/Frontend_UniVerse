@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../bars/app_bar.dart';
 import '../consts.dart';
 import 'login_body_app.dart';
 
@@ -17,24 +15,17 @@ class _MyLoginPageState extends State<LoginPageWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: cDirtyWhiteColor,
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
-          children: <Widget>[
-            LoginPageBodyApp(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:3),
-            )
-          ],
-        ),
+    return SizedBox(
+      width: size.width/4,
+      height: size.height/1.65,
+      child: const Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: cDirtyWhiteColor,
+        body: Stack(
+            children: <Widget>[
+              LoginPageBodyApp(),
+            ],
+          ),
       ),
     );
   }

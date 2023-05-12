@@ -2,13 +2,14 @@ import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../consts.dart';
+import '../find_screen/maps_screen/map_page_web.dart';
 import 'components/bodyAbout.dart';
 import 'components/newsMain.dart';
 
 class WebHomePage extends StatelessWidget {
   WebHomePage({super.key});
   @override
-  final yourScrollController = ScrollController();
+  ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -56,7 +57,7 @@ class WebHomePage extends StatelessWidget {
                   height: size.height*0.8,
                   width: size.width,
                   color: cDirtyWhite,
-                  child: mainNews(),
+                  child: mainPageMap(),
                 ),
                 Container(                 //Zona de Download da app
                   height: size.height/2,

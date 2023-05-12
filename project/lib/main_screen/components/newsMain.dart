@@ -1,6 +1,8 @@
 import 'package:UniVerse/consts.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/default_button_simple.dart';
+
 class mainNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class mainNews extends StatelessWidget {
         decoration: const BoxDecoration(
           color: cDirtyWhite,
         ),
-        child:  Column(
+        child:  const Column(
           children: <Widget> [
             Row(
               children: <Widget>[

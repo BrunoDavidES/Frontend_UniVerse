@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPageBodyApp> {
         context: context,
         builder: (context) {
           return const AlertDialog(
-            content: LoginPageApp(),
+            content: Text("Incorrect Credentials"),
           );
         },
       );
@@ -102,13 +102,13 @@ class _LoginPageState extends State<LoginPageBodyApp> {
                       ),
                     ),
                     Text(
-                        "Insere as tuas credenciais do clip.",
+                        "Insere as credenciais do clip.",
                             style:TextStyle(
                               fontSize: 15
                             )),
                     SizedBox(height: 20),
-                    MyTextField(controller: idController, hintText: "identificador", obscureText: false,),
-                    MyTextField(controller: passwordController, hintText: "senha", obscureText: true,),
+                    MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
+                    MyTextField(controller: passwordController, hintText: "Senha", obscureText: true,),
                     SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPageBodyApp> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           UrlLaunchableItem(
-                              text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
+                              text:"Esqueceu-se da senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
                           ),
                         ],
                       ),
