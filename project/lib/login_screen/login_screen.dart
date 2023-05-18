@@ -4,11 +4,13 @@ import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../Components/default_button.dart';
 import '../components/default_button_simple.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info/universe_info_app.dart';
+import '../register_screen/register_web.dart';
 import 'functions/auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var response = await Authentication.loginUser(id, password);
       if (response == 200) {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => UniverseInfoApp()));
+            MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
       }else if(response == 404) {
         showDialog(
           context: context,
@@ -103,23 +105,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.all(20),
                       child: Image.asset('assets/icon_no_white.png', scale:3),
                     ),
-                    Text(
+                    const Text(
                       "Junta-te ao Universo!",
                       style: TextStyle(
                           fontSize: 25
                       ),
                     ),
-                    Text(
+                    const Text(
                         "Insere as tuas credenciais do clip.",
                         style:TextStyle(
                             fontSize: 15
                         )),
-                    SizedBox(height: 20),
-                    MyTextField(controller: idController, hintText: "identificador", obscureText: false,),
-                    MyTextField(controller: passwordController, hintText: "senha", obscureText: true,),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                    const SizedBox(height: 20),
+                    MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
+                    MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -129,24 +131,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
                     isLoading
                     ? Container(
                       width: 150,
-                      child: LinearProgressIndicator(
+                      child: const LinearProgressIndicator(
                       color: cPrimaryColor,
                       backgroundColor: cPrimaryOverLightColor,
                     )
                     )
-                    : DefaultButtonSimple(
-                        text: "ENTRAR",
-                        press: () {
-                          logInButtonPressed(idController.text, passwordController.text);
-                          setState(() {
-                            isLoading = true;
-                          });
-                        },
-                        height: 20),
+                    : Column(
+                      children: [
+                        DefaultButtonSimple(
+                            text: "ENTRAR",
+                            press: () {
+                              logInButtonPressed(idController.text, passwordController.text);
+                              setState(() {
+                                isLoading = true;
+                              });
+                            },
+                            height: 20),
+                        DefaultButton(
+                          text: "REGISTAR",
+                          press: () {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (_) => const AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(
+                                          Radius.circular(10.0)
+                                      )
+                                  ),
+                                  content: RegisterPageWeb(),
+                                )
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

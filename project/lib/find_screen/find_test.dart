@@ -1,24 +1,36 @@
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/find_screen/findTest/left_side.dart';
 import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class findWebTest extends StatefulWidget {
+class findWebTest extends StatelessWidget {
   const findWebTest({super.key});
 
   @override
-  State<findWebTest> createState() => _FindWebTest();
-}
-
-class _FindWebTest extends State<findWebTest> {
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Row(
-        children: [
-          LeftSide(),
-          RightSide(),
-        ],
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Container(
+        color: cDirtyWhite,
+        child: Flexible(
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 50, bottom: 50, top: 10),
+                child: SizedBox(
+                  height: size.height,
+                  width: size.width/3.5,
+                    child: const LeftSide(),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: (size.width - size.width/1.05), bottom: 50, top: 10),
+                child: const RightSide(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
