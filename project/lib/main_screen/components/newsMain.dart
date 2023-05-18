@@ -13,7 +13,7 @@ class mainNews extends StatelessWidget {
         decoration: const BoxDecoration(
           color: cDirtyWhite,
         ),
-        child:  Column(
+        child:  const Column(
           children: <Widget> [
             Row(
               children: <Widget>[
@@ -28,6 +28,7 @@ class mainNews extends StatelessWidget {
                     ),
                   ),
                 ),
+                Spacer(),
                 Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(top: 25, right: 30),
