@@ -13,7 +13,7 @@ class mainPageMap extends StatelessWidget {
       ),
       child: Column(
         children: <Widget> [
-          const Row(
+          Row(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 20, left: 30),

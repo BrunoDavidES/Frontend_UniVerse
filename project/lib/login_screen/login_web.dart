@@ -15,7 +15,7 @@ class _MyLoginPageState extends State<LoginPageWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
+   return SizedBox(
       width: size.width/4,
       height: size.height/1.65,
       child: const Scaffold(

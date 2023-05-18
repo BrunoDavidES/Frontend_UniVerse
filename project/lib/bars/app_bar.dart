@@ -3,7 +3,7 @@ import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
-import 'package:UniVerse/info/universe_info_app.dart';
+import 'package:UniVerse/info_screen/universe_info_app.dart';
 import 'package:UniVerse/login_screen/login_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:flutter/material.dart';

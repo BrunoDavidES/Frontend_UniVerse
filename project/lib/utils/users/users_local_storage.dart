@@ -30,7 +30,7 @@ class LocalDB {
   Future<void> _onCreate(Database db, int version) async {
     print('onCreate');
     await db.transaction((txn) async {
-      await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, email TEXT, lastLogin INTEGER)');
+      await txn.execute('CREATE TABLE users (id TEXT PRIMARY KEY, name TEXT, role TEXT, lastLogin INTEGER)');
     });
   }
 
@@ -61,9 +61,10 @@ class LocalDB {
     print(tables);
   }
 
-  /*Future<> getUser(final String id) async {
+  Future<List<Map>> fetchUserData(final String id) async {
     final db = await initDB();
-    User u = await db.rawQuery('SELECT ')
-  }*/
+    List<Map> u = await db.rawQuery('SELECT * FROM users WHERE users.id=id');
+    return u;
+  }
 
 }

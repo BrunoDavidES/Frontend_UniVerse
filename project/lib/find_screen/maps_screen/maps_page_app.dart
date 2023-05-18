@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:UniVerse/for_data/locations/locations.dart' as locations;
+import 'package:UniVerse/utils/locations/locations.dart' as locations;
 
 import '../../bars/app_bar.dart';
 import '../../consts/color_consts.dart';

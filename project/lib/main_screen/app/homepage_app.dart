@@ -17,17 +17,20 @@ class AppHomePage extends StatelessWidget {
           width: size.width,
           decoration: BoxDecoration(
             color: Colors.white70,
-            /*image: DecorationImage(
+            image: DecorationImage(
               image: AssetImage("assets/web/FCT-NOVA.jpg"),
               colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
               fit: BoxFit.cover,
-            ),*/
+            ),
           ),
-       child: Column(
+       child: Stack(
          children: <Widget>[
            WelcomeBodyApp(),
-           const Spacer(),
-           CustomAppBar(i:0),
+           //const Spacer(),
+           Container(
+             alignment: Alignment.bottomCenter,
+             child:CustomAppBar(i:0),
+           )
          ],
        ),
         ),

@@ -6,6 +6,7 @@ class UrlLaunchableItem extends StatelessWidget {
   final String text;
   final String url;
 
+
   const UrlLaunchableItem({
     super.key, required this.text, required this.url });
 
