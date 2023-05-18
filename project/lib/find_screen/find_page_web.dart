@@ -1,10 +1,12 @@
+import 'package:UniVerse/find_screen/find_test.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../consts/color_consts.dart';
 import '../main_screen/components/bodyAbout.dart';
 
 class FindWebPage extends StatelessWidget {
-  const FindWebPage({super.key});
+  FindWebPage({super.key});
+  ScrollController yourScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -15,7 +17,9 @@ class FindWebPage extends StatelessWidget {
         interactive: true,
         radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+        controller: yourScrollController,
         child: SingleChildScrollView(
+          controller: yourScrollController,
           child: Container(
             color: cDirtyWhite,
             child: Column(
@@ -23,7 +27,7 @@ class FindWebPage extends StatelessWidget {
                 Container(
                   height: size.height/7.5,
                   color: cDirtyWhite,
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomWebBar(),
@@ -32,13 +36,10 @@ class FindWebPage extends StatelessWidget {
                 ),
                 Container(                //Zona das do Find
                   height: size.height,
-                  width: size.width/2,
+                  width: size.width,
                   color: cDirtyWhite,
-                  child: ListView(
-                    children: const [
-
-                    ],
-                  ),
+                  child:
+                    const findWebTest(),
                 ),
                 Container(                  //Zona do About
                   height: size.height/3,

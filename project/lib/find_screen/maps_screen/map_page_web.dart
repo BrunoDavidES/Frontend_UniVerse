@@ -56,7 +56,7 @@ class mainPageMap extends StatelessWidget {
                     color: cPrimaryLightColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: MapsPageWeb(),
+                  child: const MapsPageWeb(),
                 ),
               ),
           ),

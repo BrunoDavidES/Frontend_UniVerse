@@ -6,7 +6,8 @@ import '../consts/color_consts.dart';
 import '../main_screen/components/bodyAbout.dart';
 
 class FAQWebPage extends StatelessWidget {
-  const FAQWebPage({super.key});
+  FAQWebPage({super.key});
+  ScrollController yourScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -17,8 +18,10 @@ class FAQWebPage extends StatelessWidget {
           interactive: true,
           radius: const Radius.circular(20), //corner radius of scrollbar
           scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+          controller: yourScrollController,
           child: SingleChildScrollView(
-              child: Container(
+            controller: yourScrollController,
+            child: Container(
                 color: cDirtyWhite,
                 child: Column(
                   children: <Widget> [

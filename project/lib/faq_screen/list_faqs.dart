@@ -5,7 +5,6 @@ import 'package:UniVerse/consts/color_consts.dart';
 class FAQlist extends StatelessWidget {
   final String question;
   const FAQlist({super.key, required this.question});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
