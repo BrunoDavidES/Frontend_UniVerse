@@ -39,8 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
   }
 
-  void registerButtonPressed(String id, String email, String password, String confirmation) async {
-    bool areControllersCompliant = Registration.isCompliant(id, password, confirmation, name, email);
+  void registerButtonPressed(String id, String name, String email, String password, String confirmation) async {
+    bool areControllersCompliant = Registration.isCompliant(id, name, password, confirmation, email);
 
     if (!areControllersCompliant) {
       showDialog(
@@ -124,8 +124,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       )),
                   const SizedBox(height: 20),
                   MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
-                  MyTextField(controller: nameController, hintText: "Nome", obscureText: true,),
-                  MyTextField(controller: emailController, hintText: "Email", obscureText: true,),
+                  MyTextField(controller: nameController, hintText: "Nome", obscureText: false,),
+                  MyTextField(controller: emailController, hintText: "Email", obscureText: false,),
                   MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
                   MyTextField(controller: passwordConfirmationController, hintText: "Confirmação", obscureText: true,),
                   const SizedBox(height: 20),
@@ -140,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       :DefaultButtonSimple(
                       text: "REGISTAR",
                       press: () {
-                        registerButtonPressed(idController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
+                        registerButtonPressed(idController.text, nameController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
                         setState(() {
                           isLoading = true;
                         });
