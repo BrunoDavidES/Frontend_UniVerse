@@ -21,79 +21,46 @@ class _LeftSideState extends State<LeftSide> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(right: (size.width - size.width/1.1)),
-            child: Container(
-              height: size.height/6,
-              width: size.width/6,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                image: AssetImage("assets/web/findTitle.jpeg"),
-                ),
-              ),
-            ),
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
           ),
-          const FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
-          const ExpansionTile(
-            title: Text("Serviços", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
-            children: [
-              ExpansionTile(
-                title: Text("Divisão Académica", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-                children: [
-                  Text("\nInfo basica", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: UrlLaunchableItem(text: 'Mais informação', url: 'https://www.fct.unl.pt/faculdade/servicos/divisao-academica', color:Colors.black),
-                  ),
-                  Text(""),
-                ],
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.local_phone), name: "Contactos"),
           ),
-          const ExpansionTile(
-            title: Text("Contactos", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.link_outlined), name: "Links"),
           ),
-          const ExpansionTile(
-            title: Text("Links", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos"),
           ),
-          const ExpansionTile(
-            title: Text("Departamentos", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios"),
           ),
-          const ExpansionTile(
-            title: Text("Edifícios", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes"),
           ),
-          const ExpansionTile(
-            title: Text("Restaurantes", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos"),
           ),
-          const ExpansionTile(
-            title: Text("Edifícios", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria"),
           ),
-          const ExpansionTile(
-            title: Text("Núcleos", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes"),
           ),
-          const ExpansionTile(
-            title: Text("Galeria", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(bottom:5),
+            child: const FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas"),
           ),
-          const ExpansionTile(
-            title: Text("Transportes", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
-          ),
-          const ExpansionTile(
-            title: Text("Pessoas", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
-          ),
-          const ExpansionTile(
-            title: Text("Regras", style: TextStyle(fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
-          ),
+          const FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras"),
         ],
       ),
     );
