@@ -1,5 +1,5 @@
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/info_fct/info_app.dart';
+import 'package:UniVerse/info_fct_screen/info_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/list_item.dart';
@@ -20,66 +20,66 @@ class WelcomeBodyApp extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 130),
             child: Image.asset("assets/app/logo_nova_horiz.png", scale: 12),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top:170),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                width: 50,
-                  decoration: BoxDecoration(
-                    color: cDarkBlueColorTransparent,
-                    borderRadius: BorderRadius.circular(15)
+       Spacer(),
+       Padding(
+         padding: EdgeInsets.only(bottom:80),
+         child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      width: 50,
+                        decoration: BoxDecoration(
+                          color: cDarkBlueColorTransparent,
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: TextButton(
+                          onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FCTinfoApp()));},
+                          child:
+                            Icon(
+                                Icons.info_outline,
+                              color: Colors.white,
+                              size:25
+                            ),
+                        ),
+                        /*Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            /*Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Text(
+                                    "Redes Sociais FCT NOVA:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15
+                                    )
+                                )
+                            ),*/
+
+                            ListItem(
+                              title: "Facebook",
+                              press: () {},
+                            ),
+                            ListItem(
+                              title: "Instagram",
+                              press: () {},
+                            ),
+                            ListItem(
+                              title: "Twitter",
+                              press: () {},
+                            ),
+                            ListItem(
+                              title: "LinkedIn",
+                              press: () {},
+                            ),
+                            ListItem(
+                              title: "Whatsapp",
+                              press: () {},
+                            ),
+                          ],
+                        )*/
+
+                    ),
                   ),
-
-                  child: TextButton(
-                    onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FCTinfoApp()));},
-                    child:
-                      Icon(
-                          Icons.info_outline,
-                        color: Colors.white,
-                        size:25
-                      ),
-                  ),
-                  /*Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      /*Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Text(
-                              "Redes Sociais FCT NOVA:",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15
-                              )
-                          )
-                      ),*/
-
-                      ListItem(
-                        title: "Facebook",
-                        press: () {},
-                      ),
-                      ListItem(
-                        title: "Instagram",
-                        press: () {},
-                      ),
-                      ListItem(
-                        title: "Twitter",
-                        press: () {},
-                      ),
-                      ListItem(
-                        title: "LinkedIn",
-                        press: () {},
-                      ),
-                      ListItem(
-                        title: "Whatsapp",
-                        press: () {},
-                      ),
-                    ],
-                  )*/
-
-              ),
-            ),
-          ),
+       ),
           /*Padding(
             padding: const EdgeInsets.only(right:20),
             child: Text(

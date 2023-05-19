@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
+import 'chosen_page_app.dart';
 import 'maps_screen/maps_page_app.dart';
 import 'services_screen/services_body_app.dart';
 
@@ -42,16 +43,25 @@ class FindPageBodyApp extends StatelessWidget {
               return InkWell(
                 child: GridBox(text: "Serviços", icon: Icons.work_outline_rounded),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ServicesBodyApp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 1)));
                 },
               );
             }else if(index==2) {
               return GridBox(text: "Contactos", icon: Icons.local_phone);
             }else if(index==3) {
-              return GridBox(text: "Links", icon: Icons.link_outlined);
-
+              return InkWell(
+              child: GridBox(text: "Links", icon: Icons.link_outlined),
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 3)));
+            },
+            );
             }else if(index==4) {
-              return GridBox(text: "Departamentos", icon: Icons.account_balance_outlined);
+              return InkWell(
+                child: GridBox(text: "Departamentos", icon: Icons.account_balance_outlined),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 4)));
+                },
+              );
             }else if(index==5) {
              return GridBox(text: "Edifícios", icon: Icons.home_work_outlined);
             } else if(index==6) {

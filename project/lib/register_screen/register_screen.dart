@@ -9,7 +9,7 @@ import '../components/default_button_simple.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info/universe_info_app.dart';
+import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_web.dart';
 import 'functions/auth.dart';
 

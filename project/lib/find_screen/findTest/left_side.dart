@@ -34,6 +34,23 @@ class _LeftSideState extends State<LeftSide> {
           ),
           const FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
           const ExpansionTile(
+            title: Text("Serviços", style: TextStyle(fontWeight: FontWeight.bold)),
+            backgroundColor: Colors.white,
+            children: [
+              ExpansionTile(
+                title: Text("Divisão Académica", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                children: [
+                  Text("\nInfo basica", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: UrlLaunchableItem(text: 'Mais informação', url: 'https://www.fct.unl.pt/faculdade/servicos/divisao-academica', color:Colors.black),
+                  ),
+                  Text(""),
+                ],
+              ),
+            ],
+          ),
+          const ExpansionTile(
             title: Text("Contactos", style: TextStyle(fontWeight: FontWeight.bold)),
             backgroundColor: Colors.white,
           ),

@@ -1,13 +1,14 @@
 
+import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
 
-class ServicesBodyApp extends StatelessWidget {
+class LinksBodyApp extends StatelessWidget {
 
-  const ServicesBodyApp({super.key});
+  const LinksBodyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ServicesBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/app/services.png", scale: 6),
+          title: Image.asset("assets/app/departments.png", scale: 5),
           leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -43,57 +44,57 @@ class ServicesBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 15,
+            childCount: 14,
               (BuildContext context, int index) {
                 if (index == 0)
-                  return ListButtonSimple(
-                      text: "Divisão Académica", press: () {});
+                  return UrlLaunchableItem(
+                      text: "Clip",
+                      url: "https://clip.fct.unl.pt/"
+                      , color: Colors.black);
                 else if (index == 1)
                   return ListButtonSimple(
-                      text: "Divisão de Acompanhamento de Parcerias",
+                      text: "Departamento de Ciência dos Materiais",
                       press: () {});
                 else if (index == 2)
                   return ListButtonSimple(
-                      text: "Divisão de Apoio à Formação Avançada",
+                      text: "Departamento de Conservação e Restauro",
                       press: () {});
                 else if (index == 3)
                   return ListButtonSimple(
-                      text: "Divisão de Apoio Geral", press: () {});
+                      text: "Departamento de Ciências Sociais Aplicadas",
+                      press: () {});
                 else if (index == 4)
                   return ListButtonSimple(
-                      text: "Divisão de Apoio Técnico", press: () {});
+                      text: "Departamento de Ciências da Terra", press: () {});
                 else if (index == 5)
                   return ListButtonSimple(
-                      text: "Divisão de Comunicação e Relações Exteriores",
+                      text: "Departamento de Ciências da Vida",
                       press: () {});
                 else if (index == 6)
                   return ListButtonSimple(
-                      text: "Divisão de Documentação e Cultura", press: () {});
+                      text: "Departamento de Engenharia Civil", press: () {});
                 else if (index == 7)
                   return ListButtonSimple(
-                      text: "Divisão de Eventos e Apoio ao Estudante Diplomado",
+                      text: "Departamento de Engenharia Eletrotécnica e de Computadores",
                       press: () {});
                 else if (index == 8)
                   return ListButtonSimple(
-                      text: "Divisão de Infraestruturas Informáticas",
+                      text: "Departamento de Engenharia Mecânica e Industrial",
                       press: () {});
                 else if (index == 9)
                   return ListButtonSimple(
-                      text: "Divisão de Planeamento e Gestão de Qualidade",
+                      text: "Departamento de Física",
                       press: () {});
                 else if (index == 10)
                   return ListButtonSimple(
-                      text: "Divisão de Recursos Financeiros", press: () {});
+                      text: "Departamento de Informática", press: () {});
                 else if (index == 11)
                   return ListButtonSimple(
-                      text: "Divisão de Recursos Humanos", press: () {});
+                      text: "Departamento de Matemática", press: () {});
                 else if (index == 12)
                   return ListButtonSimple(
-                      text: "Divisão de Relações Internacionais", press: () {});
+                      text: "Divisão de Química", press: () {});
                 else if (index == 13)
-                  return ListButtonSimple(
-                      text: "Gabinete de Apoio à Direção", press: () {});
-                else if (index == 14)
                   return SizedBox(height: 70);
               }
           ),

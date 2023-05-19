@@ -13,10 +13,10 @@ class mainPageMap extends StatelessWidget {
       ),
       child: Column(
         children: <Widget> [
-          const Row(
+          Row(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 20, left: 30),
+                padding: EdgeInsets.only(top: 20, left: 20),
                 child: Text(
                   "Google Maps",
                   style: TextStyle(
@@ -30,9 +30,9 @@ class mainPageMap extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(top: 25, right: 30),
                   child: Text(
-                    "Ver mais",
+                    "+",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: cHeavyGrey,
                       fontSize: 30,
                     ),
                     textAlign: TextAlign.right,

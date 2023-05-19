@@ -23,47 +23,52 @@ class FAQWebPage extends StatelessWidget {
             controller: yourScrollController,
             child: Container(
                 color: cDirtyWhite,
-                child: Column(
+                child: Stack(
                   children: <Widget> [
+                    Padding(
+                      padding: EdgeInsets.only(top: size.height/6, left: size.width/4),
+                      child: Container(                //Zona das Perguntas
+                        height: size.height,
+                        width: size.width/2,
+                        color: cDirtyWhite,
+                        child: ListView(
+                          children: const [
+                            FAQlist(question: 'FAQ:'),
+                            FAQlist(question: "Tem dúvidas? Fale connosco:"),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: size.height),
+                      child: Container(                  //Zona do About
+                        height: size.height/3,
+                        width: size.width,
+                        decoration: const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            const Spacer(),
+                            BodyAbout(),
+                            const Spacer(), const Spacer(), const Spacer(), const Spacer(),
+                            const Spacer(
+                              flex: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Container(
-                      height: size.height/7.5,
                       color: cDirtyWhite,
-                      child: const Column(
+                      child:  Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                        children: const <Widget>[
                           CustomWebBar(),
                         ],
                       ),
                     ),
-                    Container(                //Zona das Perguntas
-                      height: size.height,
-                      width: size.width/2,
-                      color: cDirtyWhite,
-                      child: ListView(
-                        children: const [
-                          FAQlist(question: 'FAQ:'),
-                          FAQlist(question: "Tem dúvidas? Fale connosco:"),
-                        ],
-                      ),
-                    ),
-                    Container(                  //Zona do About
-                      height: size.height/3,
-                      width: size.width,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Spacer(),
-                          BodyAbout(),
-                          const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                          const Spacer(
-                            flex: 2,
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ),

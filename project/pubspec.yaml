@@ -45,6 +45,9 @@ dependencies:
   json_annotation: ^4.8.0
   hash_password: 0.0.3
   connectivity_plus: ^2.3.0
+  #posso nao precisar
+  internet_connection_checker: 1.0.0+1
+  geolocator: ^8.0.1
   build_runner:
 
 dev_dependencies:
@@ -83,6 +86,8 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/web/noticias.png
+    - assets/app/departments.png
     - assets/locations/locations.json
     - assets/app/find_title.png
     - assets/app/login.png

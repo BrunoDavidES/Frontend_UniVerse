@@ -9,7 +9,7 @@ import '../components/default_button_simple.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info/universe_info_app.dart';
+import '../info_screen/universe_info_app.dart';
 import '../register_screen/register_web.dart';
 import 'functions/auth.dart';
 
@@ -83,99 +83,99 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     }
-    }
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: cDirtyWhiteColor,
+        appBar: AppBar(
+          title: Image.asset("assets/app/login.png", scale:6),
+          automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
-          appBar: AppBar(
-            title: Image.asset("assets/app/login.png", scale:6),
-            automaticallyImplyLeading: false,
-            backgroundColor: cDirtyWhiteColor,
-            titleSpacing: 15,
-            elevation: 0,
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Image.asset('assets/icon_no_white.png', scale:3),
+          titleSpacing: 15,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Image.asset('assets/icon_no_white.png', scale:3),
+                  ),
+                  const Text(
+                    "Junta-te ao Universo!",
+                    style: TextStyle(
+                        fontSize: 25
                     ),
-                    const Text(
-                      "Junta-te ao Universo!",
-                      style: TextStyle(
-                          fontSize: 25
-                      ),
-                    ),
-                    const Text(
-                        "Insere as tuas credenciais do clip.",
-                        style:TextStyle(
-                            fontSize: 15
-                        )),
-                    const SizedBox(height: 20),
-                    MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
-                    MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
-                    const SizedBox(height: 10),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          UrlLaunchableItem(
-                            text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    isLoading
-                    ? Container(
-                      width: 150,
-                      child: const LinearProgressIndicator(
-                      color: cPrimaryColor,
-                      backgroundColor: cPrimaryOverLightColor,
-                    )
-                    )
-                    : Column(
+                  ),
+                  const Text(
+                      "Insere as tuas credenciais do clip.",
+                      style:TextStyle(
+                          fontSize: 15
+                      )),
+                  const SizedBox(height: 20),
+                  MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
+                  MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        DefaultButtonSimple(
-                            text: "ENTRAR",
-                            press: () {
-                              logInButtonPressed(idController.text, passwordController.text);
-                              setState(() {
-                                isLoading = true;
-                              });
-                            },
-                            height: 20),
-                        DefaultButton(
-                          text: "REGISTAR",
-                          press: () {
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                builder: (_) => const AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.all(
-                                          Radius.circular(10.0)
-                                      )
-                                  ),
-                                  content: RegisterPageWeb(),
-                                )
-                            );
-                          },
+                        UrlLaunchableItem(
+                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha', color: Colors.black,
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 25),
+                  isLoading
+                      ? Container(
+                      width: 150,
+                      child: const LinearProgressIndicator(
+                        color: cPrimaryColor,
+                        backgroundColor: cPrimaryOverLightColor,
+                      )
+                  )
+                      : Column(
+                    children: [
+                      DefaultButtonSimple(
+                          text: "ENTRAR",
+                          press: () {
+                            logInButtonPressed(idController.text, passwordController.text);
+                            setState(() {
+                              isLoading = true;
+                            });
+                          },
+                          height: 20),
+                      DefaultButton(
+                        text: "REGISTAR",
+                        press: () {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (_) => const AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(10.0)
+                                    )
+                                ),
+                                content: RegisterPageWeb(),
+                              )
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          )
-      );
-    }
+          ),
+        )
+    );
   }
+}

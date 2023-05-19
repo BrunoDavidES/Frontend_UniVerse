@@ -51,20 +51,15 @@ class UniverseInfoBodyApp extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left:135),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
+                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://universe-fct.oa.r.appspot.com", color: Colors.black),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:135),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
+                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:135),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:135, bottom: 40),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
-              ),
+                child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.black,)),
               Text(
                   "Brevemente disponível em iOS"
                 ),

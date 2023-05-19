@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
+import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hash_password/hashing_functionalities.dart';
 import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
+
+import '../../utils/users/User.dart';
 
 class Authentication {
   static bool isCompliant(String id, String password) {
@@ -11,12 +15,7 @@ class Authentication {
   }
 
   static Future<int> loginUser(String id, String password) async {
-    /*Password_Hasher(
-      algorithm_number: '512',
-      Hex: true,
-      controller: password,
-      restrict: false,
-    )*/
+    //PASSWORD_HASHER
       return authenticate(id, password);
    // return true;
   }
@@ -32,9 +31,12 @@ class Authentication {
           'password': password,
         }),
       );
-      /*var statusCode = Authentication.loginUser(id, password);
-      if (statusCode == 200) {*/
-      // TODO: Update the DB with the last active time of the user
+      if (response.statusCode == 200) {
+        User u = const User(id: 'testeDumy', name:'Dumy', primaryRole: 'Aluno');
+        var db = LocalDB('universe');
+        db.initDB();
+        db.addUser(u);
+      }
       return response.statusCode;
   }
 }

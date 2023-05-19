@@ -64,31 +64,31 @@ class FCTinfoBodyApp extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child:UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/"),
+              child:UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Youtube", url: "https://www.youtube.com/user/fctunltv"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Youtube", url: "https://www.youtube.com/user/fctunltv", color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left:135),
-              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Whatsapp", url: "https://wa.me/+351924008005"),
+              child: UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.black),
             ),
             ],
           ),

@@ -68,9 +68,7 @@ class WebHomePage extends StatelessWidget {
                 Container(                  //Zona do About
                   height: size.height/3,
                   width: size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
+                 color: cHeavyGrey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

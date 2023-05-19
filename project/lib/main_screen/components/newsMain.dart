@@ -13,29 +13,31 @@ class mainNews extends StatelessWidget {
         decoration: const BoxDecoration(
           color: cDirtyWhite,
         ),
-        child:  const Column(
+        child:  Column(
           children: <Widget> [
             Row(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 20, left: 30),
-                  child: Text(
+                  padding: EdgeInsets.only(top: 20, left: 20),
+                  child: 
+                    Image.asset("assets/web/noticias.png", scale: 3.5,)
+                  /*Text(
                     "Notícias",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 50,
                     ),
-                  ),
+                  ),*/
                 ),
                 Spacer(),
                 Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(top: 25, right: 30),
                       child: Text(
-                        "Ver mais",
+                        "+",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: cHeavyGrey,
                           fontSize: 30,
                         ),
                         textAlign: TextAlign.right,
@@ -47,7 +49,7 @@ class mainNews extends StatelessWidget {
             SizedBox(
               child: Divider(
                 thickness: 2,
-                color: cBlackOp,
+                color: cDarkLightBlueColor,
               ),
             ),
           ],
