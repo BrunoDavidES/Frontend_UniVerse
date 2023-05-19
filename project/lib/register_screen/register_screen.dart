@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void registerButtonPressed(String id, String email, String password, String confirmation) async {
-    bool areControllersCompliant = Authentication.isCompliant(id, password);
+    bool areControllersCompliant = Registration.isCompliant(id, password, confirmation, name, email);
 
     if (!areControllersCompliant) {
       showDialog(
@@ -51,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
     else {
-      var response = await Authentication.loginUser(id, password);
+      var response = await Registration.registUser(id, password, confirmation, name, email);
       if (response == 200) {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
