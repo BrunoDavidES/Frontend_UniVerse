@@ -19,7 +19,7 @@ class FAQbox extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               )),
-          trailing: const Icon(Icons.arrow_drop_down_circle_rounded),
+          trailing: const Icon(Icons.arrow_drop_down_circle_rounded, color:cDirtyWhite),
           controlAffinity: ListTileControlAffinity.trailing,
           backgroundColor: cDarkLightBlueColor,
           collapsedBackgroundColor: cPrimaryOverLightColor,

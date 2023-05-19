@@ -125,19 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   MyTextField(controller: emailController, hintText: "Email", obscureText: true,),
                   MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
                   MyTextField(controller: passwordConfirmationController, hintText: "Confirmação", obscureText: true,),
-                  const SizedBox(height: 10),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        UrlLaunchableItem(
-                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
                   isLoading
                       ? const SizedBox(
                       width: 150,

@@ -17,7 +17,7 @@ class _MyRegisterPageState extends State<RegisterPageWeb> {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
         width: size.width/4,
-        height: size.height/1.65,
+        height: size.height/1.25,
         child: const Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: cDirtyWhiteColor,
