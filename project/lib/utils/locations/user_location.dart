@@ -1,9 +1,8 @@
 import 'package:UniVerse/utils/locations/locations.dart';
-import 'package:geolocator/geolocator.dart';
 
 class UsersCurrentLocation {
 
-  Future<Position> determinePosition() async {
+  /*Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -14,5 +13,5 @@ class UsersCurrentLocation {
       return Future.error("Not allowed");
     }
     return await Geolocator.getCurrentPosition();
-  }
+  }*/
 }

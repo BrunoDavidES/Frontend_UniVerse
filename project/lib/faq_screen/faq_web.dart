@@ -62,9 +62,9 @@ class FAQWebPage extends StatelessWidget {
                     ),
                     Container(
                       color: cDirtyWhite,
-                      child:  Column(
+                      child:  const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
+                        children: <Widget>[
                           CustomWebBar(),
                         ],
                       ),

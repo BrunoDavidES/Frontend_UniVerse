@@ -10,6 +10,7 @@ class UniverseInfoWeb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    ScrollController yourScrollController = ScrollController();
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       body: Scrollbar(
@@ -18,45 +19,52 @@ class UniverseInfoWeb extends StatelessWidget {
       interactive: true,
       radius: const Radius.circular(20), //corner radius of scrollbar
       scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+      controller: yourScrollController,
       child: SingleChildScrollView(
+        controller: yourScrollController,
         child: Container(
           color: cDirtyWhite,
-          child: Column(
+          child: Stack(
             children: <Widget> [
+              Padding(
+                padding: EdgeInsets.only(top: size.height/6),
+                child: Container(                //Zona da Info
+                  height: size.height/1.4,
+                  width: size.width,
+                  color: cDirtyWhite,
+                  child: const UniverseInfoBodyWeb(),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: size.height/1.1),
+                child: Container(                  //Zona do About
+                  height: size.height/3,
+                  width: size.width,
+                  decoration: const BoxDecoration(
+                    color: cHeavyGrey,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Spacer(),
+                      BodyAbout(),
+                      const Spacer(), const Spacer(), const Spacer(), const Spacer(),
+                      const Spacer(
+                        flex: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Container(
-                height: size.height/7.5,
                 color: cDirtyWhite,
-                child: Column(
+                child:  const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     CustomWebBar(),
                   ],
                 ),
               ),
-              Container(                //Zona da Info
-                height: size.height/1.4,
-                width: size.width,
-                color: cDirtyWhite,
-                child: const UniverseInfoBodyWeb(),
-              ),
-              Container(                  //Zona do About
-                height: size.height/3,
-                width: size.width,
-                decoration: const BoxDecoration(
-                  color: cHeavyGrey,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Spacer(),
-                    BodyAbout(),
-                    const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                    const Spacer(
-                      flex: 2,
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ),

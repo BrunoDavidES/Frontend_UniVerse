@@ -21,14 +21,14 @@ class FindListItem extends StatelessWidget {
         iconColor: cDarkBlueColor,
         collapsedIconColor: cDarkBlueColor,
         collapsedTextColor: Colors.black,
-        children: [
+        children: const [
           ExpansionTile(
             title: Text("Divisão Académica", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
             children: [
               Text("\nInfo basica", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
               Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: UrlLaunchableItem(text: 'Mais informação', url: 'https://www.fct.unl.pt/faculdade/servicos/divisao-academica'),
+                child: UrlLaunchableItem(text: 'Mais informação', url: 'https://www.fct.unl.pt/faculdade/servicos/divisao-academica', color: Colors.black),
               ),
               Text(""),
             ],

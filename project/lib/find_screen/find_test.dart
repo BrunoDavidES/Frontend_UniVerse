@@ -19,7 +19,7 @@ class findWebTest extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 50, bottom: 50, top: 10),
                 child: SizedBox(
-                  height: size.height,
+                  //height: size.height,
                   width: size.width/3.5,
                     child: const LeftSide(),
                 ),

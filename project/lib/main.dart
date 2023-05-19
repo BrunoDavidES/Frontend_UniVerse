@@ -6,7 +6,6 @@ import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'faq_screen/faq_web.dart';
 import 'find_screen/find_page_web.dart';
 import 'find_screen/find_test.dart';
