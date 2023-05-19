@@ -23,6 +23,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isLoading = false;
   late TextEditingController idController;
+  late TextEditingController nameController;
   late TextEditingController passwordController;
   late TextEditingController passwordConfirmationController;
   late TextEditingController emailController;
@@ -30,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     idController = TextEditingController();
+    nameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     passwordConfirmationController = TextEditingController();
@@ -122,6 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       )),
                   const SizedBox(height: 20),
                   MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
+                  MyTextField(controller: nameController, hintText: "Nome", obscureText: true,),
                   MyTextField(controller: emailController, hintText: "Email", obscureText: true,),
                   MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
                   MyTextField(controller: passwordConfirmationController, hintText: "Confirmação", obscureText: true,),
