@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
   }
 
-  void registerButtonPressed(String id, String email, String password, String confirmation) async {
+  void registerButtonPressed(String id, String email, String password, String confirmation, String name) async {
     bool areControllersCompliant = Registration.isCompliant(id, password, confirmation, name, email);
 
     if (!areControllersCompliant) {
@@ -140,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       :DefaultButtonSimple(
                       text: "REGISTAR",
                       press: () {
-                        registerButtonPressed(idController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
+                        registerButtonPressed(idController.text, emailController.text, passwordController.text, passwordConfirmationController.text, nameController.text);
                         setState(() {
                           isLoading = true;
                         });
