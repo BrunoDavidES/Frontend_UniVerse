@@ -86,6 +86,7 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/web/noticias.png
     - assets/app/departments.png
     - assets/locations/locations.json
     - assets/app/find_title.png

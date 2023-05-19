@@ -1,8 +1,8 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_screen/universe_info_body_web.dart';
 import 'package:flutter/material.dart';
-import '../bars/web_bar.dart';
-import '../main_screen/components/bodyAbout.dart';
+import '/bars/web_bar.dart';
+import '/main_screen/components/bodyAbout.dart';
 
 class UniverseInfoWeb extends StatelessWidget {
   const UniverseInfoWeb({super.key});
@@ -43,7 +43,7 @@ class UniverseInfoWeb extends StatelessWidget {
                 height: size.height/3,
                 width: size.width,
                 decoration: const BoxDecoration(
-                  color: Colors.black,
+                  color: cHeavyGrey,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -5,10 +5,10 @@ import '../consts/color_consts.dart';
 class UrlLaunchableItem extends StatelessWidget {
   final String text;
   final String url;
-
+  final Color color;
 
   const UrlLaunchableItem({
-    super.key, required this.text, required this.url });
+    super.key, required this.text, required this.url, required this.color });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class UrlLaunchableItem extends StatelessWidget {
           children: [
             Text(
               text,
+              style: TextStyle(color: color),
               ),
           ],
         ),

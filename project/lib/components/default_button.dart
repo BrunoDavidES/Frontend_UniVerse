@@ -22,8 +22,8 @@ class DefaultButton extends StatelessWidget {
       ),
       child: TextButton(
         style: TextButton.styleFrom(
-            foregroundColor: cDarkBlueColor,
-            backgroundColor: cDirtyWhite,
+            foregroundColor: cPrimaryColor,
+            backgroundColor: cDirtyWhiteColor,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
         ),
         onPressed: (){
@@ -33,7 +33,6 @@ class DefaultButton extends StatelessWidget {
           text,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
         ),
       ),

@@ -49,7 +49,8 @@ class LinksBodyApp extends StatelessWidget {
                 if (index == 0)
                   return UrlLaunchableItem(
                       text: "Clip",
-                      url: "https://clip.fct.unl.pt/");
+                      url: "https://clip.fct.unl.pt/"
+                      , color: Colors.black);
                 else if (index == 1)
                   return ListButtonSimple(
                       text: "Departamento de Ciência dos Materiais",

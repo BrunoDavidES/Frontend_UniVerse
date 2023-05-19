@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         UrlLaunchableItem(
-                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha',
+                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha', color: Colors.black
                         ),
                       ],
                     ),

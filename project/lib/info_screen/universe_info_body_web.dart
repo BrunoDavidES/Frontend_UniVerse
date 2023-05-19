@@ -58,28 +58,28 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                 width: size.width/18,
                 child: const Padding(
                   padding: EdgeInsets.only(top: 10),
-                  child: UrlLaunchableItem(text: "Website", url: "https://www.fct.unl.pt/"),
+                  child: UrlLaunchableItem(text: "Website", url: "https://www.fct.unl.pt/", color: Colors.black),
                 ),
               ),
               SizedBox(
                 width: size.width/18,
                 child: const Padding(
                   padding: EdgeInsets.only(),
-                  child: UrlLaunchableItem(text: "Facebook", url: "https://www.facebook.com/fct.nova"),
+                  child: UrlLaunchableItem(text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
                 ),
               ),
               SizedBox(
                 width: size.width/18,
                 child: const Padding(
                   padding: EdgeInsets.only(),
-                  child: UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/fctnova"),
+                  child: UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.black),
                 ),
               ),
               SizedBox(
                 width: size.width/18,
                 child: const Padding(
                   padding: EdgeInsets.only(),
-                  child: UrlLaunchableItem(text: "Twitter", url: "https://www.twitter.com/FCTNOVA"),
+                  child: UrlLaunchableItem(text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.black,),
                 ),
               ),
               const Padding(

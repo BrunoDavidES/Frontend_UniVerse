@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           '/find': (context) => FindWebPage(),
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
-          '/aboutUs': (context) => UniverseInfoWeb(),
+          '/about/us': (context) => UniverseInfoWeb(),
           '/test': (context) => findWebTest(),
         },
       );
