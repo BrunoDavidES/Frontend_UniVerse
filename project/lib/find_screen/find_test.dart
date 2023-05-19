@@ -13,23 +13,32 @@ class findWebTest extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: cDirtyWhite,
-        child: Flexible(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 50, bottom: 50, top: 10),
-                child: SizedBox(
-                  //height: size.height,
-                  width: size.width/3.5,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:50, top: 20),
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset("assets/web/findTitle.jpeg", scale: 4,)
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 50, bottom: 50, top: 30),
+                  child: SizedBox(
+                    height: size.height,
+                    width: size.width/4.5,
                     child: const LeftSide(),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: (size.width - size.width/1.05), bottom: 50, top: 10),
-                child: const RightSide(),
-              ),
-            ],
-          ),
+                Padding(
+                  padding: EdgeInsets.only(left: (size.width - size.width/1.1), bottom: 50, top: 10),
+                  child: const RightSide(),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

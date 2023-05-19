@@ -22,43 +22,48 @@ class FindWebPage extends StatelessWidget {
           controller: yourScrollController,
           child: Container(
             color: cDirtyWhite,
-            child: Column(
+            child: Stack(
               children: <Widget> [
+                Padding(
+                  padding: EdgeInsets.only(top: size.height/7),
+                  child: Container(                //Zona das do Find
+                    height: size.height*1.2,
+                    width: size.width,
+                    color: cDirtyWhite,
+                    child:
+                      const findWebTest(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: size.height * 1.15),
+                  child: Container(                  //Zona do About
+                    height: size.height/3,
+                    width: size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Spacer(),
+                        BodyAbout(),
+                        const Spacer(), const Spacer(), const Spacer(), const Spacer(),
+                        const Spacer(
+                          flex: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
-                  height: size.height/7.5,
                   color: cDirtyWhite,
-                  child:  Column(
+                  child:  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomWebBar(),
                     ],
                   ),
                 ),
-                Container(                //Zona das do Find
-                  height: size.height,
-                  width: size.width,
-                  color: cDirtyWhite,
-                  child:
-                    const findWebTest(),
-                ),
-                Container(                  //Zona do About
-                  height: size.height/3,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Spacer(),
-                      BodyAbout(),
-                      const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
