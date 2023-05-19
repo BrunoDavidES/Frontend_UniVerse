@@ -10,30 +10,34 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
-import '../register_screen/register_web.dart';
+import '../login_screen/login_web.dart';
 import 'functions/auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool isLoading = false;
   late TextEditingController idController;
   late TextEditingController passwordController;
+  late TextEditingController passwordConfirmationController;
+  late TextEditingController emailController;
 
   @override
   void initState() {
     idController = TextEditingController();
+    emailController = TextEditingController();
     passwordController = TextEditingController();
+    passwordConfirmationController = TextEditingController();
 
     super.initState();
   }
 
-  void logInButtonPressed(String id, String password) async {
+  void registerButtonPressed(String id, String email, String password, String confirmation) async {
     bool areControllersCompliant = Authentication.isCompliant(id, password);
 
     if (!areControllersCompliant) {
@@ -118,58 +122,44 @@ class _LoginScreenState extends State<LoginScreen> {
                       )),
                   const SizedBox(height: 20),
                   MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
+                  MyTextField(controller: emailController, hintText: "Email", obscureText: true,),
                   MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        UrlLaunchableItem(
-                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha', color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
+                  MyTextField(controller: passwordConfirmationController, hintText: "Confirmação", obscureText: true,),
+                  const SizedBox(height: 20),
                   isLoading
-                      ? Container(
+                      ? const SizedBox(
                       width: 150,
-                      child: const LinearProgressIndicator(
+                      child: LinearProgressIndicator(
                         color: cPrimaryColor,
                         backgroundColor: cPrimaryOverLightColor,
                       )
                   )
-                      : Column(
-                    children: [
-                      DefaultButtonSimple(
-                          text: "ENTRAR",
-                          press: () {
-                            logInButtonPressed(idController.text, passwordController.text);
-                            setState(() {
-                              isLoading = true;
-                            });
-                          },
-                          height: 20),
-                      DefaultButton(
-                        text: "REGISTAR",
-                        press: () {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (_) => const AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.all(
-                                        Radius.circular(10.0)
-                                    )
-                                ),
-                                content: RegisterPageWeb(),
-                              )
-                          );
-                        },
-                      ),
-                    ],
+                      :DefaultButtonSimple(
+                      text: "REGISTAR",
+                      press: () {
+                        registerButtonPressed(idController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
+                        setState(() {
+                          isLoading = true;
+                        });
+                      },
+                      height: 20),
+                  DefaultButton(
+                    text: "LOGIN",
+                    press: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                          context: context,
+                          builder: (_) => const AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.all(
+                                    Radius.circular(10.0)
+                                )
+                            ),
+                            content: LoginPageWeb(),
+                          )
+                      );
+                    },
                   ),
                 ],
               ),
