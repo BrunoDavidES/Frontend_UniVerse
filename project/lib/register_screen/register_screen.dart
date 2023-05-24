@@ -11,7 +11,7 @@ import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_web.dart';
-import 'functions/auth.dart';
+import 'functions/reg.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

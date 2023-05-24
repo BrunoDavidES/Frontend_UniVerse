@@ -2,6 +2,7 @@ import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
+import 'list_button_simple.dart';
 
 class FindListItem extends StatelessWidget {
   final Icon icon;
@@ -32,20 +33,9 @@ class FindListItem extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          children: const [
-            ExpansionTile(
-              title: Text("Divisão Académica", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-              children: [
-                Text("\nInfo basica", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
-                Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: UrlLaunchableItem(text: 'Mais informação', url: 'https://www.fct.unl.pt/faculdade/servicos/divisao-academica', color: Colors.black,)
-                ),
-                Text(""),
-              ],
-            ),
-          ],
-        ),
+          children: [
+  ]
+      ),
       ),
     );
   }

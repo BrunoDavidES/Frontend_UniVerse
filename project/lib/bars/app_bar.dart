@@ -20,7 +20,6 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      //height: 60,
       decoration: BoxDecoration(
           color: cPrimaryColor,
           borderRadius: BorderRadius.circular(15),
@@ -28,7 +27,7 @@ class CustomAppBar extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
             blurRadius: 7,
-            offset: Offset(0,0),
+            offset: const Offset(0,0),
           ),
           ]
       ),
@@ -39,7 +38,7 @@ class CustomAppBar extends StatelessWidget {
           color: Colors.white60,
           activeColor: Colors.white,
           gap:5,
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           tabs: [
             GButton(
               icon: Icons.home_rounded,
@@ -88,15 +87,15 @@ class CustomAppBar extends StatelessWidget {
   }
 
   void _navigateToNextScreenHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppHomePage()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppHomePage()));
   }
 
   void _navigateToNextScreenSettings(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => UniverseInfoApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
   }
 
   void _navigateToNextScreenPersonal(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPageApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
   }
 
   void _navigateToNextScreenFind(BuildContext context) {

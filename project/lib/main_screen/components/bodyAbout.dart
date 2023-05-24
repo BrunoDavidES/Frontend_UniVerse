@@ -187,7 +187,7 @@ class BodyAbout extends StatelessWidget {
                       )
                   ),
                 SizedBox(width: 10,),
-                Image.asset("assets/icon_no_white.png",scale:6),
+                Image.asset("assets/capi_logo.png",scale:8),
               ],
             ),
           ),

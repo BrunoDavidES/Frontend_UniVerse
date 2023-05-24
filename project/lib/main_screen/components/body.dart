@@ -36,24 +36,10 @@ class Body extends StatelessWidget {
                 ),
                 child: Row(
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: cDarkBlueColorTransparent,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
+
                     Text(
-                      "mais".toUpperCase(),
+                      " ver mais".toUpperCase(),
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

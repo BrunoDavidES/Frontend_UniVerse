@@ -36,9 +36,10 @@ class UniverseInfoBodyApp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(top:5, left: 15, right: 15, bottom: 30),
                 child: Text(
-                  "Com a UniVerse, o dia-a-dia no campus torna-se mais agora mais fácil\n Tudo fica mais fácil oh yeah\nahahaha\nahahahah",
+                  "Desenvolvida por 5 estudantes de Engenharia Informática da FCT NOVA, no âmbito de Atividade de Desenvolvimento Curricular, a UniVerse permite que todos presentes na faculdade possam agora encontrar informações úteis, saber mais sobre notícias e eventos, organizar a sua agenda e muito mais na sua área pessoal.\nAlém disso, para quem tem interesse em conhecer mais sobre a FCT, continua a ser possível explorar o universo da nossa faculdade, limitadamente.\nJunta-te ao Universo!",
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ],
@@ -54,11 +55,7 @@ class UniverseInfoBodyApp extends StatelessWidget {
                 child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://universe-fct.oa.r.appspot.com", color: Colors.black),
               ),
               Padding(
-                padding: const EdgeInsets.only(left:135),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:135),
+                padding: const EdgeInsets.only(left:135, bottom: 20),
                 child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.black,)),
               Text(
                   "Brevemente disponível em iOS"
@@ -74,7 +71,14 @@ class UniverseInfoBodyApp extends StatelessWidget {
                     )
                     ),
                   ),
-                  Image.asset("assets/icon_no_white.png",scale:5),
+                  Image.asset("assets/capi_logo.png",scale:6,),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Text(
+                      "© 2023 Todos os direitos reservados",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ],
               )
             ],

@@ -25,7 +25,6 @@ class UniverseInfoApp extends StatelessWidget {
         backgroundColor: cDirtyWhiteColor,
 
       ),
-
       body: const UniverseInfoBodyApp(),
     );
   }
