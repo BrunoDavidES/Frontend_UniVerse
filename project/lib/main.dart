@@ -10,6 +10,7 @@ import 'faq_screen/faq_web.dart';
 import 'find_screen/find_page_web.dart';
 import 'find_screen/find_test.dart';
 import 'find_screen/maps_screen/maps_page_app.dart';
+import 'find_screen/test.dart';
 import 'info_screen/universe_info_app.dart';
 import 'login_screen/login_web.dart';
 import 'main_screen/app/homepage_app.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
           '/about/us': (context) => UniverseInfoWeb(),
-          '/test': (context) => findWebTest(),
+          '/test': (context) => Test(),
         },
       );
     } else {

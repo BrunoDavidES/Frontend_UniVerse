@@ -4,9 +4,14 @@ import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class findWebTest extends StatelessWidget {
+class findWebTest extends StatefulWidget {
   const findWebTest({super.key});
 
+  @override
+  State<findWebTest> createState() => _FindWebTestState();
+}
+
+class _FindWebTestState extends State<findWebTest> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

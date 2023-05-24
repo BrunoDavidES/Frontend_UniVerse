@@ -14,12 +14,10 @@ class _RightSideState extends State<RightSide> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Expanded(
-      child: Container(
+    return Container(
         height: size.height/1.5,
         width: size.width/1.8,
         color: cDirtyWhite,
-        child: Expanded(
           child: Padding(
             padding: const EdgeInsets.all(50.0),
             child: Container(
@@ -31,8 +29,6 @@ class _RightSideState extends State<RightSide> {
               child: const MapsPageWeb(),
             ),
           ),
-        ),
-      ),
     );
   }
 }
