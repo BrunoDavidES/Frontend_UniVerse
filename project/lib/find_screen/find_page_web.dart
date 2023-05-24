@@ -57,7 +57,7 @@ class FindWebPage extends StatelessWidget {
                 ),
                 Container(
                   color: cDirtyWhite,
-                  child:  Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomWebBar(),

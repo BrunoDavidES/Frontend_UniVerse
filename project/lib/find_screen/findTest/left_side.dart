@@ -16,53 +16,54 @@ class LeftSide extends StatefulWidget {
 class _LeftSideState extends State<LeftSide> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Expanded(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.local_phone), name: "Contactos"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.link_outlined), name: "Links"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes"),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom:5),
-            child: const FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas"),
-          ),
-          const FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras"),
-        ],
-      ),
+    return ListView(
+      children: const [
+        Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.local_phone), name: "Contactos"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.link_outlined), name: "Links"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes"),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom:5),
+                  child: FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas"),
+                ),
+                FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras"),
+              ],
+        ),
+      ],
     );
   }
 }
