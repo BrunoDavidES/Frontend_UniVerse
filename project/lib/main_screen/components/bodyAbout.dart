@@ -119,7 +119,7 @@ class BodyAbout extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top:10),
+                  padding: const EdgeInsets.only(top:15),
                   child: Text(
                       "UniVerse ּ  FCT NOVA",
                       textAlign: TextAlign.start,
@@ -168,7 +168,6 @@ class BodyAbout extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               UrlLaunchableItem(text: "Website", url: "https://universe-fct.oa.r.appspot.com", color: Colors.white),
-                              UrlLaunchableItem( text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.white),
                               UrlLaunchableItem( text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.white),
                             ],
                           ),

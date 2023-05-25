@@ -11,19 +11,30 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Container(
-            height: 10,
-            width: 100,
+            height: 50,
+            width: size.width - 100,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: cDirtyWhite,
                 border: Border.all(
                   color: cPrimaryLightColor,
                   width:2,
-                )
+                ),
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                //tileMode:TileMode.mirror,
+                stops: [-1, 1],
+                colors: [
+                  cDirtyWhite,
+                  cPrimaryOverLightColor.withOpacity(0.5)
+                ],
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -19,11 +19,20 @@ class GridBox extends StatelessWidget {
             width: 100,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: cDirtyWhite,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                //tileMode:TileMode.mirror,
+                colors: [
+                  cDirtyWhite,
+                  cPrimaryOverLightColor.withOpacity(0.5)
+                ],
+              ),
+                //color: cDirtyWhite,
                 border: Border.all(
                   color: cPrimaryLightColor,
                   width:2,
-                )
+                ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -16,6 +16,15 @@ class FindListItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: Container(
         decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              //tileMode:TileMode.mirror,
+              colors: [
+                cDirtyWhite,
+                cPrimaryOverLightColor.withOpacity(0.5)
+              ],
+            ),
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
               color: cPrimaryLightColor,
@@ -25,10 +34,10 @@ class FindListItem extends StatelessWidget {
         child: ExpansionTile(
           leading: icon,
           title: Text(name),
-          backgroundColor: cDirtyWhite,
+          backgroundColor: cDirtyWhiteColor,
           textColor: Colors.black,
-          iconColor: cDarkBlueColor,
-          collapsedIconColor: cDarkBlueColor,
+          iconColor: cPrimaryColor,
+          collapsedIconColor: cPrimaryColor,
           collapsedTextColor: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
