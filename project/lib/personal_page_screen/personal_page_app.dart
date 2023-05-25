@@ -1,32 +1,34 @@
+import 'package:UniVerse/bars/app_bar.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/faq_screen/faq_app.dart';
+import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
+import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
 import 'package:flutter/material.dart';
 
-import '../info_screen/universe_info_body_app.dart';
-import '../utils/users/users_local_storage.dart';
-
-class PersonalPageApp extends StatelessWidget {
-  const PersonalPageApp({super.key});
+class AppPersonalPage extends StatelessWidget {
+  const AppPersonalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        leadingWidth: 20,
-        leading: Builder(
-            builder: (context) {
-              return IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {Navigator.pop(context);},
-                  color: cDarkBlueColorTransparent);
-            }
-        ),
-        title: Text(
-          "THIS IS A TEMPORARY PERSONAL PAGE"
-        ),
-        backgroundColor: cDirtyWhiteColor,
 
+    return Scaffold(
+      body: Container(
+        height: size.height,
+        width: size.width,
+        decoration: BoxDecoration(
+          color: cDirtyWhiteColor
+        ),
+        child: Stack(
+          children: <Widget>[
+            PersonalPageBodyApp(),
+            //const Spacer(),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child:CustomAppBar(i:3),
+            )
+          ],
+        ),
       ),
     );
   }

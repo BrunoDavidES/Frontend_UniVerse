@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
+import '../components/grid_item.dart';
 import 'chosen_page_app.dart';
 import 'maps_screen/maps_page_app.dart';
 import 'services_screen/services_body_app.dart';
@@ -81,47 +82,5 @@ class FindPageBodyApp extends StatelessWidget {
         )
       );
 
-  }
-}
-
-class GridBox extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  const GridBox({
-    super.key, required this.text, required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Container(
-          height: 10,
-          width: 100,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: cDirtyWhite,
-              border: Border.all(
-                color: cPrimaryLightColor,
-                width:2,
-              )
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size:40, color: cDarkBlueColor),
-              Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: cHeavyGrey
-                  ),
-              )
-            ],
-          )
-        ),
-      ),
-    );
   }
 }
