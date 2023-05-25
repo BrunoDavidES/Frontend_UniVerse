@@ -87,6 +87,7 @@ flutter:
   assets:
     - assets/app/map.png
     - assets/capi_logo.png
+    - assets/web/foto.jpg
     - assets/web/noticias.png
     - assets/app/departments.png
     - assets/locations/locations.json

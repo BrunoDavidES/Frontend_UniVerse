@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
             "Finalmente, tão perto!".toUpperCase(),
             style: const TextStyle(
               fontSize: 80,
-              color: cPrimaryColor,
+              color: cPrimaryOverLightColor,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
             "E aqui que encontras o que precisas a qualquer altura\nBem vindo!!",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black.withOpacity(0.75),
+              color: cDirtyWhite,
             ),
           ),
           Align(

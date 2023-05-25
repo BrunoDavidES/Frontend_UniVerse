@@ -18,8 +18,8 @@ class AppHomePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white70,
             image: DecorationImage(
-              image: AssetImage("assets/web/FCT-NOVA.jpg"),
-              colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
+              image: AssetImage("assets/web/foto.jpg"),
+              //colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
               fit: BoxFit.cover,
             ),
           ),

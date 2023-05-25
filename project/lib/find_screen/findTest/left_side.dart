@@ -17,9 +17,9 @@ class _LeftSideState extends State<LeftSide> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
+      children:  [
         Column(
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
                   child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
