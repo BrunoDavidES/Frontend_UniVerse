@@ -48,51 +48,51 @@ class LinksBodyApp extends StatelessWidget {
               (BuildContext context, int index) {
                 if (index == 0)
                   return ListButtonSimple(
-                      text: "Edifício I",
+                      text: "Edifício I",tobeBold: true,
                       press: () {});
                 else if (index == 1)
                   return ListButtonSimple(
-                      text: "Edifício II",
+                      text: "Edifício II",tobeBold: true,
                       press: () {});
                 else if (index == 2)
                   return ListButtonSimple(
-                      text: "Edifício III",
+                      text: "Edifício III",tobeBold: true,
                       press: () {});
                 else if (index == 3)
                   return ListButtonSimple(
-                      text: "Edifício IV",
+                      text: "Edifício IV",tobeBold: true,
                       press: () {});
                 else if (index == 4)
                   return ListButtonSimple(
-                      text: "Edifício V", press: () {});
+                      text: "Edifício V", tobeBold: true,press: () {});
                 else if (index == 5)
                   return ListButtonSimple(
-                      text: "Departamental",
+                      text: "Departamental",tobeBold: true,
                       press: () {});
                 else if (index == 6)
                   return ListButtonSimple(
-                      text: "Edifício VII", press: () {});
+                      text: "Edifício VII", tobeBold: true,press: () {});
                 else if (index == 7)
                   return ListButtonSimple(
-                      text: "Edifício VIII",
+                      text: "Edifício VIII",tobeBold: true,
                       press: () {});
                 else if (index == 8)
                   return ListButtonSimple(
-                      text: "Edifício IX",
+                      text: "Edifício IX",tobeBold: true,
                       press: () {});
                 else if (index == 9)
                   return ListButtonSimple(
-                      text: "Edifício X",
+                      text: "Edifício X",tobeBold: true,
                       press: () {});
                 else if (index == 10)
                   return ListButtonSimple(
-                      text: "Edifício VI", press: () {});
+                      text: "Edifício VI",tobeBold: true, press: () {});
                 else if (index == 11)
                   return ListButtonSimple(
-                      text: "CENIMAT", press: () {});
+                      text: "CENIMAT", tobeBold: true,press: () {});
                 else if (index == 12)
                   return ListButtonSimple(
-                      text: "Divisão de Química", press: () {});
+                      text: "Divisão de Química",tobeBold: true, press: () {});
                 else if (index == 13)
                   return SizedBox(height: 70);
               }

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../find_screen/maps_screen/map_page_web.dart';
 import '../consts/color_consts.dart';
-import 'components/bodyAbout.dart';
+import 'components/about_bottom.dart';
+import 'components/about_bottom_body.dart';
 import 'components/newsMain.dart';
 
 class WebHomePage extends StatelessWidget {
@@ -65,34 +66,7 @@ class WebHomePage extends StatelessWidget {
                   color: cDirtyWhite,
                   child: mainNews(),
                 ),
-                Container(                  //Zona do About
-                  height: size.height/3,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          cPrimaryLightColor,
-                          cHeavyGrey,
-                        ],
-                      ),
-                      //color: cPrimaryLightColor,
-
-                  ),
-                 //color: cHeavyGrey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Spacer(),
-                      BodyAbout(),
-                      const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                    ],
-                  ),
-                )
+                BottomAbout(size: size),
               ]
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:UniVerse/faq_screen/faq_item.dart';
+import 'package:UniVerse/components/faq_item.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
@@ -22,7 +22,7 @@ class FAQlist extends StatelessWidget {
               )),
           trailing: const Icon(Icons.arrow_drop_down_circle_rounded),
           controlAffinity: ListTileControlAffinity.trailing,
-          backgroundColor: cDirtyWhiteColor,
+          backgroundColor: cDirtyWhite,
           collapsedBackgroundColor: cPrimaryOverLightColor,
           textColor: Colors.black,
           iconColor: cHeavyGrey,

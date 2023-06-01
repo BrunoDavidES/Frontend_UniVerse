@@ -1,7 +1,7 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
-import 'faq_item.dart';
+import '../components/faq_item.dart';
 import 'list_faqs.dart';
 
 class FaqApp extends StatelessWidget {

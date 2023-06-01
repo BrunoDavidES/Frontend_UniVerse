@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../components/url_launchable_icon_item.dart';
 import '../../components/url_launchable_item.dart';
 
-class BodyAbout extends StatelessWidget {
+class AboutBottomBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

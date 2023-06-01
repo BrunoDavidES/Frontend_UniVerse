@@ -4,9 +4,10 @@ import '../consts/color_consts.dart';
 
 class MenuCard extends StatelessWidget {
   final String text;
+  final String description;
   final IconData icon;
   const MenuCard({
-    super.key, required this.text, required this.icon,
+    super.key, required this.text, required this.icon, required this.description,
   });
 
   @override
@@ -29,10 +30,11 @@ class MenuCard extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 //tileMode:TileMode.mirror,
-                stops: [-1, 1],
                 colors: [
+                  cDirtyWhiteColor,
                   cDirtyWhite,
-                  cPrimaryOverLightColor.withOpacity(0.5)
+                  cPrimaryOverLightColor.withOpacity(0.4),
+                  cPrimaryLightColor.withOpacity(0.5)
                 ],
               ),
             ),
@@ -40,13 +42,28 @@ class MenuCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, size:40, color: cPrimaryColor),
-                Text(
-                  text,
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: cHeavyGrey
+                Padding(
+                  padding: const EdgeInsets.only(top:5),
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: cHeavyGrey,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    description,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: cHeavyGrey,
+                    ),
+                  ),
+                ),
               ],
             )
         ),

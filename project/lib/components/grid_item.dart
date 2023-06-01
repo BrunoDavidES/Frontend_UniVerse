@@ -24,8 +24,9 @@ class GridBox extends StatelessWidget {
                 end: Alignment.bottomLeft,
                 //tileMode:TileMode.mirror,
                 colors: [
+                  cDirtyWhiteColor,
                   cDirtyWhite,
-                  cPrimaryOverLightColor.withOpacity(0.5)
+                  cPrimaryOverLightColor.withOpacity(0.4),
                 ],
               ),
                 //color: cDirtyWhite,

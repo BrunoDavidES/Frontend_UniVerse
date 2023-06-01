@@ -16,19 +16,16 @@ class _RightSideState extends State<RightSide> {
     Size size = MediaQuery.of(context).size;
     return Container(
         height: size.height/1.5,
-        width: size.width/1.8,
+        width: size.width/1.5,
         color: cDirtyWhite,
-          child: Padding(
-            padding: const EdgeInsets.all(50.0),
             child: Container(
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: cPrimaryLightColor,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: const MapsPageWeb(),
-            ),
-          ),
+              child: Center(child: MapsPageWeb()),
+            )
     );
   }
 }

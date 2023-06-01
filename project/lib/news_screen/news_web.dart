@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../consts/color_consts.dart';
-import '../main_screen/components/bodyAbout.dart';
+import '../main_screen/components/about_bottom_body.dart';
 
 class NewsWebPage extends StatelessWidget {
   NewsWebPage({super.key});
@@ -32,27 +32,6 @@ class NewsWebPage extends StatelessWidget {
                     child: ListView(
                       children: const [
 
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: size.height/1.1),
-                  child: Container(                  //Zona do About
-                    height: size.height/3,
-                    width: size.width,
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Spacer(),
-                        BodyAbout(),
-                        const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                        const Spacer(
-                          flex: 2,
-                        ),
                       ],
                     ),
                   ),

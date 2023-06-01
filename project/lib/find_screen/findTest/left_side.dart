@@ -22,45 +22,45 @@ class _LeftSideState extends State<LeftSide> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços"),
+                  child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços", i:0),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.local_phone), name: "Contactos"),
+                  child: FindListItem(icon: Icon(Icons.local_phone), name: "Contactos", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.link_outlined), name: "Links"),
+                  child: FindListItem(icon: Icon(Icons.link_outlined), name: "Links", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos"),
+                  child: FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios"),
+                  child: FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes"),
+                  child: FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos"),
+                  child: FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria"),
+                  child: FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes"),
+                  child: FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes", i:1),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:5),
-                  child: FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas"),
+                  child: FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas", i:1),
                 ),
-                FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras"),
+                FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras", i:1),
               ],
         ),
       ],

@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
                       " ver mais".toUpperCase(),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: cDirtyWhite,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),

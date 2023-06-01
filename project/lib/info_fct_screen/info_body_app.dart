@@ -11,9 +11,18 @@ class FCTinfoBodyApp extends StatelessWidget {
     return Container(
         height: size.height,
         width: size.width,
-        decoration: BoxDecoration(
-        color: cDirtyWhiteColor,
-    ),
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          center: Alignment.bottomCenter,
+          radius: 0.75,
+          colors: [
+            cPrimaryOverLightColor,
+            cDirtyWhiteColor,
+          ],
+        ),
+        //color: cPrimaryLightColor,
+
+      ),
     child: Column(
     children: <Widget>[
       Column(

@@ -1,8 +1,9 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_screen/universe_info_body_web.dart';
+import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:flutter/material.dart';
 import '/bars/web_bar.dart';
-import '/main_screen/components/bodyAbout.dart';
+import '/main_screen/components/about_bottom_body.dart';
 
 class UniverseInfoWeb extends StatelessWidget {
   const UniverseInfoWeb({super.key});
@@ -27,33 +28,12 @@ class UniverseInfoWeb extends StatelessWidget {
           child: Stack(
             children: <Widget> [
               Padding(
-                padding: EdgeInsets.only(top: size.height/6),
+                padding: EdgeInsets.only(top: size.height/7),
                 child: Container(                //Zona da Info
-                  height: size.height/1.4,
+                  height: size.height/1.5+size.height/3,
                   width: size.width,
                   color: cDirtyWhite,
                   child: const UniverseInfoBodyWeb(),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: size.height/1.1),
-                child: Container(                  //Zona do About
-                  height: size.height/3,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                    color: cHeavyGrey,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Spacer(),
-                      BodyAbout(),
-                      const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                    ],
-                  ),
                 ),
               ),
               Container(

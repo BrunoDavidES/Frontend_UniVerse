@@ -22,7 +22,7 @@ class Authentication {
 
   static Future<int> authenticate(String id, String password) async {
       final response = await http.post(
-        Uri.parse(baseUrl + login),
+        Uri.parse(baseUrl + loginUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

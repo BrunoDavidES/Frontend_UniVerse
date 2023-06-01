@@ -2,6 +2,7 @@
 import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
+import 'package:UniVerse/feed_screen/feed_page_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
 import 'package:UniVerse/info_screen/universe_info_app.dart';
 import 'package:UniVerse/login_screen/login_app.dart';
@@ -59,7 +60,7 @@ class CustomAppBar extends StatelessWidget {
               icon: Icons.newspaper_rounded,
               text: 'Feed',
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DialogTestPage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FeedPageApp()));
               },
             ),
             /*GButton(

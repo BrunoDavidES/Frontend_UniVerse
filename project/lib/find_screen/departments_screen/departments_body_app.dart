@@ -47,51 +47,51 @@ class DepartmentsBodyApp extends StatelessWidget {
               (BuildContext context, int index) {
                 if (index == 0)
                   return ListButtonSimple(
-                      text: "Departamento de Ciências e Engenharia do Ambiente",
+                      text: "Departamento de Ciências e Engenharia do Ambiente", tobeBold: true,
                       press: () {});
                 else if (index == 1)
                   return ListButtonSimple(
-                      text: "Departamento de Ciência dos Materiais",
+                      text: "Departamento de Ciência dos Materiais",tobeBold: true,
                       press: () {});
                 else if (index == 2)
                   return ListButtonSimple(
-                      text: "Departamento de Conservação e Restauro",
+                      text: "Departamento de Conservação e Restauro",tobeBold: true,
                       press: () {});
                 else if (index == 3)
                   return ListButtonSimple(
-                      text: "Departamento de Ciências Sociais Aplicadas",
+                      text: "Departamento de Ciências Sociais Aplicadas",tobeBold: true,
                       press: () {});
                 else if (index == 4)
                   return ListButtonSimple(
-                      text: "Departamento de Ciências da Terra", press: () {});
+                      text: "Departamento de Ciências da Terra",tobeBold: true, press: () {});
                 else if (index == 5)
                   return ListButtonSimple(
-                      text: "Departamento de Ciências da Vida",
+                      text: "Departamento de Ciências da Vida",tobeBold: true,
                       press: () {});
                 else if (index == 6)
                   return ListButtonSimple(
-                      text: "Departamento de Engenharia Civil", press: () {});
+                      text: "Departamento de Engenharia Civil",tobeBold: true, press: () {});
                 else if (index == 7)
                   return ListButtonSimple(
-                      text: "Departamento de Engenharia Eletrotécnica e de Computadores",
+                      text: "Departamento de Engenharia Eletrotécnica e de Computadores",tobeBold: true,
                       press: () {});
                 else if (index == 8)
                   return ListButtonSimple(
-                      text: "Departamento de Engenharia Mecânica e Industrial",
+                      text: "Departamento de Engenharia Mecânica e Industrial",tobeBold: true,
                       press: () {});
                 else if (index == 9)
                   return ListButtonSimple(
-                      text: "Departamento de Física",
+                      text: "Departamento de Física",tobeBold: true,
                       press: () {});
                 else if (index == 10)
                   return ListButtonSimple(
-                      text: "Departamento de Informática", press: () {});
+                      text: "Departamento de Informática",tobeBold: true, press: () {});
                 else if (index == 11)
                   return ListButtonSimple(
-                      text: "Departamento de Matemática", press: () {});
+                      text: "Departamento de Matemática", tobeBold: true,press: () {});
                 else if (index == 12)
                   return ListButtonSimple(
-                      text: "Divisão de Química", press: () {});
+                      text: "Divisão de Química",tobeBold: true, press: () {});
                 else if (index == 13)
                   return SizedBox(height: 70);
               }

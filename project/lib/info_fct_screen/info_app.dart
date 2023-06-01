@@ -24,7 +24,6 @@ class FCTinfoApp extends StatelessWidget {
         backgroundColor: cDirtyWhiteColor,
 
       ),
-
       body: const FCTinfoBodyApp(),
     );
   }

@@ -1,5 +1,6 @@
 
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/consts/list_consts.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
@@ -47,52 +48,61 @@ class ServicesBodyApp extends StatelessWidget {
               (BuildContext context, int index) {
                 if (index == 0)
                   return ListButtonSimple(
-                      text: "Divisão Académica", press: () {});
+                      text: "Divisão Académica", tobeBold: true, press: () {});
                 else if (index == 1)
                   return ListButtonSimple(
                       text: "Divisão de Acompanhamento de Parcerias",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 2)
                   return ListButtonSimple(
                       text: "Divisão de Apoio à Formação Avançada",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 3)
                   return ListButtonSimple(
-                      text: "Divisão de Apoio Geral", press: () {});
+                      text: "Divisão de Apoio Geral",tobeBold: true, press: () {});
                 else if (index == 4)
                   return ListButtonSimple(
-                      text: "Divisão de Apoio Técnico", press: () {});
+                      text: "Divisão de Apoio Técnico",tobeBold: true, press: () {});
                 else if (index == 5)
                   return ListButtonSimple(
                       text: "Divisão de Comunicação e Relações Exteriores",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 6)
                   return ListButtonSimple(
-                      text: "Divisão de Documentação e Cultura", press: () {});
+                      text: "Divisão de Documentação e Cultura",tobeBold: true, press: () {});
                 else if (index == 7)
                   return ListButtonSimple(
                       text: "Divisão de Eventos e Apoio ao Estudante Diplomado",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 8)
                   return ListButtonSimple(
                       text: "Divisão de Infraestruturas Informáticas",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 9)
                   return ListButtonSimple(
                       text: "Divisão de Planeamento e Gestão de Qualidade",
+                      tobeBold: true,
                       press: () {});
                 else if (index == 10)
                   return ListButtonSimple(
-                      text: "Divisão de Recursos Financeiros", press: () {});
+                      text: "Divisão de Recursos Financeiros", tobeBold: true,
+                      press: () {});
                 else if (index == 11)
                   return ListButtonSimple(
-                      text: "Divisão de Recursos Humanos", press: () {});
+                      text: "Divisão de Recursos Humanos", tobeBold: true,
+                      press: () {});
                 else if (index == 12)
                   return ListButtonSimple(
-                      text: "Divisão de Relações Internacionais", press: () {});
+                      text: "Divisão de Relações Internacionais", tobeBold: true,
+                      press: () {});
                 else if (index == 13)
                   return ListButtonSimple(
-                      text: "Gabinete de Apoio à Direção", press: () {});
+                      text: "Gabinete de Apoio à Direção",tobeBold: true, press: () {});
                 else if (index == 14)
                   return SizedBox(height: 70);
               }

@@ -52,47 +52,47 @@ class LinksBodyApp extends StatelessWidget {
                       url: "https://clip.fct.unl.pt/"
                       , color: Colors.black);
                 else if (index == 1)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Ciência dos Materiais",
                       press: () {});
                 else if (index == 2)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Conservação e Restauro",
                       press: () {});
                 else if (index == 3)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Ciências Sociais Aplicadas",
                       press: () {});
                 else if (index == 4)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Ciências da Terra", press: () {});
                 else if (index == 5)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Ciências da Vida",
                       press: () {});
                 else if (index == 6)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Engenharia Civil", press: () {});
                 else if (index == 7)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Engenharia Eletrotécnica e de Computadores",
                       press: () {});
                 else if (index == 8)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Engenharia Mecânica e Industrial",
                       press: () {});
                 else if (index == 9)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Física",
                       press: () {});
                 else if (index == 10)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Informática", press: () {});
                 else if (index == 11)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Departamento de Matemática", press: () {});
                 else if (index == 12)
-                  return ListButtonSimple(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Divisão de Química", press: () {});
                 else if (index == 13)
                   return SizedBox(height: 70);

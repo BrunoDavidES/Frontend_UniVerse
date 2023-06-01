@@ -4,8 +4,9 @@ import '../consts/color_consts.dart';
 class ListButtonSimple extends StatelessWidget {
   final String text;
   final Function press;
+  final bool tobeBold;
   const ListButtonSimple({
-    super.key, required this.text, required this.press,
+    super.key, required this.text, required this.press, required this.tobeBold,
   });
 
   @override
@@ -26,7 +27,7 @@ class ListButtonSimple extends StatelessWidget {
                 text,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: tobeBold ?FontWeight.bold :FontWeight.normal,
                     color: cHeavyGrey,
                 )
             ),
