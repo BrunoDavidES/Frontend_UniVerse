@@ -7,9 +7,11 @@ import 'package:hash_password/hashing_functionalities.dart';
 import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 
+import '../../consts/color_consts.dart';
+
 
 class Article {
-  static List<Article> news = <Article>[];
+  //static List<Article> news = <Article>[];
   String? title;
   String? text;
   String? urlToImage;
@@ -26,11 +28,11 @@ class Article {
       this. color,
       );
 
-  Article.fromJson(Map<String, dynamic> json ) {
+  /*Article.fromJson(Map<String, dynamic> json ) {
     title = json['title'];
-  }
+  }*/
 
-  static Future<List<Article>> fetchNews(String title) async {
+  /*static Future<List<Article>> fetchNews(String title) async {
     final response = await http.patch(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
@@ -47,15 +49,15 @@ class Article {
       }
     }
     return news;
-  }
+  }*/
 
 
-  //static List<Article> news = <Article>[];
-  /*[
-    ArticleData("Carmona Rodrigues é o novo Presidente do Conselho Consultivo da ERSAR", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/crodrigues_1.png", "31 de maio 2023", "Bruno", cPrimaryLightColor),
-    ArticleData("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno", cDarkLightBlueColor),
-    ArticleData("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno", cNavyBlueColor),
-    ArticleData("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno", cPrimaryColor),
-    ArticleData("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno", cHeavyGrey),
-  ];*/
+  static List<Article> news =
+  [
+    Article("Carmona Rodrigues é o novo Presidente do Conselho Consultivo da ERSAR", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/crodrigues_1.png", "31 de maio 2023", "Bruno", cPrimaryLightColor),
+    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 MAIO 2023", "Bruno", cDarkLightBlueColor),
+    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 MAIO 2023", "Bruno", cNavyBlueColor),
+    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 MAIO 2023", "Bruno", cPrimaryColor),
+    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 MAIO 2023", "Bruno", cHeavyGrey),
+  ];
 }

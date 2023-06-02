@@ -19,7 +19,7 @@ class NewsCardState extends State<NewsCard> {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailScreen(widget.data)));
       },
       child: Container(
-        width: double.infinity,
+        width: 400,
         margin: EdgeInsets.only(bottom: 20),
         padding: EdgeInsets.all(2),
         height: 225,

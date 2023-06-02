@@ -49,7 +49,7 @@ class WebHomePage extends StatelessWidget {
                   ),
                 ),
                 Container(                //Zona das noticias
-                  height: size.height,
+                  height: size.height/1.2,
                   width: size.width,
                   color: cDirtyWhite,
                   child: mainNews(),
@@ -61,10 +61,10 @@ class WebHomePage extends StatelessWidget {
                   child: mainPageMap(),
                 ),
                 Container(                 //Zona de Download da app
-                  height: size.height/2,
-                  width: size.width,
+                  //height: size.height/2,
+                  //width: size.width,
                   color: cDirtyWhite,
-                  child: mainNews(),
+                  //child: mainNews(),
                 ),
                 BottomAbout(size: size),
               ]

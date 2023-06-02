@@ -14,13 +14,13 @@ class Authentication {
     return id.isEmpty || password.isEmpty ? false : true;
   }
 
-  static Future<int> loginUser(String id, String password) async {
+  static Future<String> loginUser(String id, String password) async {
     //PASSWORD_HASHER
       return authenticate(id, password);
    // return true;
   }
 
-  static Future<int> authenticate(String id, String password) async {
+  static Future<String> authenticate(String id, String password) async {
       final response = await http.post(
         Uri.parse(baseUrl + loginUrl),
         headers: <String, String>{
@@ -37,6 +37,7 @@ class Authentication {
         db.initDB();
         db.addUser(u);
       }
-      return response.statusCode;
+
+      return response.body;
   }
 }
