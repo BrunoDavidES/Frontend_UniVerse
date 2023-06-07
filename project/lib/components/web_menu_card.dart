@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 
-class MenuCard extends StatelessWidget {
+class WebMenuCard extends StatelessWidget {
   final String text;
   final String description;
   final IconData icon;
-  const MenuCard({
+  const WebMenuCard({
     super.key, required this.text, required this.icon, required this.description,
   });
 
@@ -21,15 +21,15 @@ class MenuCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Container(
-            height: 50,
-            width: size.width - 100,
+            height: 150,
+            width: 200,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: cDirtyWhite,
-                border: Border.all(
-                  color: cPrimaryLightColor,
-                  width:2,
-                ),
+              borderRadius: BorderRadius.circular(15),
+              color: cDirtyWhite,
+              border: Border.all(
+                color: cPrimaryLightColor,
+                width:2,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -45,15 +45,15 @@ class MenuCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size:40, color: cPrimaryColor),
+                Icon(icon, size:30, color: cPrimaryColor),
                 Padding(
                   padding: const EdgeInsets.only(top:5),
                   child: Text(
                     text,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         color: cHeavyGrey,
-                      fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold
                     ),
                   ),
                 ),
@@ -63,8 +63,8 @@ class MenuCard extends StatelessWidget {
                     description,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                        fontSize: 15,
-                        color: cHeavyGrey,
+                      fontSize: 15,
+                      color: cHeavyGrey,
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:UniVerse/events_screen/events_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
+import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/events': (context) => EventWebPage(),
           '/about/us': (context) => UniverseInfoWeb(),
           '/test': (context) => Test(),
+          '/personal/main': (context) => PersonalWebPage(),
         },
       );
     } else {

@@ -35,7 +35,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
             //color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-                color: widget.data.color!,
+                color: Colors.black,
                 width: 2
             ),
             boxShadow: [ BoxShadow(

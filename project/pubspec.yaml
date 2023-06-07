@@ -45,6 +45,7 @@ dependencies:
   json_annotation: ^4.8.0
   hash_password: 0.0.3
   connectivity_plus: ^2.3.0
+  camera: ^0.9.7
   #posso nao precisar
   internet_connection_checker: 1.0.0+1
   geolocator: ^8.0.1
@@ -86,7 +87,9 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/app/links.png
     - assets/app/area.png
+    - assets/app/profile_title.png
     - assets/app/dot.png
     - assets/app/feed_title.png
     - assets/web/sobre.png

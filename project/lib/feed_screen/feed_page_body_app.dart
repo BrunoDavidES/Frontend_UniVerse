@@ -46,20 +46,24 @@ class FeedPageBodyApp extends StatelessWidget {
                   floating: true,
                   //pinned: true,
                   snap: true,
-                  bottom: TabBar(
-                    isScrollable: true,
-                    indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: cDirtyWhiteColor,
-                        border: Border.all(color: cPrimaryColor, width: 2)
+                  actions: [Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TabBar(
+                      isScrollable: true,
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: cDirtyWhiteColor,
+                          border: Border.all(color: cPrimaryColor, width: 2)
+                      ),
+                      labelColor: cPrimaryColor,
+                      unselectedLabelColor: cHeavyGrey,
+                      tabs: [
+                        Tab(text:"Notícias"),
+                        Tab(text: "Eventos")
+                      ],
                     ),
-                    labelColor: cPrimaryColor,
-                    unselectedLabelColor: cHeavyGrey,
-                    tabs: [
-                      Tab(text: "Notícias"),
-                      Tab(text: "Eventos")
-                    ],
                   ),
+    ],
                 )
               ];
             },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
 import '../components/grid_item.dart';
+import '../components/list_button_simple.dart';
+import '../main_screen/app/homepage_app.dart';
 import 'chosen_page_app.dart';
 import 'maps_screen/maps_page_app.dart';
 import 'services_screen/services_body_app.dart';
@@ -16,10 +18,21 @@ class FindPageBodyApp extends StatelessWidget {
           return [
             SliverAppBar(
               automaticallyImplyLeading: false,
-              title: Image.asset("assets/app/find_title.png", scale:5),
+              title: Image.asset("assets/app/find_title.png", scale:6),
               backgroundColor: cDirtyWhiteColor,
               titleSpacing: 15,
-            )
+              actions: [
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right:15),
+                    child: Icon(Icons.search_outlined, color: cPrimaryColor,),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchPage()));
+                  },
+                )
+              ],
+            ),
           ];
         },
         body: GridView.builder(
@@ -83,4 +96,85 @@ class FindPageBodyApp extends StatelessWidget {
       );
 
   }
+}
+
+
+class SearchPage extends StatefulWidget {
+  @override
+  State<SearchPage> createState() => SearchPageState();
+}
+
+class SearchPageState extends State<SearchPage> {
+
+  static List<ListButtonSimple> info = [
+  ListButtonSimple(
+  text: "Divisão Académica", tobeBold: true, press: () {})
+  ];
+
+  List<ListButtonSimple> displayList = [
+
+  ];
+
+  void updateList(String value) {
+    setState(() {
+      displayList = info.where((element) => element.text.contains(value)).toList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 30,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {Navigator.pop(context);},
+            color: cDarkBlueColor),
+      ),
+        body: Container(
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            image: DecorationImage(
+              image: AssetImage("assets/web/foto.jpg"),
+              colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
+              //colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
+              fit: BoxFit.cover,
+            ),
+          ),
+          height: size.height,
+          width: size.width,
+          child: Column(
+            children: [
+              Padding(
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+              child: TextField(
+                onChanged: (value) => updateList(value),
+                decoration: InputDecoration(
+                  fillColor: cDirtyWhite.withOpacity(0.75),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: "Pesquisar",
+                    prefixIcon: Icon(Icons.search_outlined)
+                ),
+              ),
+      ),
+              Expanded(
+                  child: displayList.length==0 ? Text("Não foram encontrados resultados...") : ListView.builder(itemBuilder: (context, index) => ListTile(
+                    title: Text(
+                      displayList[index].text
+                    )
+                  ),
+              )
+              ),
+            ],
+          ),
+        ),
+    );
+  }
+
 }

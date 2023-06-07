@@ -18,7 +18,7 @@ class LinksBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/app/departments.png", scale: 5),
+          title: Image.asset("assets/app/links.png", scale: 5),
           leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -47,55 +47,27 @@ class LinksBodyApp extends StatelessWidget {
             childCount: 14,
               (BuildContext context, int index) {
                 if (index == 0)
-                  return UrlLaunchableItem(
+                  return ListButtonSimple(tobeBold: true,
                       text: "Clip",
-                      url: "https://clip.fct.unl.pt/"
-                      , color: Colors.black);
+                      press: () {});
                 else if (index == 1)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Ciência dos Materiais",
+                      text: "Moodle",
                       press: () {});
                 else if (index == 2)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Conservação e Restauro",
+                      text: "Departamento de Ciências Sociais Aplicadas",
                       press: () {});
                 else if (index == 3)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Ciências Sociais Aplicadas",
-                      press: () {});
+                      text: "Website FCT", press: () {});
                 else if (index == 4)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Ciências da Terra", press: () {});
+                      text: "Website UNL",
+                      press: () {});
                 else if (index == 5)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Ciências da Vida",
-                      press: () {});
-                else if (index == 6)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Engenharia Civil", press: () {});
-                else if (index == 7)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Engenharia Eletrotécnica e de Computadores",
-                      press: () {});
-                else if (index == 8)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Engenharia Mecânica e Industrial",
-                      press: () {});
-                else if (index == 9)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Física",
-                      press: () {});
-                else if (index == 10)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Informática", press: () {});
-                else if (index == 11)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Matemática", press: () {});
-                else if (index == 12)
-                  return ListButtonSimple(tobeBold: true,
-                      text: "Divisão de Química", press: () {});
-                else if (index == 13)
-                  return SizedBox(height: 70);
+                      text: "Guia de Cursos", press: () {});
               }
           ),
         ),

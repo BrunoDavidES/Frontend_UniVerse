@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
 import '../components/menu_card.dart';
+import '../components/personal_app_card.dart';
 
 class PersonalPageBodyApp extends StatelessWidget {
   const PersonalPageBodyApp({super.key});
@@ -22,90 +23,7 @@ class PersonalPageBodyApp extends StatelessWidget {
     body: Column(
           children: <Widget>[
             SizedBox(height:10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      cPrimaryLightColor,
-                      Colors.green,
-                    ],
-                  ),
-                //color: cPrimaryLightColor,
-                  boxShadow: [ BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: const Offset(0,0),
-            ),
-          ]
-              ),
-              height: 175,
-              width: size.width-30,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top:10, left: 13, bottom:5),
-                    child: Text(
-                      "Olá, Francisco",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18, bottom:5),
-                    child: Text(
-                      "Aluno",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: cDirtyWhiteColor,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18, bottom:5),
-                    child: Text(
-                      "Departamento de Informática",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: cDirtyWhite.withOpacity(0.75),
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Row(
-
-                    children: [
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 2, top: 5),
-                        child: Text(
-                            "O MEU PERFIL",
-                          style: TextStyle(
-                            color: cHeavyGrey.withOpacity(0.75),
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold
-                          )
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Image.asset("assets/app/dot.png", scale: 2, alignment: Alignment.bottomRight),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+            PersonalAppCard(size: size),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +77,7 @@ class PersonalPageBodyApp extends StatelessWidget {
     );
   }
 }
+
 
 
 
