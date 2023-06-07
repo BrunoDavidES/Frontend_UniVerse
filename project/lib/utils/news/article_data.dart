@@ -7,6 +7,8 @@ import 'package:hash_password/hashing_functionalities.dart';
 import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 
+import '../../consts/color_consts.dart';
+
 
 class Article {
   //static List<Article> news = <Article>[];
@@ -26,10 +28,12 @@ class Article {
 
   /*Article.fromJson(Map<String, dynamic> json ) {
     title = json['title'];
-  }
+  }*/
 
-  static Future<List<Article>> fetchNews(String title) async {
+  /*static Future<List<Article>> fetchNews(String title) async {
     final response = await http.post(
+  static Future<List<Article>> fetchNews(String title) async {
+    final response = await http.patch(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -54,5 +58,5 @@ class Article {
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-  ];
+    ];
 }

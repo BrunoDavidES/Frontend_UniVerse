@@ -48,24 +48,25 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     else {
       var response = await Authentication.loginUser(id, password);
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(response),
+          );
+        },
+      );
+
       if (response == 200) {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
-      }else if(response == 404) {
+      }else if(response.contains("User or password incorrect")) {
         showDialog(
           context: context,
           builder: (context) {
-            return const AlertDialog(
-              content: Text("O identificador fornecido não corresponde a nenhuma conta"),
-            );
-          },
-        );
-      } else if(response == 403) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("Palavra-passe errada"),
+            return AlertDialog(
+              content: Text("O identificador fornecido não corresponde a nenhuma conta ou a password esta incorreta"),
             );
           },
         );
