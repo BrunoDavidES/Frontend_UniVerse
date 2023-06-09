@@ -7,21 +7,24 @@ import '../../news_screen/news_app_detail_screen.dart';
 import '../../utils/news/article_data.dart';
 
 class mainNews extends StatelessWidget {
+  final width;
+  final height;
+
+  const mainNews({super.key, this.width, this.height});
+
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
-        decoration: const BoxDecoration(
-          color: cDirtyWhite,
-        ),
+        color: cDirtyWhite,
         child:  Column(
           children: <Widget> [
             Row(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 20),
+                  padding: const EdgeInsets.only(top: 10, left: 20),
                   child: 
-                    Image.asset("assets/web/noticias.png", scale: 3.5,)
+                    Image.asset("assets/web/noticias.png", scale: 4,)
                 ),
                 const Spacer(),
                 const Expanded(
@@ -51,11 +54,11 @@ class mainNews extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:
                     [Spacer(),
-                      NewsCardWeb(Article.news[1]),
+                      NewsCardWeb(height: height, width: width, Article.news[0]),
                     Spacer(),
-                      NewsCardWeb(Article.news[1]),
+                      NewsCardWeb(height: height, width: width, Article.news[1]),
                     Spacer(),
-                      NewsCardWeb(Article.news[1]),
+                      NewsCardWeb(height: height, width: width, Article.news[1]),
                     Spacer(),
                     ],
               )

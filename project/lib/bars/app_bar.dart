@@ -97,7 +97,7 @@ class CustomAppBar extends StatelessWidget {
   }
 
   void _navigateToNextScreenPersonal(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
   }
 
   void _navigateToNextScreenFind(BuildContext context) {

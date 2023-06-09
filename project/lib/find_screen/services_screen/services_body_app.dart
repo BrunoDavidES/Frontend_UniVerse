@@ -1,6 +1,8 @@
 
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
+import 'package:UniVerse/find_screen/info_detail_screen.dart';
+import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
@@ -48,7 +50,9 @@ class ServicesBodyApp extends StatelessWidget {
               (BuildContext context, int index) {
                 if (index == 0)
                   return ListButtonSimple(
-                      text: "Divisão Académica", tobeBold: true, press: () {});
+                      text: "Divisão Académica", tobeBold: true, press: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(Article.news[0])));
+                  });
                 else if (index == 1)
                   return ListButtonSimple(
                       text: "Divisão de Acompanhamento de Parcerias",

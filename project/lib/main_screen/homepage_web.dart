@@ -49,10 +49,10 @@ class WebHomePage extends StatelessWidget {
                   ),
                 ),
                 Container(                //Zona das noticias
-                  height: size.height/1.2,
+                  height: size.height/1.15,
                   width: size.width,
                   color: cDirtyWhite,
-                  child: mainNews(),
+                  child: mainNews(width: size.width, height: size.height/1.15,),
                 ),
                 Container(                //Zona do google Maps
                   height: size.height*0.8,

@@ -1,8 +1,11 @@
 import 'package:UniVerse/components/faq_item.dart';
 import 'package:UniVerse/faq_screen/list_faqs.dart';
+import 'package:UniVerse/main_screen/components/about_bottom.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../consts/color_consts.dart';
+import '../find_screen/findTest/right_side.dart';
 import '../main_screen/components/about_bottom_body.dart';
 
 class FAQWebPage extends StatelessWidget {
@@ -26,6 +29,30 @@ class FAQWebPage extends StatelessWidget {
                 child: Stack(
                   children: <Widget> [
                     Padding(
+                      padding: EdgeInsets.only(top: size.height/7),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left:50, top: 20),
+                            child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: Image.asset("assets/web/findTitle.jpeg", scale: 4,)
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(100),
+                            child: ExpandablePageView(
+                              children: [
+                                FAQlist(question: 'FAQ:'),
+                                FAQlist(question: "Tem dúvidas? Fale connosco:"),
+                              ],
+                            ),
+                          ),
+                          BottomAbout(size: size)
+                        ],
+                      ),
+                    ),
+                    /*Padding(
                       padding: EdgeInsets.only(top: size.height/6, left: size.width/4),
                       child: Container(                //Zona das Perguntas
                         height: size.height,
@@ -38,7 +65,7 @@ class FAQWebPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
+                    ),*/
                     Container(
                       color: cDirtyWhite,
                       child:  Column(

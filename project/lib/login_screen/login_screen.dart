@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,6 +12,7 @@ import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
 import '../register_screen/register_web.dart';
+import '../utils/connectivity.dart';
 import 'functions/auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +23,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Map _source = {ConnectivityResult.none: false};
+  final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
   bool isLoading = false;
   late TextEditingController idController;
   late TextEditingController passwordController;
@@ -29,61 +33,83 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     idController = TextEditingController();
     passwordController = TextEditingController();
-
+    _connectivity.initialize();
+    _connectivity.myStream.listen((source) {
+      setState(() {
+        _source = source;
+      });
+    });
     super.initState();
   }
 
   void logInButtonPressed(String id, String password) async {
-    bool areControllersCompliant = Authentication.isCompliant(id, password);
-
-    if (!areControllersCompliant) {
+    if(_source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-            content: Text("Existem campos vazios! Preenche-os."),
-          );
-        },
-      );
-    }
-    else {
-      var response = await Authentication.loginUser(id, password);
-
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(response),
-          );
-        },
-      );
-
-      if (response == 200) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
-      }else if(response.contains("User or password incorrect")) {
-        showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              content: Text("O identificador fornecido não corresponde a nenhuma conta ou a password esta incorreta"),
+            return const AlertDialog(
+              content: Text("INTERNET"),
             );
-          },
-        );
-      } else if (response == 400) {
+          }
+      );
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      bool areControllersCompliant = Authentication.isCompliant(id, password);
+
+      if (!areControllersCompliant) {
         showDialog(
           context: context,
           builder: (context) {
             return const AlertDialog(
-              content: Text("Bad request"),
+              content: Text("Existem campos vazios! Preenche-os."),
             );
           },
         );
+        setState(() {
+          isLoading = false;
+        });
       }
-      setState(() {
-        isLoading = false;
-      });
+      else {
+        var response = await Authentication.loginUser(id, password);
+
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(response),
+            );
+          },
+        );
+        if (response == 200) {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
+        } else if (response.contains("User or password incorrect")) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(
+                    "O identificador fornecido não corresponde a nenhuma conta ou a password esta incorreta"),
+              );
+            },
+          );
+        } else if (response == 400) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                content: Text("Bad request"),
+              );
+            },
+          );
+        }
+      }
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override

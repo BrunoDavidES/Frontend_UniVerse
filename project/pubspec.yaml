@@ -49,6 +49,7 @@ dependencies:
   #posso nao precisar
   internet_connection_checker: 1.0.0+1
   geolocator: ^8.0.1
+  expandable_page_view: 1.0.17
   build_runner:
 
 dev_dependencies:

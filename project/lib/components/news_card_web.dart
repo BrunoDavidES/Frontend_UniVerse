@@ -1,11 +1,17 @@
+import 'dart:math';
+
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/news_screen/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 
+import '../consts/list_consts.dart';
+
 class NewsCardWeb extends StatefulWidget {
-  NewsCardWeb(this.data, {super.key});
+  NewsCardWeb(this.data, {super.key, this.width, this.height});
   Article data;
+  final width;
+  final height;
 
   @override
   State<StatefulWidget> createState() => NewsCardStateWeb();
@@ -14,13 +20,10 @@ class NewsCardWeb extends StatefulWidget {
 class NewsCardStateWeb extends State<NewsCardWeb> {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    Random random = Random();
+    int cindex = random.nextInt(toRandom.length);
     var hover = true;
-
-    return Material(
-      color: cDirtyWhite,
-      child: InkWell(
+    return InkWell(
         onTap:(){},
         onHover: (hover) {
           setState(() {
@@ -28,34 +31,84 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
           });
         },
         child: Container(
-          width: width/4,
-          padding: EdgeInsets.all(8),
-          height: 400,
+          width: widget.width/4,
+          padding: EdgeInsets.all(5),
+          height: widget.height-230,
           decoration: BoxDecoration(
               color: cDirtyWhiteColor,
               borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                  color: toRandom[cindex],
+                  width: 2
+              ),
               boxShadow: [ BoxShadow(
+                color: Colors.grey.withOpacity(0.75),
+                spreadRadius: 3,
+                blurRadius: 7,
+                offset: const Offset(0,0),
+              ),
+              ]
+              /*boxShadow: [ BoxShadow(
                 color: hover ? cPrimaryLightColor.withOpacity(0.5):cDirtyWhite,
                 spreadRadius: hover ? 3:0,
                 blurRadius:  hover ? 7:0,
                 offset: const Offset(0,0),
               ),
-              ]
+              ]*/
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                height: height/3.5,
+                height: widget.height/3,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     image: DecorationImage(
                         image: NetworkImage(widget.data.urlToImage!),
-                        fit: BoxFit.fitHeight
+                        fit: BoxFit.cover
                     )
                 ),
               ),
-              Container(
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  widget.data.date!,
+                  style: const TextStyle(
+                      fontSize: 13,
+                      color: cHeavyGrey
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:5, top: 10),
+                child: Text(
+                  widget.data.title!.toUpperCase(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black
+                  ),
+                ),
+              ),
+              Spacer(),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5, top: 10, bottom: 10),
+                    child: Text(
+                      "Autoria de " + widget.data.author!,
+                      style: const TextStyle(
+                          fontSize: 13,
+                          color: cHeavyGrey
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+             /* Container(
                 child: Expanded(
                   child: Column(
                     children: [
@@ -72,7 +125,6 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                                 ),
                               ),
                             ),
-                            Spacer(),
                           ],
                         ),
                       ),
@@ -105,11 +157,10 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                     ],
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
