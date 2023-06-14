@@ -1,4 +1,5 @@
 
+import 'package:UniVerse/components/simple_dialog_box.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
@@ -51,13 +52,14 @@ class ServicesBodyApp extends StatelessWidget {
                 if (index == 0)
                   return ListButtonSimple(
                       text: "Divisão Académica", tobeBold: true, press: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(Article.news[0])));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen()));
                   });
                 else if (index == 1)
                   return ListButtonSimple(
                       text: "Divisão de Acompanhamento de Parcerias",
                       tobeBold: true,
-                      press: () {});
+                      press: () {
+                      });
                 else if (index == 2)
                   return ListButtonSimple(
                       text: "Divisão de Apoio à Formação Avançada",

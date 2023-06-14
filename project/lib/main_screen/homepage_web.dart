@@ -52,7 +52,7 @@ class WebHomePage extends StatelessWidget {
                   height: size.height/1.15,
                   width: size.width,
                   color: cDirtyWhite,
-                  child: mainNews(width: size.width, height: size.height/1.15,),
+                  child: MainNews(width: size.width, height: size.height/1.15,),
                 ),
                 Container(                //Zona do google Maps
                   height: size.height*0.8,

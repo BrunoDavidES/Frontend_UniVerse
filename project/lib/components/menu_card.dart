@@ -2,6 +2,7 @@ import 'package:UniVerse/report_screen/camera_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
+import 'simple_dialog_box.dart';
 
 class MenuCard extends StatelessWidget {
   final String text;
@@ -16,7 +17,15 @@ class MenuCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
+        showDialog(context: context,
+            builder: (BuildContext context){
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Parece que não estás ligado à internet! Para te juntares ao Universo precisamos que o faças",
+                text: "Yes",
+              );
+            }
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(5),

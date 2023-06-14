@@ -31,7 +31,6 @@ class NewsWebPage extends StatelessWidget {
                     color: cDirtyWhite,
                     child: ListView(
                       children: const [
-
                       ],
                     ),
                   ),

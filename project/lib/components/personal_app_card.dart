@@ -88,7 +88,7 @@ class PersonalAppCard extends StatelessWidget {
                   child: Text(
                       "O MEU PERFIL",
                       style: TextStyle(
-                          color: cHeavyGrey.withOpacity(0.75),
+                          color: cDirtyWhite.withOpacity(0.75),
                           fontSize: 15,
                           fontWeight: FontWeight.bold
                       )

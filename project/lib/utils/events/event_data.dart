@@ -2,6 +2,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
 class EventData {
+  //String? id;
   String? title;
   String? description;
   String? urlToImage;

@@ -12,6 +12,7 @@ import '../../consts/color_consts.dart';
 
 class Article {
   //static List<Article> news = <Article>[];
+  String? id;
   String? title;
   String? text;
   String? urlToImage;
@@ -19,6 +20,7 @@ class Article {
   String? author;
 
   Article(
+      //this.id,
       this.title,
       this.text,
       this.urlToImage,
@@ -27,19 +29,22 @@ class Article {
       );
 
   /*Article.fromJson(Map<String, dynamic> json ) {
+    id = json['id'];
     title = json['title'];
-  }*/
+    author = json['author'];
+    date = json['time_creation'].toString();
+  }
 
-  /*static Future<List<Article>> fetchNews(String title) async {
+  static Future<List<Article>> fetchNews(int limit, int offset) async {
     final response = await http.post(
-  static Future<List<Article>> fetchNews(String title) async {
-    final response = await http.patch(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-
+        'limit': limit.toString(),
+        'offset': offset.toString()
+        //mandar filtro das noticias que já foram validadas (?)
       }),
     );
     if(response.statusCode==200) {

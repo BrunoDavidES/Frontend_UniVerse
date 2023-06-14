@@ -5,11 +5,14 @@ import 'package:UniVerse/consts/color_consts.dart';
 import '../components/menu_card.dart';
 import '../components/personal_app_card.dart';
 
+final pageBucket = PageStorageBucket();
+
 class PersonalPageBodyApp extends StatelessWidget {
   const PersonalPageBodyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    ScrollController _controller = ScrollController(initialScrollOffset: 5);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
@@ -40,33 +43,37 @@ class PersonalPageBodyApp extends StatelessWidget {
                   ),
                   Container(
                     height: size.height-375,
-                    child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.only(left:10, top:5, right:10, bottom: 10),
-                        itemCount:10,
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(width: 10);
-                        },
-                        itemBuilder: (context, index) {
-                          if(index == 0)
-                          return MenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined);
-                          else if(index==1)
-                            return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined);
-                          else if(index==2)
-                            return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined);
-                          else if(index==3)
-                            return MenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined);
-                          else if(index==4)
-                            return MenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
-                          else if(index==5)
-                            return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
-                          else if(index==6)
-                            return MenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
-                          else if(index==7)
-                            return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
-                          else if(index==8)
-                            return MenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
-                        }
+                    child: PageStorage(
+                      bucket: pageBucket,
+                      child: ListView.separated(
+                        controller: _controller,
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(left:10, top:5, right:10, bottom: 10),
+                          itemCount:10,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(width: 10);
+                          },
+                          itemBuilder: (context, index) {
+                            if(index == 0)
+                            return MenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined);
+                            else if(index==1)
+                              return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined);
+                            else if(index==2)
+                              return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined);
+                            else if(index==3)
+                              return MenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined);
+                            else if(index==4)
+                              return MenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
+                            else if(index==5)
+                              return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
+                            else if(index==6)
+                              return MenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
+                            else if(index==7)
+                              return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
+                            else if(index==8)
+                              return MenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined);
+                          }
+                      ),
                     ),
                   ),
                 ],

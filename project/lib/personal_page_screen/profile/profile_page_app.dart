@@ -46,8 +46,8 @@ class ProfilePageApp extends StatelessWidget {
                   IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {Navigator.pop(context);},
-                      color: cDirtyWhiteColor),
-                  Image.asset("assets/app/profile_title.png", scale: 6,),
+                      color: cDirtyWhiteColor.withOpacity(0.75)),
+                  Image.asset("assets/app/profile_title.png", scale: 7,),
                 ],
               ),
             Row(

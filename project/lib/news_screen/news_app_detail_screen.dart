@@ -5,8 +5,9 @@ import '../consts/color_consts.dart';
 import '../utils/news/article_data.dart';
 
 class NewsDetailScreen extends StatefulWidget {
-  NewsDetailScreen(this.data, {super.key});
+  NewsDetailScreen(this.data, this.color, {super.key});
   Article data;
+  Color color;
 
   @override
   State<StatefulWidget> createState() => NewsDetailState();
@@ -24,18 +25,10 @@ class NewsDetailState extends State<NewsDetailScreen> {
         margin: EdgeInsets.only(left:10, top:40, bottom: 10, right: 10),
         padding: EdgeInsets.all(2),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.center,
-              colors: [
-                cNavyBlueColor.withOpacity(0.25),
-                cDirtyWhiteColor,
-              ],
-            ),
-            //color: cDirtyWhiteColor,
+            color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-                color: Colors.black,
+                color: widget.color,
                 width: 2
             ),
             boxShadow: [ BoxShadow(
