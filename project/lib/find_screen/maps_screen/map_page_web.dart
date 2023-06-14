@@ -15,7 +15,7 @@ class mainPageMap extends StatelessWidget {
         children: <Widget> [
           Row(
             children: <Widget>[
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 20, left: 20),
                 child: Text(
                   "Google Maps",
@@ -26,17 +26,20 @@ class mainPageMap extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 25, right: 30),
-                  child: Text(
-                    "+",
-                    style: TextStyle(
+              const Spacer(),
+              Padding(
+                padding: EdgeInsets.only(top: 25, right: 30),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(
                       color: cHeavyGrey,
                       fontSize: 30,
                     ),
-                    textAlign: TextAlign.right,
                   ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/find');
+                  },
+                  child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                 ),
               ),
             ],

@@ -37,23 +37,31 @@ class MainNewsState extends State<MainNews> {
                   padding: const EdgeInsets.only(top: 10, left: 20),
                   child:
                   Image.asset("assets/web/noticias.png", scale: 4,)
-              ),
-              const Spacer(),
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 25, right: 30),
-                  child: Text(
-                    "+",
-                    style: TextStyle(
-                      color: cHeavyGrey,
-                      fontSize: 30,
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25, right: 30),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        color: cHeavyGrey,
+                        fontSize: 30,
+                      ),
                     ),
-                    textAlign: TextAlign.right,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/news');
+                    },
+                    child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(
+              child: Divider(
+                thickness: 2,
+                color: cDarkLightBlueColor,
               ),
-            ],
-          ),
+              ),
           const SizedBox(
             child: Divider(
               thickness: 2,
@@ -111,7 +119,7 @@ class MainNewsState extends State<MainNews> {
             //SizedBox(height: 10,)
           ),
         ],
-      ),
+        ),
     );
   }
 }
