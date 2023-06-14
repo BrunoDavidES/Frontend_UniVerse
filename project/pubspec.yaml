@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_nav_bar: ^5.0.6
+  #sprintf: ^6.0.0
   url_launcher: ^6.1.8
   http: ^0.13.6
   sqflite: ^2.2.8
@@ -96,6 +97,7 @@ flutter:
     - assets/web/sobre.png
     - assets/web/android.png
     - assets/web/ios.png
+    - assets/app/registo.png
     - assets/capi_logo.png
     - assets/web/foto.jpg
     - assets/web/noticias.png

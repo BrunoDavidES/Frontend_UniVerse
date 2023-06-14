@@ -1,17 +1,10 @@
 import 'dart:convert';
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
-import 'package:UniVerse/utils/users/users_local_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:hash_password/hashing_functionalities.dart';
-import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
-
-import '../../consts/color_consts.dart';
 
 
 class Article {
-  //static List<Article> news = <Article>[];
+  static List<Article> news = <Article>[];
   String? id;
   String? title;
   String? text;
@@ -28,40 +21,58 @@ class Article {
       this.author,
       );
 
-  /*Article.fromJson(Map<String, dynamic> json ) {
-    id = json['id'];
-    title = json['title'];
-    author = json['author'];
-    date = json['time_creation'].toString();
+  Article.fromJson(Map<String, dynamic> json ) {
+    var properties = json['properties'];
+    id = properties['author']['value'];
+    title = properties['title']['value'];
+    author = properties['author']['value'];
+    date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
+    urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
+    text = 'TEXTO';
+    print(id);
+    print(title);
+    print(author);
+    print("OLÁ");
   }
 
-  static Future<List<Article>> fetchNews(int limit, int offset) async {
+  static Future<int> fetchNews(int limit, int offset) async {
+    String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+    print(newsUrl);
     final response = await http.post(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, String>{
-        'limit': limit.toString(),
-        'offset': offset.toString()
-        //mandar filtro das noticias que já foram validadas (?)
+      body: jsonEncode(<String, Map<String, String>>{
+       //'filters': {'validated_backoffice':'true'},
       }),
     );
     if(response.statusCode==200) {
       var decodedNews = json.decode(response.body);
-      for(var decoded in decodedNews) {
+      print(decodedNews);
+      for (var decoded in decodedNews) {
         news.add(Article.fromJson(decoded));
       }
+      print("DONE");
     }
-    return news;
-  }*/
+    if(response.statusCode==500) {
+      print(newsUrl);
+    }
+    print(response.statusCode);
+    print(news[0].id);
+    print(news[0].title);
+    print(news[0].author);
+    print(news[0].date);
+    print("OLÁ");
+    return response.statusCode;
+  }
 
 
-  static List<Article> news = [
+  /*static List<Article> news = [
     Article("Carmona Rodrigues é o novo Presidente do Conselho Consultivo da ERSAR", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/crodrigues_1.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-    ];
+    ];*/
 }

@@ -5,6 +5,7 @@ import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
+import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'faq_screen/faq_web.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(kIsWeb) {
+     // Article.fetchNews(3, 0);
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(

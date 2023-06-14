@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,9 +12,11 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
+import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import 'functions/auth.dart';
+import 'login_app.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -129,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
                     child: Image.asset('assets/icon_no_white.png', scale:3),
                   ),
                   const Text(
@@ -138,27 +141,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 25
                     ),
                   ),
-                  const Text(
-                      "Insere as tuas credenciais do clip.",
-                      style:TextStyle(
-                          fontSize: 15
-                      )),
                   const SizedBox(height: 20),
-                  MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
-                  MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
+                  MyTextField(controller: idController, hintText: 'Introduz o teu identificador do clip', obscureText: false, label: 'ID', icon: Icon(Icons.person_outline),),
+                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
                   const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        UrlLaunchableItem(
-                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha', color: Colors.black,
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                          },
+                          child: Text(
+                            "Esquesceste a palavra-passe?",
+                            style: TextStyle(
+                                color: Colors.black
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
                   isLoading
                       ? Container(
                       width: 150,
@@ -178,23 +184,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                           height: 20),
-                      DefaultButton(
-                        text: "REGISTAR",
-                        press: () {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (_) => const AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.all(
-                                        Radius.circular(10.0)
-                                    )
-                                ),
-                                content: RegisterPageWeb(),
-                              )
-                          );
+                      InkWell(
+                        onTap: () {
+                          if(kIsWeb) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (_) => const AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(
+                                          Radius.circular(10.0)
+                                      )
+                                  ),
+                                  content: RegisterPageWeb(),
+                                )
+                            );
+                          }
+                          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
                         },
+                        child: Text(
+                          "Criar conta",
+                          style: TextStyle(
+                              color: Colors.black
+                          ),
+                        ),
                       ),
                     ],
                   ),

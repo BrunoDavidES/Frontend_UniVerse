@@ -20,7 +20,6 @@ class MainNewsState extends State<MainNews> {
 
   @override
   void initState() {
-   // Article.fetchNews(3, 0);
     print("Teste");
     super.initState();
   }
@@ -63,7 +62,35 @@ class MainNewsState extends State<MainNews> {
           ),
           Padding(
               padding: EdgeInsets.all(50),
-              child: Row(
+              child: FutureBuilder(
+                future: Article.fetchNews(3, 0),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData) {
+                    return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children:
+                        [Spacer(),
+                          NewsCardWeb(height: widget.height,
+                              width: widget.width,
+                              Article.news[0]),
+                          Spacer(),
+                          NewsCardWeb(height: widget.height,
+                              width: widget.width,
+                              Article.news[1]),
+                          Spacer(),
+                          NewsCardWeb(height: widget.height,
+                              width: widget.width,
+                              Article.news[2]),
+                          Spacer(),
+                        ],
+                      );
+                  }
+                  return Center(
+                    child: LinearProgressIndicator(),
+                  );
+                },
+              ),
+              /*child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:
                 [Spacer(),
@@ -77,10 +104,10 @@ class MainNewsState extends State<MainNews> {
                   Spacer(),
                   NewsCardWeb(height: widget.height,
                       width: widget.width,
-                      Article.news[1]),
+                      Article.news[2]),
                   Spacer(),
                 ],
-              )
+              )*/
             //SizedBox(height: 10,)
           ),
         ],
