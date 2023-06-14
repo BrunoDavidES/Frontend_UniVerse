@@ -40,12 +40,31 @@ class FAQWebPage extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(100),
-                            child: ExpandablePageView(
-                              children: [
-                                FAQlist(question: 'FAQ:'),
-                                FAQlist(question: "Tem dúvidas? Fale connosco:"),
-                              ],
+                            padding: EdgeInsets.only(right: 100, left: 100, bottom: size.height/3.48, top: 50),
+                            child: Container(
+                              color: cDirtyWhite,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: size.width/2.4,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      children: const [
+                                        FAQlist(question: 'FAQ:', starts: true),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: size.width/2.4,
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      children: const [
+                                        FAQlist(question: "Tem dúvidas? Fale connosco:", starts: false),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           BottomAbout(size: size)
@@ -54,11 +73,10 @@ class FAQWebPage extends StatelessWidget {
                     ),
                     /*Padding(
                       padding: EdgeInsets.only(top: size.height/6, left: size.width/4),
-                      child: Container(                //Zona das Perguntas
-                        height: size.height,
-                        width: size.width/2,
+                      child: Container(                //Zona das Perguntass
                         color: cDirtyWhite,
                         child: ListView(
+                          shrinkWrap: true,
                           children: const [
                             FAQlist(question: 'FAQ:'),
                             FAQlist(question: "Tem dúvidas? Fale connosco:"),
@@ -66,6 +84,12 @@ class FAQWebPage extends StatelessWidget {
                         ),
                       ),
                     ),*/
+                    /*
+                    children: const [
+                                FAQlist(question: 'FAQ:'),
+                                FAQlist(question: "Tem dúvidas? Fale connosco:"),
+                              ],
+                    */
                     Container(
                       color: cDirtyWhite,
                       child:  Column(

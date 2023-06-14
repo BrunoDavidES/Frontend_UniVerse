@@ -29,7 +29,7 @@ class FaqApp extends StatelessWidget {
         color: Colors.white,
         child: ListView(
           children: const [
-            FAQlist(question: 'FAQ:'),
+            FAQlist(question: 'FAQ:', starts: true,),
           ],
         ),
       ),

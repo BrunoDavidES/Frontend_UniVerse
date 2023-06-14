@@ -4,7 +4,8 @@ import 'package:UniVerse/consts/color_consts.dart';
 
 class FAQlist extends StatelessWidget {
   final String question;
-  const FAQlist({super.key, required this.question});
+  final bool starts;
+  const FAQlist({super.key, required this.question, required this.starts});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,7 +13,7 @@ class FAQlist extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: ExpansionTile(
-          initiallyExpanded: true,
+          initiallyExpanded: starts,
           title: Text(
               question,
               style: const TextStyle(

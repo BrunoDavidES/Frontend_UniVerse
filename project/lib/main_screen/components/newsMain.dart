@@ -27,18 +27,20 @@ class mainNews extends StatelessWidget {
                     Image.asset("assets/web/noticias.png", scale: 4,)
                 ),
                 const Spacer(),
-                const Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 25, right: 30),
-                      child: Text(
-                        "+",
-                        style: TextStyle(
-                          color: cHeavyGrey,
-                          fontSize: 30,
-                        ),
-                        textAlign: TextAlign.right,
+                Padding(
+                  padding: const EdgeInsets.only(top: 25, right: 30),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        color: cHeavyGrey,
+                        fontSize: 30,
                       ),
                     ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/news');
+                    },
+                    child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
+                  ),
                 ),
               ],
             ),
@@ -49,20 +51,19 @@ class mainNews extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(50),
+              padding: const EdgeInsets.all(50),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:
-                    [Spacer(),
+                    [const Spacer(),
                       NewsCardWeb(height: height, width: width, Article.news[0]),
-                    Spacer(),
+                    const Spacer(),
                       NewsCardWeb(height: height, width: width, Article.news[1]),
-                    Spacer(),
+                    const Spacer(),
                       NewsCardWeb(height: height, width: width, Article.news[1]),
-                    Spacer(),
+                    const Spacer(),
                     ],
               )
-                //SizedBox(height: 10,)
               ),
           ],
         ),

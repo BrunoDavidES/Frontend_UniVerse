@@ -22,20 +22,19 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
   Widget build(BuildContext context) {
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
-    var hover = true;
+    bool isHovering = false;
     return InkWell(
-        onTap:(){},
-        onHover: (hover) {
-          setState(() {
-            hover = false;
-          });
-        },
-        child: Container(
+      onTap: () => null,
+      onHover: (hovering) {
+        setState(() => isHovering = hovering);
+      },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
           width: widget.width/4,
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           height: widget.height-230,
           decoration: BoxDecoration(
-              color: cDirtyWhiteColor,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
                   color: toRandom[cindex],
@@ -47,14 +46,7 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                 blurRadius: 7,
                 offset: const Offset(0,0),
               ),
-              ]
-              /*boxShadow: [ BoxShadow(
-                color: hover ? cPrimaryLightColor.withOpacity(0.5):cDirtyWhite,
-                spreadRadius: hover ? 3:0,
-                blurRadius:  hover ? 7:0,
-                offset: const Offset(0,0),
-              ),
-              ]*/
+              ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
