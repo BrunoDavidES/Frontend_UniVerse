@@ -5,6 +5,8 @@ import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -20,9 +22,11 @@ import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-void main() {
- // if(kIsWeb)
-    //usePathUrlStrategy();
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

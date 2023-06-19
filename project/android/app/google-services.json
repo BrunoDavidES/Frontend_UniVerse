@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1069096740543",
+    "firebase_url": "https://magikarp-fct-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "magikarp-fct",
+    "storage_bucket": "magikarp-fct.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069096740543:android:2c8e114e009d7ffe9a880a",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069096740543-ae6c9uhl9dop9ltk58qkbasci6fl1uut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrs7a6MMyohlBTaAU_oU80KdgDeihybD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069096740543-ae6c9uhl9dop9ltk58qkbasci6fl1uut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -46,74 +46,45 @@ class CustomWebBar extends StatelessWidget {
                 alignment: Alignment.center,
               ),
             ),
-    //Image.asset("assets/web/combo_logo.png",
-    //    scale: 6,
-    //    alignment: Alignment.center,),
-    const Spacer(),
-    DefaultButtonSimple(
-    text: "Início",
-    press: () {
-
-    Navigator.pushNamed(context, '/home');
-    }, height: 20,
-    ),
-    DefaultButtonSimple(
-    text: "Procurar",
-    press: () {
-    Navigator.pushNamed(context, '/find');
-    },
-    height: 20,
-    ),
-    DefaultButtonSimple(
-    text: "Notícias",
-    press: () {
-    Navigator.pushNamed(context, '/news');
-    },
-    height: 20,
-    ),
-    DefaultButtonSimple(
-    text: "Eventos",
-    press: () {
-    Navigator.pushNamed(context, '/events');
-    },
-    height: 20,
-    ),
-    DefaultButtonSimple(
-    text: "Ajuda",
-    press: () {
-    Navigator.pushNamed(context, '/help');
-    },
-    height: 20,
-    ),
-    /*isUserLogged
-    ? (
-      child: Container(
-    decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(8),
-    border: Border.all(
-    color: cPrimaryColor,
-    width: 3,
-    )
-    ),
-    child: Text(
-    "FRANCISCO",
-    style: const TextStyle(
-    fontWeight: FontWeight.bold,
-    ),
-    ),
-    ),
-      itemBuilder: (context) {
-        return List.generate(
-          5,
-              (index) {
-            return PopupMenuItem(
-              child: Text('button no $index'),
-            );
-          },
-        );
-      },
-    )
-    :*/DefaultButton(
+          //Image.asset("assets/web/combo_logo.png",
+          //    scale: 6,
+          //    alignment: Alignment.center,),
+          const Spacer(),
+          DefaultButtonSimple(
+              text: "Início",
+              press: () {
+                Navigator.pushNamed(context, '/home');
+              }, height: 20,
+          ),
+          DefaultButtonSimple(
+            text: "Procurar",
+            press: () {
+              Navigator.pushNamed(context, '/find');
+            },
+            height: 20,
+          ),
+          DefaultButtonSimple(
+            text: "Notícias",
+            press: () {
+              Navigator.pushNamed(context, '/news');
+            },
+            height: 20,
+          ),
+          DefaultButtonSimple(
+            text: "Eventos",
+            press: () {
+              Navigator.pushNamed(context, '/events');
+            },
+            height: 20,
+          ),
+          DefaultButtonSimple(
+            text: "Ajuda",
+            press: () {
+              Navigator.pushNamed(context, '/help');
+            },
+            height: 20,
+          ),
+         DefaultButton(
     text: "Área Pessoal",
     press: () {
     //Navigator.pushNamed(context, '/personal/main');
@@ -142,6 +113,9 @@ class CustomWebBar extends StatelessWidget {
                     content: LoginPageWeb(),
                   )
               );
+            },
+          ),
+        ],
             },*/
     ],
 

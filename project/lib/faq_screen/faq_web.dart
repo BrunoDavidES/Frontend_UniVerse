@@ -125,28 +125,9 @@ class FAQWebPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    /*Padding(
-                      padding: EdgeInsets.only(top: size.height/6, left: size.width/4),
-                      child: Container(                //Zona das Perguntass
-                        color: cDirtyWhite,
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: const [
-                            FAQlist(question: 'FAQ:'),
-                            FAQlist(question: "Tem dúvidas? Fale connosco:"),
-                          ],
-                        ),
-                      ),
-                    ),*/
-                    /*
-                    children: const [
-                                FAQlist(question: 'FAQ:'),
-                                FAQlist(question: "Tem dúvidas? Fale connosco:"),
-                              ],
-                    */
                     Container(
                       color: cDirtyWhite,
-                      child:  Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           CustomWebBar(),
