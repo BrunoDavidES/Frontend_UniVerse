@@ -7,7 +7,7 @@ import '../utils/news/article_data.dart';
 
 class EventsDetailScreen extends StatefulWidget {
   EventsDetailScreen(this.data, this.color, {super.key});
-  EventData data;
+  Event data;
   Color color;
 
   @override
@@ -81,8 +81,6 @@ class EventsDetailState extends State<EventsDetailScreen> {
                         color: cHeavyGrey
                     ),
                   ),
-                  Spacer(),
-                  Container(child: Image.network(widget.data.plannerPhoto!, scale: 2,))
                     ],
                   ),
               ),

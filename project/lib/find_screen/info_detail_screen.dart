@@ -24,7 +24,6 @@ class InfoDetailState extends State<InfoDetailScreen> {
         decoration: BoxDecoration(
           border: Border.all(
               color: cHeavyGrey,
-              width: 2
           ),
           boxShadow: [ BoxShadow(
             color: Colors.grey.withOpacity(0.5),

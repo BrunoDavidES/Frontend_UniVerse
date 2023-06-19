@@ -1,4 +1,4 @@
-import 'package:UniVerse/report_screen/camera_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
@@ -16,7 +16,6 @@ class WebMenuCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
       },
       child: Padding(
         padding: const EdgeInsets.all(5),

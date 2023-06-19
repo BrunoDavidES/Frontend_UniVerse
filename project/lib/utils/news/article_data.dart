@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,14 +22,15 @@ class Article {
       this.author,
       );
 
+  //POR DATA CERTA, URL DA IMAGEM, E TEXTO
   Article.fromJson(Map<String, dynamic> json ) {
     var properties = json['properties'];
-    id = properties['author']['value'];
+    id = properties['id']['value'];
     title = properties['title']['value'];
-    author = properties['author']['value'];
+    author = properties['authorName']['value'];
     date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
     urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
-    text = 'TEXTO';
+    text="Olá";
     print(id);
     print(title);
     print(author);
@@ -36,7 +38,7 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, int offset) async {
-    String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+   /* String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     final response = await http.post(
       Uri.parse(baseUrl + newsUrl),
@@ -55,16 +57,14 @@ class Article {
       }
       print("DONE");
     }
-    if(response.statusCode==500) {
-      print(newsUrl);
-    }
     print(response.statusCode);
     print(news[0].id);
     print(news[0].title);
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
-    return response.statusCode;
+    return response.statusCode;*/
+    return 200;
   }
 
 

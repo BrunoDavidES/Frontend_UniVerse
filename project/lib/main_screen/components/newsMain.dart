@@ -36,11 +36,11 @@ class MainNewsState extends State<MainNews> {
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 20),
                   child:
-                  Image.asset("assets/web/noticias.png", scale: 4,)
+                  Image.asset("assets/web/destaques.png", scale: 4,)
                 ),
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(top: 25, right: 30),
+                  padding: const EdgeInsets.only(top: 25),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(
@@ -62,14 +62,8 @@ class MainNewsState extends State<MainNews> {
                 color: cDarkLightBlueColor,
               ),
               ),
-          const SizedBox(
-            child: Divider(
-              thickness: 2,
-              color: cDarkLightBlueColor,
-            ),
-          ),
           Padding(
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.only(top: 50),
               child: FutureBuilder(
                 future: Article.fetchNews(3, 0),
                 builder: (context, snapshot) {

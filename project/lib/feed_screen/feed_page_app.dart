@@ -1,8 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
 import '../bars/app_bar.dart';
+import '../components/simple_dialog_box.dart';
 import '../find_screen/find_page_body_app.dart';
+import '../utils/connectivity.dart';
 import 'feed_page_body_app.dart';
 
 class FeedPageApp extends StatefulWidget {
@@ -14,6 +17,19 @@ class FeedPageApp extends StatefulWidget {
 }
 
 class _MyFeedPageState extends State<FeedPageApp> {
+  Map _source = {ConnectivityResult.none: false};
+  final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
+
+  @override
+  void initState() {
+    _connectivity.initialize();
+    _connectivity.myStream.listen((source) {
+      setState(() {
+        _source = source;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,5 +52,6 @@ class _MyFeedPageState extends State<FeedPageApp> {
         ),
       ),
     );
+
   }
 }

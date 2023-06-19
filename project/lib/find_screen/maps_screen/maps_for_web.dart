@@ -34,10 +34,6 @@ class _MapsPageState extends State<MapsPageWeb> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green[700],
-      ),
       home: Scaffold(
         body: GoogleMap(
           onMapCreated: _onMapCreated,

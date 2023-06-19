@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
+import '../components/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
+import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
@@ -52,12 +54,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void registerButtonPressed(String id, String name, String email, String password, String confirmation) async {
-    if(_source.keys.toList()[0]==ConnectivityResult.none) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("INTERNET"),
+    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+      showDialog(context: context,
+          builder: (BuildContext context){
+            return CustomDialogBox(
+              title: "Sem internet",
+              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              text: "OK",
             );
           }
       );
@@ -65,60 +68,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Registration.isCompliant(
-          id, name, password, confirmation, email);
-
+      bool areControllersCompliant = Registration.isCompliant(email, name, password, confirmation);
       if (!areControllersCompliant) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("Existem campos vazios! Preenche-os."),
-            );
-          },
+        showDialog(context: context,
+            builder: (BuildContext context){
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Existem campos vazios. Preenche-os, por favor.",
+                text: "OK",
+              );
+            }
         );
+        setState(() {
+          isLoading = false;
+        });
       }
       else {
-        var response = await Registration.registUser(
-            id, password, confirmation, name, email);
+        var response = await Registration.registUser(password, confirmation, name, email);
+        print(response);
         if (response == 200) {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
-        } else if (response == 404) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text(
-                    "O identificador fornecido não corresponde a nenhuma conta"),
-              );
-            },
-          );
-        } else if (response == 403) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text("Palavra-passe errada"),
-              );
-            },
-          );
+              MaterialPageRoute(builder: (context) => const LoginPageApp()));
         } else if (response == 400) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text("Bad request"),
-              );
-            },
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "O email indicado já foi registado.",
+                  text: "OK",
+                );
+              }
           );
+        } else if (response == 00) {
+          showDialog(context: context,
+              builder: (BuildContext context) {
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "O email indicado não é válido.",
+                  text: "OK",
+                );
+              }
+          );
+        }/*else if (response == 01) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "A palavra-passe não está de acordo com as restrições estabelecidas.",
+                  text: "OK",
+                );
+              }
+          );
+        }*/
+        else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, img: Image.asset("assets/app/registo.png", scale: 6,))));
         }
+      }
         setState(() {
           isLoading = false;
         });
       }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
                           },
                           child: Text(
-                            "Já tenho conta",
+                            "Já tenho uma conta",
                             style: TextStyle(
                               color: Colors.black
                             ),

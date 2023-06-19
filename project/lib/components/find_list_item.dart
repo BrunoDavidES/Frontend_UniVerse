@@ -3,6 +3,7 @@ import 'package:UniVerse/consts/list_consts.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
+import '../main_screen/homepage_web.dart';
 import 'list_button_simple.dart';
 
 class FindListItem extends StatelessWidget {
@@ -25,6 +26,7 @@ class FindListItem extends StatelessWidget {
               colors: [
                 cPrimaryOverLightColor.withOpacity(0.5),
                 cDirtyWhite,
+                cDirtyWhiteColor
               ],
             ),
             borderRadius: BorderRadius.circular(15),
@@ -47,7 +49,8 @@ class FindListItem extends StatelessWidget {
             children: [
               if(name=='Serviços')
               ListButtonSimple(
-                  text: "Divisão Académica", tobeBold: false, press: () {}),
+                  text: "Divisão Académica", tobeBold: false, press: () {
+              }),
               if(i==1)
               ListButtonSimple(
                   text: "Divisão de Acompanhamento de Parcerias",tobeBold: false,
