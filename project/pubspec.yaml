@@ -51,6 +51,8 @@ dependencies:
   geolocator: ^8.0.1
   expandable_page_view: 1.0.17
   build_runner:
+  firebase_auth: ^4.6.3
+  firebase_core: ^2.14.0
 
 dev_dependencies:
   flutter_test:
