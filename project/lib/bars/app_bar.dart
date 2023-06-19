@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../find_screen/services_screen/services_body_app.dart';
+import '../register_screen/register_app.dart';
+import '../utils/news/article_data.dart';
 
 class CustomAppBar extends StatelessWidget {
   final int i;
@@ -60,6 +62,7 @@ class CustomAppBar extends StatelessWidget {
               icon: Icons.newspaper_rounded,
               text: 'Feed',
               onPressed: () {
+                Article.fetchNews(3, 0);
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => FeedPageApp()));
               },
             ),
@@ -97,7 +100,7 @@ class CustomAppBar extends StatelessWidget {
   }
 
   void _navigateToNextScreenPersonal(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
   }
 
   void _navigateToNextScreenFind(BuildContext context) {

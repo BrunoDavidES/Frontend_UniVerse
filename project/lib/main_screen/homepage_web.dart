@@ -1,6 +1,7 @@
 import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import '../components/faq_item.dart';
 import '../find_screen/maps_screen/map_page_web.dart';
 import '../consts/color_consts.dart';
 import 'components/about_bottom.dart';
@@ -39,12 +40,21 @@ class WebHomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const CustomWebBar(),
-                      const Spacer(),
+                      CustomWebBar(),
+                      Spacer(),
                       Body(),
                       const Spacer(
                         flex: 2,
                       ),
+                      /*Row(
+                        children: [
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Image.asset("assets/web/logoNovaBranco.png", scale:9.5),
+                          ),
+                        ],
+                      ),*/
                     ],
                   ),
                 ),
@@ -52,7 +62,7 @@ class WebHomePage extends StatelessWidget {
                   height: size.height/1.15,
                   width: size.width,
                   color: cDirtyWhite,
-                  child: mainNews(width: size.width, height: size.height/1.15,),
+                  child: MainNews(width: size.width, height: size.height/1.15,),
                 ),
                 Container(                //Zona do google Maps
                   height: size.height*0.8,
@@ -60,11 +70,121 @@ class WebHomePage extends StatelessWidget {
                   color: cDirtyWhite,
                   child: mainPageMap(),
                 ),
-                Container(                 //Zona de Download da app
-                  //height: size.height/2,
-                  //width: size.width,
+                Container(
                   color: cDirtyWhite,
-                  //child: mainNews(),
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
+                      color: cDirtyWhite,
+                      child: Column(
+                          children: <Widget>[
+                      Row(
+                      children: <Widget>[
+                      Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child:
+                      Image.asset("assets/web/faq_title.png", scale: 4,)
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(
+                          color: cHeavyGrey,
+                          fontSize: 30,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/help');
+                      },
+                      child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
+                    ),
+                  ),
+              ],
+          ),
+          const SizedBox(
+            child: Divider(
+              thickness: 2,
+              color: cDarkLightBlueColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                    FAQbox(
+                      question: 'É necessário criar uma conta?',
+                      answer: 'Não! \nSe és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito. \n',
+                    ),
+                    FAQbox(
+                      question: 'É necessário criar uma conta?',
+                      answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                    ),
+                    FAQbox(
+                      question: 'É necessário criar uma conta?',
+                      answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                    ),
+            ]
+                        ),
+          ),
+          ],
+                  ),
+                  ),
+                ),
+                Container(                 //Zona de Download da app
+                  height: size.height*0.30,
+                  width: size.width,
+                  color: cDirtyWhite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Padding(
+                      padding: EdgeInsets.only(top: 30, bottom: 10),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
+                          Padding(
+                            padding: const EdgeInsets.only(left:20, right: 20),
+                            child: Text(
+                              "Instala já a nossa aplicação!".toUpperCase(),
+                              style: TextStyle(
+                                color: cPrimaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 35
+                              ),
+                            ),
+                          ),
+                          Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
+                          Spacer()
+                        ],
+                      ),
+
+                ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          "Atualmente disponível para ANDROID™",
+                          style: TextStyle(
+                              color: cHeavyGrey,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 15
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Image.asset("assets/icon_no_white.png", scale: 4),
+                          SizedBox(width: 10),
+                          Image.asset("assets/web/Example.png", scale: 25),
+                          Spacer(),
+                        ],
+                      ),
+            ]
+                  ),
                 ),
                 BottomAbout(size: size),
               ]

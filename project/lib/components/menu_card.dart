@@ -1,14 +1,16 @@
-import 'package:UniVerse/report_screen/camera_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
+import 'simple_dialog_box.dart';
 
 class MenuCard extends StatelessWidget {
   final String text;
   final String description;
   final IconData icon;
+  final Function press;
   const MenuCard({
-    super.key, required this.text, required this.icon, required this.description,
+    super.key, required this.text, required this.icon, required this.description, required this.press,
   });
 
   @override
@@ -16,7 +18,7 @@ class MenuCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
+        press();
       },
       child: Padding(
         padding: const EdgeInsets.all(5),

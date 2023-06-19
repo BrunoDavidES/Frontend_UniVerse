@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/news_screen/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
+
+import '../consts/list_consts.dart';
 
 class NewsCard extends StatefulWidget {
   NewsCard(this.data, {super.key});
@@ -14,9 +18,11 @@ class NewsCard extends StatefulWidget {
 class NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
+    Random random = Random();
+    int cindex = random.nextInt(toRandom.length);
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailScreen(widget.data)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailScreen(widget.data, toRandom[cindex])));
       },
       child: Container(
         width: 400,
@@ -26,10 +32,10 @@ class NewsCardState extends State<NewsCard> {
         decoration: BoxDecoration(
           color: cDirtyWhiteColor,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Colors.black,
-            width: 2
-          ),
+            border: Border.all(
+                color: toRandom[cindex],
+                width: 2
+            ),
           boxShadow: [ BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
@@ -88,7 +94,7 @@ class NewsCardState extends State<NewsCard> {
                   ),
                   Spacer(),
                   Text(
-                    "autoria de "+widget.data.author!,
+                    "Autoria de "+widget.data.author!,
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey

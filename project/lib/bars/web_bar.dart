@@ -1,11 +1,14 @@
 import 'package:UniVerse/components/default_button_simple.dart';
 import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 class CustomWebBar extends StatelessWidget {
-  const CustomWebBar({super.key});
+  bool isUserLogged = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,20 +26,29 @@ class CustomWebBar extends StatelessWidget {
         ],
       ),
       child: Row(
-        children: <Widget>[
+          children: <Widget>[
           InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/home');
-            },
-            child: Image.asset("assets/web/combo_logo.png",
-              scale: 6,
-              alignment: Alignment.center,
+          onTap: () {
+
+    },
+      child: Image.asset("assets/web/logo.png",
+        scale: 5.5,
+        alignment: Alignment.center,
+      ),
+    ),
+            SizedBox(width:5),
+            InkWell(
+              onTap: () {
+               launchUrl(Uri.parse("https://www.fct.unl.pt/"));
+              },
+              child: Image.asset("assets/web/logoNova.png",
+                scale: 30,
+                alignment: Alignment.center,
+              ),
             ),
-          ),
           //Image.asset("assets/web/combo_logo.png",
           //    scale: 6,
           //    alignment: Alignment.center,),
-          const SizedBox(width: 5),
           const Spacer(),
           DefaultButtonSimple(
               text: "Início",
@@ -72,12 +84,24 @@ class CustomWebBar extends StatelessWidget {
             },
             height: 20,
           ),
-          DefaultButton(
-            text: "Área Pessoal",
-            press: () {
-              //Navigator.pushNamed(context, '/personal/main');
-            //}
-              showDialog(
+         DefaultButton(
+    text: "Área Pessoal",
+    press: () {
+    //Navigator.pushNamed(context, '/personal/main');
+    showDialog(
+    context: context,
+    builder: (_) => const AlertDialog(
+    shape: RoundedRectangleBorder(
+    borderRadius:
+    BorderRadius.all(
+    Radius.circular(10.0)
+    )
+    ),
+    content: LoginPageWeb(),
+    )
+    );
+    }),
+    /*showDialog(
                   context: context,
                   builder: (_) => const AlertDialog(
                     shape: RoundedRectangleBorder(
@@ -92,8 +116,10 @@ class CustomWebBar extends StatelessWidget {
             },
           ),
         ],
+            },*/
+    ],
 
-      ),
+    ),
     );
-  }
+    }
 }

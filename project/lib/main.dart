@@ -7,6 +7,7 @@ import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'faq_screen/faq_web.dart';
@@ -19,6 +20,7 @@ import 'login_screen/login_web.dart';
 import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(kIsWeb) {
+     // Article.fetchNews(3, 0);
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
@@ -48,7 +51,6 @@ class MyApp extends StatelessWidget {
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
           '/about/us': (context) => UniverseInfoWeb(),
-          '/test': (context) => Test(),
           '/personal/main': (context) => PersonalWebPage(),
         },
       );

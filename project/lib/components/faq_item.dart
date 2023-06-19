@@ -11,7 +11,6 @@ class FAQbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Random random = Random();
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ClipRRect(
@@ -41,7 +40,7 @@ class FAQbox extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 )),
             controlAffinity: ListTileControlAffinity.trailing,
-            backgroundColor: cDarkBlueColor,
+            backgroundColor: cDarkLightBlueColor,
             textColor: Colors.white,
             iconColor: Colors.white60,
             collapsedIconColor: cHeavyGrey,

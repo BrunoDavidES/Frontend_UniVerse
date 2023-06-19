@@ -6,39 +6,42 @@ import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 
 class Registration {
-  static bool isCompliant(String id, String password, String confirmation, String name, String email) {
-    return id.isEmpty || password.isEmpty || confirmation.isEmpty || name.isEmpty || email.isEmpty ? false : true;
+  static bool isCompliant(String password, String confirmation, String name, String email) {
+    return password.isEmpty || confirmation.isEmpty || name.isEmpty || email.isEmpty ? false : true;
   }
 
-  static Future<int> registUser(String id, String password, String confirmation, String name, String email) async {
+  static Future<int> registUser(String password, String confirmation, String name, String email) async {
+    final emailRestriction = RegExp("^[A-Za-z0-9._%+-]+@(fct\.unl\.pt|campus\.fct\.unl\.pt)");
+    final passwordRestriction= RegExp("(?=.[0-9])(?=.[a-z])(?=.*[A-Z]).{6,64}");
     /*Password_Hasher(
       algorithm_number: '512',
       Hex: true,
       controller: password,
       restrict: false,
     )*/
-      return register(id, password, confirmation, name, email);
+    if(!emailRestriction.hasMatch(email))
+      return 00;
+   else if(!passwordRestriction.hasMatch(password))
+     return 01;
+    else
+      return register(password, confirmation, name, email);
    // return true;
   }
 
-  static Future<int> register(String id, String password, String confirmation, String name, String email) async {
-      final response = await http.post(
-        Uri.parse(baseUrl + regist),
+  static Future<int> register(String password, String confirmation, String name, String email) async {
+     final response = await http.post(
+        Uri.parse(baseUrl + registUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
         body: jsonEncode(<String, String>{
-          'username': id,
+          'email': email,
           'password': password,
           'confirmation': confirmation,
-          'name': name,
-          'email': email,
-          'role': 'User'
+          'name': name
         }),
       );
-      /*var statusCode = Authentication.loginUser(id, password);
-      if (statusCode == 200) {*/
-      // TODO: Update the DB with the last active time of the user
+     print(response.statusCode);
       return response.statusCode;
   }
 }

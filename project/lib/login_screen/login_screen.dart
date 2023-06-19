@@ -1,20 +1,28 @@
 import 'dart:convert';
 
+import 'package:UniVerse/components/500_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
+import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
+import '../components/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
+import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
+import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import 'functions/auth.dart';
+import 'login_app.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -79,6 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) {
             return const AlertDialog(
               content: Text("INTERNET"),
+    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+      showDialog(context: context,
+          builder: (BuildContext context){
+            return CustomDialogBox(
+              title: "Sem internet",
+              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              text: "OK",
             );
           }
       );
@@ -87,15 +102,15 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       bool areControllersCompliant = Authentication.isCompliant(id, password);
-
       if (!areControllersCompliant) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("Existem campos vazios! Preenche-os."),
-            );
-          },
+        showDialog(context: context,
+            builder: (BuildContext context){
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Existem campos vazios. Preenche-os, por favor.",
+                text: "OK",
+              );
+            }
         );
         setState(() {
           isLoading = false;
@@ -103,40 +118,24 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       else {
         var response = await Authentication.loginUser(id, password);
-
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(response),
-            );
-          },
-        );
         if (response == 200) {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
-        } else if (response.contains("User or password incorrect")) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(
-                    "O identificador fornecido não corresponde a nenhuma conta ou a password esta incorreta"),
-              );
-            },
+              MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+        } else if (response==401) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "O utilizador e/ou password incorretos. Tenta novamente.",
+                  text: "OK",
+                );
+              }
           );
-        } else if (response == 400) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text("Bad request"),
-              );
-            },
-          );
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, img: Image.asset("assets/app/login.png", scale: 6,))));
+              }
         }
       }
-    }
     setState(() {
       isLoading = false;
     });*/
@@ -159,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
                     child: Image.asset('assets/icon_no_white.png', scale:3),
                   ),
                   const Text(
@@ -168,27 +167,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 25
                     ),
                   ),
-                  const Text(
-                      "Insere as tuas credenciais do clip.",
-                      style:TextStyle(
-                          fontSize: 15
-                      )),
                   const SizedBox(height: 20),
-                  MyTextField(controller: idController, hintText: "Identificador", obscureText: false,),
-                  MyTextField(controller: passwordController, hintText: "Password", obscureText: true,),
+                  MyTextField(controller: idController, hintText: 'Introduz o teu identificador do clip', obscureText: false, label: 'ID', icon: Icon(Icons.person_outline),),
+                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
                   const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        UrlLaunchableItem(
-                          text:"Esqueceste a senha?", url: 'https://clip.fct.unl.pt/recuperar_senha', color: Colors.black,
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                          },
+                          child: Text(
+                            "Esquesceste a palavra-passe?",
+                            style: TextStyle(
+                                color: Colors.black
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
                   isLoading
                       ? Container(
                       width: 150,
@@ -208,23 +210,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                           height: 20),
-                      DefaultButton(
-                        text: "REGISTAR",
-                        press: () {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (_) => const AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.all(
-                                        Radius.circular(10.0)
-                                    )
-                                ),
-                                content: RegisterPageWeb(),
-                              )
-                          );
+                      InkWell(
+                        onTap: () {
+                          if(kIsWeb) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (_) => const AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.all(
+                                          Radius.circular(10.0)
+                                      )
+                                  ),
+                                  content: RegisterPageWeb(),
+                                )
+                            );
+                          }
+                          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
                         },
+                        child: Text(
+                          "Criar conta",
+                          style: TextStyle(
+                              color: Colors.black
+                          ),
+                        ),
                       ),
                     ],
                   ),

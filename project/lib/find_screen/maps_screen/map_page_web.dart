@@ -15,20 +15,14 @@ class mainPageMap extends StatelessWidget {
         children: <Widget> [
           Row(
             children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 20, left: 20),
-                child: Text(
-                  "Google Maps",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 45,
-                  ),
-                ),
+              Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 20),
+                  child:
+                  Image.asset("assets/app/map.png", scale: 4,)
               ),
               const Spacer(),
               Padding(
-                padding: EdgeInsets.only(top: 25, right: 30),
+                padding: const EdgeInsets.only(top: 25),
                 child: TextButton(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
@@ -47,7 +41,7 @@ class mainPageMap extends StatelessWidget {
           const SizedBox(
             child: Divider(
               thickness: 2,
-              color: cBlackOp,
+              color: cDarkLightBlueColor,
             ),
           ),
           Expanded(

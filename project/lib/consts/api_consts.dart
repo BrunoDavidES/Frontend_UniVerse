@@ -1,5 +1,6 @@
 
 const baseUrl = 'https://universe-fct.oa.r.appspot.com/rest';
-const loginUrl = '/login/';
-const regist = '/register';
-const newsUrl = '/feed/query/News';
+const loginUrl = '/login';
+const registUrl = '/register';
+const logoutUrl = '/logout';
+const reportUrl =  '/reports/post';

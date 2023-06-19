@@ -36,30 +36,84 @@ class FAQWebPage extends StatelessWidget {
                             padding: const EdgeInsets.only(left:50, top: 20),
                             child: Container(
                                 alignment: Alignment.centerLeft,
-                                child: Image.asset("assets/web/findTitle.jpeg", scale: 4,)
+                                child: Image.asset("assets/web/help.png", scale: 4,)
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 100, left: 100, bottom: size.height/3.48, top: 50),
+                            padding: EdgeInsets.only(right: 100, left: 50, bottom: 10, top: 30),
                             child: Container(
                               color: cDirtyWhite,
                               child: Row(
                                 children: [
                                   Container(
                                     width: size.width/2.4,
-                                    child: ListView(
-                                      shrinkWrap: true,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: const [
-                                        FAQlist(question: 'FAQ:', starts: true),
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          child: Text(
+                                            "Perguntas mais frequentes:",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: cHeavyGrey
+                                            ),
+                                          ),
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! \nSe és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito. \n',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
+                                        FAQbox(
+                                          question: 'É necessário criar uma conta?',
+                                          answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                                        ),
                                       ],
                                     ),
                                   ),
                                   Container(
                                     width: size.width/2.4,
-                                    child: ListView(
-                                      shrinkWrap: true,
-                                      children: const [
-                                        FAQlist(question: "Tem dúvidas? Fale connosco:", starts: false),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          child: Text(
+                                            "Ainda tens dúvidas? Contacta-nos!",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: cHeavyGrey
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -73,7 +127,7 @@ class FAQWebPage extends StatelessWidget {
                     ),
                     Container(
                       color: cDirtyWhite,
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           CustomWebBar(),

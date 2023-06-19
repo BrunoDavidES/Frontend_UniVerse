@@ -16,7 +16,7 @@ class _MyRegisterPageState extends State<RegisterPageWeb> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-        width: size.width/4,
+        width: size.width/3.5,
         height: size.height/1.25,
         child: const Scaffold(
             resizeToAvoidBottomInset: false,

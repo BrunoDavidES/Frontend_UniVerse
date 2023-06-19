@@ -11,7 +11,7 @@ import '../events_screen/events_app_detail_screen.dart';
 
 class EventsCard extends StatefulWidget {
   EventsCard(this.data, {super.key});
-  EventData data;
+  Event data;
 
   @override
   State<StatefulWidget> createState() => EventsCardState();
