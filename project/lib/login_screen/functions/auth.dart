@@ -8,6 +8,7 @@ import 'package:hash_password/hashing_functionalities.dart';
 import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:requests/requests.dart';
 
 import '../../utils/users/User.dart';
 
@@ -24,16 +25,16 @@ class Authentication {
   }
 
   static Future<int> authenticate(String id, String password) async {
-      final response = await http.post(
-        Uri.parse(baseUrl + loginUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(<String, String>{
+      final response = await Requests.post(
+        'https://universe-fct.oa.r.appspot.com/rest/login',
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+          },
+        body: {
           'username': id,
           'password': password,
-        }),
-      );
+        },
+        bodyEncoding: RequestBodyEncoding.FormURLEncoded);
       /*if (response.statusCode == 200) {
         if(!kIsWeb) {
           User u = const User(
@@ -51,8 +52,11 @@ class Authentication {
   }
 
   static Future<int> revoge() async {
-    final response = await http.post(
-      Uri.parse(baseUrl + logoutUrl),
+    final response = await Requests.post(
+     'https://universe-fct.oa.r.appspot.com/rest/logout',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
     );
     print(response.statusCode);
     return response.statusCode;
