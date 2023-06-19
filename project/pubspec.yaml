@@ -98,6 +98,7 @@ flutter:
     - assets/app/links.png
     - assets/app/area.png
     - assets/app/report.png
+    - assets/web/area.png
     - assets/app/profile_title.png
     - assets/app/dot.png
     - assets/web/help.png

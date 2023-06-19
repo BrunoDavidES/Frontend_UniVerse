@@ -48,7 +48,7 @@ class ImagePreviewState extends State<ImagePreview> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 30),
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -67,9 +67,9 @@ class ImagePreviewState extends State<ImagePreview> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    SizedBox(width: 10,),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 30),
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -78,7 +78,7 @@ class ImagePreviewState extends State<ImagePreview> {
                         height: 50,
                         child: MaterialButton(
                             shape: CircleBorder(),
-                            child: Text("GUARDAR",
+                            child: Text("ENVIAR",
                               style: TextStyle(
                                   color: cPrimaryLightColor
                               ),),

@@ -52,14 +52,15 @@ class Authentication {
   }
 
   static Future<int> revoge() async {
-    final response = await Requests.post(
+    /*final response = await Requests.post(
      'https://universe-fct.oa.r.appspot.com/rest/logout',
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
     );
     print(response.statusCode);
-    return response.statusCode;
+    return response.statusCode;*/
+    return 200;
   }
 
 }

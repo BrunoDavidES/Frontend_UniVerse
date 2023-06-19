@@ -16,12 +16,13 @@ class WebMenuCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
+
       },
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Container(
-            height: 150,
-            width: 200,
+          height: 75,
+          width: 125,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: cDirtyWhite,
@@ -53,17 +54,6 @@ class WebMenuCard extends StatelessWidget {
                         fontSize: 15,
                         color: cHeavyGrey,
                         fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    description,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: cHeavyGrey,
                     ),
                   ),
                 ),

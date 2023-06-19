@@ -20,7 +20,6 @@ import 'login_screen/login_web.dart';
 import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();

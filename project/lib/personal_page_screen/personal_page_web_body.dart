@@ -6,6 +6,7 @@ import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../components/web_menu_card.dart';
 import '../main_screen/components/about_bottom_body.dart';
 
 class PersonalWebBody extends StatefulWidget {
@@ -21,36 +22,73 @@ class PersonalWebBodyState extends State<PersonalWebBody> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        height:size.height+size.height/3+size.height/7,
+        height:size.height+115,
         color: cDirtyWhite,
         child: Column(
           children: [
-           Row(
-             children: [
-               Padding(
-                 padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
-                 child: PersonalWebCard(size: size),
-               ),
-             ],
-           ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: SizedBox(
-                    height: size.height-size.height/7,
-                    width: size.width/6,
-                    child: const LeftSide(),
+               SizedBox(
+                    height: size.height+115,
+                    width: size.width/7.5,
+                    child: ListView(
+                      children:  [
+                        Column(
+                          children: <Widget>[
+                            WebMenuCard(text: 'Logout', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.logout_outlined),
+                            WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
+                            WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
+                            WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
+                            WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
+                            WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
+                            WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                            WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                            WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                            WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                            WebMenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: RightSide(),
+                  padding: const EdgeInsets.only(left:20, right: 20),
+                  child: Container(
+                    height: size.height+115,
+                    width: size.width-size.width/7.5-40,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20, bottom: 30),
+                              child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Image.asset("assets/web/area.png", scale: 8,)
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10, top: 20, bottom: 30),
+                              child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Image.asset("assets/app/report.png", scale: 4,)
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          color: Colors.cyan,
+                          height: size.height,
+                          width: size.width-size.width/7.5-40
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-            Spacer(),
-            BottomAbout(size: size,),
           ],
         ),
       ),
