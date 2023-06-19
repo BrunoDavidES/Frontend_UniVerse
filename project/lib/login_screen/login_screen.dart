@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,7 +44,36 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void logInButtonPressed(String id, String password) async {
-    if(_source.keys.toList()[0]==ConnectivityResult.none) {
+
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: id,
+          password: password
+      );
+        print(credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: Text("User not found for that email "),
+            );
+          },
+        );
+      } else if (e.code == 'wrong-password') {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              content: Text("Wrong password for that user"),
+            );
+          },
+        );
+      }
+    }
+
+    /*if(_source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(
           context: context,
           builder: (context) {
@@ -109,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     setState(() {
       isLoading = false;
-    });
+    });*/
   }
 
   @override

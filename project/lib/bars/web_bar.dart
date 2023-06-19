@@ -75,9 +75,9 @@ class CustomWebBar extends StatelessWidget {
           DefaultButton(
             text: "Área Pessoal",
             press: () {
-              Navigator.pushNamed(context, '/personal/main');
-            }
-              /*showDialog(
+              //Navigator.pushNamed(context, '/personal/main');
+            //}
+              showDialog(
                   context: context,
                   builder: (_) => const AlertDialog(
                     shape: RoundedRectangleBorder(
@@ -89,7 +89,7 @@ class CustomWebBar extends StatelessWidget {
                     content: LoginPageWeb(),
                   )
               );
-            },*/
+            },
           ),
         ],
 
