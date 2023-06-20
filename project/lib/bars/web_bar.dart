@@ -84,36 +84,36 @@ class CustomWebBar extends StatelessWidget {
             },
             height: 20,
           ),
-   /* DefaultButton(
-    text: "Francisco".toUpperCase(),
-    press: () {*/
+            /* DefaultButton(
+              text: "Francisco".toUpperCase(),
+              press: () {*/
 
-      PopupMenuButton(
+      /*PopupMenuButton(
         tooltip: "Opções",
         child: Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(8),
-    color: cPrimaryColor,
-    border: Border.all(
-    color: cPrimaryColor,
-    width: 3,
-    )
-    ),
-    child: Text(
-    "FRANCISCO",
-    style: const TextStyle(
-    fontWeight: FontWeight.bold,
-      color: Colors.white
-    ),
-    ),
-    ),
-      offset: Offset(0.0, 50),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 10,
-      itemBuilder: (BuildContext context) => [
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: cPrimaryColor,
+            border: Border.all(
+              color: cPrimaryColor,
+              width: 3,
+            )
+          ),
+          child: Text(
+            "FRANCISCO",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+            ),
+          ),
+        ),
+        offset: Offset(0.0, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        elevation: 10,
+        itemBuilder: (BuildContext context) => [
         PopupMenuItem(
           child: Row(
             children: [
@@ -154,24 +154,24 @@ class CustomWebBar extends StatelessWidget {
       ]
     )
    // }
-    //)
-         /*DefaultButton(
+    //)*/
+         DefaultButton(
     text: "Área Pessoal",
-    press: () {
-    Navigator.pushNamed(context, '/personal/main');
-   /* showDialog(
-    context: context,
-    builder: (_) => const AlertDialog(
-    shape: RoundedRectangleBorder(
-    borderRadius:
-    BorderRadius.all(
-    Radius.circular(10.0)
-    )
-    ),
-    content: LoginPageWeb(),
-    )
-    );*/
-    }),*/
+             press: () {
+    //Navigator.pushNamed(context, '/personal/main');
+               showDialog(
+                  context: context,
+                   builder: (_) => const AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.all(
+                        Radius.circular(10.0)
+                      )
+                    ),
+                    content: LoginPageWeb(),
+                   )
+                );
+        }),
     /*showDialog(
                   context: context,
                   builder: (_) => const AlertDialog(

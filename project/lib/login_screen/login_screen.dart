@@ -52,34 +52,34 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void logInButtonPressed(String id, String password) async {
-
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
       );
-        print(credential);
+      print(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("User not found for that email "),
-            );
-          },
-        );
+
       } else if (e.code == 'wrong-password') {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("Wrong password for that user"),
-            );
-          },
-        );
+
       }
     }
+
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        IdTokenResult idTokenResult = await user.getIdTokenResult(true);
+        String? idToken = idTokenResult.token;
+        print(idToken);
+      } catch (e) {
+
+      }
+    }
+    else {
+
+    }
+
 
     /*if(_source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(
