@@ -18,6 +18,7 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
+import '../personal_page_screen/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
@@ -73,10 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
         String? idToken = idTokenResult.token;
         print(idToken);
 
-        var response = await Authentication.loginUser(id, idToken);
+        var response = await Authentication.loginUser(id, idToken!);
                 if (response == 200) {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const WebPersonalPage()));
+                      MaterialPageRoute(builder: (context) => PersonalWebPage()));
                 } else if (response==401) {
                   showDialog(context: context,
                       builder: (BuildContext context) {

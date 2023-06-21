@@ -31,7 +31,7 @@ class Registration {
   }
 
   static Future<int> register(String password, String confirmation, String name, String email) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    /*FirebaseAuth auth = FirebaseAuth.instance;
     try {
       final user = await auth.createUserWithEmailAndPassword(
           email: email, 
@@ -48,8 +48,8 @@ class Registration {
     } catch(e) {
       return 500;
     }
-    return 1;
-     /*final response = await http.post(
+    return 1; */
+    final response = await http.post(
         Uri.parse(baseUrl + registUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -57,10 +57,11 @@ class Registration {
         body: jsonEncode(<String, String>{
           'email': email,
           'password': password,
+          'confirmation': confirmation,
           'name': name
         }),
       );
      print(response.statusCode);
-      return response.statusCode*/
+      return response.statusCode;
   }
 }

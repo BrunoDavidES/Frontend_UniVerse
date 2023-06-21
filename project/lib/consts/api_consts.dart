@@ -1,5 +1,5 @@
 
-const baseUrl = 'https://universe-fct.oa.r.appspot.com/rest';
+const baseUrl = 'https://magikarp-fct.oa.r.appspot.com/rest';
 const loginUrl = '/login';
 const registUrl = '/register';
 const logoutUrl = '/logout';
