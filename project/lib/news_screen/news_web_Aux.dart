@@ -1,13 +1,15 @@
+import 'package:UniVerse/news_screen/news_web_AuxEndPage.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
 import '../main_screen/components/about_bottom.dart';
-import 'news_web_Aux.dart';
-import 'news_web_AuxEndPage.dart';
 
-class NewsWebPage extends StatelessWidget {
-  NewsWebPage({super.key});
+class NewsWebPageAux extends StatelessWidget {
+  final int indexAux;
+
+  NewsWebPageAux({required this.indexAux}) : super();
+
   @override
   ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class NewsWebPage extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: 3,
                           itemBuilder: (BuildContext context, int index) {
-                            final item = _articles[index];
+                            final item = _articles[index + 3 * indexAux];
                             return Container(
                               height: 280,
                               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
@@ -125,31 +127,61 @@ class NewsWebPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Spacer(),Spacer(),Spacer(),Spacer(),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icons.arrow_back_ios_rounded,
+                              ].map((e) {
+                                return InkWell(
+                                  onTap: () {
+                                    indexAux - 3 > 3?
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: -1))):
+                                    Navigator.pushNamed(context, '/news');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(e, size: 30),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                            DefaultButton(
+                                text: "Página Anterior",
+                                press: () {
+                                  indexAux - 3 > 3?
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: -1))):
+                                  Navigator.pushNamed(context, '/news');
+                                }),
+                            Spacer(),
                             DefaultButton(
                                 text: "Próxima Página",
                                 press: () {
-                                  _articles.length > 6?
+                                  indexAux + 1 > _articles.length?
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
-                                }),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icons.navigate_next_outlined,
-                                ].map((e) {
-                                  return InkWell(
-                                    onTap: () {
-                                      _articles.length > 6?
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50),
-                                    ),
-                                  );
-                                }).toList(),
-                              )
+                                }
+                            ),
+                            const Text("  "),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icons.arrow_forward_ios_rounded,
+                              ].map((e) {
+                                return InkWell(
+                                  onTap: () {
+                                    indexAux + 1 > _articles.length?
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(e, size: 30),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                            Spacer(),Spacer(),Spacer(),Spacer()
                           ],
                         ),
                       ),
@@ -234,6 +266,7 @@ final List<Article> _articles = [
     preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
     author: "Um dos donos da universe",
     imageUrl: "https://picsum.photos/id/1020/960/540",
-    postedOn: "1 seconds ago",
+    postedOn: "1 second ago",
   ),
+
 ];

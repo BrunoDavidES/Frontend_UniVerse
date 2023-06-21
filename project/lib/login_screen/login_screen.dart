@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void logInButtonPressed(String id, String password) async {
-    try {
+    /*try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
@@ -80,13 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     }
 
-
-    /*if(_source.keys.toList()[0]==ConnectivityResult.none) {
+    if(_source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(
           context: context,
           builder: (context) {
             return const AlertDialog(
-              content: Text("INTERNET"),
+              content: Text("INTERNET"),*/
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -138,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     setState(() {
       isLoading = false;
-    });*/
+    });
   }
 
   @override

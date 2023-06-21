@@ -12,7 +12,7 @@ class Registration {
 
   static Future<int> registUser(String password, String confirmation, String name, String email) async {
     final emailRestriction = RegExp("^[A-Za-z0-9._%+-]+@(fct\.unl\.pt|campus\.fct\.unl\.pt)");
-    final passwordRestriction= RegExp("(?=.[0-9])(?=.[a-z])(?=.*[A-Z]).{6,64}");
+    //final passwordRestriction= RegExp("(?=.[0-9])(?=.[a-z])(?=.*[A-Z]).{6,64}");
     /*Password_Hasher(
       algorithm_number: '512',
       Hex: true,
@@ -21,8 +21,8 @@ class Registration {
     )*/
     if(!emailRestriction.hasMatch(email))
       return 00;
-   else if(!passwordRestriction.hasMatch(password))
-     return 01;
+   //else if(!passwordRestriction.hasMatch(password))
+     //return 01;
     else
       return register(password, confirmation, name, email);
    // return true;

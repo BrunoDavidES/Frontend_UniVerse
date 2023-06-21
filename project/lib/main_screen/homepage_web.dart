@@ -41,7 +41,7 @@ class WebHomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       CustomWebBar(),
-                      Spacer(),
+                      const Spacer(),
                       Body(),
                       const Spacer(
                         flex: 2,
@@ -108,11 +108,11 @@ class WebHomePage extends StatelessWidget {
               color: cDarkLightBlueColor,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
+          const Padding(
+            padding: EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                     FAQbox(
                       question: 'É necessário criar uma conta?',
                       answer: 'Não! \nSe és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito. \n',
@@ -139,16 +139,16 @@ class WebHomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [Padding(
-                      padding: EdgeInsets.only(top: 30, bottom: 10),
+                      padding: const EdgeInsets.only(top: 30, bottom: 10),
                       child: Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
                           Padding(
                             padding: const EdgeInsets.only(left:20, right: 20),
                             child: Text(
                               "Instala já a nossa aplicação!".toUpperCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: cPrimaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.italic,
@@ -157,13 +157,13 @@ class WebHomePage extends StatelessWidget {
                             ),
                           ),
                           Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
-                          Spacer()
+                          const Spacer()
                         ],
                       ),
 
                 ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 10),
                         child: Text(
                           "Atualmente disponível para ANDROID™",
                           style: TextStyle(
@@ -176,11 +176,11 @@ class WebHomePage extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Image.asset("assets/icon_no_white.png", scale: 4),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Image.asset("assets/web/Example.png", scale: 25),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
             ]

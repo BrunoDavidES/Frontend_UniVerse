@@ -12,93 +12,95 @@ class AboutBottomBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Row(
         children: <Widget>[
-          Container(
+          SizedBox(
             width: size.width/3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
-                  child: Text(
-                      "FCT NOVA",
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top:10),
+                    child: Text(
+                        "FCT NOVA",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        )
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top:10),
+                    child: Text(
+                      "Faculdade de Ciências e Tecnologia\n2829-516 Caparica\nPortugal",
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      )
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
-                  child: Text(
-                    "Faculdade de Ciências e Tecnologia\n2829-516 Caparica\nPortugal",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color:Colors.white,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
-                  child: Text(
-                    "Telefone: (+351) 212 948 300\nFax: (+351) 212 954 461",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
                         color:Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:20),
-                  child: Row(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          UrlLaunchableItem(text: "Website", url: "https://www.fct.unl.pt/", color: Colors.white),
-                          UrlLaunchableItem( text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.white),
-                        ],
+                  Padding(
+                    padding: EdgeInsets.only(top:10),
+                    child: Text(
+                      "Telefone: (+351) 212 948 300\nFax: (+351) 212 954 461",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color:Colors.white,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.white),
-                            UrlLaunchableItem(text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.white),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            UrlLaunchableItem(text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/", color: Colors.white),
-                            UrlLaunchableItem(text: "Youtube", url: "https://www.youtube.com/user/fctunltv", color: Colors.white),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            UrlLaunchableItem(text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(top:20),
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            UrlLaunchableItem(text: "Website", url: "https://www.fct.unl.pt/", color: Colors.white),
+                            UrlLaunchableItem( text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.white),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.white),
+                              UrlLaunchableItem(text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.white),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              UrlLaunchableItem(text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/", color: Colors.white),
+                              UrlLaunchableItem(text: "Youtube", url: "https://www.youtube.com/user/fctunltv", color: Colors.white),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              UrlLaunchableItem(text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.white),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             width: size.width/4,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 150),
@@ -112,14 +114,14 @@ class AboutBottomBody extends StatelessWidget {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             width: size.width/3.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top:15),
+                const Padding(
+                  padding: EdgeInsets.only(top:15),
                   child: Text(
                       "UniVerse ּ  FCT NOVA",
                       textAlign: TextAlign.start,
@@ -136,7 +138,7 @@ class AboutBottomBody extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(context, '/about/us');
                     },
-                    child: Text.rich(
+                    child: const Text.rich(
                       TextSpan(
                       text: "Descobre mais sobre nós ",
                       style: TextStyle(
@@ -151,15 +153,15 @@ class AboutBottomBody extends StatelessWidget {
                   ),
                 ),
                 ),
-                Text(
+                const Text(
                     "Encontra e segue-nos:",
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color:Colors.white,
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.only(top:10),
+                const Padding(
+                  padding: EdgeInsets.only(top:10),
                   child:
                       Row(
                         children: [
@@ -178,14 +180,14 @@ class AboutBottomBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Spacer(),
-                Text(
+                const Spacer(),
+                const Text(
                       "Powered by:",
                       style: TextStyle(
                         color: Colors.white,
                       )
                   ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Image.asset("assets/capi_logo.png",scale:8),
               ],
             ),

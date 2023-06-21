@@ -44,9 +44,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+7
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
-  hash_password: 0.0.3
   connectivity_plus: ^2.3.0
-  requests: ^4.7.0
   camera: ^0.10.3
   #posso nao precisar
   internet_connection_checker: 1.0.0+1
@@ -56,6 +54,8 @@ dependencies:
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
+  requests: ^4.7.0
+  hash_password: 0.0.3
 
   #webview_flutter: ^4.2.2
 

@@ -7,10 +7,12 @@ import '../consts/color_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import '../main_screen/components/about_bottom_body.dart';
 import 'events_web_aux.dart';
-import 'events_web_auxEnd.dart';
 
-class EventWebPage extends StatelessWidget {
-  EventWebPage({super.key});
+class EventWebPageAuxEnd extends StatelessWidget {
+  final int indexAux;
+  final int aux;
+
+  EventWebPageAuxEnd({required this.indexAux, required this.aux}) : super();
   ScrollController yourScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class EventWebPage extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 3,
                             itemBuilder: (BuildContext context, int index) {
-                              final item = _articles[index];
+                              final item = _articles[index + aux];
                               return Container(
                                 height: 280,
                                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
@@ -129,31 +131,33 @@ class EventWebPage extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              DefaultButton(
-                                  text: "Próxima Página",
-                                  press: () {
-                                    _articles.length > 6?
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: 3))):
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: 3)));
-                                  }),
+                              Spacer(),Spacer(),Spacer(),Spacer(),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icons.navigate_next_outlined,
+                                  Icons.arrow_back_ios_rounded,
                                 ].map((e) {
                                   return InkWell(
                                     onTap: () {
-                                      _articles.length > 6?
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: 3,))):
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: 3,)));
+                                      aux - 3 > 3?
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: -1, aux: aux-3))):
+                                      Navigator.pushNamed(context, '/events');
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50),
+                                      child: Icon(e, size: 30),
                                     ),
                                   );
                                 }).toList(),
-                              )
+                              ),
+                              DefaultButton(
+                                  text: "Página Anterior",
+                                  press: () {
+                                    aux - 3 > 3?
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: -1, aux: aux-3))):
+                                    Navigator.pushNamed(context, '/events');
+                                  }),
+                              Spacer(),Spacer(),Spacer(),Spacer()
                             ],
                           ),
                         ),
@@ -236,7 +240,7 @@ final List<Article> _articles = [
   Article(
     title:
     "Isto e a noticia final da Universe, infelizmente e assim que as coisas acontecem",
-    date: "O evento vai decorrer no dia 24 de junho de 2023",
+    date: "O evento vai decorrer no dia 24 de junho de 20231",
     author: "Um dos donos da universe",
     imageUrl: "https://picsum.photos/id/1020/960/540",
     postedOn: "1 seconds ago",

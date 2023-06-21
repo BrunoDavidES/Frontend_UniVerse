@@ -6,11 +6,13 @@ import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import '../main_screen/components/about_bottom_body.dart';
-import 'events_web_aux.dart';
 import 'events_web_auxEnd.dart';
 
-class EventWebPage extends StatelessWidget {
-  EventWebPage({super.key});
+class EventWebPageAux extends StatelessWidget {
+  final int indexAux;
+  final int aux;
+
+  EventWebPageAux({required this.indexAux, required this.aux}) : super();
   ScrollController yourScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class EventWebPage extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 3,
                             itemBuilder: (BuildContext context, int index) {
-                              final item = _articles[index];
+                              final item = _articles[index + aux * indexAux];
                               return Container(
                                 height: 280,
                                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
@@ -129,31 +131,61 @@ class EventWebPage extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              DefaultButton(
-                                  text: "Próxima Página",
-                                  press: () {
-                                    _articles.length > 6?
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: 3))):
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: 3)));
-                                  }),
+                              Spacer(),Spacer(),Spacer(),Spacer(),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icons.navigate_next_outlined,
+                                  Icons.arrow_back_ios_rounded,
                                 ].map((e) {
                                   return InkWell(
                                     onTap: () {
-                                      _articles.length > 6?
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: 3,))):
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: 3,)));
+                                      aux - 3 > 3?
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: -1, aux: aux-3,))):
+                                      Navigator.pushNamed(context, '/events');
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50),
+                                      child: Icon(e, size: 30),
                                     ),
                                   );
                                 }).toList(),
-                              )
+                              ),
+                              DefaultButton(
+                                  text: "Página Anterior",
+                                  press: () {
+                                    aux - 3 > 3?
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: -1, aux: aux-3))):
+                                    Navigator.pushNamed(context, '/events');
+                                  }),
+                              Spacer(),
+                              DefaultButton(
+                                  text: "Próxima Página",
+                                  press: () {
+                                    aux + 4 > _articles.length?
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: aux+3))):
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: aux+3)));
+                                  }
+                              ),
+                              const Text("  "),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icons.arrow_forward_ios_rounded,
+                                ].map((e) {
+                                  return InkWell(
+                                    onTap: () {
+                                      aux + 4 > _articles.length?
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAux(indexAux: 1, aux: aux+3))):
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EventWebPageAuxEnd(indexAux: 1, aux: aux+3)));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Icon(e, size: 30),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              Spacer(),Spacer(),Spacer(),Spacer()
                             ],
                           ),
                         ),
