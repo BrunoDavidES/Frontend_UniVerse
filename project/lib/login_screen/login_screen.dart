@@ -79,7 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
     else {
 
     }*/
-
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){

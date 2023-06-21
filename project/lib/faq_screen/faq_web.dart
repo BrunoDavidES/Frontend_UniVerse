@@ -55,7 +55,7 @@ class FAQWebPage extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 100, left: 50, bottom: 10, top: 30),
+                            padding: const EdgeInsets.only(right: 100, left: 50, bottom: 10, top: 30),
                             child: Container(
                               color: Colors.transparent,
                               child: Row(
@@ -65,7 +65,7 @@ class FAQWebPage extends StatelessWidget {
                                     width: size.width/2.4,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         Padding(
                                           padding: EdgeInsets.only(bottom: 10),
                                           child: Text(

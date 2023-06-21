@@ -14,9 +14,8 @@ class BottomAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(                  //Zona do About
-      height: size.height/3,
-      width: size.width,
-      decoration: BoxDecoration(
+      height: 260,
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
           end: Alignment.centerLeft,
@@ -34,10 +33,7 @@ class BottomAbout extends StatelessWidget {
         children: <Widget>[
           const Spacer(),
           AboutBottomBody(),
-          const Spacer(), const Spacer(), const Spacer(), const Spacer(),
-          const Spacer(
-            flex: 2,
-          ),
+          const Spacer(),
         ],
       ),
     );
