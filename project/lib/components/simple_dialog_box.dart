@@ -70,6 +70,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 Spacer(),
                 DefaultButtonSimple(
                     text: widget.text,
+                    color: cPrimaryColor,
                     press: () {
                       if(widget.press == null)
                       Navigator.of(context).pop();

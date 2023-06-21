@@ -13,8 +13,10 @@ class FCTinfoBodyApp extends StatelessWidget {
         width: size.width,
       decoration: BoxDecoration(
         gradient: RadialGradient(
+          focal: Alignment.bottomCenter,
+          focalRadius: 0.1,
           center: Alignment.bottomCenter,
-          radius: 0.75,
+          radius: 0.65,
           colors: [
             cPrimaryOverLightColor,
             cDirtyWhiteColor,

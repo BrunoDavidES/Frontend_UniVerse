@@ -22,7 +22,6 @@ class FAQbox extends StatelessWidget {
                 end: Alignment.center,
                 //tileMode:TileMode.mirror,
                 colors: [
-                  cPrimaryOverLightColor.withOpacity(0.5),
                   cDirtyWhite,
                   cDirtyWhiteColor,
                 ],

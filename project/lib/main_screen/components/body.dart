@@ -36,7 +36,6 @@ class Body extends StatelessWidget {
                 ),
                 child: Row(
                   children: <Widget>[
-
                     Text(
                       " ver mais".toUpperCase(),
                       textAlign: TextAlign.center,

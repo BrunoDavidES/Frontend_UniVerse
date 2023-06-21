@@ -14,6 +14,7 @@ class PersonalWebPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: cDirtyWhite,
       body: Scrollbar(
         thumbVisibility: true, //always show scrollbar
         thickness: 8, //width of scrollbar
@@ -32,7 +33,7 @@ class PersonalWebPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(                //Zona das do Find
-                        height: size.height+115,
+                        height: size.height+size.height/7,
                         width: size.width,
                         color: cDirtyWhite,
                         child: const PersonalWebBody(),

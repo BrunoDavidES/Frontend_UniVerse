@@ -87,8 +87,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         var response = await Registration.registUser(password, confirmation, name, email);
         print(response);
         if (response == 200) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const LoginPageApp()));
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Registo com sucesso",
+                  descriptions: "Enviámos um e-mail para que possas confirmar a tua conta",
+                  text: "OK",
+                  press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                  },
+                );
+              }
+          );
         } else if (response == 400) {
           showDialog(context: context,
               builder: (BuildContext context){
@@ -109,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               }
           );
-        }/*else if (response == 01) {
+        }else if (response == 01) {
           showDialog(context: context,
               builder: (BuildContext context){
                 return CustomDialogBox(
@@ -119,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               }
           );
-        }*/
+        }
         else {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, img: Image.asset("assets/app/registo.png", scale: 6,))));
         }
@@ -162,10 +172,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontSize: 15
                       )),
                   const SizedBox(height: 20),
-                  MyTextField(controller: emailController, hintText: 'Introduz o teu email da faculdade', obscureText: false, label: 'Email', icon: Icon(Icons.email_outlined),),
-                  MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icon(Icons.person_outline),),
-                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
-                  MyTextField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icon(Icons.lock_outline),),
+                  MyTextField(controller: emailController, hintText: 'Introduz o teu email da faculdade', obscureText: false, label: 'Email', icon: Icons.email_outlined),
+                  MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
+                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
+                  MyTextField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
                   SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -212,6 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   )
                       :DefaultButtonSimple(
                       text: "REGISTAR",
+                      color: cPrimaryColor,
                       press: () {
                         registerButtonPressed(idController.text, nameController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
                         setState(() {

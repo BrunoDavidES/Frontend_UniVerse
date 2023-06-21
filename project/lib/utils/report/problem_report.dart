@@ -5,8 +5,6 @@ import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hash_password/hashing_functionalities.dart';
-import 'package:hash_password/password_hasher.dart';
 import 'package:http/http.dart' as http;
 
 import '../../utils/users/User.dart';

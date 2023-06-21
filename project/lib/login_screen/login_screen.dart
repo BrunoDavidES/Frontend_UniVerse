@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void logInButtonPressed(String id, String password) async {
-    try {
+   /* try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
@@ -78,15 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     else {
 
-    }
+    }*/
 
-
-    /*if(_source.keys.toList()[0]==ConnectivityResult.none) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("INTERNET"),
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -138,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     setState(() {
       isLoading = false;
-    });*/
+    });
   }
 
   @override
@@ -168,8 +161,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  MyTextField(controller: idController, hintText: 'Introduz o teu identificador do clip', obscureText: false, label: 'ID', icon: Icon(Icons.person_outline),),
-                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
+                  MyTextField(controller: idController, hintText: 'Introduz o teu identificador do clip', obscureText: false, label: 'ID', icon: Icons.person_outline,),
+                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
                   const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
@@ -203,6 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       DefaultButtonSimple(
                           text: "ENTRAR",
+                          color: cPrimaryColor,
                           press: () {
                             logInButtonPressed(idController.text, passwordController.text);
                             setState(() {
@@ -210,32 +204,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                           height: 20),
-                      InkWell(
-                        onTap: () {
-                          if(kIsWeb) {
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                builder: (_) => const AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.all(
-                                          Radius.circular(10.0)
-                                      )
-                                  ),
-                                  content: RegisterPageWeb(),
-                                )
-                            );
-                          }
-                          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
-                        },
-                        child: Text(
-                          "Criar conta",
-                          style: TextStyle(
-                              color: Colors.black
-                          ),
-                        ),
-                      ),
+                      DefaultButtonSimple(
+                          text: "CRIAR CONTA",
+                          color: cHeavyGrey,
+                          press: () {
+                            if(kIsWeb) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => const AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.all(
+                                            Radius.circular(10.0)
+                                        )
+                                    ),
+                                    content: RegisterPageWeb(),
+                                  )
+                              );
+                            }
+                            else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
+                          },
+                          height: 20),
                     ],
                   ),
                 ],

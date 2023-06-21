@@ -65,7 +65,7 @@ class WebHomePage extends StatelessWidget {
                   child: MainNews(width: size.width, height: size.height/1.15,),
                 ),
                 Container(                //Zona do google Maps
-                  height: size.height*0.8,
+                  height: size.height*0.9,
                   width: size.width,
                   color: cDirtyWhite,
                   child: mainPageMap(),

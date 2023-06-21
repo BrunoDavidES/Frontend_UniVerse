@@ -47,7 +47,6 @@ class _FindWebTestState extends State<findWebTest> {
                ),
               ],
             ),
-           Spacer(),
             BottomAbout(size: size,),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:UniVerse/calendar_screen/calendar_app.dart';
 import 'package:UniVerse/components/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:flutter/material.dart';
@@ -107,6 +108,10 @@ class PersonalPageBodyApp extends StatelessWidget {
                               return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
                             else if(index==8)
                               return MenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
+                            else if(index==9)
+                              return MenuCard(text: 'Calendário', description: 'Vê tudo o que tens para fazer no teu calendário',icon: Icons.calendar_month_outlined, press: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarPageApp()));
+                              });
                           }
                       ),
                     ),

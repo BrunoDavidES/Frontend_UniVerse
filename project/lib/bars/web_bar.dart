@@ -52,12 +52,14 @@ class CustomWebBar extends StatelessWidget {
           const Spacer(),
           DefaultButtonSimple(
               text: "Início",
+              color: cPrimaryColor,
               press: () {
                 Navigator.pushNamed(context, '/home');
               }, height: 20,
           ),
           DefaultButtonSimple(
             text: "Procurar",
+            color: cPrimaryColor,
             press: () {
               Navigator.pushNamed(context, '/find');
             },
@@ -65,6 +67,7 @@ class CustomWebBar extends StatelessWidget {
           ),
           DefaultButtonSimple(
             text: "Notícias",
+            color: cPrimaryColor,
             press: () {
               Navigator.pushNamed(context, '/news');
             },
@@ -72,6 +75,7 @@ class CustomWebBar extends StatelessWidget {
           ),
           DefaultButtonSimple(
             text: "Eventos",
+            color: cPrimaryColor,
             press: () {
               Navigator.pushNamed(context, '/events');
             },
@@ -79,6 +83,7 @@ class CustomWebBar extends StatelessWidget {
           ),
           DefaultButtonSimple(
             text: "Ajuda",
+            color: cPrimaryColor,
             press: () {
               Navigator.pushNamed(context, '/help');
             },
@@ -156,7 +161,7 @@ class CustomWebBar extends StatelessWidget {
    // }
     //)*/
          DefaultButton(
-    text: "Área Pessoal",
+    text: "LOGIN",
              press: () {
     //Navigator.pushNamed(context, '/personal/main');
                showDialog(

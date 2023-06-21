@@ -96,7 +96,7 @@ class CustomAppBar extends StatelessWidget {
   }
 
   void _navigateToNextScreenSettings(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FaqApp()));
   }
 
   void _navigateToNextScreenPersonal(BuildContext context) {

@@ -8,9 +8,9 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final String label;
   final bool obscureText;
-  final Icon icon;
+  final IconData? icon;
 
-  const MyTextField({super.key, this.controller, required this.hintText, required this.obscureText, required this.label, required this.icon});
+  const MyTextField({super.key, this.controller, required this.hintText, required this.obscureText, required this.label, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MyTextField extends StatelessWidget {
               labelStyle: TextStyle(
                 color: cDarkLightBlueColor
               ),
-              prefixIcon: Icon(icon.icon, color: cDarkLightBlueColor),
+              prefixIcon: Icon(icon!, color: cDarkLightBlueColor),
               /*suffixIcon: IconButton(
             icon: Icon(obscureText
             ?Icons.visibility_off_outlined

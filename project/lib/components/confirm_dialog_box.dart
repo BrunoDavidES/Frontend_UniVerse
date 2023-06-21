@@ -79,6 +79,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
                 children: [
                   DefaultButtonSimple(
                       text: "Cancelar",
+                      color: cPrimaryColor,
                       press: () {
                         Navigator.of(context).pop();
                         widget.press;
@@ -86,6 +87,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
                       height: 10),
                   DefaultButtonSimple(
                       text: "Confirmar",
+                      color: cPrimaryColor,
                       press: () {
                         Navigator.of(context).pop();
                         widget.press;

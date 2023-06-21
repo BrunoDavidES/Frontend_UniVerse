@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:UniVerse/components/500_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
@@ -10,6 +11,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import '../Components/default_button.dart';
 import '../components/500_app_with_bar.dart';
@@ -25,50 +27,30 @@ import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 
-class ReportScreenApp extends StatefulWidget {
-  const ReportScreenApp({super.key});
+class ReportScreenWeb extends StatefulWidget {
+  const ReportScreenWeb({super.key});
 
   @override
-  State<ReportScreenApp> createState() => _ReportScreenState();
+  State<ReportScreenWeb> createState() => _ReportScreenState();
 }
 
-class _ReportScreenState extends State<ReportScreenApp> {
-  Map _source = {ConnectivityResult.none: false};
-  final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
+class _ReportScreenState extends State<ReportScreenWeb> {
   bool isLoading = false;
   late TextEditingController titleController;
   late TextEditingController locationController;
   late TextEditingController descriptionController;
+  Uint8List imageUint8 = Uint8List(8);
+  File? pickedImage;
 
   @override
   void initState() {
     titleController = TextEditingController();
     locationController = TextEditingController();
     descriptionController = TextEditingController();
-    _connectivity.initialize();
-    _connectivity.myStream.listen((source) {
-      setState(() {
-        _source = source;
-      });
-    });
     super.initState();
   }
 
   void submitButtonPressed(String title, String location, String description) async {
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
-      showDialog(context: context,
-          builder: (BuildContext context){
-            return CustomDialogBox(
-              title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para reportares um problema precisamos que te ligues a uma rede.",
-              text: "OK",
-            );
-          }
-      );
-      setState(() {
-        isLoading = false;
-      });
-    } else {
       bool areControllersCompliant = Report.isCompliant(title, location, description);
       if (!areControllersCompliant) {
         showDialog(context: context,
@@ -102,12 +84,12 @@ class _ReportScreenState extends State<ReportScreenApp> {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
-                  text: "OK",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                  }
+                    title: "Ups!",
+                    descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
+                    text: "OK",
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                    }
                 );
               }
           );
@@ -118,7 +100,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       img: Image.asset(
                         "assets/app/login.png", scale: 6,))));
         }
-        }
       }
     setState(() {
       isLoading = false;
@@ -128,25 +109,11 @@ class _ReportScreenState extends State<ReportScreenApp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: cDirtyWhiteColor,
-        appBar: AppBar(
-          title: Image.asset("assets/app/login.png", scale:6),
-          automaticallyImplyLeading: false,
-          backgroundColor: cDirtyWhiteColor,
-          titleSpacing: 15,
-          elevation: 0,
-          leading: Builder(
-              builder: (context) {
-                return IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {Navigator.pop(context);},
-                    color: cDarkBlueColorTransparent);
-              }
+    return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15)
           ),
-          leadingWidth: 20,
-        ),
-        body: SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -157,54 +124,64 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       textAlign: TextAlign.justify,
                     ),
                   ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TextFormField(
-                      controller: titleController,
-                      decoration: const InputDecoration(
-                        icon: const Icon(Icons.title_outlined),
-                        hintText: 'Introduz um título',
+                  Container(
+                    padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+                    margin: EdgeInsets.only(left: 100, right: 100),
+                    child: Form(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextFormField(
+                              controller: titleController,
+                              decoration: const InputDecoration(
+                                icon: const Icon(Icons.title_outlined),
+                                hintText: 'Introduz um título',
+                              ),
+                            ),
+                            TextFormField(
+                              controller: locationController,
+                              decoration: const InputDecoration(
+                                icon: const Icon(Icons.location_on_outlined),
+                                hintText: 'Indica onde encontraste o problema',
+                              ),
+                            ),
+                          ]
                       ),
                     ),
-                    TextFormField(
-                      controller: locationController,
-                      decoration: const InputDecoration(
-                        icon: const Icon(Icons.location_on_outlined),
-                        hintText: 'Indica onde encontraste o problema',
-                      ),
-                    ),
-              ]
-                ),
-              ),
-            ),
-                Container(
-                  margin: EdgeInsets.only(left: 20, right:20, top: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: cHeavyGrey.withOpacity(0.6)
-                    )
                   ),
-                  padding: const EdgeInsets.only(left: 10, right:10),
-                  child: TextField(
-                    controller: descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    decoration: InputDecoration(
+                  Container(
+                    padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+                    margin: EdgeInsets.only(left: 120, right:120, top: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: cHeavyGrey.withOpacity(0.6)
+                        )
+                    ),
+                    child: TextField(
+                      controller: descriptionController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
+                      decoration: InputDecoration(
                         hintText: "Introduz a descrição do problema",
+                      ),
                     ),
                   ),
-                ),
                   InkWell(
-                    onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
+                    onTap: () async {
+                      final ImagePicker picker = ImagePicker();
+                      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                      if(image!=null) {
+                        var f = await image.readAsBytes();
+                         imageUint8= f;
+                        setState(() {
+                          pickedImage = File("a");
+                        });
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+                      margin: EdgeInsets.only(left: 100, right:100),
                       child: Row(
                         children: [
                           Padding(
@@ -213,7 +190,16 @@ class _ReportScreenState extends State<ReportScreenApp> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left:12),
-                            child: Text(
+                            child: pickedImage!=null
+                                ?Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15)
+                              ),
+                              width: 200,
+                              height: 150,
+                              child: Image.memory(imageUint8, fit: BoxFit.fill,),
+                            )
+                                : Text(
                               "Adiciona uma imagem aqui",
                               style: TextStyle(
                                   color: cHeavyGrey.withOpacity(0.9)
@@ -224,31 +210,31 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       ),
                     ),
                   ),
-                    //MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
-                    const SizedBox(height: 20),
-                    isLoading
-                        ? Container(
+                  //MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
+                  const SizedBox(height: 10),
+                  isLoading
+                      ? Container(
                       padding: EdgeInsets.all(10),
-                        width: 150,
-                        child: const LinearProgressIndicator(
+                      width: 150,
+                      child: const LinearProgressIndicator(
+                        color: cPrimaryColor,
+                        backgroundColor: cPrimaryOverLightColor,
+                      )
+                  )
+                      : Column(
+                    children: [
+                      DefaultButtonSimple(
+                          text: "SUBMETER",
                           color: cPrimaryColor,
-                          backgroundColor: cPrimaryOverLightColor,
-                        )
-                    )
-                        : Column(
-                      children: [
-                        DefaultButtonSimple(
-                            text: "SUBMETER",
-                            color: cPrimaryColor,
-                            press: () {
-                              submitButtonPressed(titleController.text, locationController.text, descriptionController.text);
-                            },
-                            height: 20),
-                      ],
-                    ),
-  ]
+                          press: () {
+                            submitButtonPressed(titleController.text, locationController.text, descriptionController.text);
+                          },
+                          height: 20),
+                    ],
+                  ),
+                ]
+            ),
           ),
-        )
     );
   }
 }

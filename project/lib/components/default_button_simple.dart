@@ -5,8 +5,9 @@ class DefaultButtonSimple extends StatelessWidget {
   final String text;
   final Function press;
   final double height;
+  final Color color;
   const DefaultButtonSimple({
-    super.key, required this.text, required this.press, required this.height,
+    super.key, required this.text, required this.press, required this.height, required this.color,
   });
 
   @override
@@ -23,9 +24,9 @@ class DefaultButtonSimple extends StatelessWidget {
         },
         child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: cPrimaryColor
+                color: color
             )
         ),
       ),

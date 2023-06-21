@@ -4,17 +4,21 @@ import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import '../components/default_button_simple.dart';
+import '../components/text_field.dart';
 import '../consts/color_consts.dart';
 import '../find_screen/findTest/right_side.dart';
 import '../main_screen/components/about_bottom_body.dart';
 
 class FAQWebPage extends StatelessWidget {
+  TextEditingController? controller;
   FAQWebPage({super.key});
   ScrollController yourScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: cDirtyWhite,
         body: Scrollbar(
           thumbVisibility: true, //always show scrollbar
           thickness: 8, //width of scrollbar
@@ -25,7 +29,18 @@ class FAQWebPage extends StatelessWidget {
           child: SingleChildScrollView(
             controller: yourScrollController,
             child: Container(
-                color: cDirtyWhite,
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    focal: Alignment.centerRight,
+                    focalRadius: 0.1,
+                    center: Alignment.centerRight,
+                    radius: 0.40,
+                    colors: [
+                      cPrimaryOverLightColor,
+                      cDirtyWhite,
+                    ],
+                  ),
+                ),
                 child: Stack(
                   children: <Widget> [
                     Padding(
@@ -42,8 +57,9 @@ class FAQWebPage extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(right: 100, left: 50, bottom: 10, top: 30),
                             child: Container(
-                              color: cDirtyWhite,
+                              color: Colors.transparent,
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                     width: size.width/2.4,
@@ -99,9 +115,12 @@ class FAQWebPage extends StatelessWidget {
                                       ],
                                     ),
                                   ),
+                                  SizedBox(width: 50),
                                   Container(
                                     width: size.width/2.4,
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(bottom: 10),
@@ -114,6 +133,149 @@ class FAQWebPage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            border: Border.all(
+                                              color: cHeavyGrey.withOpacity(0.4),
+                                              width: 1
+                                            )
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Email:",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: cDarkBlueColor
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10,),
+                                                      Expanded(
+                                                        child: TextFormField(
+                                                          controller: controller,
+                                                          decoration: InputDecoration(
+                                                              labelStyle: TextStyle(
+                                                                  color: cDarkLightBlueColor
+                                                              ),
+                                                              enabledBorder: OutlineInputBorder(
+                                                                borderRadius: BorderRadius.circular(15),
+                                                                borderSide: BorderSide(
+                                                                  color: cDarkLightBlueColor,
+                                                                ),
+                                                              ),
+                                                              focusedBorder: OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                    color: cDarkBlueColor,
+                                                                  )
+                                                              ),
+                                                              fillColor: Colors.white60,
+                                                              filled: true,
+                                                              hintStyle: TextStyle(
+                                                                  color: Colors.grey
+                                                              )
+                                                          ),
+                                                        ),
+                                                      ),
+                                            ]
+                                        ),
+                                          SizedBox(height: 10),
+                                              Row(
+                                                  children: [
+                                                    Text(
+                                                      "Assunto:",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: cDarkBlueColor
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10,),
+                                                    Expanded(
+                                                      child: TextFormField(
+                                                        controller: controller,
+                                                        decoration: InputDecoration(
+                                                            labelStyle: TextStyle(
+                                                                color: cDarkLightBlueColor
+                                                            ),
+                                                            enabledBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(15),
+                                                              borderSide: BorderSide(
+                                                                color: cDarkLightBlueColor,
+                                                              ),
+                                                            ),
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                  color: cDarkBlueColor,
+                                                                )
+                                                            ),
+                                                            fillColor: Colors.white60,
+                                                            filled: true,
+                                                            hintStyle: TextStyle(
+                                                                color: Colors.grey
+                                                            )
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ]
+                                              ),
+                                              SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                          Text(
+                                          "Descrição:",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: cDarkBlueColor
+                                          ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                      Expanded(
+                                        child: TextFormField(
+                                              maxLines: 7,
+                                              maxLength: 300,
+                                              controller: controller,
+                                              decoration: InputDecoration(
+                                                  labelStyle: TextStyle(
+                                                      color: cDarkLightBlueColor
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderSide: BorderSide(
+                                                      color: cDarkLightBlueColor,
+                                                    ),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: cDarkBlueColor,
+                                                      )
+                                                  ),
+                                                  fillColor: Colors.white60,
+                                                  filled: true,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.grey
+                                                  )
+                                              ),
+                                            ),
+                                      ),
+                                                ],
+                                              ),
+                                              DefaultButtonSimple(
+                                                text: "Enviar",
+                                                color: cDarkBlueColor,
+                                                press: () {
+                                                },
+                                                height: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -126,7 +288,7 @@ class FAQWebPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: cDirtyWhite,
+                      color: Colors.transparent,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
