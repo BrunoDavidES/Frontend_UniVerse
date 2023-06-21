@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void logInButtonPressed(String id, String password) async {
-   /* try {
+    try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
@@ -72,14 +72,30 @@ class _LoginScreenState extends State<LoginScreen> {
         IdTokenResult idTokenResult = await user.getIdTokenResult(true);
         String? idToken = idTokenResult.token;
         print(idToken);
+
+        var response = await Authentication.loginUser(id, idToken);
+                if (response == 200) {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const WebPersonalPage()));
+                } else if (response==401) {
+                  showDialog(context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialogBox(
+                          title: "Ups!",
+                          descriptions: "O utilizador e/ou password incorretos. Tenta novamente.",
+                          text: "OK",
+                        );
+                      }
+                  );
+                }
       } catch (e) {
 
       }
     }
     else {
 
-    }*/
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+    }
+    /*if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
@@ -127,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, img: Image.asset("assets/app/login.png", scale: 6,))));
               }
         }
-      }
+      }*/
     setState(() {
       isLoading = false;
     });
