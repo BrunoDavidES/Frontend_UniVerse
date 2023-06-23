@@ -4,6 +4,7 @@ import 'package:UniVerse/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
+import 'package:UniVerse/utils/chat/chat_utils.dart';
 
 class ChatPageApp extends StatefulWidget {
   final String receiverUserEmail;
@@ -66,7 +67,7 @@ class _MyChatPageState extends State<ChatPageApp> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           /* Expanded(
+            /* Expanded(
               child: buildMessageList(),
             ),*/
             buildList(size.width, size.height),
@@ -79,25 +80,25 @@ class _MyChatPageState extends State<ChatPageApp> {
 
   Widget buildList(double width, double height) {
     return SingleChildScrollView(
-        child: Column(
+      child: Column(
           children: [
             Container(
               margin: EdgeInsets.all(7.5),
               padding: EdgeInsets.all(5),
-              width: width/2+50,
+              width: width / 2 + 50,
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: cPrimaryOverLightColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                "Esta é a mensagem que recebes e aparece assim. Fixe não achas?"
+                  "Esta é a mensagem que recebes e aparece assim. Fixe não achas?"
               ),
             ),
             Container(
               margin: EdgeInsets.all(7.5),
               padding: EdgeInsets.all(5),
-              width: width/2+50,
+              width: width / 2 + 50,
               alignment: Alignment.centerRight,
               decoration: BoxDecoration(
                 color: cPrimaryLightColor,
@@ -108,39 +109,54 @@ class _MyChatPageState extends State<ChatPageApp> {
               ),
             )
           ]
-        ),
+      ),
     );
   }
 
   Widget buildInput() {
+    void sendMessage() {
+      String message = messageController.text;
+      String senderId = "jota";
+      String recipientId = "halo";
+
+      // Call the sendMessage function from chat_utils.dart
+      ChatUtils.sendMessage(senderId, recipientId, message);
+
+      // Clear the message text field
+      messageController.clear();
+    }
+
     return Row(
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(left:10, bottom: 10, top: 10),
+            padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
             child: TextFormField(
               obscureText: false,
               controller: messageController,
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: cDarkLightBlueColor,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: cDarkLightBlueColor,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: cDarkLightBlueColor,
-                      )
-                  ),
-                  fillColor: Colors.white60,
-                  filled: true,
+                    )
+                ),
+                fillColor: Colors.white60,
+                filled: true,
                 hintText: "mensagem",
               ),
             ),
           ),
         ),
-        IconButton(onPressed: () {}, icon: Icon(Icons.send_sharp, color: cDarkBlueColor,))
+        IconButton(
+          onPressed: sendMessage,
+          icon: Icon(Icons.send_sharp, color: cDarkBlueColor),
+        )
       ],
     );
   }
