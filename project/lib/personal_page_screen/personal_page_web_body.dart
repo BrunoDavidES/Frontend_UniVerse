@@ -5,6 +5,8 @@ import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:UniVerse/consts/api_consts.dart';
 
 import '../components/web_menu_card.dart';
 import '../main_screen/components/about_bottom_body.dart';
@@ -48,51 +50,62 @@ class PersonalWebBodyState extends State<PersonalWebBody> {
                 ),
               ],
             ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: size.height,
-                    width: size.width/7.5,
-                    child: ListView(
-                      children:  [
-                        Column(
-                          children: <Widget>[
-                            WebMenuCard(text: 'Logout', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.logout_outlined),
-                            WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
-                            WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
-                            WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
-                            WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
-                            WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
-                            WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                            WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                            WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                            WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                            WebMenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: cHeavyGrey),
-                        boxShadow: [ BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: const Offset(0,0),
-                        ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: size.height,
+                  width: size.width/7.5,
+                  child: ListView(
+                    children:  [
+                      Column(
+                        children: <Widget>[
+                          WebMenuCard(
+                            text: 'Logout',
+                            description: 'Vê e altera as tuas informações pessoais.',
+                            icon: Icons.logout_outlined,
+                            press: () async {
+                              final response = await http.post(
+                                Uri.parse(baseUrl + logoutUrl),
+                              );
+                              print(response.statusCode);
+                              return response.statusCode;
+                            },
+                          ),
+                          WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
+                          WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
+                          WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
+                          WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
+                          WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
+                          WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                          WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                          WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                          WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                          WebMenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
                         ],
-                        color: cDirtyWhiteColor
-                    ),
-                      height: size.height,
-                      width: size.width-size.width/7.5-40,
-                    child: ReportScreenWeb(),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: cHeavyGrey),
+                      boxShadow: [ BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0,0),
+                      ),
+                      ],
+                      color: cDirtyWhiteColor
+                  ),
+                  height: size.height,
+                  width: size.width-size.width/7.5-40,
+                  child: ReportScreenWeb(),
+                )
+              ],
+            ),
           ],
         ),
 

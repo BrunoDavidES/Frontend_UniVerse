@@ -15,13 +15,12 @@ class Authentication {
     return id.isEmpty || password.isEmpty ? false : true;
   }
 
-  static Future<int> loginUser(String id, String password) async {
-    //PASSWORD_HASHER
-    return authenticate(id, password);
+  static Future<int> loginUser(String id, String idToken) async {
+    return authenticate(id, idToken);
     // return true;
   }
 
-  static Future<int> authenticate(String id, String password) async {
+  static Future<int> authenticate(String id, String idToken) async {
     final response = await http.post(
       Uri.parse(baseUrl + loginUrl),
       headers: <String, String>{
@@ -29,7 +28,7 @@ class Authentication {
       },
       body: jsonEncode(<String, String>{
         'username': id,
-        'password': password,
+        'token': idToken,
       }),
     );
     print(response.headers);

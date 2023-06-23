@@ -4,7 +4,6 @@ import 'package:UniVerse/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
-import 'package:UniVerse/utils/chat/chat.dart';
 
 import 'chat_screen_app.dart';
 

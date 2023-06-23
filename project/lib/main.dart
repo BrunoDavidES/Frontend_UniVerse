@@ -8,6 +8,7 @@ import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'calendar_screen/personal_page_web_test.dart';
+import 'chat/chat_screen_app.dart';
 import 'firebase_options.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
