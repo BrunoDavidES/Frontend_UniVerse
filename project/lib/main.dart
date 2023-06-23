@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
@@ -21,9 +22,20 @@ import 'login_screen/login_web.dart';
 import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+
+import 'news_screen/news_web_detail_screen.dart';
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  if(!kIsWeb) {
+    var data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    if(data.size.shortestSide<600) {
+      SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp
+    ]);
+    }
+  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -51,7 +63,9 @@ class MyApp extends StatelessWidget {
           '/news': (context) => NewsWebPage(),
           '/events': (context) => EventWebPage(),
           '/about/us': (context) => UniverseInfoWeb(),
-          '/personal/main': (context) => PersonalWebTest(),
+          '/personal/main': (context) => PersonalPageWeb(i: 2,),
+          '/news/id_detail': (context) => NewsDetailScreenWeb(),
+          '/personal/profile': (context) => PersonalPageWeb(i: 1,),
         },
       );
     } else {

@@ -1,6 +1,5 @@
 
 import 'dart:async';
-//import 'dart:js_interop';
 
 import 'package:UniVerse/login_screen/functions/sessionManager.dart';
 import 'package:firebase_auth/firebase_auth.dart';

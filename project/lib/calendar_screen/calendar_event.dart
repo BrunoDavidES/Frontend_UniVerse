@@ -14,7 +14,8 @@ class CalendarEvent {
   static List<CalendarEvent> events = [
     CalendarEvent("Este é o título".toUpperCase(), "Ninf", "Relvado da biblioteca"),
     CalendarEvent("Este é um segundo evento".toUpperCase(), "Ninf", "Relvado da biblioteca"),
-    CalendarEvent("Terceiro evento de exemplo".toUpperCase(), "Ninf", "Relvado da biblioteca"),
+
+
   ];
 
 }

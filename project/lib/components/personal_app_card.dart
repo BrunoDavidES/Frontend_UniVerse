@@ -80,22 +80,6 @@ class PersonalAppCard extends StatelessWidget {
             children: [
               Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 2, top: 5),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePageApp()));
-                  },
-                  child: Text(
-                      "O MEU PERFIL",
-                      style: TextStyle(
-                          color: cDirtyWhite.withOpacity(0.75),
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.all(5),
                 child: Image.asset("assets/app/dot.png", scale: 2, alignment: Alignment.bottomRight),
               ),

@@ -9,8 +9,9 @@ import '../calendar_screen/calendar_event.dart';
 import '../consts/list_consts.dart';
 
 class CalendarEventCard extends StatefulWidget {
-  CalendarEventCard(this.data, {super.key});
+  CalendarEventCard(this.data, {super.key, required this.color});
   CalendarEvent data;
+  final Color color;
 
   @override
   State<StatefulWidget> createState() => CalendarEventState();
@@ -20,14 +21,12 @@ class CalendarEventState extends State<CalendarEventCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    Random random = Random();
-    int cindex = random.nextInt(toRandom.length);
    return Container(
         margin: EdgeInsets.only(right: 10, bottom: 10, left:10),
         padding: EdgeInsets.only(left: 10, top: 5, bottom: 5, right: 5),
         width: size.width-100,
         decoration: BoxDecoration(
-            color: cDarkLightBlueColor,
+            color: widget.color,
             borderRadius: BorderRadius.circular(10),
 
         ),

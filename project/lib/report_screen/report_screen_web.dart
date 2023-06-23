@@ -97,7 +97,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) =>
                   Error500WithBar(i: 3,
-                      img: Image.asset(
+                      title: Image.asset(
                         "assets/app/login.png", scale: 6,))));
         }
       }

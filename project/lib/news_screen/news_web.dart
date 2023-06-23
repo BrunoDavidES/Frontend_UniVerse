@@ -1,7 +1,11 @@
+import 'dart:math';
+
+import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
+import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import 'news_web_Aux.dart';
 import 'news_web_AuxEndPage.dart';
@@ -12,6 +16,8 @@ class NewsWebPage extends StatelessWidget {
   ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    Random random = Random();
+    int cindex = random.nextInt(toRandom.length);
     return Scaffold(
       body: Scrollbar(
         thumbVisibility: true, //always show scrollbar
@@ -27,101 +33,146 @@ class NewsWebPage extends StatelessWidget {
             child: Stack(
               children: <Widget> [
                 Padding(
-                  padding: EdgeInsets.only(top: size.height/6),
+                  padding: EdgeInsets.only(top: size.height/7),
                   child: Column(
                     children: [
-                      Container(                //Zona do Feed
-                        height: 950,
-                        width: 1100,
+                      Padding(
+                        padding: const EdgeInsets.only(left:50, top: 20),
+                        child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Image.asset("assets/web/noticias.png", scale: 4,)
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:30),//Zona do Feed
+                        height: size.height*1.60,
+                        width: size.width-300,
                         color: cDirtyWhite,
+
                         child: ListView.builder(
-                          itemCount: 3,
+                          itemCount: 4,
                           itemBuilder: (BuildContext context, int index) {
                             final item = _articles[index];
-                            return Container(
-                              height: 280,
-                              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 3,
-                                      color: const Color(0xFFE0E0E0)),
-                                  borderRadius: BorderRadius.circular(8.0)
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  const Spacer(),
-                                  Container(
-                                      width: size.width/5,
-                                      height: 220,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(item.imageUrl),
+
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  child: Divider(
+                                    thickness: 2,
+                                    color: toRandom[cindex],
+                                  ),
+                                ),
+                                Container(
+                                  height: size.height/3,
+                                  margin: EdgeInsets.only(top: 5, bottom: 5),
+                                  padding: const EdgeInsets.all(5),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                          width: size.width/4,
+                                          height: size.height/3,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(item.imageUrl),
+                                            ),
+                                            border: Border.all(
+                                              color: cHeavyGrey,
+                                            ),
+                                            boxShadow: [ BoxShadow(
+                                              color: Colors.grey.withOpacity(0.75),
+                                              spreadRadius: 3,
+                                              blurRadius: 7,
+                                              offset: const Offset(0,0),
+                                            ),
+                                            ],
+                                          )
+                                      ),
+                                      SizedBox(width: 15,),
+                                      Container(
+                                        width: size.width/1.95,
+                                        height: size.height/3,
+                                        margin: EdgeInsets.only(top:5, bottom: 5),
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: cDirtyWhiteColor,
+                                          borderRadius: BorderRadius.circular(10)
                                         ),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 2.0,
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                  const Spacer(),
-                                  SizedBox(
-                                    width: size.width/3.2,
-                                    child: Expanded(
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 20),
-                                            Text(
-                                              "${item.title}".toUpperCase(),
-                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const Spacer(),
-                                            Text(
-                                              "${item.preNews}",
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const Spacer(), const Spacer(),
-                                            Text("  ${item.author} · ${item.postedOn}",
-                                                style: Theme.of(context).textTheme.caption),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Icons.bookmark_border_rounded,
-                                                Icons.share,
-                                                Icons.more_vert
-                                              ].map((e) {
-                                                return InkWell(
-                                                  onTap: () {},
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(right: 8.0),
-                                                    child: Icon(e, size: 16),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                            const SizedBox(height: 8),
-                                          ],
-                                        )
-                                    ),
+                                                Text(
+                                                  "${item.title}".toUpperCase(),
+                                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                                SizedBox(height: 15,),
+                                                Text(
+                                                  "${item.preNews}",
+                                                  maxLines: 3,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                                SizedBox(height: 20,),
+                                                Text("Autoria de ${item.author} · ${item.postedOn}",
+                                                    style: TextStyle(
+                                                      color: cHeavyGrey
+                                                    ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Icons.bookmark_border_rounded,
+                                                    Icons.share,
+                                                  ].map((e) {
+                                                    return InkWell(
+                                                      onTap: () {},
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(right: 5.0),
+                                                        child: Icon(e, size: 16, color: cHeavyGrey,),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, "/news/id_detail");
+                                    },
+                                    child: Text(
+                                      "VER NOTÍCIA",
+                                      style: TextStyle(
+                                        color: cHeavyGrey,
+                                      ),
+                                    )
+                                  )
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                        ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             );
                           },
                         ),
                       ),
+                      SizedBox(
+                        width: size.width-300,
+                        child: Divider(
+                          thickness: 2,
+                          color: toRandom[cindex],
+                        ),
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 60.0),
+                        padding: const EdgeInsets.only(top: 20, bottom: 60.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -145,7 +196,7 @@ class NewsWebPage extends StatelessWidget {
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50),
+                                      child: Icon(e, size: 50, color: cPrimaryColor),
                                     ),
                                   );
                                 }).toList(),

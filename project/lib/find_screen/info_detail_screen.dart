@@ -41,10 +41,16 @@ class InfoDetailState extends State<InfoDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {Navigator.pop(context);},
-                color: cDirtyWhiteColor),
+            Container(
+              decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+                color: cDirtyWhiteColor.withOpacity(0.6)
+        ),
+              child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {Navigator.pop(context);},
+                  color: cHeavyGrey),
+            ),
             Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 15, bottom: 5),
@@ -60,8 +66,9 @@ class InfoDetailState extends State<InfoDetailScreen> {
             ),
             Container(
               margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
               width: double.infinity,
-              height: size.height/2,
+              height: size.height/2.25,
               decoration: BoxDecoration(
                   boxShadow: [ BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -74,13 +81,10 @@ class InfoDetailState extends State<InfoDetailScreen> {
                   color: cDirtyWhiteColor.withOpacity(0.60)
               ),
               child:SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Text(
+                child: Text(
                     "OLÁ",
                     textAlign: TextAlign.justify,
-                  ),
-                ),
+                  )
               ),
             ),
           ],
