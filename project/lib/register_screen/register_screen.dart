@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         }
         else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, img: Image.asset("assets/app/registo.png", scale: 6,))));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/registo.png", scale: 6,))));
         }
       }
         setState(() {

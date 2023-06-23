@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/components/grid_item.dart';
 import 'package:UniVerse/consts/text_consts.dart';
@@ -12,6 +14,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import '../components/500_app_with_bar.dart';
 import '../components/menu_card.dart';
 import '../components/personal_app_card.dart';
+import '../consts/list_consts.dart';
 import '../report_screen/report_app.dart';
 import '../report_screen/report_screen_app.dart';
 import 'calendar_event.dart';
@@ -31,9 +34,13 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
   late String selectedDayString;
   late String selectedMonthString;
   late Map<DateTime, List<CalendarEvent>> selectedEvents;
+  late Color color;
 
   @override
   void initState() {
+    Random random = Random();
+    int cindex = random.nextInt(toRandom2.length);
+    color = toRandom2[cindex];
     initializeDateFormatting('pt_PT', null);
     selectedDayString = selectedDay.day.toString();
     selectedMonthString = monthsInText[selectedDay.month-1];
@@ -42,12 +49,11 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
-        title: Image.asset("assets/app/area.png", scale:6),
+        title: Image.asset("assets/titles/calendar.png", scale:6),
         leadingWidth: 20,
         leading: Builder(
             builder: (context) {
@@ -106,7 +112,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   calendarStyle: CalendarStyle(
                       isTodayHighlighted: true,
                     selectedDecoration: BoxDecoration(
-                      color: cDarkLightBlueColor,
+                      color: color,
                       borderRadius: BorderRadius.circular(10)
                     ),
                     todayTextStyle: TextStyle(
@@ -153,7 +159,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
-              ...CalendarEvent.events.map((e) => CalendarEventCard(e)),
+              ...CalendarEvent.events.map((e) => CalendarEventCard(e, color: color)),
               SizedBox(height: 70,)
             ],
           ),

@@ -115,7 +115,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) =>
                   Error500WithBar(i: 3,
-                      img: Image.asset(
+                      title: Image.asset(
                         "assets/app/login.png", scale: 6,))));
         }
         }
@@ -131,7 +131,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
-          title: Image.asset("assets/app/login.png", scale:6),
+          title: Image.asset("assets/app/report.png", scale:6),
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,
@@ -164,6 +164,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TextFormField(
+                      maxLength: 25,
                       controller: titleController,
                       decoration: const InputDecoration(
                         icon: const Icon(Icons.title_outlined),
@@ -171,6 +172,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       ),
                     ),
                     TextFormField(
+                      maxLength: 50,
                       controller: locationController,
                       decoration: const InputDecoration(
                         icon: const Icon(Icons.location_on_outlined),
@@ -191,6 +193,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                   ),
                   padding: const EdgeInsets.only(left: 10, right:10),
                   child: TextField(
+                    maxLength: 100,
                     controller: descriptionController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 5,

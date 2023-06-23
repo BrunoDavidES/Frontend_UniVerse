@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 
 class Error500WithBar extends StatelessWidget {
   final int i;
-  final Image img;
-  const Error500WithBar({super.key, required this.i, required this.img});
+  final Image title;
+  const Error500WithBar({super.key, required this.i, required this.title});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: img,
+          title: title,
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,

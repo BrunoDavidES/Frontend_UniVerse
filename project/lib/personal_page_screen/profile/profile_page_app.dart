@@ -2,6 +2,7 @@ import 'package:UniVerse/components/grid_item.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
+import '../../components/custom_shape.dart';
 import 'edit_profile_page_app.dart';
 
 class ProfilePageApp extends StatelessWidget {
@@ -12,72 +13,113 @@ class ProfilePageApp extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        margin: EdgeInsets.only(left:10, top:40, bottom: 10, right: 10),
-        padding: EdgeInsets.all(2),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                cPrimaryLightColor,
-                //Colors.green,
-                //Colors.orange
-                Colors.red
-              ],
-            ),
-            //color: cDirtyWhiteColor,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [ BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: const Offset(0,0),
-            ),
-            ]
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-              Row(
-                children: [
-                  IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {Navigator.pop(context);},
-                      color: cDirtyWhiteColor.withOpacity(0.75)),
-                  Image.asset("assets/app/profile_title.png", scale: 7,),
-                ],
-              ),
-            Row(
+      appBar: AppBar(
+          title: Image.asset("assets/app/profile_title.png", scale:6),
+          leadingWidth: 20,
+          leading: Builder(
+              builder: (context) {
+                return IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {Navigator.pop(context);},
+                    color: cDirtyWhiteColor);
+              }
+          ),
+          backgroundColor: cPrimaryColor,
+          titleSpacing: 15,
+          elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+              },
+            icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor,),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 240,
+            child: Stack(
               children: [
-                Spacer(),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePageApp()));
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                          "Editar".toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: cDirtyWhite.withOpacity(0.85)
+                ClipPath(
+                  clipper: CustomShape(),
+                  child:
+                      Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            cPrimaryColor,
+                            cPrimaryLightColor,
+                            cPrimaryOverLightColor
+                          ],
+                        ),
                         ),
                       ),
+
+                  ),
+                  Row(
+                    children: [
+
+                      Column(
+                        children: [
+                          Container(
+                            height: 140,
+                            width: 140,
+                            margin: EdgeInsets.only(left:10, top: 10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: cDirtyWhiteColor, width: 5),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/man.png")
+                              )
+                            ),
+                          ),
+                          Text("Bruno David",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Text("bm.david",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: cHeavyGrey
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
                       Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: Icon(Icons.edit_outlined, color: cDirtyWhite.withOpacity(0.85),),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 90,),
+                            Text("Aluno",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: cHeavyGrey
+                            )),
+                            SizedBox(height: 5),
+                            Text("Presidente de Núcleo",
+                                style: TextStyle(
+                                fontSize: 15,
+                                color: cHeavyGrey
+                            )),
+                          ],
+                        ),
                       )
                     ],
                   ),
-                )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          )
+        ],
+      )
     );
   }
 }
