@@ -22,6 +22,43 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    if (size.width >= 600)
+      if (MediaQuery.of(context).orientation == Orientation.portrait) {
+        return Row(
+          children: [
+            Spacer(),
+            Container(
+              width: size.width / 1.5,
+              child: UniverseAppBar(i: i,),
+            ),
+            Spacer()
+          ],
+        );
+      } else {
+        return Row(
+          children: [
+            Spacer(),
+            Container(
+              width: size.width / 2,
+              child: UniverseAppBar(i: i,),
+            ),
+            Spacer()
+          ],
+        );
+      }
+    else
+        return UniverseAppBar(i: i);
+      }
+  }
+
+class UniverseAppBar extends StatelessWidget {
+  final int i;
+
+  const UniverseAppBar({super.key, required this.i});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -82,7 +119,7 @@ class CustomAppBar extends StatelessWidget {
               text: 'Definições',
               onPressed: (){
                 _navigateToNextScreenSettings(context);
-                },
+              },
             ),
           ],
           selectedIndex: i,
@@ -106,6 +143,4 @@ class CustomAppBar extends StatelessWidget {
   void _navigateToNextScreenFind(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FindPageApp()));
   }
-
-
 }

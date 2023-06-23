@@ -26,8 +26,7 @@ class NewsFeed extends StatefulWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(10),
-            child:
-           FutureBuilder(
+            child: FutureBuilder(
               future: Article.fetchNews(3, 0),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -36,7 +35,7 @@ class NewsFeed extends StatefulWidget {
                   } else {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: Article.news.map((e) => NewsCard(e)).toList(),
                     );
                   }

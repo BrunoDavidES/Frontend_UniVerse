@@ -1,4 +1,6 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
+import 'package:UniVerse/chat/chat_app.dart';
+import 'package:UniVerse/chat/contacts_screen_app.dart';
 import 'package:UniVerse/components/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
@@ -99,8 +101,8 @@ class PersonalPageBodyApp extends StatelessWidget {
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));
                               });
                             else if(index==3)
-                              return MenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined, press: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverUserEmail: 'Bruno', receiverUserID: 'bm.david')));
+                              return MenuCard(text: 'Mensagens', description: 'Comunica de forma rápida e fácil!',icon: Icons.message_outlined, press: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
                               });
                             else if(index==4)
                               return MenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });

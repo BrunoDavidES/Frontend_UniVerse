@@ -18,6 +18,23 @@ class NewsCard extends StatefulWidget {
 class NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
+    var sizeWidth;
+    var sizeHeight;
+    Size size = MediaQuery.of(context).size;
+    if(size.width>600) {
+      if(MediaQuery.of(context).orientation==Orientation.portrait) {
+        sizeWidth = size.width-200;
+        sizeHeight= size.height/4;
+      }
+      else {
+        sizeWidth = size.width/2;
+        sizeHeight= size.height/2;
+      }
+    }
+    else {
+      sizeWidth=double.infinity;
+      sizeHeight=size.height/3;
+    }
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
     return InkWell(
@@ -25,10 +42,10 @@ class NewsCardState extends State<NewsCard> {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailScreen(widget.data, toRandom[cindex])));
       },
       child: Container(
-        width: 400,
+        width: sizeWidth,
         margin: EdgeInsets.only(bottom: 20),
         padding: EdgeInsets.all(2),
-        height: 225,
+        height: sizeHeight,
         decoration: BoxDecoration(
           color: cDirtyWhiteColor,
           borderRadius: BorderRadius.circular(15),
@@ -50,7 +67,7 @@ class NewsCardState extends State<NewsCard> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 190,
+                      height: sizeHeight-40,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
@@ -60,7 +77,7 @@ class NewsCardState extends State<NewsCard> {
                       ),
                     ),
                     Container(
-                      height: 190,
+                      height: sizeHeight-40,
                       child: Column(
                         children: [
                           Spacer(),

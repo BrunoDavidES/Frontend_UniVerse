@@ -116,6 +116,15 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                       Row(
                         children: [
                           Spacer(),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top:20, bottom: 60),
+                child: Icon(Icons.arrow_back_ios_new_outlined, size: 50, color: cPrimaryColor),
+              ),
+            ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 60),
                             child: DefaultButton(

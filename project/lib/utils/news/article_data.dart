@@ -38,7 +38,7 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, int offset) async {
-   /* String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+   String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     final response = await http.post(
       Uri.parse(baseUrl + newsUrl),
@@ -63,8 +63,8 @@ class Article {
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
-    return response.statusCode;*/
-    return 200;
+    return response.statusCode;
+   // return 200;
   }
 
 
