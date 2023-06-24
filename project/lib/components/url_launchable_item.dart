@@ -26,6 +26,7 @@ class UrlLaunchableItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               text,

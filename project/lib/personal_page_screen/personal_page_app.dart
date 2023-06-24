@@ -23,7 +23,6 @@ class AppPersonalPage extends StatelessWidget {
         ),
         child: Stack(
           children: <Widget>[
-            DrawerMenu(),
             PersonalPageBodyApp(),
             //const Spacer(),
             Container(

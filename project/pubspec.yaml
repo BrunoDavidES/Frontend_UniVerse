@@ -118,6 +118,8 @@ flutter:
     - assets/web/android.png
     - assets/web/ios.png
     - assets/app/registo.png
+    - assets/web/perfil-web.png
+    - assets/web/404.png
     - assets/app/ufo.png
     - assets/capi_logo.png
     - assets/web/foto.jpg

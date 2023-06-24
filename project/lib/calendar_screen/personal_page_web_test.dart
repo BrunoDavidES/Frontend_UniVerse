@@ -38,16 +38,16 @@ class PersonalPageWeb extends StatelessWidget {
                     ClipPath(
                       clipper: CustomShape(),
                       child: Container(
-                        height: size.height / 2.25,
+                        height: size.height / 2,
                         width: size.width,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              cPrimaryColor,
                               cPrimaryLightColor,
-                              cPrimaryOverLightColor
+                              cPrimaryOverLightColor,
+                              cDirtyWhite
                             ],
                           ),
                         ),
@@ -57,11 +57,14 @@ class PersonalPageWeb extends StatelessWidget {
                     padding: EdgeInsets.only(top: size.height/7),
                     child: Column(
                       children: [
+                        //if(i==0)
+                          //MainPersonalPageWeb(),
                        if(i==1)
                          ProfileScreenWeb(),
                        if(i==2)
-                          CalendarScreenWeb(),
-                       // ReportScreenWeb(),
+                         ReportScreenWeb(),
+                       if(i==3)
+                         CalendarScreenWeb(),
                         BottomAbout(size: size,),
                       ],
                     ),

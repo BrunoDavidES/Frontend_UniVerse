@@ -1,5 +1,6 @@
 import 'package:UniVerse/components/personal_web_card.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/personal_page_screen//left_side.dart';
 import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:UniVerse/main_screen/components/about_bottom.dart';
@@ -72,7 +73,9 @@ class PersonalWebBodyState extends State<PersonalWebBody> {
                               return response.statusCode;
                             },
                           ),
-                          WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
+                          WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline, press: () {
+                            Authentication.validateLogin();
+                          },),
                           WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
                           WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
                           WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),

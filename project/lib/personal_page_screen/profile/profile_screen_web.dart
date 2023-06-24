@@ -9,6 +9,8 @@ import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import '../../login_screen/functions/auth.dart';
+
 class ProfileScreenWeb extends StatefulWidget {
   const ProfileScreenWeb({super.key});
 
@@ -67,7 +69,11 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                       WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
                       WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
                       WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
-                      WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
+                      WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () {
+    if(!Authentication.userIsLoggedIn)
+    Navigator.pushNamed(context, "/home");
+    else Navigator.pushNamed(context, "/personal/calendar");
+                      }),
                       WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
                       WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
                       WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
@@ -82,22 +88,23 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
     Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset("assets/app/profile_title.png", scale: 4.5,)
-                ),
-              ),
-              Stack(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset("assets/web/perfil-web.png", scale: 4.5,)
+                    ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         height: 140,
                         width: 140,
-                        margin: EdgeInsets.only(left:20, top: 10),
+                        margin: EdgeInsets.only(left:80, top: 10),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: cDirtyWhite, width: 5),
@@ -107,18 +114,25 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                             )
                         ),
                       ),
-                      Text("Bruno David",
-                        style: TextStyle(
-                          fontSize: 20,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 80),
+                        child: Text("Bruno David",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                       SizedBox(height: 5,),
-                      Text("bm.david",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: cHeavyGrey
+                      Padding(
+                        padding: const EdgeInsets.only(left:80),
+                        child: Text("bm.david",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: cHeavyGrey
+                          ),
                         ),
                       ),
+
                     ],
                   ),
                 ],

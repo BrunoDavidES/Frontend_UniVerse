@@ -8,6 +8,7 @@ import 'package:UniVerse/info_screen/universe_info_app.dart';
 import 'package:UniVerse/login_screen/login_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

@@ -83,6 +83,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
           isLoading = false;
         });
       }
+      areControllersCompliant = Registration.isConfirmationCompliant(password, confirmation);
+      if (!areControllersCompliant) {
+        showDialog(context: context,
+            builder: (BuildContext context){
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Parece existir um erro com a palavra-passe e confirmação que escreveste-",
+                text: "OK",
+              );
+            }
+        );
+        setState(() {
+          isLoading = false;
+        });
+      }
       else {
         var response = await Registration.registUser(password, confirmation, name, email);
         print(response);
@@ -91,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               builder: (BuildContext context){
                 return CustomDialogBox(
                   title: "Registo com sucesso",
-                  descriptions: "Enviámos um e-mail para que possas confirmar a tua conta",
+                  descriptions: "Enviámos-te um e-mail para que possas confirmar a tua conta",
                   text: "OK",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
@@ -109,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               }
           );
-        } else if (response == 00) {
+        } /*else if (response == 00) {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(
@@ -129,9 +144,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               }
           );
-        }
+        }*/
         else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/registo.png", scale: 6,))));
+          if(kIsWeb)
+            Navigator.popAndPushNamed(context, "/error");
+          else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/registo.png", scale: 6,))));
         }
       }
         setState(() {
@@ -172,7 +189,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontSize: 15
                       )),
                   const SizedBox(height: 20),
-                  MyTextField(controller: emailController, hintText: 'Introduz o teu email da faculdade', obscureText: false, label: 'Email', icon: Icons.email_outlined),
+                  MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined),
                   MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
                   MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
                   MyTextField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),

@@ -172,8 +172,8 @@ class _MyChatPageState extends State<ChatPageApp> {
   Widget buildInput() {
     void sendMessage() {
       String message = messageController.text;
-      String senderId = "jota";
-      String recipientId = "halo";
+      String senderId = "halo";
+      String recipientId = "jota";
 
       // Call the sendMessage function from chat_utils.dart
       ChatUtils.sendMessage(senderId, recipientId, message);

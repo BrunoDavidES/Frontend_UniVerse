@@ -10,8 +10,9 @@ import 'components/newsMain.dart';
 
 class WebHomePage extends StatelessWidget {
   WebHomePage({super.key});
-  @override
+
   ScrollController yourScrollController = ScrollController();
+  bool showbtn = false;
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(

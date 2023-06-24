@@ -2,6 +2,8 @@
 import 'dart:math';
 
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';

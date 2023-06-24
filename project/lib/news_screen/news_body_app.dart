@@ -42,7 +42,22 @@ class NewsFeed extends StatefulWidget {
                 }
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "A CARREGAR NOTÍCIAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cPrimaryLightColor
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),

@@ -2,6 +2,8 @@ import 'package:UniVerse/components/url_launchable_icon_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
+import '../components/url_launchable_item.dart';
+
 class FCTinfoBodyApp extends StatelessWidget {
   const FCTinfoBodyApp({super.key});
 
@@ -73,13 +75,13 @@ class FCTinfoBodyApp extends StatelessWidget {
             Text(
               "FCT NOVA nas redes:"
             ),
-            UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://www.fct.unl.pt/", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Youtube", url: "https://www.youtube.com/user/fctunltv", color: Colors.black),
-            UrlLaunchableIconItem(icon: const Icon(Icons.web), text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.black),
+            UrlLaunchableItem(text: "Website", url: "https://www.fct.unl.pt/", color: Colors.black),
+            UrlLaunchableItem(text: "Facebook", url: "https://www.facebook.com/fct.nova", color: Colors.black),
+            UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/fctnova", color: Colors.black),
+            UrlLaunchableItem(text: "Twitter", url: "https://www.twitter.com/FCTNOVA", color: Colors.black),
+            UrlLaunchableItem(text: "LinkedIn", url: "https://pt.linkedin.com/school/nova-school-of-science-and-technology/", color: Colors.black),
+            UrlLaunchableItem(text: "Youtube", url: "https://www.youtube.com/user/fctunltv", color: Colors.black),
+            UrlLaunchableItem(text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.black),
             ],
           ),
 ],

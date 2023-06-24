@@ -15,6 +15,7 @@ class NewsDetailScreenWeb extends StatefulWidget {
   //Article data;
   //Color color;
 
+
   @override
   State<StatefulWidget> createState() => NewsDetailState();
 }
@@ -86,30 +87,49 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                 ],
                               )
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                child: Text("${item.title}".toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                width: size.width-size.width/2.75,
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Text(
-                                  "${item.preNews}",
-                                  style: TextStyle(
-                                    fontSize: 15
-                                  ),
-                                  textAlign: TextAlign.justify,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: cDirtyWhiteColor,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Text("${item.title}".toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
                                 ),
-                              )
-                            ],
+                                Container(
+                                  width: size.width-size.width/2.75,
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    "${item.preNews}",
+                                    style: TextStyle(
+                                      fontSize: 15
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:20, right: 20),
+                                      child:Text("Autoria de ${item.author} · ${item.postedOn}",
+                                        style: TextStyle(
+                                            color: cHeavyGrey
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),

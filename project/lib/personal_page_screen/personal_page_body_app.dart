@@ -3,6 +3,7 @@ import 'package:UniVerse/chat/chat_app.dart';
 import 'package:UniVerse/chat/contacts_screen_app.dart';
 import 'package:UniVerse/components/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
@@ -40,7 +41,7 @@ class PersonalPageBodyApp extends StatelessWidget {
                   var response = Authentication.revoge();
                   if(response==500)
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/area.png", scale: 6,))));
-                  else Navigator.of(context).pop();
+                  else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
                 },
                 child:
                     Center(

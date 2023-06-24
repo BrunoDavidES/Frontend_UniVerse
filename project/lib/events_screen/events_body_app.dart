@@ -41,8 +41,23 @@ class EventsState extends State<EventsFeed> {
                   }
                 }
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                    padding: const EdgeInsets.all(10.0),
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                "A CARREGAR EVENTOS",
+                style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: cPrimaryLightColor
+                ),
+                ),
+                )
+                ]
+                )
                 );
               },
             ),

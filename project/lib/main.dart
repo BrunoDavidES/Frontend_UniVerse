@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:UniVerse/components/500_web.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
@@ -9,6 +10,7 @@ import 'package:UniVerse/utils/network_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'calendar_screen/personal_page_web_test.dart';
 import 'chat/chat_screen_app.dart';
+import 'components/not_found.dart';
 import 'firebase_options.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
@@ -58,15 +60,21 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/home',
         routes: {
+          '/error': (context) => Error500Web(),
           '/home': (context) => WebHomePage(),
           '/help': (context) => FAQWebPage(),
           '/find': (context) => FindWebPage(),
           '/news': (context) => NewsWebPage(),
+          '/news/id_detail': (context) => NewsDetailScreenWeb(),
           '/events': (context) => EventWebPage(),
           '/about/us': (context) => UniverseInfoWeb(),
-          '/personal/main': (context) => PersonalPageWeb(i: 2,),
-          '/news/id_detail': (context) => NewsDetailScreenWeb(),
+          '/personal/main': (context) => PersonalPageWeb(i: 0,),
+          '/personal/report': (context) => PersonalPageWeb(i: 2,),
+          '/personal/calendar': (context) => PersonalPageWeb(i: 3),
           '/personal/profile': (context) => PersonalPageWeb(i: 1,),
+        },
+        onUnknownRoute: (settings) {
+          return MaterialPageRoute(builder: (_) => PageNotFound());
         },
       );
     } else {
