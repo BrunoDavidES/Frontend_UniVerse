@@ -6,6 +6,7 @@ import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_web.dart';
 import 'package:UniVerse/utils/network_controller.dart';
+import 'package:UniVerse/tester/tester_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'calendar_screen/personal_page_web_test.dart';
 import 'chat/chat_screen_app.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
           '/news/id_detail': (context) => NewsDetailScreenWeb(),
           '/personal/profile': (context) => PersonalPageWeb(i: 1,),
           '/chat': (context) => ChatPageApp(receiverUserEmail: '', receiverUserID: '',),
+          '/tester': (context) => const TesterScreen(),
         },
       );
     } else {
