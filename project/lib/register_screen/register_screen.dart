@@ -30,7 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
   bool isLoading = false;
-  bool _isPasswordVisible = false;
   late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController passwordController;
@@ -64,9 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }
       );
-      setState(() {
-        isLoading = false;
-      });
     } else {
       bool areControllersCompliant = Registration.isCompliant(email, name, password, confirmation);
       if (!areControllersCompliant) {
@@ -83,79 +79,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
           isLoading = false;
         });
       }
-      areControllersCompliant = Registration.isConfirmationCompliant(password, confirmation);
-      if (!areControllersCompliant) {
-        showDialog(context: context,
-            builder: (BuildContext context){
-              return CustomDialogBox(
-                title: "Ups!",
-                descriptions: "Parece existir um erro com a palavra-passe e confirmação que escreveste-",
-                text: "OK",
-              );
-            }
-        );
-        setState(() {
-          isLoading = false;
-        });
-      }
       else {
-        var response = await Registration.registUser(password, confirmation, name, email);
-        print(response);
-        if (response == 200) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Registo com sucesso",
-                  descriptions: "Enviámos-te um e-mail para que possas confirmar a tua conta",
-                  text: "OK",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                  },
-                );
-              }
-          );
-        } else if (response == 400) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "O email indicado já foi registado.",
-                  text: "OK",
-                );
-              }
-          );
-        } /*else if (response == 00) {
+        areControllersCompliant =
+            Registration.areCompliant(password, confirmation);
+        if (!areControllersCompliant) {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "O email indicado não é válido.",
+                  descriptions: "A confirmação da palavra-passe está errada",
                   text: "OK",
                 );
               }
           );
-        }else if (response == 01) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "A palavra-passe não está de acordo com as restrições estabelecidas.",
-                  text: "OK",
-                );
-              }
-          );
-        }*/
-        else {
-          if(kIsWeb)
-            Navigator.popAndPushNamed(context, "/error");
-          else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/registo.png", scale: 6,))));
+          setState(() {
+            isLoading = false;
+          });
+        } else {
+          var response = await Registration.registUser(
+              password, confirmation, name, email);
+          print(response);
+          if (response == 200) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Registo com sucesso",
+                    descriptions: "Damos-te as boas-vindas ao Universo!\nEnviámos um e-mail para que possas confirmar a tua conta.",
+                    text: "OK",
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const LoginPageApp()));
+                    },
+                  );
+                }
+            );
+          } else if (response == 400) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "O email indicado já foi registado.",
+                    text: "OK",
+                  );
+                }
+            );
+          } else if (response == 00) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "O email indicado não é válido.",
+                    text: "OK",
+                  );
+                }
+            );
+          } else if (response == 01) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "A palavra-passe não está de acordo com as restrições estabelecidas.",
+                    text: "OK",
+                  );
+                }
+            );
+          }
+          else {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) =>
+                    Error500WithBar(i: 3,
+                        title: Image.asset(
+                          "assets/app/registo.png", scale: 6,))));
+          }
         }
       }
-        setState(() {
-          isLoading = false;
-        });
-      }
     }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,9 +191,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontSize: 15
                       )),
                   const SizedBox(height: 20),
-                  MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined),
+                  MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined, ),
                   MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
-                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
+                  MyTextField(controller: passwordController, hintText: 'No mínimo: 6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
                   MyTextField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
                   SizedBox(height: 10),
                   Padding(
@@ -201,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                  Navigator.of(context).pop();
+                            Navigator.of(context).pop();
                             if(kIsWeb) {
                               showDialog(
                                   context: context,
@@ -221,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Text(
                             "Já tenho uma conta",
                             style: TextStyle(
-                              color: Colors.black
+                                color: Colors.black
                             ),
                           ),
                         ),

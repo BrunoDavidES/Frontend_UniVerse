@@ -86,7 +86,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
             builder: (BuildContext context) {
               return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
+                  descriptions: "Parece que não iniciaste sessão na tua conta.",
                   text: "OK",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 
-class MyTextField extends StatelessWidget {
+class MyTextField extends StatefulWidget {
 
   final controller;
   final String hintText;
@@ -13,19 +13,34 @@ class MyTextField extends StatelessWidget {
   const MyTextField({super.key, this.controller, required this.hintText, required this.obscureText, required this.label, this.icon});
 
   @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  @override
   Widget build(BuildContext context) {
+    bool isVisible = false;
     return Padding(
       padding: const EdgeInsets.only(left: 20, right:20, top: 10),
       child: Container(
         child: TextFormField(
-          obscureText: obscureText,
-          controller: controller,
+          obscureText: widget.obscureText,
+          controller: widget.controller,
           decoration: InputDecoration(
-              labelText: label,
+              labelText: widget.label,
               labelStyle: TextStyle(
                 color: cDarkLightBlueColor
               ),
-              prefixIcon: Icon(icon!, color: cDarkLightBlueColor),
+              prefixIcon: Icon(widget.icon!, color: cDarkLightBlueColor),
+              /*suffixIcon: IconButton(onPressed: (){
+                setState(() {
+                  isVisible = !isVisible;
+                });
+              },
+                  icon: Icon(
+                    if(isVisible)
+                    Icons.visibility_offIcons.visibility,
+                  )),*/
               /*suffixIcon: IconButton(
             icon: Icon(obscureText
             ?Icons.visibility_off_outlined
@@ -47,7 +62,7 @@ class MyTextField extends StatelessWidget {
             ),
             fillColor: Colors.white60,
             filled: true,
-            hintText: hintText,
+            hintText: widget.hintText,
             hintStyle: TextStyle(
               color: Colors.grey
             )
@@ -56,5 +71,4 @@ class MyTextField extends StatelessWidget {
       ),
     );
   }
-  
 }

@@ -1,6 +1,4 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
-import 'package:UniVerse/chat/chat_app.dart';
-import 'package:UniVerse/chat/contacts_screen_app.dart';
 import 'package:UniVerse/components/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'dart:io';
 
-import '../chat/chat_screen_app.dart';
+import '../chat_screen/chat_app.dart';
 import '../components/500_app_with_bar.dart';
 import '../components/menu_card.dart';
 import '../components/personal_app_card.dart';

@@ -4,6 +4,7 @@ import 'package:UniVerse/personal_page_screen/profile/profile_screen_web.dart';
 import 'package:UniVerse/report_screen/report_screen_web.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import '../chat_screen/chat_screen_web.dart';
 import '../components/personal_web_card.dart';
 import 'package:UniVerse/components/custom_shape.dart';
 import '../consts/color_consts.dart';
@@ -65,6 +66,8 @@ class PersonalPageWeb extends StatelessWidget {
                          ReportScreenWeb(),
                        if(i==3)
                          CalendarScreenWeb(),
+                        if(i==4)
+                          ChatScreenWeb(),
                         BottomAbout(size: size,),
                       ],
                     ),

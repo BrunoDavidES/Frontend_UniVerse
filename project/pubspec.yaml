@@ -122,6 +122,7 @@ flutter:
     - assets/web/404.png
     - assets/app/ufo.png
     - assets/capi_logo.png
+    - assets/titles/messages.png
     - assets/web/foto.jpg
     - assets/web/noticias.png
     - assets/app/departments.png
