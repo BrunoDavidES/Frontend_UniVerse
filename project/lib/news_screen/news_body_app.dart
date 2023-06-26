@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
-import '../components/500_app.dart';
+import '../components/500.dart';
 import '../components/news_card.dart';
 import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
@@ -31,7 +31,7 @@ class NewsFeed extends StatefulWidget {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {
-                    return Error500App();
+                    return Error500();
                   } else {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,

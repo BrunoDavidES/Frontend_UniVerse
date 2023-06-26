@@ -1,6 +1,5 @@
 
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../Components/default_button.dart';
@@ -11,7 +10,8 @@ import '../main_screen/components/about_bottom.dart';
 import '../utils/news/article_data.dart';
 
 class NewsDetailScreenWeb extends StatefulWidget {
-  NewsDetailScreenWeb(/*this.data, this.color,*/ {super.key});
+  final String id;
+  NewsDetailScreenWeb(/*this.data, this.color,*/ {super.key, required this.id});
   //Article data;
   //Color color;
 

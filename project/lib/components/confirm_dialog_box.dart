@@ -1,8 +1,7 @@
-import 'package:UniVerse/components/list_item.dart';
+
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'default_button_simple.dart';
 
 class ConfirmDialogBox extends StatefulWidget {
@@ -36,10 +35,6 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
   }
   contentBox(context, height, width){
     return Expanded(
-      /*padding: EdgeInsets.only(left: Constants.padding,top: Constants.avatarRadius
-              + Constants.padding, right: Constants.padding,bottom: Constants.padding
-          ),
-          margin: EdgeInsets.only(top: Constants.avatarRadius),*/
       child: Container(
         child:Container(
         padding: EdgeInsets.all(2),

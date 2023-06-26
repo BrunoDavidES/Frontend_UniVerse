@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
-import '../components/500_app_with_bar.dart';
+import '../components/app/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';

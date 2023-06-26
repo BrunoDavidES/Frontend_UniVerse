@@ -1,10 +1,14 @@
 import 'dart:async';
 
-import 'package:UniVerse/components/500_web.dart';
+import 'package:UniVerse/components/web/500_web.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
+import 'package:UniVerse/find_screen/services_screen/testing.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
+import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'calendar_screen/personal_page_web_test.dart';
 import 'components/not_found.dart';
 import 'firebase_options.dart';
@@ -16,10 +20,12 @@ import 'main_screen/app/homepage_app.dart';
 import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:UniVerse/utils/route.dart';
 
 import 'news_screen/news_web_detail_screen.dart';
 
 Future main() async{
+  //setUrlStrategy(PathUrlStrategy());
   WidgetsFlutterBinding.ensureInitialized();
   if(!kIsWeb) {
     var data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
@@ -42,32 +48,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(kIsWeb) {
-     // Article.fetchNews(3, 0);
-      return MaterialApp(
+      return MaterialApp.router(
         title: 'UniVerse ּ  FCT NOVA',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/home',
-        routes: {
-          '/error': (context) => Error500Web(),
-          '/home': (context) => WebHomePage(),
-          '/help': (context) => FAQWebPage(),
-          '/find': (context) => FindWebPage(),
-          '/news': (context) => NewsWebPage(),
-          '/news/id_detail': (context) => NewsDetailScreenWeb(),
-          '/events': (context) => EventWebPage(),
-          '/about/us': (context) => UniverseInfoWeb(),
-          '/personal/main': (context) => PersonalPageWeb(i: 0,),
-          '/personal/profile': (context) => PersonalPageWeb(i: 1,),
-          '/personal/report': (context) => PersonalPageWeb(i: 2,),
-          '/personal/calendar': (context) => PersonalPageWeb(i: 3),
-          '/personal/messages': (context) => PersonalPageWeb(i:4),
-        },
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute(builder: (_) => PageNotFound());
-        },
-      );
+        routerConfig: Routing.router,
+      ).animate().fadeIn(duration: 500.ms);
     } else {
       return MaterialApp(
         title: 'UniVerse ּ  FCT NOVA',

@@ -1,12 +1,7 @@
-import 'dart:math';
 
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/news_screen/news_app_detail_screen.dart';
-import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
-
 import '../calendar_screen/calendar_event.dart';
-import '../consts/list_consts.dart';
 
 class CalendarEventCard extends StatefulWidget {
   CalendarEventCard(this.data, {super.key, required this.color});
@@ -22,8 +17,8 @@ class CalendarEventState extends State<CalendarEventCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
    return Container(
-        margin: EdgeInsets.only(right: 10, bottom: 10, left:10),
-        padding: EdgeInsets.only(left: 10, top: 5, bottom: 5, right: 5),
+        margin: const EdgeInsets.only(right: 10, bottom: 10, left:10),
+        padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5, right: 5),
         width: size.width-100,
         decoration: BoxDecoration(
             color: widget.color,
@@ -35,17 +30,17 @@ class CalendarEventState extends State<CalendarEventCard> {
           children: [
                   Text(
                     widget.data.title!,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         color: cDirtyWhiteColor
                     ),
                   ),
             Row(
               children: [
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Text(
                   widget.data.location!,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 13,
                       color: cDirtyWhiteColor
                   ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

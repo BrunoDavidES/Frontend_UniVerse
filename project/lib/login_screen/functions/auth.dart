@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/browser_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:requests/requests.dart';
 
@@ -62,8 +60,7 @@ class Authentication {
         IdTokenResult idTokenResult = await user.getIdTokenResult(true);
         String? idToken = idTokenResult.token;
         print(idToken);
-        var client = BrowserClient()..withCredentials=true;
-        final response = await client.post(
+        final response = await http.post(
           Uri.parse(baseUrl + loginUrl),
           headers: <String, String>{
             'Content-Type': 'application/json',

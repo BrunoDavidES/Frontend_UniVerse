@@ -1,8 +1,8 @@
 import 'package:UniVerse/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../components/500_app.dart';
-import '../components/events_card.dart';
+import '../components/500.dart';
+import '../components/app/events_card.dart';
 import '../components/news_card.dart';
 import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
@@ -30,7 +30,7 @@ class EventsState extends State<EventsFeed> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {
-                    return Error500App();
+                    return Error500();
                   } else if(snapshot.data == 403){
                     return LoginScreen();
                   } else { return Column(

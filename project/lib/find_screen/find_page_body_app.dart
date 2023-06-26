@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
-import '../components/grid_item.dart';
+import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
 import '../main_screen/app/homepage_app.dart';
 import 'chosen_page_app.dart';

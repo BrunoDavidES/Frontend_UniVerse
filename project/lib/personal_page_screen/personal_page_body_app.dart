@@ -1,5 +1,5 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
-import 'package:UniVerse/components/grid_item.dart';
+import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
@@ -8,8 +8,8 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'dart:io';
 
 import '../chat_screen/chat_app.dart';
-import '../components/500_app_with_bar.dart';
-import '../components/menu_card.dart';
+import '../components/app/500_app_with_bar.dart';
+import '../components/app/menu_card.dart';
 import '../components/personal_app_card.dart';
 import '../report_screen/report_app.dart';
 import '../report_screen/report_screen_app.dart';

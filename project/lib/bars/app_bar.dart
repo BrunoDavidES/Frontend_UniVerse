@@ -112,7 +112,7 @@ class UniverseAppBar extends StatelessWidget {
               },
             ),
           ],
-          //selectedIndex: i,
+          selectedIndex: i,
         ),
       ),
     );

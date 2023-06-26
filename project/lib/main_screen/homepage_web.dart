@@ -16,6 +16,7 @@ class WebHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: cDirtyWhite,
       body: Scrollbar(
         thumbVisibility: true, //always show scrollbar
         thickness: 8, //width of scrollbar
@@ -147,7 +148,7 @@ class WebHomePage extends StatelessWidget {
                           Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
                           Padding(
                             padding: const EdgeInsets.only(left:20, right: 20),
-                            child: Text(
+                            child: SelectableText(
                               "Instala já a nossa aplicação!".toUpperCase(),
                               style: const TextStyle(
                                 color: cPrimaryColor,
