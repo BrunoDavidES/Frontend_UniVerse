@@ -38,7 +38,7 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
-   String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+   /*String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     final response = await http.post(
       Uri.parse(baseUrl + newsUrl),
@@ -47,7 +47,12 @@ class Article {
       },
       body: jsonEncode({
         if(filters.isNotEmpty)
-         'filters': filters
+          'filters': jsonEncode(
+            {
+              'title': 'Caso chocante na fct'
+            }
+          ),
+
       }),
     );
     if(response.statusCode==200) {
@@ -64,8 +69,8 @@ class Article {
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
-    return response.statusCode;
-   //return 200;
+    return response.statusCode;*/
+   return 200;
   }
 
 

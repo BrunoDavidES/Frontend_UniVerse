@@ -12,8 +12,8 @@ import '../utils/news/article_data.dart';
 
 class NewsDetailScreenWeb extends StatefulWidget {
   final String id;
-  final Article? data;
-  NewsDetailScreenWeb( {super.key, required this.id, this.data});
+  final Article data;
+  NewsDetailScreenWeb( {super.key, required this.id, required this.data});
   //Article data;
   //Color color;
 
@@ -27,12 +27,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
 
   @override
   void initState() {
-    if(widget.data==null) {
-      Article.fetchNews(1, 0, {'id': widget.id});
-      item = Article.news[0];
-    } else {
-      item=widget.data;
-    }
+    super.initState();
   }
   ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
@@ -110,7 +105,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 20),
-                                  child: Text("${item.title}".toUpperCase(),
+                                  child: Text("${widget.data.title}".toUpperCase(),
                                       style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold
@@ -121,7 +116,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                   width: size.width-size.width/2.75,
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: Text(
-                                    "${item.text}",
+                                    "${widget.data.text}",
                                     style: TextStyle(
                                       fontSize: 15
                                     ),
@@ -132,7 +127,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top:20, right: 20),
-                                      child:Text("Autoria de ${item.author} · ${item.date}",
+                                      child:Text("Autoria de ${widget.data.author} · ${widget.data.date}",
                                         style: TextStyle(
                                             color: cHeavyGrey
                                         ),

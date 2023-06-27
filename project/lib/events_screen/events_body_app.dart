@@ -26,7 +26,7 @@ class EventsState extends State<EventsFeed> {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: FutureBuilder(
-              future: Event.fetchEvents(3, 0),
+              future: Event.fetchEvents(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {

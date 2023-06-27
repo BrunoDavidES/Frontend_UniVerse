@@ -99,6 +99,7 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/titles/events.png
     - assets/app/links.png
     - assets/man.png
     - assets/app/area.png

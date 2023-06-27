@@ -26,7 +26,7 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
     bool isHovering = false;
     return InkWell(
       onTap: () => context.go(
-          "/news/full?id=${widget.data.id}",
+          "/news/full/${widget.data.id}",
           extra: widget.data),
       onHover: (hovering) {
         setState(() => isHovering = hovering);
