@@ -1,6 +1,7 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../Components/default_button.dart';
 import '../bars/web_bar.dart';
@@ -11,7 +12,8 @@ import '../utils/news/article_data.dart';
 
 class NewsDetailScreenWeb extends StatefulWidget {
   final String id;
-  NewsDetailScreenWeb(/*this.data, this.color,*/ {super.key, required this.id});
+  final Article? data;
+  NewsDetailScreenWeb( {super.key, required this.id, this.data});
   //Article data;
   //Color color;
 
@@ -21,8 +23,18 @@ class NewsDetailScreenWeb extends StatefulWidget {
 }
 
 class NewsDetailState extends State<NewsDetailScreenWeb> {
+  var item;
+
+  @override
+  void initState() {
+    if(widget.data==null) {
+      Article.fetchNews(1, 0, {'id': widget.id});
+      item = Article.news[0];
+    } else {
+      item=widget.data;
+    }
+  }
   ScrollController yourScrollController = ScrollController();
-  final item = _articles[0];
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Random random = Random();
@@ -109,7 +121,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                   width: size.width-size.width/2.75,
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: Text(
-                                    "${item.preNews}",
+                                    "${item.text}",
                                     style: TextStyle(
                                       fontSize: 15
                                     ),
@@ -120,7 +132,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top:20, right: 20),
-                                      child:Text("Autoria de ${item.author} · ${item.postedOn}",
+                                      child:Text("Autoria de ${item.author} · ${item.date}",
                                         style: TextStyle(
                                             color: cHeavyGrey
                                         ),
@@ -150,8 +162,7 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                             child: DefaultButton(
                                 text: "Página Anterior",
                                 press: () {
-                                  Navigator.pop(context);
-                                }),
+                                  Navigator.pop(context); }),
                           ),
                           Spacer()
                         ],
@@ -178,7 +189,8 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
   }
 }
 
-class Article {
+/*class Article {
+  final String id;
   final String title;
   final String preNews;
   final String imageUrl;
@@ -187,6 +199,7 @@ class Article {
 
   Article(
       {
+        required this.id,
         required this.title,
         required this.preNews,
         required this.imageUrl,
@@ -196,10 +209,11 @@ class Article {
 
 final List<Article> _articles = [
 Article(
+  id: "10",
 title: "Instagram quietly limits ‘daily time limit’ option",
 preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle. Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle.",
 author: "MacRumors",
 imageUrl: "https://picsum.photos/id/1000/960/540",
 postedOn: "Yesterday",
 ),
-];
+];*/

@@ -1,6 +1,7 @@
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:UniVerse/utils/news/article_data.dart';
 
 import '../calendar_screen/personal_page_web_test.dart';
 import '../components/not_found.dart';
@@ -11,6 +12,7 @@ import '../find_screen/find_page_web.dart';
 import '../info_screen/universe_info_web.dart';
 import '../main_screen/homepage_web.dart';
 import '../news_screen/news_web.dart';
+import '../news_screen/news_web_detail_screen.dart';
 
 class Routing {
   static GoRouter router = GoRouter(
@@ -36,6 +38,24 @@ class Routing {
           name: 'Notícias',
           path: '/news',
           builder: (BuildContext context, GoRouterState state) => NewsWebPage(),
+  routes: [
+  GoRoute(
+  path: 'full',
+  builder: (BuildContext context, GoRouterState state) {
+    var id;
+    if(state == null)
+      id = Uri.base.queryParameters.values.first;
+      else id = state.queryParameters['id'];
+    Article? data = state.extra as Article?;
+    return NewsDetailScreenWeb(id: id.toString(), data: data,);
+  },
+  /* redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn) {
+                      return '/home';
+                    }
+                  }*/
+  ),
+  ]
         ),
         GoRoute(
           name: 'Eventos',

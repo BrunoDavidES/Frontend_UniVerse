@@ -37,16 +37,17 @@ class Article {
     print("OLÁ");
   }
 
-  static Future<int> fetchNews(int limit, int offset) async {
-   /*String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+  static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
+   String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     final response = await http.post(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, Map<String, String>>{
-       //'filters': {'validated_backoffice':'true'},
+      body: jsonEncode({
+        if(filters.isNotEmpty)
+         'filters': filters
       }),
     );
     if(response.statusCode==200) {
@@ -63,8 +64,8 @@ class Article {
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
-    return response.statusCode;*/
-   return 200;
+    return response.statusCode;
+   //return 200;
   }
 
 

@@ -69,17 +69,13 @@ class CustomWebBar extends StatelessWidget {
           DefaultButtonSimple(
             text: "Eventos",
             color: cPrimaryColor,
-            press: () {
-              Navigator.pushNamed(context, '/events');
-            },
+            press: () => context.go('/events'),
             height: 20,
           ),
           DefaultButtonSimple(
             text: "Ajuda",
             color: cPrimaryColor,
-            press: () {
-              Navigator.pushNamed(context, '/help');
-            },
+            press: () => context.go('/help'),
             height: 20,
           ),
          Authentication.userIsLoggedIn

@@ -4,6 +4,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/news_screen/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../consts/list_consts.dart';
 
@@ -24,7 +25,9 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
     int cindex = random.nextInt(toRandom.length);
     bool isHovering = false;
     return InkWell(
-      onTap: () => null,
+      onTap: () => context.go(
+          "/news/full?id=${widget.data.id}",
+          extra: widget.data),
       onHover: (hovering) {
         setState(() => isHovering = hovering);
       },

@@ -3,17 +3,31 @@ import 'dart:math';
 import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import 'package:go_router/go_router.dart';
 import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
+import '../utils/news/article_data.dart';
 import 'news_web_Aux.dart';
 import 'news_web_AuxEndPage.dart';
 
-class NewsWebPage extends StatelessWidget {
+class NewsWebPage extends StatefulWidget {
   NewsWebPage({super.key});
+
   @override
+  State<NewsWebPage> createState() => _NewsWebPageState();
+}
+
+class _NewsWebPageState extends State<NewsWebPage> {
   ScrollController yourScrollController = ScrollController();
+  late Future<int> fetchDone;
+
+  @override
+  void initState() {
+    fetchDone = Article.fetchNews(4, 0, {});
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Random random = Random();
@@ -28,197 +42,209 @@ class NewsWebPage extends StatelessWidget {
         controller: yourScrollController,
         child: SingleChildScrollView(
           controller: yourScrollController,
-          child: Container(
-            color: cDirtyWhite,
-            child: Stack(
-              children: <Widget> [
-                Padding(
-                  padding: EdgeInsets.only(top: size.height/7),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left:50, top: 20),
-                        child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Image.asset("assets/web/noticias.png", scale: 4,)
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top:30),//Zona do Feed
-                        height: size.height*1.60,
-                        width: size.width-300,
-                        color: cDirtyWhite,
+          child: FutureBuilder(
+            future: fetchDone,
+            builder: (context, snapshot) {
+    if(snapshot.hasData) {
+      return Container(
+        color: cDirtyWhite,
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: size.height / 7),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, top: 20),
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset("assets/web/noticias.png", scale: 4,)
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 30),
+                    //Zona do Feed
+                    height: size.height * 1.60,
+                    width: size.width - 300,
+                    color: cDirtyWhite,
 
-                        child: ListView.builder(
-                          itemCount: 4,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = _articles[index];
+                    child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = Article.news[index];
 
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  child: Divider(
-                                    thickness: 2,
-                                    color: toRandom[cindex],
+                        return Column(
+                          children: [
+                            SizedBox(
+                              child: Divider(
+                                thickness: 2,
+                                color: toRandom[cindex],
+                              ),
+                            ),
+                            Container(
+                              height: size.height / 3,
+                              decoration: BoxDecoration(
+                                color: cDirtyWhiteColor,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              margin: EdgeInsets.only(top: 5, bottom: 5),
+                              padding: const EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  Container(
+                                      width: size.width / 4,
+                                      height: size.height / 3,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            15.0),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(item.urlToImage!),
+                                        ),
+                                        border: Border.all(
+                                          color: cHeavyGrey,
+                                        ),
+                                        boxShadow: [ BoxShadow(
+                                          color: Colors.grey.withOpacity(0.75),
+                                          spreadRadius: 3,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 0),
+                                        ),
+                                        ],
+                                      )
                                   ),
-                                ),
-                                Container(
-                                  height: size.height/3,
-                                  margin: EdgeInsets.only(top: 5, bottom: 5),
-                                  padding: const EdgeInsets.all(5),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                          width: size.width/4,
-                                          height: size.height/3,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15.0),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(item.imageUrl),
+                                  SizedBox(width: 15,),
+                                  Container(
+                                      width: size.width / 1.95,
+                                      height: size.height / 3,
+                                      margin: EdgeInsets.only(
+                                          top: 5, bottom: 5),
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        children: [
+                                          Text(
+                                            "${item.title}".toUpperCase(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 15,),
+                                          Text(
+                                            "${item.text}",
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 20,),
+                                          Text(
+                                            "Autoria de ${item.author} · ${item
+                                                .date}",
+                                            style: TextStyle(
+                                                color: cHeavyGrey
                                             ),
-                                            border: Border.all(
-                                              color: cHeavyGrey,
-                                            ),
-                                            boxShadow: [ BoxShadow(
-                                              color: Colors.grey.withOpacity(0.75),
-                                              spreadRadius: 3,
-                                              blurRadius: 7,
-                                              offset: const Offset(0,0),
-                                            ),
+                                          ),
+                                          const SizedBox(height: 50),
+                                          Row(
+                                            children: [
+                                              Spacer(),
+                                              InkWell(
+                                                  onTap: () =>
+                                                      context.go(
+                                                          "/news/full?id=${item.id}",
+                                                          extra: item),
+                                                  child: Text(
+                                                    "VER NOTÍCIA",
+                                                    style: TextStyle(
+                                                      color: cHeavyGrey,
+                                                    ),
+                                                  )
+                                              )
                                             ],
                                           )
-                                      ),
-                                      SizedBox(width: 15,),
-                                      Container(
-                                        width: size.width/1.95,
-                                        height: size.height/3,
-                                        margin: EdgeInsets.only(top:5, bottom: 5),
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: cDirtyWhiteColor,
-                                          borderRadius: BorderRadius.circular(10)
-                                        ),
-                                        child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "${item.title}".toUpperCase(),
-                                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                                SizedBox(height: 15,),
-                                                Text(
-                                                  "${item.preNews}",
-                                                  maxLines: 3,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                                SizedBox(height: 20,),
-                                                Text("Autoria de ${item.author} · ${item.postedOn}",
-                                                    style: TextStyle(
-                                                      color: cHeavyGrey
-                                                    ),
-                                                ),
-                                                const SizedBox(height: 10),
-                                                Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Icons.bookmark_border_rounded,
-                                                    Icons.share,
-                                                  ].map((e) {
-                                                    return InkWell(
-                                                      onTap: () {},
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(right: 5.0),
-                                                        child: Icon(e, size: 16, color: cHeavyGrey,),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/news/id_detail");
-                                    },
-                                    child: Text(
-                                      "VER NOTÍCIA",
-                                      style: TextStyle(
-                                        color: cHeavyGrey,
-                                      ),
-                                    )
-                                  )
-                                                  ],
-                                                )
-                                              ],
-                                            )
-                                        ),
-                                    ],
+                                        ],
+                                      )
                                   ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: size.width-300,
-                        child: Divider(
-                          thickness: 2,
-                          color: toRandom[cindex],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 60.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DefaultButton(
-                                text: "Próxima Página",
-                                press: () {
-                                  _articles.length > 6?
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
-                                }),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icons.navigate_next_outlined,
-                                ].map((e) {
-                                  return InkWell(
-                                    onTap: () {
-                                      _articles.length > 6?
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50, color: cPrimaryColor),
-                                    ),
-                                  );
-                                }).toList(),
-                              )
+                                ],
+                              ),
+                            ),
                           ],
-                        ),
-                      ),
-                      BottomAbout(size: size),
-                    ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  color: cDirtyWhite,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CustomWebBar(),
-                    ],
+                  SizedBox(
+                    width: size.width - 300,
+                    child: Divider(
+                      thickness: 2,
+                      color: toRandom[cindex],
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 60.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DefaultButton(
+                            text: "Próxima Página",
+                            press: () {
+                              Article.news.length > 6 ?
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewsWebPageAux(indexAux: 1))) :
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewsWebPageAuxEnd(indexAux: 1)));
+                            }),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icons.navigate_next_outlined,
+                          ].map((e) {
+                            return InkWell(
+                              onTap: () {
+                                Article.news.length > 6 ?
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewsWebPageAux(indexAux: 1))) :
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewsWebPageAuxEnd(indexAux: 1)));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Icon(e, size: 50, color: cPrimaryColor),
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    ),
+                  ),
+                  BottomAbout(size: size),
+                ],
+              ),
             ),
+            Container(
+              color: cDirtyWhite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  CustomWebBar(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    return Center(
+        child: LinearProgressIndicator());
+    }
           ),
         ),
       ),
@@ -226,7 +252,7 @@ class NewsWebPage extends StatelessWidget {
   }
 }
 
-class Article {
+/*class Article {
   final String title;
   final String preNews;
   final String imageUrl;
@@ -288,3 +314,5 @@ final List<Article> _articles = [
     postedOn: "1 seconds ago",
   ),
 ];
+
+ */

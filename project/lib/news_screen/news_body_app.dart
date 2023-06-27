@@ -27,7 +27,7 @@ class NewsFeed extends StatefulWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: FutureBuilder(
-              future: Article.fetchNews(3, 0),
+              future: Article.fetchNews(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {

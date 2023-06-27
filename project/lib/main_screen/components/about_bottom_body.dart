@@ -1,5 +1,6 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../components/url_launchable_icon_item.dart';
 import '../../components/url_launchable_item.dart';
@@ -133,9 +134,7 @@ class AboutBottomBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top:10),
                   child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/about/us');
-                    },
+                    onTap: () => context.go('/about/us'),
                     child: Text.rich(
                       TextSpan(
                           text: "Descobre mais sobre nós ",

@@ -4,6 +4,7 @@ import 'package:UniVerse/bars/web_bar.dart';
 import '../Components/default_button.dart';
 import '../consts/color_consts.dart';
 import '../main_screen/components/about_bottom.dart';
+import '../utils/news/article_data.dart';
 
 class NewsWebPageAux extends StatelessWidget {
   final int indexAux;
@@ -22,7 +23,9 @@ class NewsWebPageAux extends StatelessWidget {
         radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
         controller: yourScrollController,
-        child: SingleChildScrollView(
+        child: Container(
+
+        )/*SingleChildScrollView(
           controller: yourScrollController,
           child: Container(
             color: cDirtyWhite,
@@ -39,7 +42,7 @@ class NewsWebPageAux extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: 3,
                           itemBuilder: (BuildContext context, int index) {
-                            final item = _articles[index + 3 * indexAux];
+                            final item = Article.news[index + 3 * indexAux];
                             return Container(
                               height: 280,
                               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
@@ -61,7 +64,7 @@ class NewsWebPageAux extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(8.0),
                                         image: DecorationImage(
                                           fit: BoxFit.cover,
-                                          image: NetworkImage(item.imageUrl),
+                                          image: NetworkImage(item.urlToImage!),
                                         ),
                                         boxShadow: const [
                                           BoxShadow(
@@ -87,7 +90,7 @@ class NewsWebPageAux extends StatelessWidget {
                                             ),
                                             const Spacer(),
                                             Text(
-                                              "${item.preNews}",
+                                              "${item.}",
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -157,7 +160,7 @@ class NewsWebPageAux extends StatelessWidget {
                             DefaultButton(
                                 text: "Próxima Página",
                                 press: () {
-                                  indexAux + 1 > _articles.length?
+                                  indexAux + 1 > Article.news.length?
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
                                 }
@@ -170,7 +173,7 @@ class NewsWebPageAux extends StatelessWidget {
                               ].map((e) {
                                 return InkWell(
                                   onTap: () {
-                                    indexAux + 1 > _articles.length?
+                                    indexAux + 1 > Article.news.length?
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAux(indexAux: 1))):
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => NewsWebPageAuxEnd(indexAux: 1)));
                                   },
@@ -201,13 +204,13 @@ class NewsWebPageAux extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ),*/
       ),
     );
   }
 }
 
-class Article {
+/*class Article {
   final String title;
   final String preNews;
   final String imageUrl;
@@ -269,4 +272,4 @@ final List<Article> _articles = [
     postedOn: "1 second ago",
   ),
 
-];
+];*/
