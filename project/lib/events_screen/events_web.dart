@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
 import '../Components/default_button.dart';
+import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
@@ -89,6 +90,9 @@ class _EventsWebPageState extends State<EventsWebPage> {
                               future: fetchDone,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
+                                  if (snapshot.data == 500) {
+                                    return Error500();
+                                  }
                                   return ListView.builder(
                                     itemCount: 4,
                                     itemBuilder: (BuildContext context, int index) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
 import '../Components/default_button.dart';
+import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
@@ -67,6 +68,9 @@ class _NewsWebPageState extends State<NewsWebPage> {
                           child: FutureBuilder(
                               future: fetchDone,
                               builder: (context, snapshot) {
+                                if (snapshot.data == 500) {
+                                  return Error500();
+                                }
                                 if (snapshot.hasData) {
                                   return ListView.builder(
                                     itemCount: 4,
@@ -241,68 +245,3 @@ class _NewsWebPageState extends State<NewsWebPage> {
   }
 
 }
-
-/*class Article {
-  final String title;
-  final String preNews;
-  final String imageUrl;
-  final String author;
-  final String postedOn;
-
-  Article(
-      {
-        required this.title,
-        required this.preNews,
-        required this.imageUrl,
-        required this.author,
-        required this.postedOn});
-}
-
-final List<Article> _articles = [
-  Article(
-    title: "Instagram quietly limits ‘daily time limit’ option",
-    preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-    author: "MacRumors",
-    imageUrl: "https://picsum.photos/id/1000/960/540",
-    postedOn: "Yesterday",
-  ),
-  Article(
-      title: "Google Search dark theme goes fully black for some on the web",
-      preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-      imageUrl: "https://picsum.photos/id/1010/960/540",
-      author: "9to5Google",
-      postedOn: "4 hours ago"),
-  Article(
-    title: "Check your iPhone now: warning signs someone is spying on you",
-    preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-    author: "New York Times",
-    imageUrl: "https://picsum.photos/id/1001/960/540",
-    postedOn: "2 days ago",
-  ),
-  Article(
-    title:
-    "Amazon’s incredibly popular Lost Ark MMO is ‘at capacity’ in central Europe",
-    preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-    author: "MacRumors",
-    imageUrl: "https://picsum.photos/id/1002/960/540",
-    postedOn: "22 hours ago",
-  ),
-  Article(
-    title:
-    "Panasonic's 25-megapixel GH6 is the highest resolution Micro Four Thirds camera yet",
-    preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-    author: "Polygon",
-    imageUrl: "https://picsum.photos/id/1020/960/540",
-    postedOn: "2 hours ago",
-  ),
-  Article(
-    title:
-    "Isto e a noticia final da Universe, infelizmente e assim que as coisas acontecem",
-    preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim...",
-    author: "Um dos donos da universe",
-    imageUrl: "https://picsum.photos/id/1020/960/540",
-    postedOn: "1 seconds ago",
-  ),
-];
-
- */

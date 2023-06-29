@@ -8,12 +8,13 @@ import '../bars/web_bar.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
+import '../utils/events/event_data.dart';
 import '../utils/news/article_data.dart';
 
-class NewsDetailScreenWeb extends StatelessWidget {
+class EventsDetailScreenWeb extends StatelessWidget {
   final String id;
-  final Article data;
-  NewsDetailScreenWeb( {super.key, required this.id, required this.data});
+  final Event data;
+  EventsDetailScreenWeb( {super.key, required this.id, required this.data});
 
   ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                         padding: const EdgeInsets.only(left:50, top: 20, bottom: 30),
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Image.asset("assets/web/noticias.png", scale: 4,)
+                            child: Image.asset("assets/titles/events.png", scale: 4,)
                         ),
                       ),
                       Row(
@@ -90,7 +91,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 20),
+                                  padding: const EdgeInsets.only(bottom: 10),
                                   child: Text("${data.title}".toUpperCase(),
                                       style: TextStyle(
                                         fontSize: 25,
@@ -98,11 +99,58 @@ class NewsDetailScreenWeb extends StatelessWidget {
                                       ),
                                     ),
                                 ),
+                                Row(
+                                  children: [
+                                    Text("${data.startDate} · ${data.endDate}",
+                                      style: TextStyle(
+                                          color: cHeavyGrey
+                                      ),
+                                    ),
+                                    SizedBox(width: 10,),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.location_on_outlined, color: cHeavyGrey),
+                                        Text(
+                                          data.location!,
+                                          style: TextStyle(
+                                              color: cHeavyGrey
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(width: 10,),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.people, color: cHeavyGrey),
+                                        Text(
+                                          data.capacity!,
+                                          style: TextStyle(
+                                              color: cHeavyGrey
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(width: 10,),
+                                    if(data.isPaid=="yes")
+                                      Row(
+                                        children: [
+                                          Icon(Icons.euro_outlined, color: cHeavyGrey),
+                                          Text(
+                                            "PAGO",
+                                            style: TextStyle(
+                                                color: cHeavyGrey
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                                SizedBox(height: 15,),
                                 Container(
                                   width: size.width-size.width/2.75,
                                   margin: EdgeInsets.only(bottom: 10),
                                   child: Text(
-                                    "${data.text}",
+                                    "${data.description}",
                                     style: TextStyle(
                                       fontSize: 15
                                     ),
@@ -113,7 +161,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top:20, right: 20),
-                                      child:Text("Autoria de ${data.author} · ${data.date}",
+                                      child:Text("Autoria de ${data.planner} · ${data.endDate}",
                                         style: TextStyle(
                                             color: cHeavyGrey
                                         ),
@@ -169,3 +217,32 @@ class NewsDetailScreenWeb extends StatelessWidget {
     );
   }
 }
+
+/*class Article {
+  final String id;
+  final String title;
+  final String preNews;
+  final String imageUrl;
+  final String author;
+  final String postedOn;
+
+  Article(
+      {
+        required this.id,
+        required this.title,
+        required this.preNews,
+        required this.imageUrl,
+        required this.author,
+        required this.postedOn});
+}
+
+final List<Article> _articles = [
+Article(
+  id: "10",
+title: "Instagram quietly limits ‘daily time limit’ option",
+preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle. Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle.",
+author: "MacRumors",
+imageUrl: "https://picsum.photos/id/1000/960/540",
+postedOn: "Yesterday",
+),
+];*/

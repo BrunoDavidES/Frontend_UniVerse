@@ -163,7 +163,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
             ],
           ),
           Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
@@ -177,6 +177,9 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                   child: const Text(
                     "Encontraste um problema no campus? Preenche os campos abaixo para que possamos conhecer a situação e agir o mais rapidamente possível.",
                     textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 15
+                    ),
                   ),
                 ),
                Container(

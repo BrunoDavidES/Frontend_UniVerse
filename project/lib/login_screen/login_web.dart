@@ -17,7 +17,6 @@ class _MyLoginPageState extends State<LoginPageWeb> {
     Size size = MediaQuery.of(context).size;
    return SizedBox(
       width: size.width/3.5,
-      height: size.height/1.5,
       child: const Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: cDirtyWhiteColor,

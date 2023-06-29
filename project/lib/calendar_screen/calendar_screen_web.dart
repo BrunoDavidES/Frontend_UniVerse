@@ -1,14 +1,18 @@
 
 import 'dart:math';
 
+import 'package:UniVerse/Components/default_button.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../components/default_button_simple.dart';
 import '../components/web_menu_card.dart';
 import '../consts/list_consts.dart';
+import '../login_screen/login_web.dart';
+import 'personal_event_web.dart';
 import 'calendar_event.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';
@@ -102,12 +106,19 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                      child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Image.asset("assets/titles/calendar.png", scale: 4.5,)
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                          child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Image.asset("assets/titles/calendar.png", scale: 4.5,)
+                          ),
+                        ),
+
+
+                      ],
                     ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,67 +140,100 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                               ),
 
                           ),
-                          child: TableCalendar(
-                            locale: 'pt_PT',
-                            focusedDay: focusedDay,
-                            firstDay: DateTime.utc(2023),
-                            lastDay: DateTime.utc(2030),
-                            startingDayOfWeek: StartingDayOfWeek.monday,
-                            daysOfWeekVisible: true,
-                            onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                              setState(() {
-                                selectedDay = selectDay;
-                                focusedDay = focusDay;
-                                selectedDayString = selectDay.day.toString();
-                                selectedMonthString = monthsInText[selectedDay.month-1];
-                              });
-                            },
-                            calendarFormat: format,
-                            onFormatChanged: ( CalendarFormat _format) {
-                              setState(() {
-                                format=_format;
-                              });
-                            },
-                            calendarStyle: CalendarStyle(
-                                isTodayHighlighted: true,
-                                selectedDecoration: BoxDecoration(
-                                    color: color,
-                                    borderRadius: BorderRadius.circular(10),
-                                  shape: BoxShape.rectangle
+                          child: Column(
+                            children: [
+                              TableCalendar(
+                                locale: 'pt_PT',
+                                focusedDay: focusedDay,
+                                firstDay: DateTime.utc(2023),
+                                lastDay: DateTime.utc(2030),
+                                startingDayOfWeek: StartingDayOfWeek.monday,
+                                daysOfWeekVisible: true,
+                                onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                                  setState(() {
+                                    selectedDay = selectDay;
+                                    focusedDay = focusDay;
+                                    selectedDayString = selectDay.day.toString();
+                                    selectedMonthString = monthsInText[selectedDay.month-1];
+                                  });
+                                },
+                                calendarFormat: format,
+                                onFormatChanged: ( CalendarFormat _format) {
+                                  setState(() {
+                                    format=_format;
+                                  });
+                                },
+                                calendarStyle: CalendarStyle(
+                                    isTodayHighlighted: true,
+                                    selectedDecoration: BoxDecoration(
+                                        color: color,
+                                        borderRadius: BorderRadius.circular(10),
+                                      shape: BoxShape.rectangle
+                                    ),
+                                    todayTextStyle: TextStyle(
+                                        color: Colors.black
+                                    ),
+                                    todayDecoration: BoxDecoration(
+                                        color: cPrimaryOverLightColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      shape: BoxShape.rectangle
+                                    )
                                 ),
-                                todayTextStyle: TextStyle(
-                                    color: Colors.black
-                                ),
-                                todayDecoration: BoxDecoration(
-                                    color: cPrimaryOverLightColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  shape: BoxShape.rectangle
-                                )
-                            ),
-                            selectedDayPredicate: (DateTime date) {
-                              return isSameDay(selectedDay, date);
-                            },
-                            headerStyle: HeaderStyle(
-                              formatButtonVisible: true,
-                              titleCentered: true,
-                              formatButtonShowsNext: false,
-                              formatButtonDecoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(10),
+                                selectedDayPredicate: (DateTime date) {
+                                  return isSameDay(selectedDay, date);
+                                },
+                                headerStyle: HeaderStyle(
+                                  formatButtonVisible: true,
+                                  titleCentered: true,
+                                  formatButtonShowsNext: false,
+                                  formatButtonDecoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10),
 
-                                  border: Border.all(
-                                      color: cHeavyGrey,
-                                      width: 1
+                                      border: Border.all(
+                                          color: cHeavyGrey,
+                                          width: 1
+                                      )
+                                  ),
+                                  formatButtonTextStyle: TextStyle(
+                                    color: cHeavyGrey,
+                                  ),
+                                  titleTextStyle: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Spacer(),
+                                  Padding(
+                                    padding: EdgeInsets.only(top:20, bottom: 10),
+                                    child: DefaultButtonSimple(
+                                        color: cHeavyGrey,
+                                        height: 10,
+                                        text: 'Adicionar à minha agenda',
+                                        press: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => const AlertDialog(
+                                                backgroundColor: cDirtyWhiteColor,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(10.0)
+                                                    )
+                                                ),
+                                                content: PersonalEventWeb(toCreate: true,/*focusDay: focusedDay*/),
+                                              )
+                                          );
+                                        }
+                                    ),
                                   )
-                              ),
-                              formatButtonTextStyle: TextStyle(
-                                color: cHeavyGrey,
-                              ),
-                              titleTextStyle: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                                ],
+                              )
+                            ],
+
                           ),
                         ),
                       ],

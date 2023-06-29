@@ -134,16 +134,6 @@ class Routing {
                   ]
               ),
               GoRoute(
-                path: 'report',
-                builder: (BuildContext context, GoRouterState state) =>
-                    PersonalPageWeb(i: 2,),
-                /* redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
-                      return '/home';
-                    }
-                  }*/
-              ),
-              GoRoute(
                 path: 'calendar',
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 3,),
@@ -164,6 +154,16 @@ class Routing {
                   }*/
               ),
             ]
+        ),
+        GoRoute(
+          path: '/report',
+          builder: (BuildContext context, GoRouterState state) =>
+              PersonalPageWeb(i: 2,),
+          /* redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn) {
+                      return '/home';
+                    }
+                  }*/
         ),
       ]
   );
