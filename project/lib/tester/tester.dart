@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:UniVerse/tester/utils/UserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:UniVerse/tester/consts/api_consts.dart';
@@ -48,6 +49,33 @@ class Tester {
       }
     }
     return "Error";
+  }
+
+  Future<void> oldLogin(UserData data) async {
+    const url = loginUrl;
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: requestBody
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('User logged in with ID: $id');
+      } else {
+        print('Login failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+    print('Error occurred while logging in: $e');
+    }
   }
 
   Future<String> logout() async {
