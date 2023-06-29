@@ -1,14 +1,5 @@
-import 'dart:convert';
-
-import 'package:UniVerse/consts/api_consts.dart';
-import 'package:UniVerse/utils/users/users_local_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:requests/requests.dart';
-
-import '../../utils/users/User.dart';
 
 class Authentication {
 
@@ -35,112 +26,34 @@ class Authentication {
     return id.isEmpty || password.isEmpty ? false : true;
   }
 
-  static Future<int> loginUser(String id, String password) async {
-    return authenticate(id, password);
-    // return true;
-  }
-
-  static Future<int> authenticate(String id, String password) async {
-    /*try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: id,
-          password: password
+  static Future<int> login(String email, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-      print(credential);
+      userIsLoggedIn = true;
+      return 200;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        statusCode = 401;
+        return 401;
       } else if (e.code == 'wrong-password') {
-        statusCode = 401;
+        return 401;
       }
     }
-    var user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      try {
-        IdTokenResult idTokenResult = await user.getIdTokenResult(true);
-        String? idToken = idTokenResult.token;
-        print(idToken);
-        final response = await http.post(
-          Uri.parse(baseUrl + loginUrl),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(<String, String>{
-            'username': id,
-            'token': idToken!,
-          }),
-        );
-        print(response.headers);
-        print(response.headers['set-cookie']);
-        if (response.statusCode == 200) {
-          userIsLoggedIn = true;
-          statusCode = 200;
-        }
-      } catch (e) {
-      }
-    }
-    return statusCode;
-  }
-/*if (response.statusCode == 200) {
-        if(!kIsWeb) {
-          User u = const User(
-              id: 'testeDumy', name: 'Dumy', primaryRole: 'Aluno');
-          var db = LocalDB('universe');
-          db.initDB();
-          db.addUser(u);
-        }
-      }
-
-      return response.statusCode;
-      print(response.body);
-      print(response.headers);
-    return response.statusCode;
-  }*/*/
-    const url = "https://universe-fct.oa.r.appspot.com/rest/login";
-
-    final headers = {
-      'Content-Type': 'application/json',
-    };
-
-    final String requestBody = jsonEncode(
-        {
-          'username': id,
-          'password': password,
-        }
-    );
-
-
-      final response = await http.post(
-          Uri.parse(url),
-          headers: headers,
-          body: requestBody
-      );
-
-      if (response.statusCode == 200) {
-        final String id = response.body;
-        print('User logged in with ID: $id');
-      } else {
-        print('Login failed with status code: ${response.statusCode}');
-      }
-    return response.statusCode;
+    return 404;
   }
 
-  static Future<int> revoge() async {
-      FirebaseAuth.instance.signOut();
-      final response = await http.post(
-        Uri.parse(baseUrl + logoutUrl),
-      );
-      print(response.statusCode);
-      if(response.statusCode == 200)
-        userIsLoggedIn = false;
-      return response.statusCode;
-    }
+  static Future<int> logout() async {
+    await FirebaseAuth.instance.signOut();
+    userIsLoggedIn = false;
+    return 200;
+  }
 
   static Future<bool> checkLogin() async {
     var user = FirebaseAuth.instance.currentUser;
     return user!=null;
   }
-
 
   static Future<int> validateLogin() async {
     final url = Uri.parse('https://majikarp-fct.oa.r.appspot.com/rest/login/validate');

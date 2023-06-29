@@ -19,7 +19,7 @@ class PopUpMenu extends StatelessWidget {
           if(value=="area") {
             context.go('/personal/main');
           } else {
-            var response = await Authentication.revoge();
+            var response = await Authentication.logout();
             if(response==200)
               context.go('/home');
           }

@@ -96,8 +96,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             isLoading = false;
           });
         } else {
-          var response = await Registration.registUser(
-              password, confirmation, name, email);
+          var response = await Registration.validateAndRegister(
+              email, name, password, confirmation);
           print(response);
           if (response == 200) {
             showDialog(context: context,

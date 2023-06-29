@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
       else {
-        var response = await Authentication.loginUser(id, password);
+        var response = await Authentication.login(id, password);
         if (response == 200) {
           if(kIsWeb) {
             context.go("/personal/profile");

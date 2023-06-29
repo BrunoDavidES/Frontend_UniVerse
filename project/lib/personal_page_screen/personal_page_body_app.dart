@@ -36,7 +36,7 @@ class PersonalPageBodyApp extends StatelessWidget {
         actions: [
          InkWell(
                 onTap: () {
-                  var response = Authentication.revoge();
+                  var response = Authentication.logout();
                   if(response==500)
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/area.png", scale: 6,))));
                   else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
