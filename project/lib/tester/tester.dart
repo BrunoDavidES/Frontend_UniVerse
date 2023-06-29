@@ -338,4 +338,29 @@ class Tester {
     }
   }
 
+  Future<void> countUnresolvedReports(String token) async {
+    const String apiUrl = '$feedsUrl/unresolved';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Unresolved reports count results: $results');
+      } else {
+        print('Unresolved reports count failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while counting unresolved reports: $e');
+    }
+  }
+
 }
