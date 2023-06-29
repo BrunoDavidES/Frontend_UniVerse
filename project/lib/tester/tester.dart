@@ -304,4 +304,38 @@ class Tester {
     }
   }
 
+  Future<void> queryReports(String token, String limit, String offset, Map<String, String> filters) async {
+    const String apiUrl = '$feedsUrl/query';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query results: $results');
+      } else {
+        print('Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while querying reports: $e');
+    }
+  }
+
 }
