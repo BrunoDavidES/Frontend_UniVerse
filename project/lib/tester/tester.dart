@@ -163,4 +163,37 @@ class Tester {
     }
   }
 
+  Future<void> queryFeed(String token, String kind, String limit, String offset, Map<String, String> filters) async {
+    final String apiUrl = '$feedsUrl/query/$kind';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+      ...filters.map((key, value) => MapEntry(key, value.toString())),
+    };
+
+    try {
+      final http.Response response = await http.post(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query results: $results');
+      } else {
+        print('Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while querying feed: $e');
+    }
+  }
+
+
 }
