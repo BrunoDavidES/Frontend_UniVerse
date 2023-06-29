@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
-import '../components/500_app.dart';
+import '../components/500.dart';
 import '../components/news_card.dart';
 import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
@@ -26,24 +26,38 @@ class NewsFeed extends StatefulWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(10),
-            child:
-           FutureBuilder(
-              future: Article.fetchNews(3, 0),
+            child: FutureBuilder(
+              future: Article.fetchNews(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {
-                    return Error500App();
+                    return Error500();
                   } else {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: Article.news.map((e) => NewsCard(e)).toList(),
                     );
                   }
                 }
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "A CARREGAR NOTÍCIAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cPrimaryLightColor
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 );
               },
             ),

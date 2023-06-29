@@ -1,14 +1,15 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
-import 'package:UniVerse/components/grid_item.dart';
+import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'dart:io';
 
-import '../chat/chat_screen_app.dart';
-import '../components/500_app_with_bar.dart';
-import '../components/menu_card.dart';
+import '../chat_screen/chat_app.dart';
+import '../components/app/500_app_with_bar.dart';
+import '../components/app/menu_card.dart';
 import '../components/personal_app_card.dart';
 import '../report_screen/report_app.dart';
 import '../report_screen/report_screen_app.dart';
@@ -38,7 +39,7 @@ class PersonalPageBodyApp extends StatelessWidget {
                   var response = Authentication.revoge();
                   if(response==500)
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/area.png", scale: 6,))));
-                  else Navigator.of(context).pop();
+                  else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
                 },
                 child:
                     Center(
@@ -99,8 +100,8 @@ class PersonalPageBodyApp extends StatelessWidget {
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));
                               });
                             else if(index==3)
-                              return MenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined, press: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverUserEmail: 'Bruno', receiverUserID: 'bm.david')));
+                              return MenuCard(text: 'Mensagens', description: 'Comunica de forma rápida e fácil!',icon: Icons.message_outlined, press: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
                               });
                             else if(index==4)
                               return MenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });

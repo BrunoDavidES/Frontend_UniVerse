@@ -1,5 +1,4 @@
 import 'package:UniVerse/bars/app_bar.dart';
-import 'package:UniVerse/components/drawer_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
@@ -23,7 +22,6 @@ class AppPersonalPage extends StatelessWidget {
         ),
         child: Stack(
           children: <Widget>[
-            DrawerMenu(),
             PersonalPageBodyApp(),
             //const Spacer(),
             Container(

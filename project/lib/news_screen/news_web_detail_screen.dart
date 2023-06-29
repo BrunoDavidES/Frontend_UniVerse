@@ -1,7 +1,7 @@
 
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../Components/default_button.dart';
 import '../bars/web_bar.dart';
@@ -10,18 +10,12 @@ import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import '../utils/news/article_data.dart';
 
-class NewsDetailScreenWeb extends StatefulWidget {
-  NewsDetailScreenWeb(/*this.data, this.color,*/ {super.key});
-  //Article data;
-  //Color color;
+class NewsDetailScreenWeb extends StatelessWidget {
+  final String id;
+  final Article data;
+  NewsDetailScreenWeb( {super.key, required this.id, required this.data});
 
-  @override
-  State<StatefulWidget> createState() => NewsDetailState();
-}
-
-class NewsDetailState extends State<NewsDetailScreenWeb> {
   ScrollController yourScrollController = ScrollController();
-  final item = _articles[0];
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Random random = Random();
@@ -86,43 +80,70 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
                                 ],
                               )
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                child: Text("${item.title}".toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                width: size.width-size.width/2.75,
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: Text(
-                                  "${item.preNews}",
-                                  style: TextStyle(
-                                    fontSize: 15
-                                  ),
-                                  textAlign: TextAlign.justify,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: cDirtyWhiteColor,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Text("${data.title}".toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
                                 ),
-                              )
-                            ],
+                                Container(
+                                  width: size.width-size.width/2.75,
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: Text(
+                                    "${data.text}",
+                                    style: TextStyle(
+                                      fontSize: 15
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:20, right: 20),
+                                      child:Text("Autoria de ${data.author} · ${data.date}",
+                                        style: TextStyle(
+                                            color: cHeavyGrey
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
                       Row(
                         children: [
                           Spacer(),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top:20, bottom: 60),
+                child: Icon(Icons.arrow_back_ios_new_outlined, size: 50, color: cPrimaryColor),
+              ),
+            ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 60),
                             child: DefaultButton(
                                 text: "Página Anterior",
                                 press: () {
-                                  Navigator.pop(context);
-                                }),
+                                  Navigator.pop(context); }),
                           ),
                           Spacer()
                         ],
@@ -148,29 +169,3 @@ class NewsDetailState extends State<NewsDetailScreenWeb> {
     );
   }
 }
-
-class Article {
-  final String title;
-  final String preNews;
-  final String imageUrl;
-  final String author;
-  final String postedOn;
-
-  Article(
-      {
-        required this.title,
-        required this.preNews,
-        required this.imageUrl,
-        required this.author,
-        required this.postedOn});
-}
-
-final List<Article> _articles = [
-Article(
-title: "Instagram quietly limits ‘daily time limit’ option",
-preNews: "Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle. Isto e um teste so para ter o inicio das noticias, secalhar a primeira frase ou as primerias frases, so para as pessoas poderem ler a noticia ou perceberem a mesma sem terem de clicar nela porque isso e mesmo muito chato, nao? Pessoalmente acho que sim. A notícia ser for muito grande pode ser um problema, nao sei, veremos. Este é um teste para tornar a página fazívle.",
-author: "MacRumors",
-imageUrl: "https://picsum.photos/id/1000/960/540",
-postedOn: "Yesterday",
-),
-];

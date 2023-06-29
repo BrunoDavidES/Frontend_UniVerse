@@ -12,21 +12,21 @@ class Event {
   String? title;
   String? description;
   String? urlToImage;
-  String? date;
   String? location;
   String? planner;
   String? capacity;
   String? department;
   String? startDate;
   String? endDate;
+  String? isPaid;
 
   Event(
       this.title,
       this.description,
       this.urlToImage,
-      this.date,
       this.location,
       this.planner,
+      this.isPaid,
       );
 
   Event.fromJson(Map<String, dynamic> json ) {
@@ -39,7 +39,8 @@ class Event {
     endDate =properties['endDate']['value'];
     location=properties['location']['value'];
     startDate =properties['startDate']['value'];
-    date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
+    isPaid = properties['isItPaid']['value'];
+    //date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
     urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
     description="Olá";
     print(id);
@@ -48,14 +49,14 @@ class Event {
     print("OLÁ");
   }
 
-  static Future<int> fetchEvents(int limit, int offset) async {
+  static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
     /*String eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     final response = await http.post(
       Uri.parse(baseUrl + eventsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, Map>{
+      body: jsonEncode(<String, String>{
        //'filters': {"validated_backoffice": "true"}
       }),
     );
@@ -70,7 +71,7 @@ class Event {
     print(response.statusCode);
     print("OLÁ");
     return response.statusCode;*/
-    return 200;
+    return 500;
   }
 
   /*static List<Event> events = [

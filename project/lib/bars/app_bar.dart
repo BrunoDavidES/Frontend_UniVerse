@@ -1,19 +1,12 @@
 
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/feed_screen/feed_page_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
-import 'package:UniVerse/info_screen/universe_info_app.dart';
-import 'package:UniVerse/login_screen/login_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
-import '../find_screen/services_screen/services_body_app.dart';
-import '../register_screen/register_app.dart';
-import '../utils/news/article_data.dart';
 
 class CustomAppBar extends StatelessWidget {
   final int i;
@@ -22,8 +15,47 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    if (size.width >= 600) {
+      if (MediaQuery.of(context).orientation == Orientation.portrait) {
+        return Row(
+          children: [
+            const Spacer(),
+            SizedBox(
+              width: size.width / 1.5,
+              child: UniverseAppBar(i: i,),
+            ),
+            const Spacer()
+          ],
+        );
+      } else {
+        return Row(
+          children: [
+            const Spacer(),
+            SizedBox(
+              width: size.width / 2,
+              child: UniverseAppBar(i: i,),
+            ),
+            const Spacer()
+          ],
+        );
+      }
+    }
+    else {
+      return UniverseAppBar(i: i);
+    }
+  }
+}
+
+class UniverseAppBar extends StatelessWidget {
+  final int i;
+
+  const UniverseAppBar({super.key, required this.i});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: cPrimaryColor,
           borderRadius: BorderRadius.circular(15),
@@ -48,41 +80,36 @@ class CustomAppBar extends StatelessWidget {
               icon: Icons.home_rounded,
               text: 'Início',
               onPressed: (){
-                _navigateToNextScreenHome(context);
+                _navigateToScreenHome(context);
               },
             ),
             GButton(
               icon: Icons.search_rounded,
               text: 'Procurar',
               onPressed: (){
-                _navigateToNextScreenFind(context);
+                _navigateToScreenFind(context);
               },
             ),
             GButton(
               icon: Icons.newspaper_rounded,
               text: 'Feed',
               onPressed: () {
-                Article.fetchNews(3, 0);
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FeedPageApp()));
+                _navigateToScreenFeed(context);
               },
             ),
-            /*GButton(
-              icon: Icons.qr_code_scanner,
-              text: 'Scan',
-            ),*/
             GButton(
               icon: Icons.person_rounded,
               text: 'Área Pessoal',
               onPressed: (){
-                _navigateToNextScreenPersonal(context);
+                _navigateToScreenPersonal(context);
               },
             ),
             GButton(
               icon: Icons.settings_rounded,
               text: 'Definições',
               onPressed: (){
-                _navigateToNextScreenSettings(context);
-                },
+                _navigateToScreenSettings(context);
+              },
             ),
           ],
           selectedIndex: i,
@@ -91,21 +118,23 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 
-  void _navigateToNextScreenHome(BuildContext context) {
+  void _navigateToScreenHome(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppHomePage()));
   }
 
-  void _navigateToNextScreenSettings(BuildContext context) {
+  void _navigateToScreenFeed(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FeedPageApp()));
+  }
+
+  void _navigateToScreenSettings(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => FaqApp()));
   }
 
-  void _navigateToNextScreenPersonal(BuildContext context) {
+  void _navigateToScreenPersonal(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
   }
 
-  void _navigateToNextScreenFind(BuildContext context) {
+  void _navigateToScreenFind(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FindPageApp()));
   }
-
-
 }

@@ -35,13 +35,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   contentBox(context, height, width){
     return Container(
           padding: EdgeInsets.all(2),
-          width: width,
-          height: height/4
           /*padding: EdgeInsets.only(left: Constants.padding,top: Constants.avatarRadius
               + Constants.padding, right: Constants.padding,bottom: Constants.padding
           ),
           margin: EdgeInsets.only(top: Constants.avatarRadius),*/
-          ,decoration: BoxDecoration(
+          decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [ BoxShadow(
@@ -67,7 +65,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 Text(widget.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                 SizedBox(height: 15,),
                 Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
-                Spacer(),
                 DefaultButtonSimple(
                     text: widget.text,
                     color: cPrimaryColor,

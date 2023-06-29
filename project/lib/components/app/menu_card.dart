@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-
-import '../consts/color_consts.dart';
-import 'simple_dialog_box.dart';
+import '../../consts/color_consts.dart';
 
 class MenuCard extends StatelessWidget {
   final String text;
@@ -35,7 +33,6 @@ class MenuCard extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                //tileMode:TileMode.mirror,
                 colors: [
                   cDirtyWhiteColor,
                   cDirtyWhite,
@@ -52,7 +49,7 @@ class MenuCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top:5),
                   child: Text(
                     text,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         color: cHeavyGrey,
                       fontWeight: FontWeight.bold
@@ -64,7 +61,7 @@ class MenuCard extends StatelessWidget {
                   child: Text(
                     description,
                     textAlign: TextAlign.justify,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         color: cHeavyGrey,
                     ),

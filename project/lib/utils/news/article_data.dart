@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 class Article {
   static List<Article> news = <Article>[];
+  static int numNews = 0;
   String? id;
   String? title;
   String? text;
@@ -37,16 +38,37 @@ class Article {
     print("OLÁ");
   }
 
-  static Future<int> fetchNews(int limit, int offset) async {
-   /* String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+  static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
+    /*String newsUrl = '/feed/numberOf/News';
+    var response;
+    if(numNews == 0) {
+      response = await http.post(
+        Uri.parse(baseUrl + newsUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+      );
+      if(response.statusCode==200) {
+        numNews = json.decode(response.body);
+        print(numNews);
+      }
+      else return 500;
+    }
+    newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
-    final response = await http.post(
+    response = await http.post(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, Map<String, String>>{
-       //'filters': {'validated_backoffice':'true'},
+      body: jsonEncode({
+        if(filters.isNotEmpty)
+          'filters': jsonEncode(
+            {
+              'id': '7579ab46-1116-444b-954b-b49324b5a47e'
+            }
+          ),
+
       }),
     );
     if(response.statusCode==200) {
@@ -63,8 +85,9 @@ class Article {
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
+    print(news.length);
     return response.statusCode;*/
-    return 200;
+  return 500;
   }
 
 

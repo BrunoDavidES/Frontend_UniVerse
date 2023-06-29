@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 
-import '../consts/color_consts.dart';
+import 'package:flutter/material.dart';
+import '../../consts/color_consts.dart';
 
 class GridBox extends StatelessWidget {
   final String text;
@@ -22,14 +22,12 @@ class GridBox extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                //tileMode:TileMode.mirror,
                 colors: [
                   cDirtyWhiteColor,
                   cDirtyWhite,
                   cPrimaryOverLightColor.withOpacity(0.4),
                 ],
               ),
-                //color: cDirtyWhite,
                 border: Border.all(
                   color: cPrimaryLightColor,
                   width:2,

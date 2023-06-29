@@ -1,3 +1,4 @@
+import 'package:UniVerse/events_screen/events_web_aux.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import '../Components/default_button.dart';
@@ -22,7 +23,9 @@ class NewsWebPageAuxEnd extends StatelessWidget {
         radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
         controller: yourScrollController,
-        child: SingleChildScrollView(
+        child: Container(
+
+        )/*SingleChildScrollView(
           controller: yourScrollController,
           child: Container(
             color: cDirtyWhite,
@@ -39,7 +42,7 @@ class NewsWebPageAuxEnd extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: 3,
                           itemBuilder: (BuildContext context, int index) {
-                            final item = _articles[index + 3 * indexAux];
+                            final item = Article.articles[index + 3 * indexAux];
                             return Container(
                               height: 280,
                               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
@@ -173,13 +176,13 @@ class NewsWebPageAuxEnd extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ),*/
       ),
     );
   }
 }
 
-class Article {
+/*class Article {
   final String title;
   final String preNews;
   final String imageUrl;
@@ -240,4 +243,4 @@ final List<Article> _articles = [
     imageUrl: "https://picsum.photos/id/1020/960/540",
     postedOn: "1 second ago",
   ),
-];
+];*/

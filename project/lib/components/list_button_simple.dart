@@ -17,7 +17,7 @@ class ListButtonSimple extends StatelessWidget {
         style: TextButton.styleFrom(
             foregroundColor: cPrimaryLightColor,
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left:20)
+          padding: const EdgeInsets.only(left:20)
         ),
         onPressed: (){
           press();
@@ -27,7 +27,7 @@ class ListButtonSimple extends StatelessWidget {
                 text,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    fontWeight: tobeBold ?FontWeight.bold :FontWeight.normal,
+                    fontWeight: tobeBold ? FontWeight.bold :FontWeight.normal,
                     color: cHeavyGrey,
                 )
             ),

@@ -53,6 +53,7 @@ class WebMenuCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
                   text,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 15,
                       color: cHeavyGrey,

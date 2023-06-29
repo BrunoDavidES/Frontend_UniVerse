@@ -1,3 +1,5 @@
+
+
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_fct_screen/info_app.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +7,17 @@ import 'package:flutter/material.dart';
 import '../../components/list_item.dart';
 
 class WelcomeBodyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
+    var pad;
+    Size size = MediaQuery.of(context).size;
+    if(size.width>=600) {
+      if(MediaQuery.of(context).orientation==Orientation.landscape)
+      pad=size.width/3.9;
+      else pad = size.width/5.5;
+    }
+    else pad=0.0;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal:20),
       child: Column(
@@ -22,7 +32,7 @@ class WelcomeBodyApp extends StatelessWidget {
           ),
        Spacer(),
        Padding(
-         padding: EdgeInsets.only(bottom:80),
+         padding: EdgeInsets.only(bottom:80, right: pad),
          child: Align(
                     alignment: Alignment.centerRight,
                     child: Container(

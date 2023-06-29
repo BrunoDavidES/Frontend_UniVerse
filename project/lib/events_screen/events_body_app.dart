@@ -1,8 +1,8 @@
 import 'package:UniVerse/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../components/500_app.dart';
-import '../components/events_card.dart';
+import '../components/500.dart';
+import '../components/app/events_card.dart';
 import '../components/news_card.dart';
 import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
@@ -26,11 +26,11 @@ class EventsState extends State<EventsFeed> {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: FutureBuilder(
-              future: Event.fetchEvents(3, 0),
+              future: Event.fetchEvents(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {
-                    return Error500App();
+                    return Error500();
                   } else if(snapshot.data == 403){
                     return LoginScreen();
                   } else { return Column(
@@ -41,8 +41,23 @@ class EventsState extends State<EventsFeed> {
                   }
                 }
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                    padding: const EdgeInsets.all(10.0),
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                "A CARREGAR EVENTOS",
+                style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: cPrimaryLightColor
+                ),
+                ),
+                )
+                ]
+                )
                 );
               },
             ),

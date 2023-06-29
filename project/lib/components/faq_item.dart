@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
@@ -17,7 +17,7 @@ class FAQbox extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.bottomRight,
                 end: Alignment.center,
                 //tileMode:TileMode.mirror,
@@ -35,27 +35,26 @@ class FAQbox extends StatelessWidget {
           child: ExpansionTile(
             title: Text(
                 question,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 )),
             controlAffinity: ListTileControlAffinity.trailing,
             backgroundColor: cDarkLightBlueColor,
             textColor: Colors.white,
-            iconColor: Colors.white60,
             collapsedIconColor: cHeavyGrey,
             collapsedTextColor: cHeavyGrey,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
+            childrenPadding: const EdgeInsets.all(10),
             children: [
               Text(
                   answer,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   )
               ),
             ],
-            childrenPadding: EdgeInsets.all(10),
           ),
         ),
       ),

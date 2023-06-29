@@ -136,6 +136,7 @@ class FAQWebPage extends StatelessWidget {
                                         Container(
                                           padding: EdgeInsets.all(10),
                                           decoration: BoxDecoration(
+
                                             borderRadius: BorderRadius.circular(15),
                                             border: Border.all(
                                               color: cHeavyGrey.withOpacity(0.4),
@@ -173,7 +174,7 @@ class FAQWebPage extends StatelessWidget {
                                                                     color: cDarkBlueColor,
                                                                   )
                                                               ),
-                                                              fillColor: Colors.white60,
+                                                              fillColor: cDirtyWhiteColor,
                                                               filled: true,
                                                               hintStyle: TextStyle(
                                                                   color: Colors.grey
@@ -213,7 +214,7 @@ class FAQWebPage extends StatelessWidget {
                                                                   color: cDarkBlueColor,
                                                                 )
                                                             ),
-                                                            fillColor: Colors.white60,
+                                                            fillColor: cDirtyWhiteColor,
                                                             filled: true,
                                                             hintStyle: TextStyle(
                                                                 color: Colors.grey
@@ -256,7 +257,7 @@ class FAQWebPage extends StatelessWidget {
                                                         color: cDarkBlueColor,
                                                       )
                                                   ),
-                                                  fillColor: Colors.white60,
+                                                  fillColor: cDirtyWhiteColor,
                                                   filled: true,
                                                   hintStyle: TextStyle(
                                                       color: Colors.grey

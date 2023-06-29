@@ -1,5 +1,7 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class User {
   final String id, name, primaryRole;
   //final DateTime lastLogin;
@@ -28,5 +30,6 @@ class User {
   String toString() {
     return 'User{username: $id}';
   }
+
 
 }

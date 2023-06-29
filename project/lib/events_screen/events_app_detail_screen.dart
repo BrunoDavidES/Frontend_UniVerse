@@ -75,7 +75,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.data.date!,
+                    widget.data.endDate!,
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey

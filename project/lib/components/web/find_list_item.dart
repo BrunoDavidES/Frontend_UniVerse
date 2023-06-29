@@ -1,10 +1,8 @@
-import 'package:UniVerse/components/url_launchable_item.dart';
-import 'package:UniVerse/consts/list_consts.dart';
-import 'package:flutter/material.dart';
 
-import '../consts/color_consts.dart';
-import '../main_screen/homepage_web.dart';
-import 'list_button_simple.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../consts/color_consts.dart';
+import '../list_button_simple.dart';
 
 class FindListItem extends StatelessWidget {
   final Icon icon;
@@ -22,7 +20,6 @@ class FindListItem extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.bottomRight,
               end: Alignment.center,
-              //tileMode:TileMode.mirror,
               colors: [
                 cPrimaryOverLightColor.withOpacity(0.5),
                 cDirtyWhite,
@@ -49,8 +46,7 @@ class FindListItem extends StatelessWidget {
             children: [
               if(name=='Serviços')
               ListButtonSimple(
-                  text: "Divisão Académica", tobeBold: false, press: () {
-              }),
+                  text: "Divisão Académica", tobeBold: false, press: () => context.go('/find/services')),
               if(i==1)
               ListButtonSimple(
                   text: "Divisão de Acompanhamento de Parcerias",tobeBold: false,

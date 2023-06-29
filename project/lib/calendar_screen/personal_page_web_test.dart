@@ -4,6 +4,7 @@ import 'package:UniVerse/personal_page_screen/profile/profile_screen_web.dart';
 import 'package:UniVerse/report_screen/report_screen_web.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import '../chat_screen/chat_screen_web.dart';
 import '../components/personal_web_card.dart';
 import 'package:UniVerse/components/custom_shape.dart';
 import '../consts/color_consts.dart';
@@ -38,16 +39,16 @@ class PersonalPageWeb extends StatelessWidget {
                     ClipPath(
                       clipper: CustomShape(),
                       child: Container(
-                        height: size.height / 2.25,
+                        height: size.height / 2,
                         width: size.width,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              cPrimaryColor,
                               cPrimaryLightColor,
-                              cPrimaryOverLightColor
+                              cPrimaryOverLightColor,
+                              cDirtyWhite
                             ],
                           ),
                         ),
@@ -57,11 +58,16 @@ class PersonalPageWeb extends StatelessWidget {
                     padding: EdgeInsets.only(top: size.height/7),
                     child: Column(
                       children: [
+                        //if(i==0)
+                          //MainPersonalPageWeb(),
                        if(i==1)
                          ProfileScreenWeb(),
                        if(i==2)
-                          CalendarScreenWeb(),
-                       // ReportScreenWeb(),
+                         ReportScreenWeb(),
+                       if(i==3)
+                         CalendarScreenWeb(),
+                        if(i==4)
+                          ChatScreenWeb(),
                         BottomAbout(size: size,),
                       ],
                     ),

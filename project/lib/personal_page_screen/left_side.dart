@@ -1,11 +1,5 @@
-import 'dart:ui';
-import 'package:UniVerse/consts/color_consts.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../../components/find_list_item.dart';
-import '../../components/menu_card.dart';
-import '../../components/url_launchable_item.dart';
+import 'package:flutter/material.dart';
 import '../../components/web_menu_card.dart';
 
 class LeftSide extends StatefulWidget {
