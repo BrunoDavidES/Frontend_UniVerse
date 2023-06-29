@@ -26,6 +26,7 @@ import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_app.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
+import '../tester/utils/ReportData.dart';
 import '../utils/connectivity.dart';
 
 class ReportScreenWeb extends StatefulWidget {
@@ -69,8 +70,8 @@ class _ReportScreenState extends State<ReportScreenWeb> {
     }
     //else if(File.isEmpty)
     else{
-      var response = await Report.send(
-          title, location, description);
+      ReportData reportData = ReportData(title: title, location: location);
+      var response = await Report.postReport(reportData);
       if (response == 200) {
         showDialog(context: context,
             builder: (BuildContext context) {
