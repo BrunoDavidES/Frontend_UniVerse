@@ -111,7 +111,7 @@ class Tester {
   }
 
   Future<void> editFeed(String token, String kind, String id, FeedData data) async {
-    final String apiUrl = '$feedsUrl/post/$kind/$id';
+    final String apiUrl = '$feedsUrl/edit/$kind/$id';
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -135,6 +135,31 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while updating feed: $e');
+    }
+  }
+
+  Future<void> deleteFeed(String token, String kind, String id) async {
+    final String apiUrl = '$feedsUrl/delete/$kind/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Delete successful with ID: $id');
+      } else {
+        print('Delete failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting feed: $e');
     }
   }
 
