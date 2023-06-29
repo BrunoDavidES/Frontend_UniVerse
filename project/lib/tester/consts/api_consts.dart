@@ -4,4 +4,5 @@ const registerUrl = '$baseUrl/register';
 const feedsUrl = '$baseUrl/feeds';
 const reportUrl =  '$baseUrl/reports';
 const departmentUrl = '$baseUrl/department';
+const modifyUrl = '$baseUrl/modify';
 const sendMsgUrl = '$baseUrl/message/send';

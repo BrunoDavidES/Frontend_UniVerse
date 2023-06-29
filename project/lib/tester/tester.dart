@@ -7,6 +7,7 @@ import 'package:UniVerse/tester/consts/api_consts.dart';
 import 'package:UniVerse/tester/utils/FeedData.dart';
 import 'package:UniVerse/tester/utils/ReportData.dart';
 import 'package:UniVerse/tester/utils/DepartmentData.dart';
+import 'package:UniVerse/tester/utils/ModifyAttributesData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
@@ -590,5 +591,90 @@ class Tester {
       print('Error occurred while editing member : $e');
     }
   }
+
+  Future<void> modifyAttributesUser(String token, ModifyAttributesData data) async {
+    const String apiUrl = '$modifyUrl/attributes';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Modify user attributes successful with ID: $id');
+      } else {
+        print('Modify user attributes failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while modifying user attributes: $e');
+    }
+  }
+
+  Future<void> modifyRoleUser(String token, ModifyAttributesData data) async {
+    const String apiUrl = '$modifyUrl/role';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Modify user role successful with ID: $id');
+      } else {
+        print('Modify role user failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while modifying user role: $e');
+    }
+  }
+
+  Future<void> deleteUser(String token, ModifyAttributesData data) async {
+    const String apiUrl = '$modifyUrl/delete';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Delete user successful with ID: $id');
+      } else {
+        print('Delete user failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting user: $e');
+    }
+  }
+
 
 }
