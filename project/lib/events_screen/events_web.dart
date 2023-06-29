@@ -28,7 +28,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Event.fetchEvents(4, 0, {});
+    fetchDone = Event.fetchEvents("4", "0", {});
   }
 
   Widget build(BuildContext context) {

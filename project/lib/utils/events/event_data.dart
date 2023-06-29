@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../consts/api_consts.dart';
+import '../../tester/utils/FirebaseAuthentication.dart';
 
 class Event {
   static List<Event> events = <Event>[];
@@ -50,36 +51,49 @@ class Event {
     print("OLÁ");
   }
 
-  static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
-    String eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
-    final response = await http.post(
-      Uri.parse(baseUrl + eventsUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-       //'filters': {"validated_backoffice": "true"}
-      }),
-    );
-    if(response.statusCode==200) {
-      var decodedEvents = json.decode(response.body);
-      print(decodedEvents);
-      for (var decoded in decodedEvents) {
-        events.add(Event.fromJson(decoded));
-      }
-      print("DONE");
-    }
-    print(response.statusCode);
-    print("OLÁ");
-    return response.statusCode;
-    //return 500;
-  }
+  static Future<int> fetchEvents(String limit, String offset, Map<String, String> filters) async {
+    final String apiUrl = '$feedsUrl/query/Event';
 
-  /*static List<Event> events = [
-    Event("", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/aefct-logo-color.png", cPrimaryLightColor),
-    Event("", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf", "https://ninf.ae.fct.unl.pt/img/logo.png", cHeavyGrey),
-    Event("", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/aefct-logo-color.png", cPrimaryLightColor),
-  ];*/
+    String token = await FirebaseAuthentication.getIdToken();
+    if(token.isEmpty) {
+      return 403;
+    }
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+          uri.replace(queryParameters: queryParameters),
+          headers: headers,
+          body: requestBody
+      );
+
+      if (response.statusCode == 200) {
+        var decodedEvents = json.decode(response.body);
+        print(decodedEvents);
+        for (var decoded in decodedEvents) {
+          events.add(Event.fromJson(decoded));
+        }
+        print("DONE");
+        return response.statusCode;
+      } else {
+        return response.statusCode;
+      }
+    } catch (e) {
+      return 500;
+    }
+  }
 
   static List<String> images = [
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/edsa2023.png",
