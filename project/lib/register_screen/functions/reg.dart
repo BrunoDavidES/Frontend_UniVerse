@@ -21,9 +21,9 @@ class Registration {
     if(!emailRestriction.hasMatch(email)) {
       return 00;
     }
-    if(!passwordRestriction.hasMatch(password)) {
+    /*if(!passwordRestriction.hasMatch(password)) {
       return 01;
-    }
+    }*/
 
     return register(email, name, password, confirmation);
   }

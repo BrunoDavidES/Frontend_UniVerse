@@ -7,6 +7,7 @@ class FirebaseAuthentication {
     if (user != null) {
       try {
         String idToken = await user.getIdToken();
+        print(idToken);
         return idToken;
       } catch (e) {
         print('Error getting ID token: $e');
