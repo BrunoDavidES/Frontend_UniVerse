@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:UniVerse/consts/api_consts.dart';
+import 'package:UniVerse/tester/consts/api_consts.dart';
 
-import '../login_screen/functions/auth.dart';
+import 'package:UniVerse/tester/utils/FeedData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
     try {
-      final url = Uri.parse(registUrl);
+      final url = Uri.parse(registerUrl);
       final response = await http.post(
         url,
         body: json.encode({
@@ -21,6 +21,8 @@ class Tester {
       );
 
       if (response.statusCode == 200) {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+        await FirebaseAuth.instance.currentUser?.sendEmailVerification();
         return('Registration successful');
       } else {
         return('Registration failed: ${response.body}');
@@ -45,60 +47,18 @@ class Tester {
       }
       // Handle other FirebaseAuthException errors if needed
     }
-
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      try {
-        IdTokenResult idTokenResult = await user.getIdTokenResult(true);
-        String? idToken = idTokenResult.token;
-        print(idToken);
-
-        final response = await http.post(
-          Uri.parse(loginUrl),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(<String, String>{
-            'token': idToken!,
-          }),
-        );
-        print(response.headers);
-        return('Login: ${response.body}');
-      } catch (e) {
-        return('Error occurred during HTTP POST: $e');
-      }
-    }
     return "Error";
   }
 
   Future<String> logout() async {
-    try {
-      final url = Uri.parse(logoutUrl);
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        return('Logout successful');
-      } else {
-        return('Logout failed: ${response.body}');
-      }
-    } catch (error) {
-      return('Error occurred during logout: $error');
-    }
+    await FirebaseAuth.instance.signOut();
+    return("User logged out.");
+    // Additional cleanup or navigation code can be added here
   }
 
-  Future<String> displayToken() async {
-    try {
-      final url = Uri.parse(displayTokenUrl);
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        return('Empty Token');
-      } else {
-        return('Token: ${response.body}');
-      }
-    } catch (error) {
-      return('Error occurred during validation: $error');
-    }
+  Future<String?> displayToken() async {
+    String? token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    return token;
   }
 
   Future<String> sendMessage(String sender, List<String> recipientIds, String message) async {
@@ -121,6 +81,34 @@ class Tester {
       }
     } catch (error) {
       return ('Error occurred while sending message: $error');
+    }
+  }
+
+  Future<void> postFeed(String token, String kind, FeedData data) async {
+    final String apiUrl = 'https://your-api-url.com/post/$kind';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Post successful with ID: $id');
+      } else {
+        print('Post failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while posting feed: $e');
     }
   }
 }

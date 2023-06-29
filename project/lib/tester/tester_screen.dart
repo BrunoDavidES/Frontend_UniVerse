@@ -19,7 +19,7 @@ class TesterScreenState extends State<TesterScreen> {
   final TextEditingController recipientController = TextEditingController();
   final TextEditingController messageController = TextEditingController();
 
-  String outputMessage = '';
+  String? outputMessage = '';
 
   void registerUser(String email, String name, String password, String confirmation) {
     // Perform registration logic and update output message
@@ -155,7 +155,7 @@ class TesterScreenState extends State<TesterScreen> {
                           ),
                           child: const Text('Display Token'),
                           onPressed: () async {
-                            String result = await Tester().displayToken();
+                            String? result = await Tester().displayToken();
                             setState(() {
                               outputMessage = result;
                             });
@@ -202,7 +202,7 @@ class TesterScreenState extends State<TesterScreen> {
             ),
             const SizedBox(height: 16.0),
             Text(
-              outputMessage,
+              outputMessage!,
               style: const TextStyle(fontSize: 16.0),
             ),
           ],
