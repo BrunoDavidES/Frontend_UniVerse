@@ -200,17 +200,19 @@ class Tester {
       'Authorization': token,
     };
 
+    final String requestBody = jsonEncode(filters);
+
     final Uri uri = Uri.parse(apiUrl);
     final Map<String, String> queryParameters = {
       if (limit.isNotEmpty) 'limit': limit,
       if (offset.isNotEmpty) 'offset': offset,
-      ...filters.map((key, value) => MapEntry(key, value.toString())),
     };
 
     try {
-      final http.Response response = await http.get(
+      final http.Response response = await http.post(
         uri.replace(queryParameters: queryParameters),
         headers: headers,
+        body: requestBody
       );
 
       if (response.statusCode == 200) {
@@ -232,15 +234,13 @@ class Tester {
       'Authorization': token,
     };
 
-    final Uri uri = Uri.parse(apiUrl);
-    final Map<String, String> queryParameters = {
-      ...filters.map((key, value) => MapEntry(key, value.toString())),
-    };
+    final String requestBody = jsonEncode(filters);
 
     try {
-      final http.Response response = await http.get(
-        uri.replace(queryParameters: queryParameters),
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
         headers: headers,
+        body: requestBody
       );
 
       if (response.statusCode == 200) {
