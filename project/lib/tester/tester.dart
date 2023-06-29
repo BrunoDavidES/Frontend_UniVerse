@@ -254,7 +254,7 @@ class Tester {
     }
   }
 
-  Future<void> editReport(String token, String id, ReportData data) async {
+  Future<void> editReport(String token, String id) async {
     final String apiUrl = '$reportUrl/edit/$id';
 
     final Map<String, String> headers = {
@@ -262,13 +262,10 @@ class Tester {
       'Authorization': token,
     };
 
-    final String requestBody = jsonEncode(data.toJson());
-
     try {
       final http.Response response = await http.post(
         Uri.parse(apiUrl),
         headers: headers,
-        body: requestBody,
       );
 
       if (response.statusCode == 200) {
@@ -279,6 +276,31 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while editing report: $e');
+    }
+  }
+
+  Future<void> statusReport(String token, String id, String status) async {
+    final String apiUrl = '$reportUrl/status/$id/$status';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Status edit successful with ID: $id');
+      } else {
+        print('Status Eedit failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while editing status report: $e');
     }
   }
 
