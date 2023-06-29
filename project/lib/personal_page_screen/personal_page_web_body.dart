@@ -66,11 +66,7 @@ class PersonalWebBodyState extends State<PersonalWebBody> {
                             description: 'Vê e altera as tuas informações pessoais.',
                             icon: Icons.logout_outlined,
                             press: () async {
-                              final response = await http.post(
-                                Uri.parse(baseUrl + logoutUrl),
-                              );
-                              print(response.statusCode);
-                              return response.statusCode;
+                              await Authentication.logout();
                             },
                           ),
                           WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline, press: () {

@@ -1,7 +1,10 @@
-
 const baseUrl = 'https://magikarp-fct.oa.r.appspot.com/rest';
-const loginUrl = '/login';
+const loginUrl = '$baseUrl/login';
 const registerUrl = '$baseUrl/register';
-const logoutUrl = '/logout';
-const reportUrl =  '/reports/post';
-const sendMsgUrl = '/message/send';
+const feedsUrl = '$baseUrl/feeds';
+const reportUrl =  '$baseUrl/reports';
+const departmentUrl = '$baseUrl/department';
+const modifyUrl = '$baseUrl/modify';
+const nucleusUrl = '$baseUrl/nucleus';
+const profileUrl = '$baseUrl/profile';
+const sendMsgUrl = '$baseUrl/message/send';

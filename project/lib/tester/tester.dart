@@ -231,7 +231,7 @@ class Tester {
   }
 
   Future<void> countQueryFeed(String token, String kind, Map<String, String> filters) async {
-    final String apiUrl = '$feedsUrl/query/$kind';
+    final String apiUrl = '$feedsUrl/numberOf/$kind';
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',

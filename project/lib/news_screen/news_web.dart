@@ -26,7 +26,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(4, 0, {});
+    fetchDone = Article.fetchNews("4", "0", {});
   }
 
   Widget build(BuildContext context) {

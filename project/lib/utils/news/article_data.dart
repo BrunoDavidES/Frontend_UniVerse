@@ -5,6 +5,8 @@ import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
 import 'package:http/http.dart' as http;
 
+import '../../tester/utils/FirebaseAuthentication.dart';
+
 
 class Article {
   static List<Article> news = <Article>[];
@@ -40,66 +42,73 @@ class Article {
     print("OLÁ");
   }
 
-  static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
-    String newsUrl = '/feed/numberOf/News';
-    var response;
-    if(numNews == 0) {
-      response = await http.post(
-        Uri.parse(baseUrl + newsUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
+  static Future<int> fetchNews(String limit, String offset, Map<String, String> filters) async {
+    String apiUrl = '$feedsUrl/numberOf/News';
+
+    String token = await FirebaseAuthentication.getIdToken();
+    if(token.isEmpty) {
+      return 403;
+    }
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    try {
+      final http.Response response = await http.post(
+          Uri.parse(apiUrl),
+          headers: headers,
+          body: requestBody
       );
-      if(response.statusCode==200) {
+
+      if (response.statusCode == 200) {
         numNews = json.decode(response.body);
         print(numNews);
+      } else {
+        return 500;
       }
-      else return 500;
+    } catch (e) {
+      return 500;
     }
-    newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
-    print(newsUrl);
-    response = await http.post(
-      Uri.parse(baseUrl + newsUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        if(filters.isNotEmpty)
-          'filters': jsonEncode(
-            {
-              'id': '7579ab46-1116-444b-954b-b49324b5a47e'
-            }
-          ),
 
-      }),
-    );
-    if(response.statusCode==200) {
-      var decodedNews = json.decode(response.body);
-      print(decodedNews);
-      for (var decoded in decodedNews) {
-        news.add(Article.fromJson(decoded));
+    apiUrl = '$feedsUrl/query/News';
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+          uri.replace(queryParameters: queryParameters),
+          headers: headers,
+          body: requestBody
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+
+        print('Query results: $results');
+        print(response.statusCode);
+        print(news[0].id);
+        print(news[0].title);
+        print(news[0].author);
+        print(news[0].date);
+        print("OLÁ");
+        print(news.length);
+
+        return response.statusCode;
+      } else {
+        return response.statusCode;
       }
-      print("DONE");
+    } catch (e) {
+      return 405;
     }
-    print(response.statusCode);
-    print(news[0].id);
-    print(news[0].title);
-    print(news[0].author);
-    print(news[0].date);
-    print("OLÁ");
-    print(news.length);
-    return response.statusCode;
-  //return 500;
   }
-
-
-  /*static List<Article> news = [
-    Article("Carmona Rodrigues é o novo Presidente do Conselho Consultivo da ERSAR", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/crodrigues_1.png", "31 de maio 2023", "Bruno"),
-    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-    Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
-    ];*/
 
 static List<String> images = [
   "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",

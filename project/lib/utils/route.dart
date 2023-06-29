@@ -47,7 +47,7 @@ class Routing {
                   var id = state.pathParameters['id'];
                   Article? data = state.extra as Article?;
                   if(data==null) {
-                    Article.fetchNews(1, 0, {'id': id!});
+                    Article.fetchNews("1", "0", {'id': id!});
                     if(Article.news.isEmpty)
                       return PageNotFound();
                     else data = Article.news[0];
