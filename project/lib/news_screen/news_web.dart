@@ -73,7 +73,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                 }
                                 if (snapshot.hasData) {
                                   return ListView.builder(
-                                    itemCount: 4,
+                                    itemCount: Article.news.length,
                                     itemBuilder: (BuildContext context, int index) {
                                       final item = Article.news[index];
 

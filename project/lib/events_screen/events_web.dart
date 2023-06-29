@@ -94,7 +94,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                     return Error500();
                                   }
                                   return ListView.builder(
-                                    itemCount: 4,
+                                    itemCount: Event.events.length,
                                     itemBuilder: (BuildContext context, int index) {
                                       final event = Event.events[index];
 
