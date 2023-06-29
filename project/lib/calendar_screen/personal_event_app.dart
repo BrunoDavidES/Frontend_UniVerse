@@ -6,20 +6,20 @@ import '../consts/color_consts.dart';
 import '../login_screen/login_screen.dart';
 import 'add_personal_event_screen.dart';
 
-class PersonalEventWeb extends StatelessWidget {
+class PersonalEventApp extends StatelessWidget {
   final bool toCreate;
   final CalendarEvent? data;
   //final DateTime focusDay;
-  const PersonalEventWeb({super.key, required this.toCreate, this.data/*required this.focusDay*/});
+  const PersonalEventApp({super.key, required this.toCreate, this.data/*required this.focusDay*/});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-        width: toCreate ?size.width/2.75 :size.width/3.5,
-        height: toCreate ?size.height/2.5 :size.height/4,
+        width: size.width,
+        height: toCreate ?size.height/2 :size.height/4,
         child: toCreate
-          ?PersonalEventCreationScreen()
+            ?PersonalEventCreationScreen()
             :PersonalEventScreen(data: data!,)
     );
   }

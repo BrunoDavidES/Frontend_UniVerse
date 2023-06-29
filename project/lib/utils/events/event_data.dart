@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class Event {
     startDate =properties['startDate']['value'];
     isPaid = properties['isItPaid']['value'];
     //date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
+    urlToImage = images[Random().nextInt(images.length)];
     description="Olá";
     print(id);
     print(title);
@@ -50,7 +51,7 @@ class Event {
   }
 
   static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
-    /*String eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
+    String eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     final response = await http.post(
       Uri.parse(baseUrl + eventsUrl),
       headers: <String, String>{
@@ -70,8 +71,8 @@ class Event {
     }
     print(response.statusCode);
     print("OLÁ");
-    return response.statusCode;*/
-    return 500;
+    return response.statusCode;
+    //return 500;
   }
 
   /*static List<Event> events = [
@@ -79,4 +80,11 @@ class Event {
     Event("", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf", "https://ninf.ae.fct.unl.pt/img/logo.png", cHeavyGrey),
     Event("", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/aefct-logo-color.png", cPrimaryLightColor),
   ];*/
+
+  static List<String> images = [
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/edsa2023.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/profnova23.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/05/destaque-fct_act_verao_3.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png"
+  ];
 }

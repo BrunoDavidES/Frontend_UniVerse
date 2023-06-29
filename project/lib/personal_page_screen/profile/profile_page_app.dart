@@ -24,7 +24,7 @@ class ProfilePageApp extends StatelessWidget {
                     color: cDirtyWhiteColor);
               }
           ),
-          backgroundColor: cPrimaryColor,
+          backgroundColor: cPrimaryLightColor,
           titleSpacing: 15,
           elevation: 0,
         actions: [
@@ -51,7 +51,6 @@ class ProfilePageApp extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            cPrimaryColor,
                             cPrimaryLightColor,
                             cPrimaryOverLightColor
                           ],
@@ -73,18 +72,19 @@ class ProfilePageApp extends StatelessWidget {
                               shape: BoxShape.circle,
                               border: Border.all(color: cDirtyWhiteColor, width: 5),
                               image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("assets/man.png")
+                                scale: 3,
+                                fit: BoxFit.fill,
+                                image: AssetImage("assets/capi.png",)
                               )
                             ),
                           ),
-                          Text("Bruno David",
+                          Text("Capi Crew",
                             style: TextStyle(
                               fontSize: 20,
                             ),
                           ),
                           SizedBox(height: 5,),
-                          Text("bm.david",
+                          Text("uni.capi",
                             style: TextStyle(
                               fontSize: 15,
                               color: cHeavyGrey
@@ -105,7 +105,7 @@ class ProfilePageApp extends StatelessWidget {
                               color: cHeavyGrey
                             )),
                             SizedBox(height: 5),
-                            Text("Presidente de Núcleo",
+                            Text("Developer UniVerse",
                                 style: TextStyle(
                                 fontSize: 15,
                                 color: cHeavyGrey

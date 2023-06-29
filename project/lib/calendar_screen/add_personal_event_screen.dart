@@ -120,113 +120,173 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-            child: Column(
-                children: [
-                  MyTextField(controller: titleController, hintText: '', obscureText: false, label: 'Título', icon: Icons.abc,),
-                  MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Localização', icon: Icons.location_on_outlined,),
-                  TextField(
-                    controller: dateController,
-                    //editing controller of this TextField
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter Date" //label text of field
-                    ),
-                    readOnly: true,
-                    //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2023),
-                          //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2030));
-
-                      if (pickedDate != null) {
-                        print(
-                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                        setState(() {
-                          dateController.text =
-                              formattedDate; //set output date to TextField value.
-                        });
-                      } else {}
-                    },
-                  )
-                  ,TextField(
-                    controller: timeController, //editing controller of this TextField
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.timer), //icon of text field
-                        labelText: "Enter Time" //label text of field
-                    ),
-                    readOnly: true,  //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      TimeOfDay? pickedTime =  await showTimePicker(
-                        initialTime: TimeOfDay.now(),
-                        context: context,
-                          /*builder: (BuildContext context, Widget? child) => MediaQuery(
-                            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                            child: Localizations.override(
-                              context: context,
-                              locale: const Locale('pt_pt', 'PT'),
-                              child: child!,
+    return Scaffold(
+      backgroundColor: cDirtyWhiteColor,
+      appBar: AppBar(
+        title: Text(
+            "Adicionar à minha agenda",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: cHeavyGrey
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: cDirtyWhiteColor,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+              child: Column(
+                  children: [
+                    MyTextField(controller: titleController, hintText: '', obscureText: false, label: 'Título', icon: Icons.title,),
+                    MyTextField(controller: locationController, hintText: '', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
+                    Container(
+                      margin: const EdgeInsets.only(left: 20, right:20, top: 10),
+                      child: TextField(
+                        controller: dateController,
+                        //editing controller of this TextField
+                        decoration: InputDecoration(
+                            labelText: "Data",
+                            labelStyle: TextStyle(
+                                color: cDarkLightBlueColor
                             ),
-                          )*/
-                      );
-
-                      if(pickedTime != null ){
-                        print(pickedTime.format(context));   //output 10:51 PM
-                        DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                        //converting to DateTime so that we can further format on different pattern.
-                        print(parsedTime); //output 1970-01-01 22:53:00.000
-                        String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                        print(formattedTime); //output 14:59:00
-                        //DateFormat() is from intl package, you can format the time on any pattern you need.
-
-                        setState(() {
-                          timeController.text = formattedTime; //set the value of text field.
-                        });
-                      }else{
-                        print("Time is not selected");
-                      }
-                    },
-                  )
-                  ,const SizedBox(height: 20),
-                  isLoading
-                      ? Container(
-                      width: 150,
-                      child: const LinearProgressIndicator(
-                        color: cPrimaryColor,
-                        backgroundColor: cPrimaryOverLightColor,
-                      )
-                  )
-                      : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DefaultButtonSimple(
-                          text: "CANCELAR",
-                          color: cPrimaryColor,
-                          press: () {
-                            Navigator.pop(context);
-                          },
-                          height: 20),
-                      DefaultButtonSimple(
-                          text: "ADICIONAR",
-                          color: cPrimaryColor,
-                          press: () {
-                            submitButtonPressed(titleController.text, locationController.text, "DATE", "TIME");
+                            prefixIcon: Icon(Icons.calendar_today, color: cDarkLightBlueColor),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: cDarkLightBlueColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: cDarkBlueColor,
+                                )
+                            ),
+                            fillColor: Colors.white60,
+                            filled: true,
+                            hintText: "dd-MM-yyyy",
+                            hintStyle: TextStyle(
+                                color: Colors.grey
+                            )
+                        ),
+                        readOnly: true,//set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              //locale: Locale('pt', 'PT'),
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2023, DateTime.now().month),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2030));
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate =
+                            DateFormat('dd-MM-yyyy').format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
                             setState(() {
-                              isLoading = true;
+                              dateController.text =
+                                  formattedDate; //set output date to TextField value.
                             });
-                          },
-                          height: 20),
-                    ],
-                  ),
-                ],
+                          } else {}
+                        },
+                      ),
+                    )
+                    ,Container(
+                      margin: const EdgeInsets.only(left: 20, right:20, top: 10),
+                      child: TextField(
+                        controller: timeController, //editing controller of this TextField
+                        decoration: InputDecoration(
+                            labelText: "Hora de início",
+                            labelStyle: TextStyle(
+                                color: cDarkLightBlueColor
+                            ),
+                            prefixIcon: Icon(Icons.timer, color: cDarkLightBlueColor),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: cDarkLightBlueColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: cDarkBlueColor,
+                                )
+                            ),
+                            fillColor: Colors.white60,
+                            filled: true,
+                            hintText: "HH:mm",
+                            hintStyle: TextStyle(
+                                color: Colors.grey
+                            )
+                        ),
+                        readOnly: true,  //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          TimeOfDay? pickedTime =  await showTimePicker(
+                            initialTime: TimeOfDay.now(),
+                            context: context,
+                              /*builder: (BuildContext context, Widget? child) => MediaQuery(
+                                data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                                child: Localizations.override(
+                                  context: context,
+                                  locale: const Locale('pt_pt', 'PT'),
+                                  child: child!,
+                                ),
+                              )*/
+                          );
+
+                          if(pickedTime != null ){
+                            print(pickedTime.format(context));   //output 10:51 PM
+                            DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                            //converting to DateTime so that we can further format on different pattern.
+                            print(parsedTime); //output 1970-01-01 22:53:00.000
+                            String formattedTime = DateFormat('HH:mm').format(parsedTime);
+                            print(formattedTime); //output 14:59:00
+                            //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                            setState(() {
+                              timeController.text = formattedTime; //set the value of text field.
+                            });
+                          }else{
+                            print("Time is not selected");
+                          }
+                        },
+                      ),
+                    )
+                    ,const SizedBox(height: 20),
+                    isLoading
+                        ? Container(
+                        width: 150,
+                        child: const LinearProgressIndicator(
+                          color: cPrimaryColor,
+                          backgroundColor: cPrimaryOverLightColor,
+                        )
+                    )
+                        : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DefaultButtonSimple(
+                            text: "CANCELAR",
+                            color: cPrimaryColor,
+                            press: () {
+                              Navigator.pop(context);
+                            },
+                            height: 20),
+                        DefaultButtonSimple(
+                            text: "ADICIONAR",
+                            color: cPrimaryColor,
+                            press: () {
+                              submitButtonPressed(titleController.text, locationController.text, "DATE", "TIME");
+                              setState(() {
+                                isLoading = true;
+                              });
+                            },
+                            height: 20),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            );
+    );
   }
 }

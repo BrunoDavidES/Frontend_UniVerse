@@ -39,7 +39,7 @@ class Registration {
     /*FirebaseAuth auth = FirebaseAuth.instance;
     try {
       final user = await auth.createUserWithEmailAndPassword(
-          email: email, 
+          email: email,
           password: password
       ).then((value) {
         auth.currentUser?.sendEmailVerification();

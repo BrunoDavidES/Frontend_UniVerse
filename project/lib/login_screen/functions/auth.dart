@@ -41,7 +41,7 @@ class Authentication {
   }
 
   static Future<int> authenticate(String id, String password) async {
-    try {
+    /*try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
@@ -95,7 +95,35 @@ class Authentication {
       print(response.body);
       print(response.headers);
     return response.statusCode;
-  }*/
+  }*/*/
+    const url = "https://universe-fct.oa.r.appspot.com/rest/login";
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final String requestBody = jsonEncode(
+        {
+          'username': id,
+          'password': password,
+        }
+    );
+
+
+      final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: requestBody
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('User logged in with ID: $id');
+      } else {
+        print('Login failed with status code: ${response.statusCode}');
+      }
+    return response.statusCode;
+  }
 
   static Future<int> revoge() async {
       FirebaseAuth.instance.signOut();

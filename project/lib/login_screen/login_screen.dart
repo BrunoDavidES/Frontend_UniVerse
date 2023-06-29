@@ -11,6 +11,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
         var response = await Authentication.loginUser(id, password);
         if (response == 200) {
           if(kIsWeb) {
-            Navigator.pushNamed(context, "/personal/main");
+            context.go("/personal/profile");
           }
           else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {

@@ -2,6 +2,7 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../calendar_screen/personal_event_app.dart';
 import '../calendar_screen/personal_event_web.dart';
 import '../calendar_screen/calendar_event.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -31,7 +32,9 @@ class CalendarEventState extends State<CalendarEventCard> {
                      Radius.circular(10.0)
                  )
              ),
-             content: PersonalEventWeb(toCreate: false, data: widget.data,/*focusDay: focusedDay*/),
+             content: kIsWeb
+             ?PersonalEventWeb(toCreate: false, data: widget.data,/*focusDay: focusedDay*/)
+             :PersonalEventApp(toCreate: false, data: widget.data,/*focusDay: focusedDay*/)
            )
        );
      },

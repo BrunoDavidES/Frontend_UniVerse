@@ -29,16 +29,14 @@ class EventsState extends State<EventsFeed> {
               future: Event.fetchEvents(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data == 500) {
+                  if (snapshot.data == 500)
                     return Error500();
-                  } else if(snapshot.data == 403){
-                    return LoginScreen();
-                  } else { return Column(
+                  else
+                    return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: Event.events.map((e) => EventsCard(e)).toList(),
                     );
-                  }
                 }
                 return Padding(
                     padding: const EdgeInsets.all(10.0),

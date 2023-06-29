@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:UniVerse/calendar_screen/personal_event_app.dart';
+import 'package:UniVerse/calendar_screen/personal_event_web.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/consts/text_consts.dart';
@@ -11,6 +13,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import '../components/app/500_app_with_bar.dart';
 import '../components/app/menu_card.dart';
+import '../components/default_button_simple.dart';
 import '../components/personal_app_card.dart';
 import '../consts/list_consts.dart';
 import '../report_screen/report_app.dart';
@@ -86,64 +89,96 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                     ),
                     ]
                 ),
-                child: TableCalendar(
-                  locale: 'pt_PT',
-                    focusedDay: focusedDay,
-                    firstDay: DateTime.utc(2023),
-                    lastDay: DateTime.utc(2030),
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  daysOfWeekVisible: true,
-                  onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                    setState(() {
-                      selectedDay = selectDay;
-                      focusedDay = focusDay;
-                      selectedDayString = selectDay.day.toString();
-                      selectedMonthString = monthsInText[selectedDay.month-1];
-                    });
-                  },
-                  calendarFormat: format,
-                  onFormatChanged: ( CalendarFormat _format) {
-                    setState(() {
-                      format=_format;
-                    });
-                  },
-                  calendarStyle: CalendarStyle(
-                      isTodayHighlighted: true,
-                    selectedDecoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    todayTextStyle: TextStyle(
-                      color: Colors.black
-                    ),
-                    todayDecoration: BoxDecoration(
-                      color: cPrimaryOverLightColor,
-                      borderRadius: BorderRadius.circular(10)
+                child: Column(
+                  children: [
+                    TableCalendar(
+                      locale: 'pt_PT',
+                        focusedDay: focusedDay,
+                        firstDay: DateTime.utc(2023),
+                        lastDay: DateTime.utc(2030),
+                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      daysOfWeekVisible: true,
+                      onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                        setState(() {
+                          selectedDay = selectDay;
+                          focusedDay = focusDay;
+                          selectedDayString = selectDay.day.toString();
+                          selectedMonthString = monthsInText[selectedDay.month-1];
+                        });
+                      },
+                      calendarFormat: format,
+                      onFormatChanged: ( CalendarFormat _format) {
+                        setState(() {
+                          format=_format;
+                        });
+                      },
+                      calendarStyle: CalendarStyle(
+                          isTodayHighlighted: true,
+                        selectedDecoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        todayTextStyle: TextStyle(
+                          color: Colors.black
+                        ),
+                        todayDecoration: BoxDecoration(
+                          color: cPrimaryOverLightColor,
+                          borderRadius: BorderRadius.circular(10)
+                        )
+                      ),
+                      selectedDayPredicate: (DateTime date) {
+                        return isSameDay(selectedDay, date);
+                      },
+                      headerStyle: HeaderStyle(
+                        formatButtonVisible: true,
+                        titleCentered: true,
+                        formatButtonShowsNext: false,
+                        formatButtonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: cHeavyGrey,
+                            width: 1
+                          )
+                        ),
+                        formatButtonTextStyle: TextStyle(
+                          color: cHeavyGrey,
+                        ),
+                        titleTextStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Padding(
+                          padding: EdgeInsets.only(top:20, bottom: 10),
+                          child: DefaultButtonSimple(
+                              color: cHeavyGrey,
+                              height: 10,
+                              text: 'Adicionar à minha agenda',
+                              press: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => const AlertDialog(
+                                      backgroundColor: cDirtyWhiteColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.all(
+                                              Radius.circular(10.0)
+                                          )
+                                      ),
+                                      content: PersonalEventApp(toCreate: true/*focusDay: focusedDay*/),
+                                    )
+                                );
+                              }
+                          ),
+                        )
+                      ],
                     )
-                  ),
-                  selectedDayPredicate: (DateTime date) {
-                    return isSameDay(selectedDay, date);
-                  },
-                  headerStyle: HeaderStyle(
-                    formatButtonVisible: true,
-                    titleCentered: true,
-                    formatButtonShowsNext: false,
-                    formatButtonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: cHeavyGrey,
-                        width: 1
-                      )
-                    ),
-                    formatButtonTextStyle: TextStyle(
-                      color: cHeavyGrey,
-                    ),
-                    titleTextStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  ),
+                  ],
+                ),
               ),
               SizedBox(height: 15,),
               Padding(
