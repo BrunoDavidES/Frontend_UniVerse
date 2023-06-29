@@ -179,7 +179,7 @@ class Tester {
     };
 
     try {
-      final http.Response response = await http.post(
+      final http.Response response = await http.get(
         uri.replace(queryParameters: queryParameters),
         headers: headers,
       );
@@ -192,6 +192,36 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while querying feed: $e');
+    }
+  }
+
+  Future<void> countQueryFeed(String token, String kind, Map<String, String> filters) async {
+    final String apiUrl = '$feedsUrl/query/$kind';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      ...filters.map((key, value) => MapEntry(key, value.toString())),
+    };
+
+    try {
+      final http.Response response = await http.get(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Count Query results: $results');
+      } else {
+        print('Count Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while counting query feed: $e');
     }
   }
 
