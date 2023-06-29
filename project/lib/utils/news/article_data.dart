@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:UniVerse/consts/api_consts.dart';
+import 'package:UniVerse/consts/list_consts.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -30,7 +32,7 @@ class Article {
     title = properties['title']['value'];
     author = properties['authorName']['value'];
     date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
+    urlToImage = images[Random().nextInt(images.length)];
     text="Olá";
     print(id);
     print(title);
@@ -39,7 +41,7 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
-    /*String newsUrl = '/feed/numberOf/News';
+    String newsUrl = '/feed/numberOf/News';
     var response;
     if(numNews == 0) {
       response = await http.post(
@@ -86,8 +88,8 @@ class Article {
     print(news[0].date);
     print("OLÁ");
     print(news.length);
-    return response.statusCode;*/
-  return 500;
+    return response.statusCode;
+  //return 500;
   }
 
 
@@ -98,4 +100,11 @@ class Article {
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     ];*/
+
+static List<String> images = [
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png"
+];
 }

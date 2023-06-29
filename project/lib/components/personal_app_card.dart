@@ -43,7 +43,7 @@ class PersonalAppCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top:10, left: 13, bottom:5),
             child: Text(
-              "Olá, Francisco",
+              "Olá, Capi",
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: Colors.white,

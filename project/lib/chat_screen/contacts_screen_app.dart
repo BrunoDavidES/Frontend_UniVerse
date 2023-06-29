@@ -16,7 +16,7 @@ class ContactsScreenApp extends StatefulWidget {
 }
 
 class _MyChatPageState extends State<ContactsScreenApp> {
-  var contactName = "Nome do Contacto";
+  var contactName = "Demonstrador";
 
   @override
   Widget build(BuildContext context) {

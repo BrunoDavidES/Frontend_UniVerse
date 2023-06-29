@@ -224,7 +224,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                                                         Radius.circular(10.0)
                                                     )
                                                 ),
-                                                content: PersonalEventWeb(toCreate: true,/*focusDay: focusedDay*/),
+                                                content: PersonalEventWeb(toCreate: true/*focusDay: focusedDay*/),
                                               )
                                           );
                                         }

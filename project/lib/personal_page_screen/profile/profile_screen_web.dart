@@ -1,7 +1,6 @@
 
 import 'package:UniVerse/components/text_field.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';

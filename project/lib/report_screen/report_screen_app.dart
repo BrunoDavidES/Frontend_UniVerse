@@ -185,12 +185,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
             ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right:20, top: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: cHeavyGrey.withOpacity(0.6)
-                    )
-                  ),
                   padding: const EdgeInsets.only(left: 10, right:10),
                   child: TextField(
                     maxLength: 100,

@@ -18,8 +18,8 @@ class CalendarEvent {
       );
 
   static List<CalendarEvent> events = [
-    CalendarEvent(true, "Este é o título".toUpperCase(), "user", "Relvado da biblioteca", "09:00", "21-02-2023"),
-    CalendarEvent(false, "Este é um segundo evento".toUpperCase(), "Ninf", "Relvado da biblioteca", "10:50", "21-02-2023"),
+    CalendarEvent(true, "Este é o primeiro evento de teste".toUpperCase(), "user", "Edifício II sala 127", "09:00", "25-06-2023"),
+    CalendarEvent(false, "Demonstração da fase beta".toUpperCase(), "Capi Crew", "Auditório", "13:30", "29-06-2023"),
 
 
   ];

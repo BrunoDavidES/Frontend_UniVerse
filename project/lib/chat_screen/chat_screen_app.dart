@@ -95,7 +95,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          "Esta é a mensagem que recebes e aparece assim. Fixe não achas?",
+                          "Esta é a mensagem que se recebe e aparece assim.",
                           style: TextStyle(
                               color: cDirtyWhiteColor
                           ),
@@ -114,7 +114,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                                "Olá! Por acaso acho! Esta a resposta que podes mandar"
+                                "Enviando uma mensagem, o utilizador sabe que o fez desta forma!"
                             ),
                           ),
                         ],

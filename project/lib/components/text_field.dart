@@ -20,9 +20,8 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     bool isVisible = false;
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-      child: Container(
+    return Container(
+        margin: const EdgeInsets.only(left: 20, right:20, top: 10),
         child: TextFormField(
           obscureText: widget.obscureText,
           controller: widget.controller,
@@ -68,7 +67,6 @@ class _MyTextFieldState extends State<MyTextField> {
             )
           ),
         ),
-      ),
-    );
+      );
   }
 }
