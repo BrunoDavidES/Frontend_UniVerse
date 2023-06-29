@@ -5,4 +5,5 @@ const feedsUrl = '$baseUrl/feeds';
 const reportUrl =  '$baseUrl/reports';
 const departmentUrl = '$baseUrl/department';
 const modifyUrl = '$baseUrl/modify';
+const nucleusUrl = '$baseUrl/nucleus';
 const sendMsgUrl = '$baseUrl/message/send';

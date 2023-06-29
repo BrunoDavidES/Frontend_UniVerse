@@ -8,6 +8,7 @@ import 'package:UniVerse/tester/utils/FeedData.dart';
 import 'package:UniVerse/tester/utils/ReportData.dart';
 import 'package:UniVerse/tester/utils/DepartmentData.dart';
 import 'package:UniVerse/tester/utils/ModifyAttributesData.dart';
+import 'package:UniVerse/tester/utils/NucleusData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
@@ -532,7 +533,7 @@ class Tester {
         print('Add member failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred while adding member : $e');
+      print('Error occurred while adding member to department : $e');
     }
   }
 
@@ -560,7 +561,7 @@ class Tester {
         print('Remove member failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred while removing member : $e');
+      print('Error occurred while removing member from department : $e');
     }
   }
 
@@ -588,7 +589,7 @@ class Tester {
         print('Edit member failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error occurred while editing member : $e');
+      print('Error occurred while editing member from department : $e');
     }
   }
 
@@ -673,6 +674,176 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while deleting user: $e');
+    }
+  }
+  Future<void> registerNucleus(String token, NucleusData data) async {
+    const String apiUrl = '$nucleusUrl/register';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Register successful with ID: $id');
+      } else {
+        print('Register failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while registering nucleus: $e');
+    }
+  }
+
+  Future<void> modifyNucleus(String token, NucleusData data) async {
+    const String apiUrl = '$nucleusUrl/modify';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Modify successful with ID: $id');
+      } else {
+        print('Modify failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while modifying nucleus: $e');
+    }
+  }
+
+  Future<void> deleteNucleus(String token) async {
+    const String apiUrl = '$departmentUrl/delete';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.delete(
+          Uri.parse(apiUrl),
+          headers: headers
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Delete successful with ID: $id');
+      } else {
+        print('Delete failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting nucleus: $e');
+    }
+  }
+
+  Future<void> queryNucleus(String token, String limit, String offset, Map<String, String> filters) async {
+    const String apiUrl = '$nucleusUrl/query';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query results: $results');
+      } else {
+        print('Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while querying nucleus: $e');
+    }
+  }
+
+  Future<void> addMembersNucleus(String token, String id, NucleusData data) async {
+    final String apiUrl = '$nucleusUrl/add/members/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Add members successful with ID: $id');
+      } else {
+        print('Add members failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while adding members to nucleus : $e');
+    }
+  }
+
+  Future<void> deleteMembersNucleus(String token, String id, NucleusData data) async {
+    final String apiUrl = '$nucleusUrl/delete/members/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Remove members successful with ID: $id');
+      } else {
+        print('Remove members failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while removing members from nucleus : $e');
     }
   }
 
