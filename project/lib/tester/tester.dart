@@ -225,5 +225,32 @@ class Tester {
     }
   }
 
+  Future<void> postReport(String token, ReportData data) async {
+    const String apiUrl = '$reportUrl/post';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Post successful with ID: $id');
+      } else {
+        print('Post failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while posting report: $e');
+    }
+  }
 
 }
