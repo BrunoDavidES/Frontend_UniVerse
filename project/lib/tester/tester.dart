@@ -45,7 +45,6 @@ class Tester {
       } else if (e.code == 'wrong-password') {
         return('Wrong password');
       }
-      // Handle other FirebaseAuthException errors if needed
     }
     return "Error";
   }
@@ -53,7 +52,6 @@ class Tester {
   Future<String> logout() async {
     await FirebaseAuth.instance.signOut();
     return("User logged out.");
-    // Additional cleanup or navigation code can be added here
   }
 
   Future<String?> displayToken() async {
@@ -85,7 +83,7 @@ class Tester {
   }
 
   Future<void> postFeed(String token, String kind, FeedData data) async {
-    final String apiUrl = 'https://your-api-url.com/post/$kind';
+    final String apiUrl = '$feedsUrl/post/$kind';
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -111,4 +109,33 @@ class Tester {
       print('Error occurred while posting feed: $e');
     }
   }
+
+  Future<void> editFeed(String token, String kind, String id, FeedData data) async {
+    final String apiUrl = '$feedsUrl/post/$kind/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Update successful with ID: $id');
+      } else {
+        print('Update failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while updating feed: $e');
+    }
+  }
+
 }
