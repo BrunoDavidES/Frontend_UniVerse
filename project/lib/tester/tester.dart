@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:UniVerse/tester/consts/api_consts.dart';
 
 import 'package:UniVerse/tester/utils/FeedData.dart';
+import 'package:UniVerse/tester/utils/ReportData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
@@ -250,6 +251,34 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while posting report: $e');
+    }
+  }
+
+  Future<void> editReport(String token, String id, ReportData data) async {
+    final String apiUrl = '$reportUrl/edit/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Edit successful with ID: $id');
+      } else {
+        print('Edit failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while editing report: $e');
     }
   }
 
