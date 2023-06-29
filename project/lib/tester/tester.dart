@@ -1,14 +1,15 @@
 import 'dart:convert';
-import 'package:UniVerse/tester/utils/UserData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:UniVerse/tester/consts/api_consts.dart';
 
+import 'package:UniVerse/tester/utils/UserData.dart';
 import 'package:UniVerse/tester/utils/FeedData.dart';
 import 'package:UniVerse/tester/utils/ReportData.dart';
 import 'package:UniVerse/tester/utils/DepartmentData.dart';
 import 'package:UniVerse/tester/utils/ModifyAttributesData.dart';
 import 'package:UniVerse/tester/utils/NucleusData.dart';
+import 'package:UniVerse/tester/utils/PersonalEventsData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
@@ -844,6 +845,199 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while removing members from nucleus : $e');
+    }
+  }
+
+  Future<void> getProfile(String token, String username) async {
+    final String apiUrl = '$profileUrl/$username';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Get profile successful with ID: $id');
+      } else {
+        print('Get profile failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while getting profile : $e');
+    }
+  }
+
+  Future<void> addPersonalEvent(String token, String id, PersonalEventsData data) async {
+    const String apiUrl = '$profileUrl/personalEvent/add';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Add personal event successful with ID: $id');
+      } else {
+        print('Add personal event failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while adding personal event : $e');
+    }
+  }
+
+  Future<void> getPersonalEvent(String token, String title) async {
+    final String apiUrl = '$profileUrl/personalEvent/get/$title';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Get personal event successful with ID: $id');
+      } else {
+        print('Get personal event failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while getting personal event : $e');
+    }
+  }
+
+  Future<void> editPersonalEvent(String token, String id, String oldTitle, PersonalEventsData data) async {
+    final String apiUrl = '$profileUrl/personalEvent/edit/$oldTitle';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Edit personal event successful with ID: $id');
+      } else {
+        print('Edit personal event failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while editing personal event : $e');
+    }
+  }
+
+  Future<void> deletePersonalEvent(String token, String id, String oldTitle) async {
+    final String apiUrl = '$profileUrl/personalEvent/edit/$oldTitle';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Delete personal event successful with ID: $id');
+      } else {
+        print('Delete personal event failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting personal event : $e');
+    }
+  }
+
+  Future<void> queryUsers(String token, String limit, String offset, Map<String, String> filters) async {
+    const String apiUrl = '$profileUrl/query';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query results: $results');
+      } else {
+        print('Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while querying profiles: $e');
+    }
+  }
+
+  Future<void> countQueryUsers(String token, Map<String, String> filters) async {
+    const String apiUrl = '$profileUrl/query';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query count results: $results');
+      } else {
+        print('Query count failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while counting query profiles: $e');
     }
   }
 
