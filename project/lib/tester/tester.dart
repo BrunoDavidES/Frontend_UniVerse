@@ -6,6 +6,7 @@ import 'package:UniVerse/tester/consts/api_consts.dart';
 
 import 'package:UniVerse/tester/utils/FeedData.dart';
 import 'package:UniVerse/tester/utils/ReportData.dart';
+import 'package:UniVerse/tester/utils/DepartmentData.dart';
 
 class Tester {
   Future<String> register(String email, String name, String password, String confirmation) async {
@@ -388,6 +389,205 @@ class Tester {
       }
     } catch (e) {
       print('Error occurred while counting unresolved reports: $e');
+    }
+  }
+
+  Future<void> registerDepartment(String token, DepartmentData data) async {
+    const String apiUrl = '$departmentUrl/register';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Register successful with ID: $id');
+      } else {
+        print('Register failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while registering department: $e');
+    }
+  }
+
+  Future<void> modifyDepartment(String token, DepartmentData data) async {
+    const String apiUrl = '$departmentUrl/modify';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Modify successful with ID: $id');
+      } else {
+        print('Modify failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while modifying department: $e');
+    }
+  }
+
+  Future<void> deleteDepartment(String token, String id) async {
+    final String apiUrl = '$departmentUrl/delete/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    try {
+      final http.Response response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: headers
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Delete successful with ID: $id');
+      } else {
+        print('Delete failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while deleting department: $e');
+    }
+  }
+
+  Future<void> queryDepartment(String token, String limit, String offset, Map<String, String> filters) async {
+    const String apiUrl = '$departmentUrl/query';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(filters);
+
+    final Uri uri = Uri.parse(apiUrl);
+    final Map<String, String> queryParameters = {
+      if (limit.isNotEmpty) 'limit': limit,
+      if (offset.isNotEmpty) 'offset': offset,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        uri.replace(queryParameters: queryParameters),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> results = jsonDecode(response.body);
+        print('Query results: $results');
+      } else {
+        print('Query failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while querying department: $e');
+    }
+  }
+
+  Future<void> addMemberDepartment(String token, String id, DepartmentData data) async {
+    final String apiUrl = '$departmentUrl/add/member/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Add member successful with ID: $id');
+      } else {
+        print('Add member failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while adding member : $e');
+    }
+  }
+
+  Future<void> deleteMembersDepartment(String token, String id, DepartmentData data) async {
+    final String apiUrl = '$departmentUrl/delete/member/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Remove member successful with ID: $id');
+      } else {
+        print('Remove member failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while removing member : $e');
+    }
+  }
+
+  Future<void> editMembersDepartment(String token, String id, DepartmentData data) async {
+    final String apiUrl = '$departmentUrl/edit/member/$id';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final String requestBody = jsonEncode(data.toJson());
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('Edit member successful with ID: $id');
+      } else {
+        print('Edit member failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while editing member : $e');
     }
   }
 
