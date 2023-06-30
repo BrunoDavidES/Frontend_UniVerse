@@ -23,18 +23,25 @@ class ChatUtils {
     return inbox;*/
   }
 
-  static Future<void> sendMessage(String senderId, String recipientId,
-      String message) async {
+  static Future<void> sendMessage(String senderId, String recipientId, String message) async {
     try {
       final url = Uri.parse('$messageUrl/send');
+
+      String token = await FirebaseAuthentication.getIdToken();
+
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      };
+
       final response = await http.post(
         url,
         body: json.encode({
           'senderId': senderId,
-          'recipientId': "g.cerveira",
-          'message': message,
+          'recipientId': recipientId,
+          'message': message
         }),
-        headers: {'Content-Type': 'application/json'},
+        headers: headers,
       );
 
       if (response.statusCode == 200) {
@@ -46,6 +53,18 @@ class ChatUtils {
       print('Error sending message: $error');
     }
   }
+/*
+      if (response.statusCode == 200) {
+        print('Message sent successfully');
+      } else {
+        print('Failed to send message. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error sending message: $error');
+    }
+  }
+  */
+
 
 
 }

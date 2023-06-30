@@ -8,14 +8,15 @@ import '../consts/color_consts.dart';
 import 'chat_screen_app.dart';
 
 class ContactsScreenApp extends StatefulWidget {
-
   ContactsScreenApp({super.key});
 
   @override
-  State<ContactsScreenApp> createState() => _MyChatPageState();
+  State<ContactsScreenApp> createState() => _ContactsScreenState();
 }
 
-class _MyChatPageState extends State<ContactsScreenApp> {
+class _ContactsScreenState extends State<ContactsScreenApp> {
+  String senderId = "";
+  String receiverId = "";
   var contactName = "Demonstrador";
 
   @override
@@ -25,14 +26,15 @@ class _MyChatPageState extends State<ContactsScreenApp> {
       appBar: AppBar(
         title: Image.asset("assets/app/area.png", scale: 6),
         leading: Builder(
-            builder: (context) {
-              return IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  color: cDarkBlueColorTransparent);
-            }
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: cDarkBlueColorTransparent,
+            );
+          },
         ),
         leadingWidth: 20,
         backgroundColor: cDirtyWhiteColor,
@@ -46,40 +48,68 @@ class _MyChatPageState extends State<ContactsScreenApp> {
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                border: Border.all(
-                  color: cDarkLightBlueColor
-                )
+                border: Border.all(color: cDarkLightBlueColor),
               ),
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName,)));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ChatPageApp(
+                        senderID: senderId,
+                        receiverID: receiverId,
+                      ),
+                    ),
+                  );
                 },
                 child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black
-                        ),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
                       ),
-                      Text(
-                          contactName,
-                        style: TextStyle(
-                          fontSize: 17
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      contactName,
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    senderId = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Sender ID',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    receiverId = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Receiver ID',
+                ),
               ),
             ),
           ],
         ),
       ),
-
     );
   }
 }

@@ -12,8 +12,9 @@ import'package:UniVerse/utils/chat/chat_utils.dart';
 
 class ChatPageApp extends StatefulWidget {
   final String receiverID;
+  final String senderID;
 
-  ChatPageApp({super.key, required this.receiverID,});
+  ChatPageApp({super.key, required this.senderID, required this.receiverID,});
 
   @override
   State<ChatPageApp> createState() => _MyChatPageState();
@@ -22,7 +23,8 @@ class ChatPageApp extends StatefulWidget {
 class _MyChatPageState extends State<ChatPageApp> {
   final TextEditingController messageController = TextEditingController();
   late StreamSubscription _chatStream;
-  
+  final StreamController<dynamic> _streamController = StreamController<dynamic>();
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +39,7 @@ class _MyChatPageState extends State<ChatPageApp> {
 
   void _activateListeners() {
     _chatStream =
-        FirebaseDatabase.instance.ref().child('Users/mgamboa/inbox/gcerveira').onValue.listen((event) {
+        FirebaseDatabase.instance.ref().child('Users/${widget.senderID.replaceAll(".", "")}/inbox/${widget.receiverID.replaceAll(".", "")}').onValue.listen((event) {
       var snapshot = event.snapshot;
       var children = snapshot.value as Map<dynamic, dynamic>;
 
@@ -46,6 +48,8 @@ class _MyChatPageState extends State<ChatPageApp> {
         var senderId = value['senderId'];
 
         print('Message: $message, SenderId: $senderId');
+
+        _streamController.add(children);
       });
     });
   }
@@ -112,13 +116,10 @@ class _MyChatPageState extends State<ChatPageApp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StreamBuilder(
-              stream: FirebaseDatabase.instance
-                  .ref()
-                  .child('Users/mgamboa/inbox/gcerveira')
-                  .onValue,
+              stream: _streamController.stream,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  var children = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
+                if (snapshot.hasData && snapshot.data != null) {
+                  var children = snapshot.data as Map<dynamic, dynamic>;
                   return SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,8 +205,8 @@ class _MyChatPageState extends State<ChatPageApp> {
   Widget buildInput() {
     void sendMessage() {
       String message = messageController.text;
-      String senderId = "halo";
-      String recipientId = "jota";
+      String senderId = "m.gamboa";
+      String recipientId = "g.cerveira";
 
       // Call the sendMessage function from chat_utils.dart
       ChatUtils.sendMessage(senderId, recipientId, message);

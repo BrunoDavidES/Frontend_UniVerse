@@ -200,7 +200,7 @@ class _ChatScreenState extends State<ChatScreenWeb> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName, senderID: contactName,)));
                                     },
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
