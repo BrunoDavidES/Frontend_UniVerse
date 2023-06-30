@@ -60,6 +60,7 @@ dependencies:
   cloud_firestore: ^4.8.1
   requests: ^4.7.0
   hash_password: 0.0.3
+  firebase_database: ^10.2.3
 
   #webview_flutter: ^4.2.2
 

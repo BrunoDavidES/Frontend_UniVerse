@@ -1,3 +1,5 @@
+import 'package:UniVerse/chat_screen/chat_app.dart';
+import 'package:UniVerse/chat_screen/chat_screen_web.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -145,8 +147,7 @@ class Routing {
               ),
               GoRoute(
                 path: 'messages',
-                builder: (BuildContext context, GoRouterState state) =>
-                    PersonalPageWeb(i: 4,),
+                builder: (BuildContext context, GoRouterState state) => const ChatScreenApp(),
                 /*redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';

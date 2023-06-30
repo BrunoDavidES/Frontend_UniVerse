@@ -18,4 +18,14 @@ class FirebaseAuthentication {
       return "";
     }
   }
+
+  static String getCurrentUserUid() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.uid;
+    }
+    return '';
+  }
+
+
 }

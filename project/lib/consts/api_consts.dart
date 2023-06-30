@@ -7,4 +7,4 @@ const departmentUrl = '$baseUrl/department';
 const modifyUrl = '$baseUrl/modify';
 const nucleusUrl = '$baseUrl/nucleus';
 const profileUrl = '$baseUrl/profile';
-const sendMsgUrl = '$baseUrl/message/send';
+const messageUrl = '$baseUrl/message';
