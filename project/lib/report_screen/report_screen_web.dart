@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:UniVerse/utils/camera/camera_screen.dart';
-import 'package:UniVerse/utils/report/problem_report.dart';
+import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +110,8 @@ class _ReportScreenState extends State<ReportScreenWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    Uint8List imageUint8 = Uint8List(8);
+    File? pickedImage;
     return Row(
         children: [
           Column(

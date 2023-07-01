@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:UniVerse/components/500.dart';
+import 'package:UniVerse/components/my_date_field.dart';
 import 'package:UniVerse/login_screen/reset_password_app.dart';
 import 'package:UniVerse/login_screen/reset_password_screen.dart';
 import 'package:UniVerse/login_screen/reset_password_web.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +22,7 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
-import '../personal_page_screen/personal_page_web.dart';
+import '../personal_page_screen/web/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
@@ -139,60 +140,8 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                   children: [
                     MyTextField(controller: titleController, hintText: '', obscureText: false, label: 'Título', icon: Icons.title,),
                     MyTextField(controller: locationController, hintText: '', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
+                    MyDateField(controller: dateController, label: "Data",),
                     Container(
-                      margin: const EdgeInsets.only(left: 20, right:20, top: 10),
-                      child: TextField(
-                        controller: dateController,
-                        //editing controller of this TextField
-                        decoration: InputDecoration(
-                            labelText: "Data",
-                            labelStyle: TextStyle(
-                                color: cDarkLightBlueColor
-                            ),
-                            prefixIcon: Icon(Icons.calendar_today, color: cDarkLightBlueColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                color: cDarkLightBlueColor,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: cDarkBlueColor,
-                                )
-                            ),
-                            fillColor: Colors.white60,
-                            filled: true,
-                            hintText: "dd-MM-yyyy",
-                            hintStyle: TextStyle(
-                                color: Colors.grey
-                            )
-                        ),
-                        readOnly: true,//set it true, so that user will not able to edit text
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              //locale: Locale('pt', 'PT'),
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2023, DateTime.now().month),
-                              //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime(2030));
-                          if (pickedDate != null) {
-                            print(
-                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                            print(
-                                formattedDate); //formatted date output using intl package =>  2021-03-16
-                            setState(() {
-                              dateController.text =
-                                  formattedDate; //set output date to TextField value.
-                            });
-                          } else {}
-                        },
-                      ),
-                    )
-                    ,Container(
                       margin: const EdgeInsets.only(left: 20, right:20, top: 10),
                       child: TextField(
                         controller: timeController, //editing controller of this TextField

@@ -1,11 +1,11 @@
 import 'package:UniVerse/find_screen/find_test.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_web_body.dart';
+import 'package:UniVerse/personal_page_screen/web/personal_page_web_body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
-import '../components/personal_web_card.dart';
-import '../consts/color_consts.dart';
-import '../main_screen/components/about_bottom.dart';
-import '../main_screen/components/about_bottom_body.dart';
+import '../../components/personal_web_card.dart';
+import '../../consts/color_consts.dart';
+import '../../main_screen/components/about_bottom.dart';
+import '../../main_screen/components/about_bottom_body.dart';
 
 class PersonalWebPage extends StatelessWidget {
   PersonalWebPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:UniVerse/components/personal_web_card.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
-import 'package:UniVerse/personal_page_screen//left_side.dart';
+import 'package:UniVerse/personal_page_screen/web/left_side.dart';
 import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:flutter/gestures.dart';
@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:UniVerse/consts/api_consts.dart';
 
-import '../components/web_menu_card.dart';
-import '../main_screen/components/about_bottom_body.dart';
-import '../report_screen/report_screen_app.dart';
-import '../report_screen/report_screen_web.dart';
+import '../../components/web_menu_card.dart';
+import '../../main_screen/components/about_bottom_body.dart';
+import '../../report_screen/report_screen_app.dart';
+import '../../report_screen/report_screen_web.dart';
 
 class PersonalWebBody extends StatefulWidget {
   const PersonalWebBody({super.key});
@@ -74,7 +74,7 @@ class PersonalWebBodyState extends State<PersonalWebBody> {
                             },
                           ),
                           WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline, press: () {
-                            Authentication.validateLogin();
+                           // Authentication.validateLogin();
                           },),
                           WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
                           WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),

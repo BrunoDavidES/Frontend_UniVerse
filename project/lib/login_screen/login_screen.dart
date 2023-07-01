@@ -5,8 +5,8 @@ import 'package:UniVerse/login_screen/reset_password_app.dart';
 import 'package:UniVerse/login_screen/reset_password_screen.dart';
 import 'package:UniVerse/login_screen/reset_password_web.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -22,7 +22,7 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
-import '../personal_page_screen/personal_page_web.dart';
+import '../personal_page_screen/web/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
@@ -56,6 +56,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    idController.dispose();
+    passwordController.dispose();
+    _connectivity.disposeStream();
+    super.dispose();
+  }
+
   void logInButtonPressed(String id, String password) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
@@ -71,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.isCompliant(id, password);
+      bool areControllersCompliant = Authentication.isCompliant(id.toLowerCase(), password);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
@@ -87,10 +95,11 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
       else {
-        var response = await Authentication.loginUser(id, password);
+        var response = await Authentication.loginUser(id.toLowerCase(), password);
         if (response == 200) {
           if(kIsWeb) {
-            context.go("/personal/profile");
+            Navigator.pop(context);
+            context.go("/personal/main");
           }
           else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {
@@ -105,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         } else {
           if(kIsWeb)
-            Navigator.popAndPushNamed(context, "/error");
+            context.go("/error");
           else
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
         }
@@ -137,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Image.asset('assets/icon_no_white.png', scale:3),
                   ),
                   const Text(
-                    "Junta-te ao Universo!",
+                    "Entra no Universo!",
                     style: TextStyle(
                         fontSize: 25
                     ),

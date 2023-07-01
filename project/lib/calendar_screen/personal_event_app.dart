@@ -1,4 +1,4 @@
-import 'package:UniVerse/calendar_screen/calendar_event.dart';
+import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/calendar_screen/personal_event_screen.dart';
 import 'package:flutter/material.dart';
 

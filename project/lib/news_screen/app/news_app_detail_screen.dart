@@ -1,22 +1,16 @@
 
 import 'package:flutter/material.dart';
 
-import '../consts/color_consts.dart';
-import '../utils/news/article_data.dart';
+import '../../consts/color_consts.dart';
+import '../../utils/news/article_data.dart';
 
-class NewsDetailScreen extends StatefulWidget {
+class NewsDetailScreen extends StatelessWidget {
   NewsDetailScreen(this.data, this.color, {super.key});
   Article data;
   Color color;
 
   @override
-  State<StatefulWidget> createState() => NewsDetailState();
-}
-
-class NewsDetailState extends State<NewsDetailScreen> {
-  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       body: Container(
@@ -28,7 +22,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
             color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-                color: widget.color,
+                color: color,
                 width: 2
             ),
             boxShadow: [ BoxShadow(
@@ -50,7 +44,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                            image: NetworkImage(widget.data.urlToImage!),
+                            image: NetworkImage(data.urlToImage!),
                             fit: BoxFit.cover
                         )
                     ),
@@ -74,7 +68,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.data.date!,
+                    data.date!,
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey
@@ -82,7 +76,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
                   ),
                   Spacer(),
                   Text(
-                    "autoria de "+widget.data.author!,
+                    "Autoria de "+data.author!,
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey
@@ -94,7 +88,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
               child: Text(
-                widget.data.title!.toUpperCase(),
+                data.title!.toUpperCase(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -107,7 +101,7 @@ class NewsDetailState extends State<NewsDetailScreen> {
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    widget.data.text!,
+                    data.text!,
                     textAlign: TextAlign.justify,
                   ),
                   //SizedBox(height: 10,)

@@ -4,6 +4,7 @@ import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
@@ -16,6 +17,7 @@ import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_app.dart';
 import '../login_screen/login_web.dart';
+import '../personal_page_screen/app/personal_page_app.dart';
 import '../utils/connectivity.dart';
 import 'functions/reg.dart';
 
@@ -50,6 +52,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
+    _connectivity.disposeStream();
+    super.dispose();
   }
 
   void registerButtonPressed(String id, String name, String email, String password, String confirmation) async {
@@ -107,8 +118,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     descriptions: "Damos-te as boas-vindas ao Universo!\nEnviámos um e-mail para que possas confirmar a tua conta.",
                     text: "OK",
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const LoginPageApp()));
+                      if(kIsWeb) {
+                        Navigator.pop(context);
+                        context.go("/personal/main");
+                      }else
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AppPersonalPage()));
                     },
                   );
                 }

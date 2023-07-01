@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:UniVerse/utils/camera/camera_screen.dart';
-import 'package:UniVerse/utils/report/problem_report.dart';
+import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +54,14 @@ class _ReportScreenState extends State<ReportScreenApp> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+   titleController.dispose();
+   locationController.dispose();
+   descriptionController.dispose();
+   super.dispose();
+  }
+
   void submitButtonPressed(String title, String location, String description) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
@@ -98,7 +106,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                 );
               }
           );
-        } else if (response == 403) {
+        } else if (response == 401) {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(
@@ -127,7 +135,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
@@ -157,35 +164,30 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       textAlign: TextAlign.justify,
                     ),
                   ),
-            Container(
+            Padding(
               padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TextFormField(
-                      maxLength: 25,
-                      controller: titleController,
-                      decoration: const InputDecoration(
-                        icon: const Icon(Icons.title_outlined),
-                        hintText: 'Introduz um título',
-                      ),
-                    ),
-                    TextFormField(
-                      maxLength: 50,
-                      controller: locationController,
-                      decoration: const InputDecoration(
-                        icon: const Icon(Icons.location_on_outlined),
-                        hintText: 'Indica onde encontraste o problema',
-                      ),
-                    ),
-              ]
+              child: TextFormField(
+                maxLength: 25,
+                controller: titleController,
+                decoration: const InputDecoration(
+                  icon: const Icon(Icons.title_outlined),
+                  hintText: 'Introduz um título',
                 ),
               ),
             ),
-                Container(
-                  margin: EdgeInsets.only(left: 20, right:20, top: 10),
-                  padding: const EdgeInsets.only(left: 10, right:10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+              child: TextFormField(
+                maxLength: 50,
+                controller: locationController,
+                decoration: const InputDecoration(
+                  icon: const Icon(Icons.location_on_outlined),
+                  hintText: 'Indica onde encontraste o problema',
+                ),
+              ),
+            ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right:20, top: 10),
                   child: TextField(
                     maxLength: 100,
                     controller: descriptionController,
@@ -221,7 +223,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       ),
                     ),
                   ),
-                    //MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
                     const SizedBox(height: 20),
                     isLoading
                         ? Container(

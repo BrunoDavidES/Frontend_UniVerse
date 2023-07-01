@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:UniVerse/consts/api_consts.dart';
+import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../utils/users/User.dart';
+import '../../utils/users/user_data.dart';
 
 class Report {
   static bool isCompliant(String title, String location, String description) {
@@ -18,7 +19,30 @@ class Report {
   }*/
 
   static Future<int> send(String title, String location, String description) async {
-    final response = await http.post(
+    String token = await Authentication.getTokenID();
+    if (token != "") {
+      final http.Response response = await http.post(
+        Uri.parse(reportUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+        body: json.encode({
+          'title': title,
+          'location': location,
+        }),
+      );
+      if (response.statusCode == 200) {
+        //final String id = response.body;
+        return 200;
+      } else if (response.statusCode == 401) {
+        Authentication.userIsLoggedIn = false;
+        Authentication.revoge();
+      }
+      return response.statusCode;
+    } else return 401;
+  }
+    /*final response = await http.post(
       Uri.parse(baseUrl + reportUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -37,6 +61,6 @@ class Report {
     print(response.body);
     print(response.statusCode);
     return response.statusCode;
-  }
+  }*/
 
 }

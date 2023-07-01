@@ -1,5 +1,5 @@
 import 'package:UniVerse/find_screen/find_test.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_web_body.dart';
+import 'package:UniVerse/personal_page_screen/web/personal_page_web_body.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_screen_web.dart';
 import 'package:UniVerse/report_screen/report_screen_web.dart';
 import 'package:flutter/material.dart';

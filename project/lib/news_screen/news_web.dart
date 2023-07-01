@@ -27,6 +27,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
   @override
   void initState() {
     fetchDone = Article.fetchNews(4, 0, {});
+    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -68,15 +69,16 @@ class _NewsWebPageState extends State<NewsWebPage> {
                           child: FutureBuilder(
                               future: fetchDone,
                               builder: (context, snapshot) {
-                                if (snapshot.data == 500) {
-                                  return Error500();
-                                }
                                 if (snapshot.hasData) {
-                                  return ListView.builder(
+                                  if (snapshot.data == 500) {
+                                    return Error500();
+                                  }
+                                  else {
+                                    return ListView.builder(
                                     itemCount: 4,
                                     itemBuilder: (BuildContext context, int index) {
+                                      //Article.news.map((e) => NewsCard(e)).toList(),
                                       final item = Article.news[index];
-
                                       return Column(
                                         children: [
                                           SizedBox(
@@ -169,6 +171,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                       );
                                     },
                                   );
+                                  }
                                 }
                                 return Center(
                                     child: LinearProgressIndicator());

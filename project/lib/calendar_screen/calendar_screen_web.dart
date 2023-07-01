@@ -13,7 +13,7 @@ import '../components/web_menu_card.dart';
 import '../consts/list_consts.dart';
 import '../login_screen/login_web.dart';
 import 'personal_event_web.dart';
-import 'calendar_event.dart';
+import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';
 import 'package:intl/date_symbol_data_local.dart';

@@ -13,6 +13,7 @@ class Error500WithBar extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
           title: title,
           automaticallyImplyLeading: false,
@@ -20,19 +21,15 @@ class Error500WithBar extends StatelessWidget {
           titleSpacing: 15,
           elevation: 0,
         ),
-      body: Container(
-        height: size.height,
-        width: size.width,
-        color: cDirtyWhiteColor,
-        child: Stack(
-          children: <Widget>[
-            const Error500(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:i),
-            )
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          const Error500(),
+          Spacer(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child:CustomAppBar(i:i),
+          )
+        ],
       ),
     );
   }

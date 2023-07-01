@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../calendar_screen/personal_event_app.dart';
 import '../calendar_screen/personal_event_web.dart';
-import '../calendar_screen/calendar_event.dart';
+import '../utils/events/personal_event_data.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CalendarEventCard extends StatefulWidget {

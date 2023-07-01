@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +19,7 @@ import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
-import '../personal_page_screen/personal_page_web.dart';
+import '../personal_page_screen/web/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<ResetScreen> {
                             else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
                           },
                           child: Text(
-                            "Fazer login",
+                            "Iniciar sessão",
                             style: TextStyle(
                                 color: Colors.black
                             ),
