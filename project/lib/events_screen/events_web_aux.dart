@@ -25,7 +25,9 @@ class EventWebPageAux extends StatelessWidget {
         radius: const Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
         controller: yourScrollController,
-        child: SingleChildScrollView(
+        child: Container(
+
+        )/*SingleChildScrollView(
           controller: yourScrollController,
           child: Container(
             color: cDirtyWhite,
@@ -206,13 +208,13 @@ class EventWebPageAux extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ),*/
       ),
     );
   }
 }
 
-class Article {
+/*class Article {
   final String title;
   final String imageUrl;
   final String author;
@@ -297,4 +299,4 @@ final List<Article> _articles = [
     imageUrl: "https://picsum.photos/id/1020/960/540",
     postedOn: "1 seconds ago",
   ),
-];
+];*/

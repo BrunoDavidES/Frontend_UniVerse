@@ -1,6 +1,7 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'maps_page_app.dart';
 class mainPageMap extends StatelessWidget {
@@ -30,9 +31,7 @@ class mainPageMap extends StatelessWidget {
                       fontSize: 30,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/find');
-                  },
+                  onPressed: () => context.go('/find'),
                   child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                 ),
               ),

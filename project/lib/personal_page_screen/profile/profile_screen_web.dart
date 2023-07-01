@@ -1,8 +1,9 @@
 
+import 'package:UniVerse/components/text_field.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../components/custom_shape.dart';
 import '../../components/web_menu_card.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
@@ -63,7 +64,9 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                 children:  [
                   Column(
                     children: <Widget>[
-                      WebMenuCard(text: 'Logout', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.logout_outlined),
+                      WebMenuCard(text: 'Gestão de Backoffice', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.manage_accounts_outlined, press: () {
+                        launchUrl(Uri.parse("https://universe-fct.oa.r.appspot.com/backoffice/index.html"));
+                      },),
                       WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
                       WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
                       WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
@@ -98,49 +101,128 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                         child: Image.asset("assets/web/perfil-web.png", scale: 4.5,)
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 140,
-                        width: 140,
-                        margin: EdgeInsets.only(left:80, top: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: cDirtyWhite, width: 5),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("assets/man.png")
+
+                      SizedBox(
+                        width: size.width/1.75,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Spacer(),
+                            Container(
+                              height: 140,
+                              width: 140,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: cDirtyWhite, width: 5),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage("assets/man.png")
+                                  )
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top:30),
+                              child: Column(
+                                children: [
+                                    Text("Nome Utilizador",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  SizedBox(height: 5,),
+                          Text("identificador",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: cHeavyGrey
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width:50),
+
+                             Padding(
+                               padding: const EdgeInsets.only(top: 40),
+                               child: Text("Funcionário",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                             ),
+                                SizedBox(width:10,),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 45),
+                                child: Text("Divisão Académica",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: cHeavyGrey
+                                      ),
+                                    ),
+                              ),
+                            Spacer(),
+                            Row(
+                              children: [
+                                Text(
+                                  "EDITAR",
+                                  style: TextStyle(
+                                    color: cHeavyGrey,
+                                    fontWeight: FontWeight.bold
+                                  )
+                                ),
+                                IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined, color: cHeavyGrey,)),
+                              ],
                             )
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 80),
-                        child: Text("Bruno David",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5,),
-                      Padding(
-                        padding: const EdgeInsets.only(left:80),
-                        child: Text("bm.david",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: cHeavyGrey
-                          ),
+                          ],
                         ),
                       ),
 
-                    ],
-                  ),
                 ],
               ),
+              MyReadOnlyField(icon: Icons.alternate_email, text: "Email do utilizador",),
+              MyReadOnlyField(icon: Icons.phone, text: "+351 999999999",),
               SizedBox(height:size.height/2)
             ],
           ),
       ],
+    );
+  }
+}
+
+class MyReadOnlyField extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  const MyReadOnlyField({
+    super.key, required this.icon, required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, bottom: 10),
+      child: Row(
+        children: [
+          Icon(icon, color: cHeavyGrey),
+          SizedBox(width: 5,),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: cDirtyWhiteColor,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: cHeavyGrey,
+                width: 2
+              )
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 15,
+                color: cHeavyGrey
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

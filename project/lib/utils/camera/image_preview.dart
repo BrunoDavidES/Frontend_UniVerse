@@ -31,14 +31,16 @@ class ImagePreviewState extends State<ImagePreview> {
       ),
       body: Stack(
           children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color:cHeavyGrey
-              )
+          Center(
+            child: Container(
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color:cHeavyGrey
+                )
+              ),
+                child: Image.file(picture)
             ),
-              child: Image.file(picture)
           ),
             Column(
               children: [

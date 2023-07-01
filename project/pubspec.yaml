@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_nav_bar: ^5.0.6
   table_calendar: ^3.0.9
+  flutter_animate: 4.1.0
+  go_router: 8.2.0
   #sprintf: ^6.0.0
   url_launcher: ^6.1.8
   http: ^0.13.6
@@ -97,6 +99,8 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/capi.png
+    - assets/titles/events.png
     - assets/app/links.png
     - assets/man.png
     - assets/app/area.png
@@ -120,8 +124,9 @@ flutter:
     - assets/app/registo.png
     - assets/web/perfil-web.png
     - assets/web/404.png
-    - assets/app/ufo.png
+    - assets/images/ufo.png
     - assets/capi_logo.png
+    - assets/titles/messages.png
     - assets/web/foto.jpg
     - assets/web/noticias.png
     - assets/app/departments.png

@@ -1,8 +1,8 @@
 import 'package:UniVerse/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../components/500_app.dart';
-import '../components/events_card.dart';
+import '../components/500.dart';
+import '../components/app/events_card.dart';
 import '../components/news_card.dart';
 import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
@@ -26,19 +26,17 @@ class EventsState extends State<EventsFeed> {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: FutureBuilder(
-              future: Event.fetchEvents(3, 0),
+              future: Event.fetchEvents(3, 0, {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data == 500) {
-                    return Error500App();
-                  } else if(snapshot.data == 403){
-                    return LoginScreen();
-                  } else { return Column(
+                  if (snapshot.data == 500)
+                    return Error500();
+                  else
+                    return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: Event.events.map((e) => EventsCard(e)).toList(),
                     );
-                  }
                 }
                 return Padding(
                     padding: const EdgeInsets.all(10.0),

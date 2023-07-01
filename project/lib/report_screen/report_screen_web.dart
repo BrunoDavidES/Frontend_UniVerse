@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:UniVerse/components/500_app.dart';
+import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../Components/default_button.dart';
-import '../components/500_app_with_bar.dart';
+import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
 import '../components/simple_dialog_box.dart';
@@ -86,7 +86,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
             builder: (BuildContext context) {
               return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
+                  descriptions: "Parece que não iniciaste sessão na tua conta.",
                   text: "OK",
                   press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
@@ -163,7 +163,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
             ],
           ),
           Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
@@ -177,6 +177,9 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                   child: const Text(
                     "Encontraste um problema no campus? Preenche os campos abaixo para que possamos conhecer a situação e agir o mais rapidamente possível.",
                     textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 15
+                    ),
                   ),
                 ),
                Container(

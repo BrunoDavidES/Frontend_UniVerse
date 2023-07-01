@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/browser_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:requests/requests.dart';
 
@@ -43,7 +41,7 @@ class Authentication {
   }
 
   static Future<int> authenticate(String id, String password) async {
-    try {
+    /*try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: id,
           password: password
@@ -62,8 +60,7 @@ class Authentication {
         IdTokenResult idTokenResult = await user.getIdTokenResult(true);
         String? idToken = idTokenResult.token;
         print(idToken);
-        var client = BrowserClient()..withCredentials=true;
-        final response = await client.post(
+        final response = await http.post(
           Uri.parse(baseUrl + loginUrl),
           headers: <String, String>{
             'Content-Type': 'application/json',
@@ -98,7 +95,35 @@ class Authentication {
       print(response.body);
       print(response.headers);
     return response.statusCode;
-  }*/
+  }*/*/
+    const url = "https://universe-fct.oa.r.appspot.com/rest/login";
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final String requestBody = jsonEncode(
+        {
+          'username': id,
+          'password': password,
+        }
+    );
+
+
+      final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: requestBody
+      );
+
+      if (response.statusCode == 200) {
+        final String id = response.body;
+        print('User logged in with ID: $id');
+      } else {
+        print('Login failed with status code: ${response.statusCode}');
+      }
+    return response.statusCode;
+  }
 
   static Future<int> revoge() async {
       FirebaseAuth.instance.signOut();

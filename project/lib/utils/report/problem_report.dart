@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:UniVerse/bars/dialog_test.dart';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';

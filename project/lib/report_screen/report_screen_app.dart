@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:UniVerse/components/500_app.dart';
+import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/personal_page_body_app.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/default_button.dart';
-import '../components/500_app_with_bar.dart';
+import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
 import '../components/simple_dialog_box.dart';
@@ -185,12 +185,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
             ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right:20, top: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: cHeavyGrey.withOpacity(0.6)
-                    )
-                  ),
                   padding: const EdgeInsets.only(left: 10, right:10),
                   child: TextField(
                     maxLength: 100,

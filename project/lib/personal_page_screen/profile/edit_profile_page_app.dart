@@ -1,4 +1,4 @@
-import 'package:UniVerse/components/grid_item.dart';
+import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 

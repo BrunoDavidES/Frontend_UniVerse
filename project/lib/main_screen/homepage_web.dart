@@ -1,6 +1,7 @@
 import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import 'package:go_router/go_router.dart';
 import '../components/faq_item.dart';
 import '../find_screen/maps_screen/map_page_web.dart';
 import '../consts/color_consts.dart';
@@ -15,7 +16,10 @@ class WebHomePage extends StatelessWidget {
   bool showbtn = false;
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(size.height);
+    print(size.width);
     return Scaffold(
+      backgroundColor: cDirtyWhite,
       body: Scrollbar(
         thumbVisibility: true, //always show scrollbar
         thickness: 8, //width of scrollbar
@@ -43,7 +47,62 @@ class WebHomePage extends StatelessWidget {
                     children: <Widget>[
                       CustomWebBar(),
                       const Spacer(),
-                      Body(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Finalmente, tão perto!".toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 80,
+                            color: cDirtyWhiteColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "E aqui que encontras o que precisas a qualquer altura\nBem vindo!!",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: cDirtyWhite,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: InkWell(
+                            onTap: () {
+                              yourScrollController.animateTo(650,
+                                  duration: Duration(seconds: 1), curve: Curves.easeIn);
+                            },
+                            child: FittedBox(
+                              child: Container (
+                                margin: const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: cDarkBlueColorTransparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      " ver mais".toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: cDirtyWhite,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                       const Spacer(
                         flex: 2,
                       ),
@@ -95,9 +154,7 @@ class WebHomePage extends StatelessWidget {
                           fontSize: 30,
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/help');
-                      },
+                      onPressed: () => context.go('/help'),
                       child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                     ),
                   ),
@@ -147,7 +204,7 @@ class WebHomePage extends StatelessWidget {
                           Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
                           Padding(
                             padding: const EdgeInsets.only(left:20, right: 20),
-                            child: Text(
+                            child: SelectableText(
                               "Instala já a nossa aplicação!".toUpperCase(),
                               style: const TextStyle(
                                 color: cPrimaryColor,

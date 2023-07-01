@@ -16,7 +16,7 @@ class _RightSideState extends State<RightSide> {
     Size size = MediaQuery.of(context).size;
     var containerHeight = size.height/1.5;
     var containerWidth = size.width/1.5;
-    return /*Container(
+    return Container(
         height: containerHeight,
         width: containerWidth,
         color: cDirtyWhite,
@@ -98,8 +98,7 @@ class _RightSideState extends State<RightSide> {
               ),
               child: Center(child: MapsPageWeb()),
             )*/
-    );*/
-      Container(
+      /*Container(
         height: containerHeight,
         width: containerWidth,
         color: cDirtyWhite,
@@ -117,64 +116,19 @@ class _RightSideState extends State<RightSide> {
               ],
               color: cDirtyWhiteColor
           ),
-          child: Row(
+          child: /*Row(
             children: [
-              Container(
-                width: containerWidth-containerWidth/3.5-15,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left:15, top: 15, bottom:5),
-                      child: Text(
-                        "Divisão de Eventos e Apoio ao Estudante Diplomado",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            color: cHeavyGrey,
-                            fontSize: 25
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    Container(
-                      margin: EdgeInsets.only(left:15),
-                      width: double.infinity,
-                      height: containerHeight-175,
 
-                      child:SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            "OLÁ",
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: containerWidth/3.5,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/web/foto.jpg"),
-                      fit: BoxFit.cover),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
             ],
           ),
-        ),
-        /*child: Container(
+        ),*/*/
+       /* Container(
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: cPrimaryLightColor,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Center(child: MapsPageWeb()),
-            )*/
+              child: Center(child: MapsPageWeb()),*/
       );
   }
 }

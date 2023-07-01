@@ -1,5 +1,6 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/news_card_web.dart';
@@ -17,10 +18,11 @@ class MainNews extends StatefulWidget {
 }
 
 class MainNewsState extends State<MainNews> {
+  late Future<int> fetchDone;
 
   @override
   void initState() {
-    print("Teste");
+    fetchDone = Article.fetchNews(3, 0, {});
     super.initState();
   }
 
@@ -48,9 +50,7 @@ class MainNewsState extends State<MainNews> {
                         fontSize: 30,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/news');
-                    },
+                    onPressed: () => context.go('/news'),
                     child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                   ),
                 ),
@@ -65,7 +65,7 @@ class MainNewsState extends State<MainNews> {
           Padding(
               padding: EdgeInsets.only(top: 50),
               child: FutureBuilder(
-                future: Article.fetchNews(3, 0),
+                future: fetchDone,
                 builder: (context, snapshot) {
                   if(snapshot.hasData) {
                     return Row(

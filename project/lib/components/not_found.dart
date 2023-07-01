@@ -1,6 +1,7 @@
 import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import 'package:go_router/go_router.dart';
 import '../components/faq_item.dart';
 import '../find_screen/maps_screen/map_page_web.dart';
 import '../consts/color_consts.dart';
@@ -37,13 +38,11 @@ class PageNotFound extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/home');
-                },
+                onTap: () => context.go('/home'),
                 child: Text.rich(
                   textAlign: TextAlign.center,
                   TextSpan(
-                      text: "O Universo tem muito mais para explorar\nPara voltares à página inicial clica ",
+                      text: "O Universo está sempre em expansão, mas a página que procuras ainda não existe.\nPara voltares à página inicial clica ",
                       style: TextStyle(
                         color:cDirtyWhiteColor,
                         fontSize: 20

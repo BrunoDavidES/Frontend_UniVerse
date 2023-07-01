@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:UniVerse/consts/api_consts.dart';
+import 'package:UniVerse/consts/list_consts.dart';
 import 'package:http/http.dart' as http;
 
 
 class Article {
   static List<Article> news = <Article>[];
+  static int numNews = 0;
   String? id;
   String? title;
   String? text;
@@ -29,7 +32,7 @@ class Article {
     title = properties['title']['value'];
     author = properties['authorName']['value'];
     date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png";
+    urlToImage = images[Random().nextInt(images.length)];
     text="Olá";
     print(id);
     print(title);
@@ -37,16 +40,37 @@ class Article {
     print("OLÁ");
   }
 
-  static Future<int> fetchNews(int limit, int offset) async {
-   /*String newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+  static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
+    String newsUrl = '/feed/numberOf/News';
+    var response;
+    if(numNews == 0) {
+      response = await http.post(
+        Uri.parse(baseUrl + newsUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+      );
+      if(response.statusCode==200) {
+        numNews = json.decode(response.body);
+        print(numNews);
+      }
+      else return 500;
+    }
+    newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
-    final response = await http.post(
+    response = await http.post(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, Map<String, String>>{
-       //'filters': {'validated_backoffice':'true'},
+      body: jsonEncode({
+        if(filters.isNotEmpty)
+          'filters': jsonEncode(
+            {
+              'id': '7579ab46-1116-444b-954b-b49324b5a47e'
+            }
+          ),
+
       }),
     );
     if(response.statusCode==200) {
@@ -63,8 +87,9 @@ class Article {
     print(news[0].author);
     print(news[0].date);
     print("OLÁ");
-    return response.statusCode;*/
-   return 200;
+    print(news.length);
+    return response.statusCode;
+  //return 500;
   }
 
 
@@ -75,4 +100,11 @@ class Article {
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     ];*/
+
+static List<String> images = [
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
+  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png"
+];
 }

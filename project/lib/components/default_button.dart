@@ -1,7 +1,6 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
-import '../main_screen/components/body.dart';
 
 class DefaultButton extends StatelessWidget {
   final String text;
