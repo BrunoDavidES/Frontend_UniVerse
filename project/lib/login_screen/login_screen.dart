@@ -42,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController idController;
   late TextEditingController passwordController;
 
+  bool passwordObscured = true;
+
   @override
   void initState() {
     idController = TextEditingController();
@@ -144,6 +146,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   MyTextField(controller: idController, hintText: 'Introduz o teu e-mail institucional', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
                   MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
+                  TextField(
+                    obscureText: passwordObscured,
+                      decoration: InputDecoration(
+                        hintText: 'Palavra-passe',
+                        prefixIcon: Icon(
+                          Icons.lock,
+                        ),
+
+                        suffixIcon: IconButton(onPressed: (){
+                          setState(() {
+                            passwordObscured = !passwordObscured;
+                          });
+                        },
+                        icon: Icon(
+                          passwo
+                          Icons.visibility_off,
+                        )),
+                        fillColor: Colors.white,
+                        filled: true,
+                      ),
+                  ),
                   const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
