@@ -8,3 +8,4 @@ const modifyUrl = '$baseUrl/modify';
 const nucleusUrl = '$baseUrl/nucleus';
 const profileUrl = '$baseUrl/profile';
 const messageUrl = '$baseUrl/message';
+const forumUrl = '$baseUrl/forum';

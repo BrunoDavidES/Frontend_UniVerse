@@ -15,7 +15,6 @@ class ContactsScreenApp extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreenApp> {
-  String senderId = "";
   String receiverId = "";
   var contactName = "Demonstrador";
 
@@ -55,7 +54,6 @@ class _ContactsScreenState extends State<ContactsScreenApp> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => ChatPageApp(
-                        senderID: senderId,
                         receiverID: receiverId,
                       ),
                     ),
@@ -78,19 +76,6 @@ class _ContactsScreenState extends State<ContactsScreenApp> {
                       style: TextStyle(fontSize: 17),
                     ),
                   ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    senderId = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Sender ID',
                 ),
               ),
             ),

@@ -23,9 +23,9 @@ class ChatUtils {
     return inbox;*/
   }
 
-  static Future<void> sendMessage(String senderId, String recipientId, String message) async {
+  static Future<void> sendMessage(String forumID, String message) async {
     try {
-      final url = Uri.parse('$messageUrl/send');
+      final url = Uri.parse('$forumUrl/$forumID/post');
 
       String token = await FirebaseAuthentication.getIdToken();
 
@@ -37,9 +37,8 @@ class ChatUtils {
       final response = await http.post(
         url,
         body: json.encode({
-          'senderId': senderId,
-          'recipientId': recipientId,
-          'message': message
+          'title': 'title',
+          'description': message
         }),
         headers: headers,
       );

@@ -1,20 +1,20 @@
 import 'dart:async';
 
-import 'package:UniVerse/bars/app_bar.dart';
-import 'package:UniVerse/calendar_screen/calendar_screen_app.dart';
-import 'package:UniVerse/components/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 
-import'package:UniVerse/utils/chat/chat_utils.dart';
+import 'package:UniVerse/utils/chat/chat_utils.dart';
 
 class ChatPageApp extends StatefulWidget {
   final String receiverID;
-  final String senderID;
 
-  ChatPageApp({super.key, required this.senderID, required this.receiverID,});
+  ChatPageApp({
+    Key? key,
+    required this.receiverID,
+  }) : super(key: key);
 
   @override
   State<ChatPageApp> createState() => _MyChatPageState();
@@ -24,6 +24,8 @@ class _MyChatPageState extends State<ChatPageApp> {
   final TextEditingController messageController = TextEditingController();
   late StreamSubscription _chatStream;
   final StreamController<dynamic> _streamController = StreamController<dynamic>();
+  String currentPage = 'Homepage';
+  String forumID = '-NZGuFwlRhrbHrrMpOMA';
 
   @override
   void initState() {
@@ -37,17 +39,22 @@ class _MyChatPageState extends State<ChatPageApp> {
     super.deactivate();
   }
 
-  void _activateListeners() {
-    _chatStream =
-        FirebaseDatabase.instance.ref().child('Users/${widget.senderID.replaceAll(".", "")}/inbox/${widget.receiverID.replaceAll(".", "")}').onValue.listen((event) {
+  void _activateListeners() async {
+    String? senderID = FirebaseAuth.instance.currentUser?.uid;
+    _chatStream = FirebaseDatabase.instance
+        .ref()
+        .child('forums/$forumID/feed/')
+        .onValue
+        .listen((event) {
       var snapshot = event.snapshot;
       var children = snapshot.value as Map<dynamic, dynamic>;
 
       children.forEach((key, value) {
-        var message = value['message'];
-        var senderId = value['senderId'];
+        var description = value['description'];
+        var time = value['time'];
+        var title = value['title'];
 
-        print('Message: $message, SenderId: $senderId');
+        print('Description: $description, Time: $time, Title: $title');
 
         _streamController.add(children);
       });
@@ -74,32 +81,18 @@ class _MyChatPageState extends State<ChatPageApp> {
             );
           },
         ),
-        title: Row(
-          children: [
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage("assets/man.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            SizedBox(width: 5),
-            Text(
-              widget.receiverID,
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ],
+        title: Text(
+          currentPage, // Display the current page name
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: cDirtyWhiteColorNoOps,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: RadialGradient(
             focal: Alignment.bottomCenter,
             focalRadius: 0.1,
@@ -112,141 +105,231 @@ class _MyChatPageState extends State<ChatPageApp> {
           ),
         ),
         height: size.height,
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            StreamBuilder(
-              stream: _streamController.stream,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  var children = snapshot.data as Map<dynamic, dynamic>;
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: children.entries.map((entry) {
-                        var key = entry.key;
-                        var value = entry.value;
-                        var message = value['message'];
-                        var senderId = value['senderId'];
-
-                        return Container(
-                          margin: EdgeInsets.all(7.5),
-                          padding: EdgeInsets.all(5),
-                          width: size.width / 2 + 75,
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            color: cHeavyGrey.withOpacity(0.6),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            'Message: $message, SenderId: $senderId',
-                            style: TextStyle(
-                              color: cDirtyWhiteColor,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
+            Expanded(
+              flex: 1,
+              child: buildLeftColumn(),
             ),
-            Spacer(),
-            buildInput(),
+            Expanded(
+              flex: 2,
+              child: buildMiddleColumn(),
+            ),
+            Expanded(
+              flex: 1,
+              child: buildRightColumn(),
+            ),
           ],
         ),
       ),
     );
   }
 
-
-  Widget buildList(double width, double height) {
-    return SingleChildScrollView(
+  Widget buildLeftColumn() {
+    return Align(
+      alignment: Alignment.centerLeft, // Align buttons to the left
       child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(7.5),
-              padding: EdgeInsets.all(5),
-              width: width / 2 + 50,
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                color: cHeavyGrey,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                "Esta é a mensagem que recebes e aparece assim. Fixe não achas?",
-                style: TextStyle(
-                    color: cDirtyWhiteColor
+        crossAxisAlignment: CrossAxisAlignment.start, // Align text within buttons to the left
+        children: [
+          TextButton.icon(
+            onPressed: () {
+              setState(() {
+                currentPage = 'Homepage'; // Update the current page to 'Homepage'
+              });
+              // Action to perform when Homepage button is pressed
+            },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.all(7.5),
-              padding: EdgeInsets.all(5),
-              width: width / 2 + 50,
-              alignment: Alignment.centerRight,
-              decoration: BoxDecoration(
-                color: cPrimaryLightColor,
-                borderRadius: BorderRadius.circular(10),
+            icon: const Icon(Icons.home), // Icon on the left side
+            label: const Text('Homepage'),
+          ),
+
+          const SizedBox(height: 8), // Adding spacing between buttons
+
+          TextButton.icon(
+            onPressed: () {
+              setState(() {
+                currentPage = 'Grades'; // Update the current page to 'Grades'
+              });
+              // Action to perform when Grades button is pressed
+            },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              child: Text(
-                  "Olá! Por acaso acho! Esta a resposta que podes mandar"
+            ),
+            icon: const Icon(Icons.grade), // Icon on the left side
+            label: const Text('Grades'),
+          ),
+
+          const SizedBox(height: 8), // Adding spacing between buttons
+
+          TextButton.icon(
+            onPressed: () {
+              setState(() {
+                currentPage = 'Evaluations'; // Update the current page to 'Evaluations'
+              });
+              // Action to perform when Evaluations button is pressed
+            },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            )
-          ]
+            ),
+            icon: const Icon(Icons.rate_review), // Icon on the left side
+            label: const Text('Evaluations'),
+          ),
+
+          const SizedBox(height: 8), // Adding spacing between buttons
+        ],
       ),
+    );
+  }
+
+  Widget buildMiddleColumn() {
+    final scrollController = ScrollController();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: StreamBuilder(
+            stream: _streamController.stream,
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+
+              if (!snapshot.hasData || snapshot.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              var children = snapshot.data as Map<dynamic, dynamic>;
+
+              WidgetsBinding.instance?.addPostFrameCallback((_) {
+                // Add this callback to scroll to the bottom after the frame is rendered
+                scrollController.animateTo(
+                  scrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              });
+
+              return SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: children.entries.map((entry) {
+                    var key = entry.key;
+                    var value = entry.value;
+                    var description = value['description'];
+                    var time = value['time'];
+
+                    return Container(
+                      margin: const EdgeInsets.all(7.5),
+                      padding: const EdgeInsets.all(5),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '$time \n\n$description',
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
+        ),
+        buildInput(),
+      ],
+    );
+  }
+
+  Widget buildRightColumn() {
+    // Replace with your Firebase alerts widgets
+    return Container(
+      // Add your Firebase alerts here
     );
   }
 
   Widget buildInput() {
     void sendMessage() {
       String message = messageController.text;
-      String senderId = "m.gamboa";
-      String recipientId = "g.cerveira";
 
       // Call the sendMessage function from chat_utils.dart
-      ChatUtils.sendMessage(senderId, recipientId, message);
+      ChatUtils.sendMessage(forumID, message);
 
       // Clear the message text field
       messageController.clear();
     }
 
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+    void onKeyboardSubmit(String value) {
+      if (value.isNotEmpty) {
+        sendMessage();
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          Expanded(
             child: TextFormField(
               obscureText: false,
               controller: messageController,
+              onFieldSubmitted: onKeyboardSubmit,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(
+                    color: cDarkLightBlueColor,
+                  ),
+                ),
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: cDarkLightBlueColor,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: cDarkLightBlueColor,
-                    )
-                ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "mensagem",
+                hintText: "Message",
               ),
             ),
           ),
-        ),
-        IconButton(
-          onPressed: sendMessage,
-          icon: Icon(Icons.send_sharp, color: cDarkBlueColor),
-        )
-      ],
+          IconButton(
+            onPressed: sendMessage,
+            icon: const Icon(Icons.send_sharp, color: cDarkBlueColor),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -200,7 +200,7 @@ class _ChatScreenState extends State<ChatScreenWeb> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName, senderID: contactName,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName,)));
                                     },
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -341,7 +341,7 @@ class _ChatScreenState extends State<ChatScreenWeb> {
       String recipientId = "jota";
 
       // Call the sendMessage function from chat_utils.dart
-      ChatUtils.sendMessage(senderId, recipientId, message);
+      ChatUtils.sendMessage(recipientId, message);
 
       // Clear the message text field
       messageController.clear();
