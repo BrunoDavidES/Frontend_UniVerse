@@ -18,58 +18,54 @@ class MenuCard extends StatelessWidget {
       onTap: () {
         press();
       },
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Container(
-            height: 50,
-            width: size.width - 100,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: cDirtyWhite,
-                border: Border.all(
-                  color: cPrimaryLightColor,
-                  width:2,
-                ),
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  cDirtyWhiteColor,
-                  cDirtyWhite,
-                  cPrimaryOverLightColor.withOpacity(0.4),
-                  cPrimaryLightColor.withOpacity(0.5)
-                ],
+      child: Container(
+        margin: EdgeInsets.all(5),
+          width: size.width - 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: cPrimaryLightColor,
+                width:2,
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size:40, color: cPrimaryColor),
-                Padding(
-                  padding: const EdgeInsets.only(top:5),
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: cHeavyGrey,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    description,
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: cHeavyGrey,
-                    ),
-                  ),
-                ),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                cDirtyWhiteColor,
+                cDirtyWhite,
+                cPrimaryOverLightColor.withOpacity(0.4),
+                cPrimaryLightColor.withOpacity(0.5)
               ],
-            )
-        ),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size:40, color: cPrimaryColor),
+              Padding(
+                padding: const EdgeInsets.only(top:5),
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: cHeavyGrey,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      color: cHeavyGrey,
+                  ),
+                ),
+              ),
+            ],
+          )
       ),
     );
   }

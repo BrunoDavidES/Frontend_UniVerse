@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../consts/color_consts.dart';
 import '../../login_screen/functions/auth.dart';
+import '../../utils/users/user_data.dart';
 
 class PopUpMenu extends StatelessWidget {
   const PopUpMenu({super.key});
@@ -63,7 +64,7 @@ class PopUpMenu extends StatelessWidget {
               color: cPrimaryColor,
           ),
           child: Text(
-            Authentication.getName(),
+            User.getName(),
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white

@@ -21,7 +21,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     Size size = MediaQuery.of(context).size;
     double width;
     if(kIsWeb)
-    width=size.width/3.5;
+    width=size.width/4;
     else width = double.infinity;
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -34,11 +34,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   }
   contentBox(context, height, width){
     return Container(
+      height: height/4,
+          width: width,
           padding: EdgeInsets.all(2),
-          /*padding: EdgeInsets.only(left: Constants.padding,top: Constants.avatarRadius
-              + Constants.padding, right: Constants.padding,bottom: Constants.padding
-          ),
-          margin: EdgeInsets.only(top: Constants.avatarRadius),*/
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -65,6 +63,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 Text(widget.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                 SizedBox(height: 15,),
                 Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
+                Spacer(),
                 DefaultButtonSimple(
                     text: widget.text,
                     color: cPrimaryColor,
@@ -78,18 +77,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               ],
             ),
           ),
-        /*Positioned(
-          left: Constants.padding,
-          right: Constants.padding,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: Constants.avatarRadius,
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(Constants.avatarRadius)),
-                child: Image.asset("assets/model.jpeg")
-            ),
-          ),
-        ),*/
     );
   }
 }

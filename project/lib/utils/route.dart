@@ -159,11 +159,11 @@ class Routing {
           path: '/report',
           builder: (BuildContext context, GoRouterState state) =>
               PersonalPageWeb(i: 2,),
-          /* redirect: (BuildContext context, GoRouterState state) {
+          redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';
                     }
-                  }*/
+                  }
         ),
       ]
   );

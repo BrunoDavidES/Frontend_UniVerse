@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/news_card_web.dart';
-import '../../news_screen/news_app_detail_screen.dart';
+import '../../news_screen/app/news_app_detail_screen.dart';
 import '../../utils/news/article_data.dart';
 
 class MainNews extends StatefulWidget {

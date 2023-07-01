@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../consts/color_consts.dart';
-import '../personal_page_screen/profile/profile_page_app.dart';
+import '../../consts/color_consts.dart';
+import '../profile/profile_page_app.dart';
+import '../../utils/users/user_data.dart';
 
-class PersonalAppCard extends StatelessWidget {
-  const PersonalAppCard({
+class PersonalCard extends StatelessWidget {
+  const PersonalCard({
     super.key,
     required this.size,
   });
@@ -13,7 +14,17 @@ class PersonalAppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String name =  User.getName();
+    String role = User.getRole();
+    String job = User.getJob();
+    Color color;
+    if(User.isVerified()) {
+      if (User.isActive())
+        color = Colors.green;
+      else color = Colors.orange;
+    } else color = Colors.red;
     return Container(
+      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: LinearGradient(
@@ -21,14 +32,11 @@ class PersonalAppCard extends StatelessWidget {
             end: Alignment.bottomLeft,
             colors: [
               cPrimaryLightColor,
-              //Colors.green,
-              //Colors.orange
-              Colors.red
+              color
             ],
           ),
-          //color: cPrimaryLightColor,
           boxShadow: [ BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withOpacity(0.6),
             spreadRadius: 3,
             blurRadius: 7,
             offset: const Offset(0,0),
@@ -36,15 +44,14 @@ class PersonalAppCard extends StatelessWidget {
           ]
       ),
       height: 175,
-      width: size.width-30,
+      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top:10, left: 13, bottom:5),
+            padding: const EdgeInsets.only(top:10, left: 15, bottom:5),
             child: Text(
-              "Olá, Capi",
-              textAlign: TextAlign.start,
+              "Olá, ${name}",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
@@ -52,21 +59,24 @@ class PersonalAppCard extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18, bottom:5),
+          User.isVerified()
+          ?Padding(
+            padding: const EdgeInsets.only(left: 15, bottom:5),
             child: Text(
-              "Aluno",
-              textAlign: TextAlign.start,
+              role,
               style: TextStyle(
                 color: cDirtyWhiteColor,
                 fontSize: 20,
               ),
             ),
-          ),
+          )
+          : SizedBox(width: 1,),
           Padding(
-            padding: const EdgeInsets.only(left: 18, bottom:5),
+            padding: const EdgeInsets.only(left: 15, bottom:5),
             child: Text(
-              "Departamento de Informática",
+              User.isVerified()
+                  ? job
+              : "CONTA NÃO VERIFICADA",
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: cDirtyWhite.withOpacity(0.75),
@@ -76,12 +86,11 @@ class PersonalAppCard extends StatelessWidget {
           ),
           Spacer(),
           Row(
-
             children: [
               Spacer(),
               Padding(
                 padding: const EdgeInsets.all(5),
-                child: Image.asset("assets/app/dot.png", scale: 2, alignment: Alignment.bottomRight),
+                child: Image.asset("assets/dot.png", scale: 2, alignment: Alignment.bottomRight),
               ),
             ],
           )

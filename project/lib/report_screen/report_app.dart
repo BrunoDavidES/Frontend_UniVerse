@@ -16,24 +16,16 @@ class _MyReportPageState extends State<ReportPageApp> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
-          children: <Widget>[
-            ReportScreenApp(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:3),
-            )
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          ReportScreenApp(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child:CustomAppBar(i:3),
+          )
+        ],
       ),
     );
   }

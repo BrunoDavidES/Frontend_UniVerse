@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'User.dart';
+import 'user_data.dart';
 
 const String localDatabaseName = "universe-fct.db";
 
@@ -40,11 +40,11 @@ class LocalDB {
 
     // The `conflictAlgorithm` is used to select the strategy to be used in case
     // the user already exists. In this case, replace any previous data.
-    await db.insert(
+    /*await db.insert(
       'users',
-      u.toMap(),
+      //u.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    );*/
   }
 
   Future<int> countUsers() async {

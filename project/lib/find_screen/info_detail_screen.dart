@@ -53,7 +53,7 @@ class InfoDetailState extends State<InfoDetailScreen> {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(left: 15, bottom: 5),
+              padding: const EdgeInsets.only(left: 10, bottom: 5),
               child: Text(
                 "Divisão de Eventos e Apoio ao Estudante Diplomado",
                 style: TextStyle(
@@ -65,7 +65,7 @@ class InfoDetailState extends State<InfoDetailScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(5),
               width: double.infinity,
               height: size.height/2.25,

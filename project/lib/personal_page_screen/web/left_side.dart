@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '../../components/web_menu_card.dart';
+import '../../../components/web_menu_card.dart';
 
 class LeftSide extends StatefulWidget {
   const LeftSide({super.key});

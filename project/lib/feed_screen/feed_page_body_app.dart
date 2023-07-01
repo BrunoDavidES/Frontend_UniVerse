@@ -5,7 +5,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 
 import '../components/app/grid_item.dart';
 import '../events_screen/events_body_app.dart';
-import '../news_screen/news_body_app.dart';
+import '../news_screen/app/news_body_app.dart';
 
 class FeedPageBodyApp extends StatelessWidget {
 
