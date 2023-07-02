@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import '../Components/default_button.dart';
 import '../components/app/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
+import '../components/password_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
@@ -117,9 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
             context.go("/error");
           else
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
-              }
         }
       }
+    }
     setState(() {
       isLoading = false;
     });
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
                   MyTextField(controller: idController, hintText: 'Introduz o teu e-mail institucional', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
-                  MyTextField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
+                  MyPasswordField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
                   const SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
