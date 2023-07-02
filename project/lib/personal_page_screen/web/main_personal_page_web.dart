@@ -11,12 +11,14 @@ import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../components/web/web_menu.dart';
 import '../../utils/users/user_data.dart';
+import '../components/info.dart';
 
 
 class MainPersonalPageWeb extends StatefulWidget {
@@ -41,25 +43,29 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String job = User.getJob();
     return Row(
-        children: [
-          WebMenu(width: size.width/9, height: size.height/1.25,),
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Image.asset("assets/titles/area.png", scale: 4.5,)
-                  ),
+      children: [
+        if(User.isVerified() && User.isActive())
+        WebMenu(width: size.width/9, height: size.height/2),
+        Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset("assets/titles/area.png", scale: 4.5,)
                 ),
-                PersonalWebCard(size: size),
-              ]
-          ),
-
-        ]
+              ),
+              SizedBox(height: 20,),
+              PersonalWebCard(size: size),
+              SizedBox(height: 30,)
+            ]
+        ),
+        !User.isVerified() || !User.isActive()
+        ?Info()
+            :SizedBox()
+      ],
     );
 
 

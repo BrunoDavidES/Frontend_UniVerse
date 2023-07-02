@@ -50,7 +50,7 @@ class User {
     if (user != null) {
       return user.emailVerified == true;
     }
-    return false;
+    return true;
   }
 
   static bool isActive() {

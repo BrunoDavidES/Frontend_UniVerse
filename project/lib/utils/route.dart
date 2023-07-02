@@ -118,18 +118,8 @@ class Routing {
             name: 'Área Pessoal',
             path: '/personal',
             builder: (BuildContext context, GoRouterState state) =>
-                PageNotFound(),
+                PersonalPageWeb(i: 0,),
             routes: [
-              GoRoute(
-                path: 'main',
-                builder: (BuildContext context, GoRouterState state) =>
-                    PersonalPageWeb(i: 0,),
-                /* redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
-                      return '/home';
-                    }
-                  }*/
-              ),
               GoRoute(
                   path: 'profile',
                   builder: (BuildContext context, GoRouterState state) =>
