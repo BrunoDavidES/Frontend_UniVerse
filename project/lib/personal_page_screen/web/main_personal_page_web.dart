@@ -64,7 +64,7 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
         ),
         !User.isVerified() || !User.isActive()
         ?Info()
-            :SizedBox()
+            :
       ],
     );
 
