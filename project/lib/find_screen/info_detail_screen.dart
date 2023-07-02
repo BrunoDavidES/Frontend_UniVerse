@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 
-class InfoDetailScreen extends StatefulWidget {
+class InfoDetailScreen extends StatelessWidget {
   InfoDetailScreen( {super.key});
-
-  @override
-  State<StatefulWidget> createState() => InfoDetailState();
-}
-
-class InfoDetailState extends State<InfoDetailScreen> {
 
   @override
   Widget build(BuildContext context) {

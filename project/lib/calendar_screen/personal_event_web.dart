@@ -17,7 +17,7 @@ class PersonalEventWeb extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
         width: toCreate ?size.width/2.75 :size.width/3.5,
-        height: toCreate ?size.height/2.5 :size.height/4,
+        height: toCreate ?size.height/2 :size.height/4,
         child: toCreate
           ?PersonalEventCreationScreen()
             :PersonalEventScreen(data: data!,)

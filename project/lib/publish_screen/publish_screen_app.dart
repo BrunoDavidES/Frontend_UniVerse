@@ -46,6 +46,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
   //late TextEditingController timeController;
   late TextEditingController startDateController;
   late TextEditingController endDateController;
+  late TextEditingController descriptionController;
   late String isItPaid;
   late String isItPublic;
 
@@ -56,6 +57,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
     capacityController = TextEditingController();
     startDateController = TextEditingController();
     endDateController = TextEditingController();
+    descriptionController = TextEditingController();
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
@@ -173,15 +175,14 @@ class _PublishScreenState extends State<PublishScreenApp> {
                       press: () {
                         showDialog(
                             context: context,
-                            builder: (_) => const AlertDialog(
-                              backgroundColor: cDirtyWhiteColor,
+                            builder: (_) => const Dialog(
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                   BorderRadius.all(
                                       Radius.circular(10.0)
                                   )
                               ),
-                              content: OrganizedEventsFeed()
+                              child: OrganizedEventsFeed()
                             )
                         );
                       },
@@ -287,7 +288,8 @@ class _PublishScreenState extends State<PublishScreenApp> {
                   ?Text(
                 "Thumbnail adicionada!",
                 style: TextStyle(
-                    color: Colors.green
+                    color: Colors.green,
+                  fontWeight: FontWeight.bold
                 ),
               )
                   : Text(
@@ -301,6 +303,38 @@ class _PublishScreenState extends State<PublishScreenApp> {
         ),
       ),
     ),
+        Container(
+          margin: const EdgeInsets.only(left: 20, right:20, top: 10),
+          child: TextFormField(
+            maxLength: 500,
+            maxLines: 15,
+            controller: descriptionController,
+            decoration: InputDecoration(
+                labelText: "Descrição",
+                labelStyle: TextStyle(
+                    color: cDarkLightBlueColor
+                ),
+
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                    color: cDarkLightBlueColor,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cDarkBlueColor,
+                    )
+                ),
+                fillColor: Colors.white60,
+                filled: true,
+                hintText: "Descreve o evento",
+                hintStyle: TextStyle(
+                    color: Colors.grey
+                )
+            ),
+          ),
+        ),
               const SizedBox(height: 20),
               isLoading
                   ? Container(

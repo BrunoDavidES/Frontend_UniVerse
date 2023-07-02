@@ -15,9 +15,9 @@ class PersonalEventApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
+    return Container(
         width: size.width,
-        height: toCreate ?size.height/2 :size.height/4,
+        height: toCreate ?size.height/1.7 :size.height/4,
         child: toCreate
             ?PersonalEventCreationScreen()
             :PersonalEventScreen(data: data!,)

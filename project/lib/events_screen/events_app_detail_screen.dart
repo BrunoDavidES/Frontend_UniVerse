@@ -70,21 +70,6 @@ class EventsDetailState extends State<EventsDetailScreen> {
                 ]
             ),
             Padding(
-              padding: const EdgeInsets.only(top:15, left: 10, right: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.data.endDate!,
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: cHeavyGrey
-                    ),
-                  ),
-                    ],
-                  ),
-              ),
-            Padding(
               padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
               child: Text(
                 widget.data.title!.toUpperCase(),
@@ -94,16 +79,69 @@ class EventsDetailState extends State<EventsDetailScreen> {
                 ),
               ),
             ),
+
             Expanded(
               flex: 1,
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    widget.data.description!,
-                    textAlign: TextAlign.justify,
-                  ),
-                  //SizedBox(height: 10,)
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top:15, left: 10, right: 10),
+                          child: Text("${widget.data.startDate} · ${widget.data.endDate}",
+                            style: TextStyle(
+                                color: cHeavyGrey
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:15, left: 10, right: 10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_on_outlined, color: cHeavyGrey),
+                              Text(
+                                widget.data.location!,
+                                style: TextStyle(
+                                    color: cHeavyGrey
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:15, left: 10, right: 10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.people, color: cHeavyGrey),
+                              Text(
+                                widget.data.capacity!,
+                                style: TextStyle(
+                                    color: cHeavyGrey
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if(widget.data.isPaid=="yes")
+                          Padding(
+                            padding:  EdgeInsets.only(top:15, left: 10, right: 10),
+                            child: Icon(Icons.euro_outlined, color: cHeavyGrey),
+                          ),
+
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        widget.data.description!,
+                        textAlign: TextAlign.justify,
+                      ),
+                      //SizedBox(height: 10,)
+                    ),
+                  ],
                 ),
               ),
             ),

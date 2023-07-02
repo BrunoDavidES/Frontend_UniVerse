@@ -1,6 +1,7 @@
 
 import 'dart:math';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/utils/events/event_data.dart';
 import 'package:flutter/material.dart';
 import '../../consts/list_consts.dart';
@@ -60,9 +61,17 @@ class EventsCardState extends State<EventsCard> {
               padding: const EdgeInsets.only(top:5, left: 10, right: 10),
               child: Row(
                 children: [
+                  Text(
+                    "Organizado por "+widget.data.planner!,
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: cHeavyGrey
+                    ),
+                  ),
                   Spacer(),
-                  Icon(Icons.star_border_outlined),
-                  Icon(Icons.bookmark_outline),
+                  Authentication.userIsLoggedIn
+                  ?Icon(Icons.bookmark_outline)
+                  :SizedBox(width: 1,),
                   Icon(Icons.share_outlined),
                 ],
               ),

@@ -17,9 +17,11 @@ import '../Components/default_button.dart';
 import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
+import '../components/description_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
+import '../components/web/web_menu.dart';
 import '../components/web_menu_card.dart';
 import '../consts/color_consts.dart';
 import '../info_screen/universe_info_app.dart';
@@ -114,56 +116,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
     File? pickedImage;
     return Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left:20, top:20, bottom: 5),
-                child: Text(
-                  "MENU DE OPÇÕES",
-                  style:TextStyle(
-                      color: cHeavyGrey,
-                      fontWeight: FontWeight.bold
-                  ),),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: cDirtyWhiteColor,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow:[ BoxShadow(
-                      color: Colors.grey.withOpacity(0.7),
-                      spreadRadius: 3,
-                      blurRadius: 7,
-                      offset: const Offset(0,0),
-                    ),
-                    ]
-                ),
-                alignment: Alignment.bottomCenter,
-                width: size.width/9,
-                height: size.height/1.25,
-                margin: EdgeInsets.only(left:20, right:20, bottom: 20),
-                child: ListView(
-                  children:  [
-                    Column(
-                      children: <Widget>[
-                        WebMenuCard(text: 'Logout', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.logout_outlined),
-                        WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
-                        WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
-                        WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
-                        WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
-                        WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
-                        WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                        WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                        WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                        WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                        WebMenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          WebMenu(width: size.width/9, height: size.height/1.15,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -175,7 +128,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 10, top:15, bottom: 15),
+                  padding: const EdgeInsets.only(left:30, top:15, bottom: 15),
                   child: const Text(
                     "Encontraste um problema no campus? Preenche os campos abaixo para que possamos conhecer a situação e agir o mais rapidamente possível.",
                     textAlign: TextAlign.justify,
@@ -189,38 +142,13 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                       height: size.height/1.25,
                       width: size.width/2,
                       padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-                      margin: EdgeInsets.only(left: 100, right: 100),
+                      margin: EdgeInsets.only(left: 250, right: 100),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          TextFormField(
-                            maxLength: 25,
-                            controller: titleController,
-                            decoration: const InputDecoration(
-                              icon: const Icon(Icons.title_outlined),
-                              hintText: 'Introduz um título',
-                            ),
-                          ),
-                          TextFormField(
-                            maxLength: 50,
-                            controller: locationController,
-                            decoration: const InputDecoration(
-                              icon: const Icon(Icons.location_on_outlined),
-                              hintText: 'Indica onde encontraste o problema',
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 40),
-                            child: TextField(
-                              maxLength: 100,
-                              controller: descriptionController,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 5,
-                              decoration: InputDecoration(
-                                hintText: "Introduz a descrição do problema",
-                              ),
-                            ),
-                          ),
+                          MyTextField(controller: titleController, hintText: 'Introduz um título', obscureText: false, label: 'Título', icon: Icons.title,),
+                          MyTextField(controller: locationController, hintText: 'Onde ecnontraste o problema?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
+                          DescriptionField(controller: descriptionController),
                           InkWell(
                             onTap: () async {
                               final ImagePicker picker = ImagePicker();
@@ -233,13 +161,15 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                                 });
                               }
                             },
+
+
                             child: Container(
                               padding: const EdgeInsets.only(left: 25, top: 10),
                               child: Row(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left:5),
-                                    child: Icon(Icons.camera_alt_outlined, color: cHeavyGrey.withOpacity(0.6),),
+                                    child: Icon(Icons.camera_alt_outlined, color: cDarkBlueColor),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left:12),
@@ -253,9 +183,9 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                                       child: Image.memory(imageUint8, fit: BoxFit.scaleDown, scale: 5),
                                     )
                                         : Text(
-                                      "Adiciona uma imagem aqui",
+                                      "Adciona uma foto do problema aqui",
                                       style: TextStyle(
-                                          color: cHeavyGrey.withOpacity(0.9)
+                                          color: cDarkBlueColor
                                       ),
                                     ),
                                   ),

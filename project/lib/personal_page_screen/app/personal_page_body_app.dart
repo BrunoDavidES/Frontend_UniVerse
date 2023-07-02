@@ -1,6 +1,5 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
-import 'package:UniVerse/events_screen/publish_screen/publish_app.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
@@ -11,6 +10,7 @@ import 'dart:io';
 import '../../chat_screen/chat_app.dart';
 import '../../components/app/500_app_with_bar.dart';
 import '../../components/app/menu_card.dart';
+import '../../publish_screen/publish_app.dart';
 import '../components/info.dart';
 import '../components/personal_card.dart';
 import '../../report_screen/report_app.dart';
@@ -103,7 +103,7 @@ class Menu extends StatelessWidget {
               },
               itemBuilder: (context, index) {
                 if(index == 0)
-                return MenuCard(text: 'QR Scan1', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined, press: () {
+                return MenuCard(text: 'APAGAR', description: '', icon: Icons.delete, press: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i: 1, title: Image.asset("assets/app/report.png", scale: 6,),)));
                 },);
                 else if(index==1)
@@ -113,11 +113,11 @@ class Menu extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));
                   });
                 else if(index==3)
-                  return MenuCard(text: 'Mensagens', description: 'Comunica de forma rápida e fácil!',icon: Icons.message_outlined, press: () {
+                  return MenuCard(text: 'Fóruns', description: 'Acede a fóruns informativos do que se passa na FCT',icon: Icons.message_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
                   });
                 else if(index==4)
-                  return MenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
+                  return MenuCard(text: 'APAGAR', description: '',icon: Icons.delete, press: () { });
                 else if(index==5)
                   return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
                 else if(index==6)
@@ -125,7 +125,7 @@ class Menu extends StatelessWidget {
                 else if(index==7)
                   return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
                 else if(index==8)
-                  return MenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
+                  return MenuCard(text: 'APAGAR', description: '',icon: Icons.delete, press: () { });
                 else if(index==9)
                   return MenuCard(text: 'Calendário', description: 'Vê tudo o que tens para fazer no teu calendário',icon: Icons.calendar_month_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarPageApp()));

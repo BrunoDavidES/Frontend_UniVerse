@@ -13,9 +13,8 @@ class Event {
   static int numEvents = 0;
   String? id;
   String? title;
-  String? description;
-  String? urlToImage;
   String? location;
+  //authorName no Datastore
   String? planner;
   String? capacity;
   String? department;
@@ -23,13 +22,21 @@ class Event {
   String? endDate;
   String? isPaid;
 
+  String? description;
+  String? urlToImage;
+
   Event(
+      this.id,
       this.title,
-      this.description,
-      this.urlToImage,
       this.location,
       this.planner,
+      this.capacity,
+      this.department,
+      this.startDate,
+      this.endDate,
       this.isPaid,
+      this.description,
+      this.urlToImage,
       );
 
   Event.fromJson(Map<String, dynamic> json ) {
@@ -53,7 +60,7 @@ class Event {
   }
 
   static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
-    /*String eventsUrl = '/feed/numberOf/Event';
+   /* String eventsUrl = '/feed/numberOf/Event';
     var response;
     if(numEvents == 0) {
       response = await http.post(
@@ -175,9 +182,9 @@ class Event {
   }
 
   static List<Event> events = [
-    Event("Evento", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf"),
-    Event("Evento", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf",),
-    Event("Evento", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/queima2023fct.png", "31 de maio 2023", "Edifício 7", "ninf",),
+    Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "yes", "4", "", "", "", "",),
+    Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "31 de maio 2023", "Edifício 7", "ninf", "10", "", "",),
+    Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "31 de maio 2023", "Edifício 7", "ninf", "11",  "", "",)
   ];
 
   static List<String> images = [

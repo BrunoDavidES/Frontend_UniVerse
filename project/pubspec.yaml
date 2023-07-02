@@ -104,6 +104,7 @@ flutter:
     - assets/titles/events.png
     - assets/app/links.png
     - assets/man.png
+    - assets/titles/area.png
     - assets/app/area.png
     - assets/titles/calendar.png
     - assets/app/report.png

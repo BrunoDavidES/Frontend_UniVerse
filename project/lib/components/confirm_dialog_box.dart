@@ -4,33 +4,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'default_button_simple.dart';
 
-class ConfirmDialogBox extends StatefulWidget {
+class ConfirmDialogBox extends StatelessWidget {
   final String descriptions;
   final Function press;
 
   const ConfirmDialogBox({Key? key, required this.descriptions, required this.press}) : super(key: key);
 
   @override
-  _ConfirmDialogBoxState createState() => _ConfirmDialogBoxState();
-}
-
-class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width;
+    double height;
     if(kIsWeb)
       width=size.width/3;
     else width = double.infinity;
-    return Expanded(
-      child: Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        elevation: 5,
-        backgroundColor: Colors.transparent,
-        child: contentBox(context, size.height, width),
+    height = size.height/3;
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
+      elevation: 5,
+      backgroundColor: Colors.transparent,
+      child: contentBox(context, height, width),
     );
   }
   contentBox(context, height, width){
@@ -38,6 +33,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
       child:Container(
       padding: EdgeInsets.all(2),
     width: width,
+    height: height,
     decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(15),
@@ -63,7 +59,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
           children: <Widget>[
             Text("Aviso",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
             SizedBox(height: 15,),
-            Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
+            Text(descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -72,7 +68,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
                     color: cPrimaryColor,
                     press: () {
                       Navigator.of(context).pop();
-                      widget.press;
+                      press;
                     },
                     height: 10),
                 DefaultButtonSimple(
@@ -80,7 +76,7 @@ class _ConfirmDialogBoxState extends State<ConfirmDialogBox> {
                     color: cPrimaryColor,
                     press: () {
                       Navigator.of(context).pop();
-                      widget.press;
+                      press;
                     },
                     height: 10),
               ],

@@ -56,7 +56,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                           padding: const EdgeInsets.only(left: 50, top: 20),
                           child: Container(
                               alignment: Alignment.centerLeft,
-                              child: Image.asset("assets/web/noticias.png", scale: 4,)
+                              child: Image.asset("assets/web/noticias.png", scale: 4.5,)
                           ),
                         ),
                         Container(

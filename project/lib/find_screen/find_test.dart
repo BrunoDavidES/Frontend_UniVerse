@@ -5,6 +5,7 @@ import 'package:UniVerse/main_screen/components/about_bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../components/web/find_list_item.dart';
 import '../main_screen/components/about_bottom_body.dart';
 
 class findWebTest extends StatefulWidget {
@@ -28,7 +29,7 @@ class _FindWebTestState extends State<findWebTest> {
               padding: const EdgeInsets.only(left:50, top: 20),
               child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Image.asset("assets/web/findTitle.jpeg", scale: 4,)
+                  child: Image.asset("assets/web/findTitle.jpeg", scale: 4.5,)
               ),
             ),
             Row(
@@ -38,7 +39,55 @@ class _FindWebTestState extends State<findWebTest> {
                   child: SizedBox(
                     height: size.height-size.height/7,
                     width: size.width/4.5,
-                    child: const LeftSide(),
+                    child:ListView(
+                      children:  [
+                        Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços", i:0),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.local_phone), name: "Contactos", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.link_outlined), name: "Links", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes", i:1),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom:5),
+                              child: FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas", i:1),
+                            ),
+                            FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras", i:1),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                Padding(
