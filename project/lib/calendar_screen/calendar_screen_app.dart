@@ -161,7 +161,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                               press: () {
                                 showDialog(
                                     context: context,
-                                    builder: (_) => const AlertDialog(
+                                    builder: (_) => Dialog(
                                       backgroundColor: cDirtyWhiteColor,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -169,7 +169,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                                               Radius.circular(10.0)
                                           )
                                       ),
-                                      content: PersonalEventApp(toCreate: true/*focusDay: focusedDay*/),
+                                      child: PersonalEventApp(toCreate: true/*focusDay: focusedDay*/),
                                     )
                                 );
                               }
@@ -192,7 +192,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
-              ...CalendarEvent.events.map((e) => CalendarEventCard(e, color: color)),
+              ...CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element, color: color)),
               SizedBox(height: 70,)
             ],
           ),

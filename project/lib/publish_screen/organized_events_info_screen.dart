@@ -21,15 +21,15 @@ import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
 
-class PersonalEventScreen extends StatefulWidget {
+class OrganizedEventInfo extends StatefulWidget {
   final Event data;
-  const PersonalEventScreen({super.key, required this.data});
+  const OrganizedEventInfo({super.key, required this.data});
 
   @override
-  State<PersonalEventScreen> createState() => _EventScreenState();
+  State<OrganizedEventInfo> createState() => _EventScreenState();
 }
 
-class _EventScreenState extends State<PersonalEventScreen> {
+class _EventScreenState extends State<OrganizedEventInfo> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
   bool isLoading = false;
@@ -108,12 +108,18 @@ class _EventScreenState extends State<PersonalEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: cDirtyWhiteColor,
-      body: Column(
+    Size size = MediaQuery.of(context).size;
+    double width;
+    if(kIsWeb)
+      width = size.width/3;
+    else
+      width = size.width;
+    return SizedBox(
+      height: size.height/4,
+      width: width,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
           Text(
             widget.data.title!,
             style: TextStyle(
@@ -133,14 +139,21 @@ class _EventScreenState extends State<PersonalEventScreen> {
           ),
           SizedBox(height:5),
           Text(
-            //"${widget.data.date!} · ${widget.data.hour!}",
-            "Hello",
+            "Capacidade de ${widget.data.capacity!} pessoas",
             style: TextStyle(
               color: cHeavyGrey,
               fontSize: 15,
             ),
           ),
-          SizedBox(height:20),
+          SizedBox(height:5),
+          Text(
+            "${widget.data.startDate!} · ${widget.data.endDate!}",
+            style: TextStyle(
+              color: cHeavyGrey,
+              fontSize: 15,
+            ),
+          ),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

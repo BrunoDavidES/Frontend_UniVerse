@@ -76,7 +76,7 @@ class PersonalWebCard extends StatelessWidget {
               Spacer(),
               Padding(
                 padding: const EdgeInsets.all(3),
-                child: Image.asset("assets/app/dot.png", scale: 2, alignment: Alignment.bottomRight),
+                child: Image.asset("assets/dot.png", scale: 2, alignment: Alignment.bottomRight),
               ),
             ],
           )

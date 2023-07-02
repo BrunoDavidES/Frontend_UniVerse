@@ -216,7 +216,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                                         press: () {
                                           showDialog(
                                               context: context,
-                                              builder: (_) => const AlertDialog(
+                                              builder: (_) => const Dialog(
                                                 backgroundColor: cDirtyWhiteColor,
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -224,7 +224,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                                                         Radius.circular(10.0)
                                                     )
                                                 ),
-                                                content: PersonalEventWeb(toCreate: true/*focusDay: focusedDay*/),
+                                                child: PersonalEventWeb(toCreate: true/*focusDay: focusedDay*/),
                                               )
                                           );
                                         }
@@ -255,7 +255,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                           Container(
                             width: size.width/2,
                             child: Column(
-                              children: CalendarEvent.events.map((e) => CalendarEventCard(e, color: color,)).toList(),
+                              children: CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element, color: color)).toList(),
                             ),
                           )
                         ],

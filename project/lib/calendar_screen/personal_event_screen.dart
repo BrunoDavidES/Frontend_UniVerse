@@ -149,7 +149,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                   ),
                 ),
             SizedBox(height:5),
-            widget.data.planner! == 'user'
+            widget.data.isEditable!
             ?Text(
               "Evento Pessoal",
               style: TextStyle(
@@ -158,7 +158,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
               ),
             )
             :Text(
-              "Organizado por ${widget.data.planner!}",
+              "Organizado por ${widget.data.location!}",
               style: TextStyle(
                 color: cHeavyGrey,
                 fontSize: 12,

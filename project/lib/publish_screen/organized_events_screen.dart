@@ -1,13 +1,19 @@
+import 'dart:math';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/500.dart';
+import '../../components/default_button_simple.dart';
 import '../../components/news_card.dart';
 import '../../components/simple_dialog_box.dart';
 import '../../consts/color_consts.dart';
+import '../../consts/list_consts.dart';
 import '../../utils/connectivity.dart';
 import '../../utils/events/event_data.dart';
 import '../../utils/news/article_data.dart';
+import 'organized_events_info_screen.dart';
 
 class OrganizedEventsFeed extends StatefulWidget {
 
@@ -62,75 +68,105 @@ class EventsState extends State<OrganizedEventsFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        title: Text("OS EVENTOS QUE CRIEI",
-        style: TextStyle(
-          color: cHeavyGrey,
-          fontWeight: FontWeight.bold,
-            fontSize: 20
-        ),),
-        backgroundColor: cDirtyWhiteColor,
-        titleSpacing: 15,
-        elevation: 0,
-      ),
-      backgroundColor: cDirtyWhiteColor,
-      body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: FutureBuilder(
-              future: Event.fetchEvents(5, 0, {}),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == 500) {
-                    return Error500();
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: Event.events.map((e) => InkWell(
-                        child: Text(
-                          e.title!,
-                          style: TextStyle(
-                            color: cDarkBlueColor,
-                            fontWeight: FontWeight.bold,
-                            //fontSize: 13
+    Size size = MediaQuery.of(context).size;
+    double width;
+    if(kIsWeb)
+      width = size.width/2.75;
+    else
+      width = size.width;
+    return Container(
+width: width,
+      height: size.height/2,
+      padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+      child: Column(
+        //crossAxisAlignment: CrossAxisAlignment,
+        children: [
+          Text("OS EVENTOS QUE CRIEI",
+            style: TextStyle(
+                color: cHeavyGrey,
+                fontWeight: FontWeight.bold,
+                fontSize: 20
+            ),),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: FutureBuilder(
+                future: Event.fetchEvents(5, 0, {}),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data == 500) {
+                      return Error500();
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: Event.events.map((element) => InkWell(
+                          onTap: () =>
+                            showDialog(
+                                context: context,
+                                builder: (_) =>  AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.all(
+                                            Radius.circular(10.0)
+                                        )
+                                    ),
+                                    content: OrganizedEventInfo(data: element)
+                                )
+                                ),
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 5),
+                            child: Text(
+                              element.title!,
+                              style: TextStyle(
+                                color: cDarkBlueColor,
+                                fontSize: 18
+                              ),
+                            ),
                           ),
-                        ),
-                      )).toList(),
-                    );
+                        )).toList(),
+                      );
+                    }
                   }
-                }
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      LinearProgressIndicator(color: cPrimaryOverLightColor,
-                        minHeight: 10,
-                        backgroundColor: cPrimaryLightColor,),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "A CARREGAR EVENTOS",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: cPrimaryLightColor
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        LinearProgressIndicator(color: cPrimaryOverLightColor,
+                          minHeight: 10,
+                          backgroundColor: cPrimaryLightColor,),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            "A CARREGAR EVENTOS",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: cPrimaryLightColor
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+              /*Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: Article.news.map((e) => NewsCard(e)).toList(),*/
+              //SizedBox(height: 10,)
             ),
-            /*Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: Article.news.map((e) => NewsCard(e)).toList(),*/
-            //SizedBox(height: 10,)
           ),
-        ),
+          Spacer(),
+          DefaultButtonSimple(
+              text: "OK",
+              color: cPrimaryColor,
+              press: () {
+                Navigator.pop(context);
+              },
+              height: 20),
+        ],
+      ),
     );
   }/*FutureBuilder(
           future: fetchDone,

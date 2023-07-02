@@ -81,6 +81,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                               )
                           ),
                           Container(
+                            width: size.width-size.width/2.75,
                             decoration: BoxDecoration(
                               color: cDirtyWhiteColor,
                               borderRadius: BorderRadius.circular(10)

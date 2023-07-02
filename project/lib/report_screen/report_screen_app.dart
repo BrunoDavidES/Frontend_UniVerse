@@ -15,6 +15,7 @@ import '../Components/default_button.dart';
 import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
+import '../components/description_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
@@ -135,6 +136,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
 
   @override
   Widget build(BuildContext context) {
+    bool added = false;
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
@@ -164,58 +166,35 @@ class _ReportScreenState extends State<ReportScreenApp> {
                       textAlign: TextAlign.justify,
                     ),
                   ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-              child: TextFormField(
-                maxLength: 25,
-                controller: titleController,
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.title_outlined),
-                  hintText: 'Introduz um título',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-              child: TextFormField(
-                maxLength: 50,
-                controller: locationController,
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.location_on_outlined),
-                  hintText: 'Indica onde encontraste o problema',
-                ),
-              ),
-            ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right:20, top: 10),
-                  child: TextField(
-                    maxLength: 100,
-                    controller: descriptionController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                        hintText: "Introduz a descrição do problema",
-                    ),
-                  ),
-                ),
+                  MyTextField(controller: titleController, hintText: 'Introduz um título', obscureText: false, label: 'Título', icon: Icons.title,),
+                  MyTextField(controller: locationController, hintText: 'Onde ecnontraste o problema?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
+                  DescriptionField(controller: descriptionController),
                   InkWell(
                     onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
+                    added = true;
                     },
                     child: Container(
-                      padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+                      padding: const EdgeInsets.only(left: 25, top: 10),
                       child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left:5),
-                            child: Icon(Icons.camera_alt_outlined, color: cHeavyGrey.withOpacity(0.6),),
+                            child: Icon(Icons.camera_alt_outlined, color: cDarkBlueColor),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left:12),
-                            child: Text(
-                              "Adiciona uma imagem aqui",
+                            child: added==true
+                                ?Text(
+                              "Fotografia adicionada!",
                               style: TextStyle(
-                                  color: cHeavyGrey.withOpacity(0.9)
+                                  color: Colors.green
+                              ),
+                            )
+                                : Text(
+                              "Adciona uma foto do problema aqui",
+                              style: TextStyle(
+                                  color: cDarkBlueColor
                               ),
                             ),
                           ),

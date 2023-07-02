@@ -1,9 +1,10 @@
+import 'package:UniVerse/find_screen/find_test.dart';
+import 'package:UniVerse/find_screen/info_detail_screen.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 
-import '../calendar_screen/personal_page_web_test.dart';
 import '../components/not_found.dart';
 import '../components/web/500_web.dart';
 import '../events_screen/events_web.dart';
@@ -14,6 +15,7 @@ import '../info_screen/universe_info_web.dart';
 import '../main_screen/homepage_web.dart';
 import '../news_screen/news_web.dart';
 import '../news_screen/news_web_detail_screen.dart';
+import '../personal_page_screen/web/personal_page_web.dart';
 import 'events/event_data.dart';
 
 class Routing {
@@ -32,9 +34,16 @@ class Routing {
           builder: (BuildContext context, GoRouterState state) => WebHomePage(),
         ),
         GoRoute(
-          name: 'Procurar',
-          path: '/find',
-          builder: (BuildContext context, GoRouterState state) => FindWebPage(),
+            name: 'Procurar',
+            path: '/find',
+            builder: (BuildContext context, GoRouterState state) => FindWebPage(),
+          routes: [
+              /* redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn) {
+                      return '/home';
+                    }
+                  }*/
+          ]
         ),
         GoRoute(
             name: 'Notícias',
@@ -81,6 +90,16 @@ class Routing {
                   }
                   return EventsDetailScreenWeb(id: id.toString(), data: data,);
                 },
+              ),
+              GoRoute(
+                path: 'submit',
+                builder: (BuildContext context, GoRouterState state) =>
+                    PersonalPageWeb(i: 4,),
+                /* redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn) {
+                      return '/home';
+                    }
+                  }*/
               ),
             ]
         ),
@@ -143,27 +162,17 @@ class Routing {
                     }
                   }*/
               ),
-              GoRoute(
-                path: 'messages',
-                builder: (BuildContext context, GoRouterState state) =>
-                    PersonalPageWeb(i: 4,),
-                /*redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
-                      return '/home';
-                    }
-                  }*/
-              ),
             ]
         ),
         GoRoute(
           path: '/report',
           builder: (BuildContext context, GoRouterState state) =>
               PersonalPageWeb(i: 2,),
-          redirect: (BuildContext context, GoRouterState state) {
+          /*redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';
                     }
-                  }
+                  }*/
         ),
       ]
   );
