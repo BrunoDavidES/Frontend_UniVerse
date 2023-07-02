@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../consts/color_consts.dart';
 
@@ -23,7 +24,8 @@ class ChatPageApp extends StatefulWidget {
 class _MyChatPageState extends State<ChatPageApp> {
   final TextEditingController messageController = TextEditingController();
   late StreamSubscription _chatStream;
-  final StreamController<dynamic> _streamController = StreamController<dynamic>();
+  final StreamController<dynamic> _streamController = StreamController<
+      dynamic>();
   String currentPage = 'Homepage';
   String forumID = '-NZGuFwlRhrbHrrMpOMA';
 
@@ -41,29 +43,36 @@ class _MyChatPageState extends State<ChatPageApp> {
 
   void _activateListeners() async {
     String? senderID = FirebaseAuth.instance.currentUser?.uid;
+    print(senderID);
     _chatStream = FirebaseDatabase.instance
         .ref()
         .child('forums/$forumID/feed/')
         .onValue
         .listen((event) {
+      print('Firebase Request: forums/$forumID/feed/');
       var snapshot = event.snapshot;
       var children = snapshot.value as Map<dynamic, dynamic>;
 
       children.forEach((key, value) {
         var description = value['description'];
         var time = value['time'];
-        var title = value['title'];
+        var author = value['author'];
 
-        print('Description: $description, Time: $time, Title: $title');
-
-        _streamController.add(children);
+        print('Description: $description, Time: $time, Author: $author');
       });
+
+      print('Firebase Response: $children');
+
+      _streamController.add(children);
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
@@ -130,17 +139,21 @@ class _MyChatPageState extends State<ChatPageApp> {
     return Align(
       alignment: Alignment.centerLeft, // Align buttons to the left
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Align text within buttons to the left
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // Align text within buttons to the left
         children: [
           TextButton.icon(
             onPressed: () {
               setState(() {
-                currentPage = 'Homepage'; // Update the current page to 'Homepage'
+                currentPage =
+                'Homepage'; // Update the current page to 'Homepage'
               });
               // Action to perform when Homepage button is pressed
             },
             style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              overlayColor: MaterialStateProperty.all<Color>(
+                  Colors.blue.withOpacity(0.2)),
+              // Slightly darker background on hover
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               textStyle: MaterialStateProperty.all<TextStyle>(
                 const TextStyle(
@@ -163,7 +176,9 @@ class _MyChatPageState extends State<ChatPageApp> {
               // Action to perform when Grades button is pressed
             },
             style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              overlayColor: MaterialStateProperty.all<Color>(
+                  Colors.blue.withOpacity(0.2)),
+              // Slightly darker background on hover
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               textStyle: MaterialStateProperty.all<TextStyle>(
                 const TextStyle(
@@ -181,12 +196,15 @@ class _MyChatPageState extends State<ChatPageApp> {
           TextButton.icon(
             onPressed: () {
               setState(() {
-                currentPage = 'Evaluations'; // Update the current page to 'Evaluations'
+                currentPage =
+                'Evaluations'; // Update the current page to 'Evaluations'
               });
               // Action to perform when Evaluations button is pressed
             },
             style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.2)), // Slightly darker background on hover
+              overlayColor: MaterialStateProperty.all<Color>(
+                  Colors.blue.withOpacity(0.2)),
+              // Slightly darker background on hover
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               textStyle: MaterialStateProperty.all<TextStyle>(
                 const TextStyle(
@@ -245,6 +263,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                     var value = entry.value;
                     var description = value['description'];
                     var time = value['time'];
+                    var author = value['author'];
 
                     return Container(
                       margin: const EdgeInsets.all(7.5),
@@ -259,7 +278,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '$time \n\n$description',
+                        '$author - $time \n\n$description',
                       ),
                     );
                   }).toList(),
@@ -291,36 +310,40 @@ class _MyChatPageState extends State<ChatPageApp> {
       messageController.clear();
     }
 
-    void onKeyboardSubmit(String value) {
-      if (value.isNotEmpty) {
-        sendMessage();
-      }
-    }
-
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           Expanded(
-            child: TextFormField(
-              obscureText: false,
-              controller: messageController,
-              onFieldSubmitted: onKeyboardSubmit,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(
-                    color: cDarkLightBlueColor,
+            child: RawKeyboardListener(
+              focusNode: FocusNode(),
+              onKey: (RawKeyEvent event) {
+                if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
+                  if (!event.isShiftPressed) {
+                    sendMessage();
+                  }
+                }
+              },
+              child: TextFormField(
+                obscureText: false,
+                controller: messageController,
+                maxLines: null,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: cDarkLightBlueColor,
+                    ),
                   ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: cDarkLightBlueColor,
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: cDarkLightBlueColor,
+                    ),
                   ),
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Message",
                 ),
-                fillColor: Colors.white,
-                filled: true,
-                hintText: "Message",
               ),
             ),
           ),
