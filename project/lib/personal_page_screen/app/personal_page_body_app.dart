@@ -10,6 +10,9 @@ import 'dart:io';
 import '../../chat_screen/chat_app.dart';
 import '../../components/app/500_app_with_bar.dart';
 import '../../components/app/menu_card.dart';
+import '../../components/confirm_dialog_box.dart';
+import '../../components/simple_dialog_box.dart';
+import '../../login_screen/login_app.dart';
 import '../../publish_screen/publish_app.dart';
 import '../components/info.dart';
 import '../components/personal_card.dart';
@@ -97,7 +100,7 @@ class Menu extends StatelessWidget {
           height: size.height/2.75,
           child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount:12,
+              itemCount:13,
               separatorBuilder: (context, index) {
                 return const SizedBox(width: 10);
               },
@@ -137,6 +140,27 @@ class Menu extends StatelessWidget {
                 else if(index==11)
                   return MenuCard(text: 'Organizar evento', description: 'Organiza um evento na faculdade de forma fácil e rápida',icon: Icons.event_available_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppPublishPage()));
+                  });
+                else if(index==12)
+                  return MenuCard(text: 'Apagar Conta', description: '',icon: Icons.delete, press: () {
+    showDialog(
+    context: context,
+    builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
+    final response = User.delete();
+    if(response == 200)
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
+    else showDialog(
+    context: context,
+    builder: (_) => CustomDialogBox(
+    title: "Ups!",
+    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
+    text: "OK",
+    press: () {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+    }
+    )
+    );
+    },));
                   });
               }
           ),

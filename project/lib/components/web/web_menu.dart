@@ -1,8 +1,10 @@
 import 'package:UniVerse/components/confirm_dialog_box.dart';
 import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../consts/color_consts.dart';
+import '../simple_dialog_box.dart';
 import '../web_menu_card.dart';
 
 class WebMenu extends StatelessWidget {
@@ -60,9 +62,24 @@ class WebMenu extends StatelessWidget {
                   WebMenuCard(text: 'Apagar Conta', description: '',icon: Icons.delete, press: () {
                     showDialog(
                         context: context,
-                        builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {}),
+                        builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
+                          final response = User.delete();
+                          if(response == 200)
+                            context.go('/home');
+                          else showDialog(
+                              context: context,
+                              builder: (_) => CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
+                              text: "OK",
+                              press: () {
+                                context.go('/home');
+                              }
+                        )
                     );
-                  },),
+                  },));
+    }
+                  )
                 ],
               ),
             ],

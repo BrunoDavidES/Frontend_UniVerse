@@ -60,6 +60,7 @@ class ConfirmDialogBox extends StatelessWidget {
             Text("Aviso",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
             SizedBox(height: 15,),
             Text(descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
+            Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -74,10 +75,7 @@ class ConfirmDialogBox extends StatelessWidget {
                 DefaultButtonSimple(
                     text: "Confirmar",
                     color: cPrimaryColor,
-                    press: () {
-                      Navigator.of(context).pop();
-                      press;
-                    },
+                    press: press,
                     height: 10),
               ],
             ),
