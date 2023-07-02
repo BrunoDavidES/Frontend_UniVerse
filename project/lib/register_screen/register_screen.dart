@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../Components/default_button.dart';
 import '../components/app/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
+import '../components/password_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../components/url_launchable_item.dart';
@@ -207,8 +208,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 20),
                   MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined, ),
                   MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
-                  MyTextField(controller: passwordController, hintText: 'No mínimo: 6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
-                  MyTextField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
+                  MyPasswordField(controller: passwordController, hintText: 'No mínimo: 6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
+                  MyPasswordField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
                   SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),

@@ -31,23 +31,6 @@ class _MyTextFieldState extends State<MyTextField> {
                 color: cDarkLightBlueColor
               ),
               prefixIcon: Icon(widget.icon!, color: cDarkLightBlueColor),
-              /*suffixIcon: IconButton(onPressed: (){
-                setState(() {
-                  isVisible = !isVisible;
-                });
-              },
-                  icon: Icon(
-                    if(isVisible)
-                    Icons.visibility_offIcons.visibility,
-                  )),*/
-              /*suffixIcon: IconButton(
-            icon: Icon(obscureText
-            ?Icons.visibility_off_outlined
-                : Icons.visibility_outlined
-            ), onPressed: () {
-              obscureText = !obscureText;
-              },
-        ),*/
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(
