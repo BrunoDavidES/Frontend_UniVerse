@@ -26,7 +26,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(4, 0, {});
+    fetchDone = Article.fetchNews(5, 0, {});
     super.initState();
   }
 
@@ -62,8 +62,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                         Container(
                           padding: EdgeInsets.only(top: 30),
                           //Zona do Feed
-                          height: size.height * 1.60,
-                          width: size.width - 300,
+                          height: 1950,
+                          width: size.width/1.20,
                           color: cDirtyWhite,
 
                           child: FutureBuilder(
@@ -75,7 +75,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                   }
                                   else {
                                     return ListView.builder(
-                                    itemCount: 4,
+                                    itemCount: 5,
                                     itemBuilder: (BuildContext context, int index) {
                                       //Article.news.map((e) => NewsCard(e)).toList(),
                                       final item = Article.news[index];
@@ -88,7 +88,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                             ),
                                           ),
                                           Container(
-                                            height: size.height / 3,
+                                            height: 350,
                                             decoration: BoxDecoration(
                                               color: cDirtyWhiteColor,
                                               borderRadius: BorderRadius.circular(15),
@@ -99,7 +99,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                               children: [
                                                 Container(
                                                     width: size.width / 4,
-                                                    height: size.height / 3,
+                                                    height: 320,
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(
                                                           15.0),
@@ -122,7 +122,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                 SizedBox(width: 15,),
                                                 Container(
                                                     width: size.width / 1.95,
-                                                    height: size.height / 3,
+                                                    height: 320,
                                                     margin: EdgeInsets.only(
                                                         top: 5, bottom: 5),
                                                     padding: EdgeInsets.all(10),
@@ -143,22 +143,31 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                         SizedBox(height: 15,),
                                                         Text(
                                                           "${item.text}",
-                                                          maxLines: 3,
+                                                          maxLines: 10,
                                                           overflow: TextOverflow.ellipsis,
                                                         ),
                                                         Spacer(),
                                                         Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
-                                                              Text(
-                                                                "Autoria de ${item.author} · ${item
-                                                                    .date}",
-                                                                style: TextStyle(
-                                                                    color: cHeavyGrey
-                                                                ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                "Autoria de ${item.author} · ${item.date}",
+                                                                style: TextStyle(color: cHeavyGrey),
                                                               ),
-                                                            Spacer(),
-                                                            IconButton(onPressed: () {}, icon: Icon(Icons.share, color: cHeavyGrey,)),
-                                                            IconButton(onPressed: () =>context.go("/news/full/${item.id}", extra: item), icon: Icon(Icons.remove_red_eye, color: cHeavyGrey,))
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                IconButton(
+                                                                  onPressed: () {},
+                                                                  icon: Icon(Icons.share, color: cHeavyGrey),
+                                                                ),
+                                                                IconButton(
+                                                                  onPressed: () => context.go("/news/full/${item.id}", extra: item),
+                                                                  icon: Icon(Icons.remove_red_eye, color: cHeavyGrey),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ],
                                                         )
                                                       ],
@@ -179,7 +188,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width - 300,
+                          width: size.width/1.15,
                           child: Divider(
                             thickness: 2,
                             color: toRandom[cindex],
