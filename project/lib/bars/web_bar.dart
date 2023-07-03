@@ -1,4 +1,3 @@
-
 import 'package:UniVerse/bars/components/popup_item.dart';
 import 'package:UniVerse/components/default_button_simple.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
@@ -10,10 +9,11 @@ import 'package:go_router/go_router.dart';
 import '../consts/color_consts.dart';
 
 class CustomWebBar extends StatelessWidget {
-  const CustomWebBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bool isSmallScreen = MediaQuery.of(context).size.width < 1080;
+
     return Container(
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(8),
@@ -32,72 +32,99 @@ class CustomWebBar extends StatelessWidget {
         children: <Widget>[
           InkWell(
             onTap: () => context.go('/home'),
-            child: Image.asset("assets/web/logo.png",
+            child: Image.asset(
+              "assets/web/logo.png",
               scale: 5.5,
               alignment: Alignment.center,
             ),
           ),
-          const SizedBox(width:5),
+          const SizedBox(width: 5),
           InkWell(
             onTap: () {
               launchUrl(Uri.parse("https://www.fct.unl.pt/"));
             },
-            child: Image.asset("assets/web/logoNova.png",
+            child: Image.asset(
+              "assets/web/logoNova.png",
               scale: 30,
               alignment: Alignment.center,
             ),
           ),
           const Spacer(),
-          DefaultButtonSimple(
-            text: "Início",
-            color: cPrimaryColor,
-            press: () => context.go('/home'),
-            height: 20,
-          ),
-          DefaultButtonSimple(
-            text: "Procurar",
-            color: cPrimaryColor,
-            press: () => context.go('/find'),
-            height: 20,
-          ),
-          DefaultButtonSimple(
-            text: "Notícias",
-            color: cPrimaryColor,
-            press: () => context.go('/news'),
-            height: 20,
-          ),
-          DefaultButtonSimple(
-            text: "Eventos",
-            color: cPrimaryColor,
-            press: () => context.go('/events'),
-            height: 20,
-          ),
-          DefaultButtonSimple(
-            text: "Ajuda",
-            color: cPrimaryColor,
-            press: () => context.go('/help'),
-            height: 20,
-          ),
-         Authentication.userIsLoggedIn
-              ? const PopUpMenu()
-              : DefaultButton(
+          if (!isSmallScreen)
+            Expanded(
+              child: Row(
+                children: [
+                  _buildNavButton(context, "Início", "/home"),
+                  _buildNavButton(context, "Procurar", "/find"),
+                  _buildNavButton(context, "Notícias", "/news"),
+                  _buildNavButton(context, "Eventos", "/events"),
+                  _buildNavButton(context, "Ajuda", "/help"),
+                ],
+              ),
+            ),
+          if (Authentication.userIsLoggedIn)
+            const PopUpMenu()
+          else if (isSmallScreen)
+            PopupMenuButton<String>(
+              itemBuilder: (_) => [
+                PopupMenuItem<String>(
+                  child: Text("Início"),
+                  value: "/home",
+                ),
+                PopupMenuItem<String>(
+                  child: Text("Procurar"),
+                  value: "/find",
+                ),
+                PopupMenuItem<String>(
+                  child: Text("Notícias"),
+                  value: "/news",
+                ),
+                PopupMenuItem<String>(
+                  child: Text("Eventos"),
+                  value: "/events",
+                ),
+                PopupMenuItem<String>(
+                  child: Text("Ajuda"),
+                  value: "/help",
+                ),
+              ],
+              onSelected: (route) {
+                context.go(route);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const Icon(Icons.more_vert),
+              ),
+            )
+          else
+            DefaultButton(
               text: "LOGIN",
               press: () {
                 showDialog(
-                    context: context,
-                    builder: (_) => const AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(
-                              Radius.circular(10.0)
-                          )
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
                       ),
-                      content: LoginPageWeb(),
-                    )
+                    ),
+                    content: LoginPageWeb(),
+                  ),
                 );
-              }),
+              },
+            ),
         ],
+      ),
+    );
+  }
 
+  Widget _buildNavButton(BuildContext context, String text, String route) {
+    return Expanded(
+      child: DefaultButtonSimple(
+        text: text,
+        color: cPrimaryColor,
+        press: () => context.go(route),
+        height: 20,
       ),
     );
   }

@@ -12,7 +12,7 @@ class Error500Web extends StatelessWidget {
     return Scaffold(
       body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             CustomWebBar(),
             Error500(),
             ],

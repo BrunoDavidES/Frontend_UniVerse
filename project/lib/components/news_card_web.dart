@@ -85,7 +85,7 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                       fontSize: 20,
                       color: Colors.black
                   ),
-                  maxLines: 5,
+                  maxLines: 4,
                 ),
               ),
               Spacer(),

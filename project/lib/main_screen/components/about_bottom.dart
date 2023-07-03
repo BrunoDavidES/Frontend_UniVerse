@@ -14,7 +14,7 @@ class BottomAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(                  //Zona do About
-      height: size.height/3,
+      height: 280,
       width: size.width,
       decoration: BoxDecoration(
         gradient: LinearGradient(

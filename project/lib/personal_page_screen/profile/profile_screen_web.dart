@@ -191,7 +191,7 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                     MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: "identificador@campus.fct.unl.pt",),
                     MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: "+351 999999999",),
                     MyReadOnlyField(icon: Icons.work, text: "Trabalho:", content: "Estudante",),
-                    MyReadOnlyField(icon: Icons.car_crash_outlined, text: "Matricula:", content: "Sem registo",),
+                    MyReadOnlyField(icon: Icons.car_repair, text: "Matricula:", content: "Sem registo",),
                   ],
                 ),
               ),
