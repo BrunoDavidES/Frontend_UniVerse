@@ -120,11 +120,24 @@ class CustomWebBar extends StatelessWidget {
 
   Widget _buildNavButton(BuildContext context, String text, String route) {
     return Expanded(
-      child: DefaultButtonSimple(
-        text: text,
-        color: cPrimaryColor,
-        press: () => context.go(route),
-        height: 20,
+      child: Container(
+        width: 100,
+        height: 40,// Adjust the width value to control the button width
+        child: TextButton(
+          onPressed: () => context.go(route),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16// Make the text thicker
+            ),
+          ),
+          style: ButtonStyle(
+            overlayColor: MaterialStateColor.resolveWith(
+                  (states) => cPrimaryLightColor.withOpacity(0.15), // Remove overlay color
+            ),
+          ),
+        ),
       ),
     );
   }

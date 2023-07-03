@@ -62,7 +62,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                         Container(
                           padding: EdgeInsets.only(top: 30),
                           //Zona do Feed
-                          height: 1950,
+                          height: 1650,
                           width: size.width/1.20,
                           color: cDirtyWhite,
 
@@ -88,7 +88,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                             ),
                                           ),
                                           Container(
-                                            height: 350,
+                                            height: 280,
                                             decoration: BoxDecoration(
                                               color: cDirtyWhiteColor,
                                               borderRadius: BorderRadius.circular(15),
@@ -99,7 +99,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                               children: [
                                                 Container(
                                                     width: size.width / 4,
-                                                    height: 320,
+                                                    height: 260,
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(
                                                           15.0),
@@ -122,7 +122,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                 SizedBox(width: 15,),
                                                 Container(
                                                     width: size.width / 1.95,
-                                                    height: 320,
+                                                    height: 260,
                                                     margin: EdgeInsets.only(
                                                         top: 5, bottom: 5),
                                                     padding: EdgeInsets.all(10),

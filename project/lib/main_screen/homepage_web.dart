@@ -119,7 +119,7 @@ class WebHomePage extends StatelessWidget {
                   ),
                 ),
                 Container(                //Zona das noticias
-                  height: size.height/1.15,
+                  height: 700,
                   width: size.width,
                   color: cDirtyWhite,
                   child: MainNews(width: size.width, height: size.height/1.15,),
