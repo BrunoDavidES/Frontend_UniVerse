@@ -137,25 +137,40 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                             Spacer(),
                             Row(
                               children: [
-                                Text(
-                                  "EDITAR",
-                                  style: TextStyle(
-                                    color: cHeavyGrey,
-                                    fontWeight: FontWeight.bold
-                                  )
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 45),
+                                  child: Text(
+                                    "EDITAR",
+                                    style: TextStyle(
+                                      color: cHeavyGrey,
+                                      fontWeight: FontWeight.bold
+                                    )
+                                  ),
                                 ),
-                                IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined, color: cHeavyGrey,)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 45.0),
+                                  child: IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined, color: cHeavyGrey,)),
+                                ),
                               ],
                             )
                           ],
                         ),
                       ),
-
                 ],
               ),
-              MyReadOnlyField(icon: Icons.alternate_email, text: "Email do utilizador",),
-              MyReadOnlyField(icon: Icons.phone, text: "+351 999999999",),
-              SizedBox(height:size.height/2)
+              Container(
+                margin: EdgeInsets.only(left: size.width/5),
+                child: Column(
+                  children: [
+                    SizedBox(height:size.height/10),
+                    MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: "identificador@campus.fct.unl.pt",),
+                    MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: "+351 999999999",),
+                    MyReadOnlyField(icon: Icons.work, text: "Trabalho:", content: "Estudante",),
+                    MyReadOnlyField(icon: Icons.car_crash_outlined, text: "Matricula:", content: "Sem registo",),
+                  ],
+                ),
+              ),
+              SizedBox(height:size.height/6)
             ],
           ),
       ],
@@ -166,8 +181,9 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
 class MyReadOnlyField extends StatelessWidget {
   final IconData icon;
   final String text;
+  final String content;
   const MyReadOnlyField({
-    super.key, required this.icon, required this.text,
+    super.key, required this.icon, required this.text, required this.content,
   });
 
   @override
@@ -178,7 +194,16 @@ class MyReadOnlyField extends StatelessWidget {
         children: [
           Icon(icon, color: cHeavyGrey),
           SizedBox(width: 5,),
+          Text(
+            text,
+            style: TextStyle(
+                fontSize: 15,
+                color: cHeavyGrey
+            ),
+          ),
+          SizedBox(width: 5,),
           Container(
+            width: 450,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: cDirtyWhiteColor,
@@ -189,11 +214,12 @@ class MyReadOnlyField extends StatelessWidget {
               )
             ),
             child: Text(
-              text,
+              content,
               style: TextStyle(
                 fontSize: 15,
                 color: cHeavyGrey
               ),
+              textAlign: TextAlign.center,
             ),
           )
         ],
