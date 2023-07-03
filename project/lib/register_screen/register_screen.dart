@@ -179,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
-          title: Image.asset("assets/app/registo.png", scale:6),
+          title: Image.asset("assets/titles/regist.png", scale:6),
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,
@@ -192,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top:20, left:20, right: 20, bottom:10),
-                    child: Image.asset('assets/icon_no_white.png', scale:3),
+                    child: Image.asset('assets/images/icon_no_white.png', scale:3),
                   ),
                   const Text(
                     "Junta-te ao Universo!",

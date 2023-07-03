@@ -156,7 +156,7 @@ class _LoginScreenState extends State<ResetScreen> {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
-          title: Image.asset("assets/app/login.png", scale:6),
+          title: Image.asset("assets/titles/login.png", scale:6),
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<ResetScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
-                    child: Image.asset('assets/icon_no_white.png', scale:3),
+                    child: Image.asset('assets/images/icon_no_white.png', scale:3),
                   ),
                   const Text(
                     "Redefine a tua palavra-passe!",

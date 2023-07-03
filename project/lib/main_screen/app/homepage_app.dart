@@ -20,7 +20,6 @@ class AppHomePage extends StatelessWidget {
             image: DecorationImage(
               image: AssetImage("assets/images/welcome_photo.jpg"),
               colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
-              //colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
               fit: BoxFit.cover,
             ),
           ),

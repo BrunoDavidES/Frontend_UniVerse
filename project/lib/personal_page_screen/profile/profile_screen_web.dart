@@ -1,5 +1,6 @@
 
 import 'package:UniVerse/components/text_field.dart';
+import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -35,32 +36,7 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left:20, top:20, bottom: 5),
-              child: Text(
-                "MENU DE OPÇÕES",
-                style:TextStyle(
-                    color: cHeavyGrey,
-                    fontWeight: FontWeight.bold
-                ),),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: cDirtyWhiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow:[ BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: const Offset(0,0),
-                  ),
-                  ]
-              ),
-              alignment: Alignment.bottomCenter,
-              width: size.width/9,
-              height: size.height/1.75,
-              margin: EdgeInsets.only(left:15, right:20, bottom: 20),
-            ),
+            WebMenu(width: size.width/9, height: size.height/1.75,)
           ],
         ),
     Column(
@@ -73,7 +49,7 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
                     padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
                     child: Container(
                         alignment: Alignment.centerLeft,
-                        child: Image.asset("assets/web/perfil-web.png", scale: 4.5,)
+                        child: Image.asset("assets/web/profile-title.png", scale: 4.5,)
                     ),
                   ),
 

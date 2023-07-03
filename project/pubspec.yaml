@@ -100,59 +100,51 @@ flutter:
 
   assets:
     - assets/images/welcome_photo.jpg
-    - assets/app/map.png
-    - assets/titles/restaurants.png
-    - assets/capi.png
-    - assets/titles/events.png
-    - assets/titles/buildings.png
-    - assets/app/links.png
-    - assets/man.png
+    - assets/images/ufo.png
+    - assets/images/icon_no_white.png
+    - assets/images/dot.png
+    - assets/images/capi_logo.png
+    - assets/images/bigger_dot.png
+    - assets/images/404.png
+    - assets/app/logo_full_background.png
+    - assets/app/logo_no_reference_no_white.png
+    - assets/app/logo_nova_horiz.png
+    - assets/app/profile_title.png
+    - assets/titles/about_us.png
     - assets/titles/area.png
+    - assets/titles/buildings.png
+    - assets/titles/calendar.png
+    - assets/titles/departments.png
+    - assets/titles/events.png
+    - assets/titles/faq.png
+    - assets/titles/feed.png
+    - assets/titles/find.png
+    - assets/titles/help.png
+    - assets/titles/highlights.png
+    - assets/titles/links.png
+    - assets/titles/login.png
+    - assets/titles/map.png
+    - assets/titles/messages.png
+    - assets/titles/news.png
+    - assets/titles/organize.png
+    - assets/titles/regist.png
+    - assets/titles/restaurants.png
+    - assets/titles/report.png
+    - assets/titles/services.png
+    - assets/capi.png
+    - assets/man.png
     - assets/img.png
     - assets/bill.jpg
-    - assets/app/area.png
-    - assets/titles/calendar.png
-    - assets/app/report.png
-    - assets/web/area.png
-    - assets/app/profile_title.png
-    - assets/dot.png
-    - assets/titles/organize.png
-    - assets/app/ajuda.png
-    - assets/web/help.png
     - assets/web/logo.png
+    - assets/web/qr.png
+    - assets/web/profile-title.png
     - assets/web/logoNova.png
-    - assets/web/destaques.png
-    - assets/web/bigger_dot.png
-    - assets/web/faq_title.png
-    - assets/web/Example.png
-    - assets/app/feed_title.png
-    - assets/web/sobre.png
     - assets/web/android.png
     - assets/web/ios.png
-    - assets/app/registo.png
-    - assets/web/perfil-web.png
-    - assets/web/404.png
-    - assets/images/ufo.png
-    - assets/capi_logo.png
-    - assets/titles/messages.png
-    - assets/web/foto.jpg
-    - assets/web/noticias.png
-    - assets/app/departments.png
     - assets/locations/locations.json
-    - assets/app/find_title.png
-    - assets/app/login.png
-    - assets/icon_no_white.png
-    - assets/app/services.png
-    - assets/app/about_us.png
-    - assets/app/faq_title.png
-    - assets/app/logo_full_background.png
-    - assets/web/icon.ico
-    - assets/web/combo_logo.png
-    - assets/web/logoNovaBranco.png
-    - assets/app/logo_nova_horiz.png
-    - assets/app/logo_no_reference_no_white.png
-    - assets/web/findTitle.jpeg
 
+
+    - assets/web/icon.ico
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -19,7 +19,7 @@ class mainPageMap extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(top: 20, left: 20),
                   child:
-                  Image.asset("assets/app/map.png", scale: 4,)
+                  Image.asset("assets/titles/map.png", scale: 4,)
               ),
               const Spacer(),
               Padding(

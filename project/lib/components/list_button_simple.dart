@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
@@ -12,13 +13,14 @@ class ListButtonSimple extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: TextButton(
             style: TextButton.styleFrom(
                 foregroundColor: cPrimaryLightColor,
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
             ),
             onPressed: (){
               press();
@@ -34,6 +36,7 @@ class ListButtonSimple extends StatelessWidget {
                 ),
             ),
         ),
+        if(kIsWeb)
         SizedBox(
           width: 150,
           child: Divider(

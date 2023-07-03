@@ -229,7 +229,7 @@ class AboutBottomBody extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Image.asset("assets/capi_logo.png", scale: 8),
+                        Image.asset("assets/images/capi_logo.png", scale: 8),
                       ],
                     ),
                   ),

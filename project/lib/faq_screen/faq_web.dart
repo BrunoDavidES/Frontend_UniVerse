@@ -51,7 +51,7 @@ class FAQWebPage extends StatelessWidget {
                             padding: const EdgeInsets.only(left:50, top: 20),
                             child: Container(
                                 alignment: Alignment.centerLeft,
-                                child: Image.asset("assets/web/help.png", scale: 4,)
+                                child: Image.asset("assets/titles/help.png", scale: 4,)
                             ),
                           ),
                           Padding(

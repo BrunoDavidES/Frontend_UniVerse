@@ -47,13 +47,13 @@ class LinksBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 1,
+            childCount: 5,
               (BuildContext context, int index) {
-              final item = services[index];
+              final item = links[index];
               return ListButtonSimple(tobeBold: true,
-                  text: item.values.first,
+                  text: item.keys.first,
                   press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                launchUrl(Uri.parse(item.values.first),  mode: LaunchMode.externalApplication);
                   });
                 /*if (index == 0)
                   return ListButtonSimple(tobeBold: true,

@@ -38,7 +38,7 @@ class MainNewsState extends State<MainNews> {
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 20),
                   child:
-                  Image.asset("assets/web/destaques.png", scale: 4,)
+                  Image.asset("assets/titles/highlights.png", scale: 4,)
                 ),
                 const Spacer(),
                 Padding(

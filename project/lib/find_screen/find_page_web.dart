@@ -50,7 +50,7 @@ class _FindWebPageState extends State<FindWebPage> {
                             padding: const EdgeInsets.only(left:50, top: 20),
                             child: Container(
                                 alignment: Alignment.centerLeft,
-                                child: Image.asset("assets/web/findTitle.jpeg", scale: 4.5,)
+                                child: Image.asset("assets/titles/find.png", scale: 4.5,)
                             ),
                           ),
                           Row(

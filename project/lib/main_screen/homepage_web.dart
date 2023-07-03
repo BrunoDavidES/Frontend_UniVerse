@@ -142,7 +142,7 @@ class WebHomePage extends StatelessWidget {
                       Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child:
-                      Image.asset("assets/web/faq_title.png", scale: 4,)
+                      Image.asset("assets/titles/faq.png", scale: 4,)
                   ),
                   const Spacer(),
                   Padding(
@@ -201,7 +201,7 @@ class WebHomePage extends StatelessWidget {
                       child: Row(
                         children: [
                           const Spacer(),
-                          Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
+                          Image.asset("assets/images/bigger_dot.png", scale: 3.5,),
                           Padding(
                             padding: const EdgeInsets.only(left:20, right: 20),
                             child: SelectableText(
@@ -214,7 +214,7 @@ class WebHomePage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Image.asset("assets/web/bigger_dot.png", scale: 3.5,),
+                          Image.asset("assets/images/bigger_dot.png", scale: 3.5,),
                           const Spacer()
                         ],
                       ),
@@ -235,9 +235,9 @@ class WebHomePage extends StatelessWidget {
                       Row(
                         children: [
                           const Spacer(),
-                          Image.asset("assets/icon_no_white.png", scale: 4),
+                          Image.asset("assets/images/icon_no_white.png", scale: 4),
                           const SizedBox(width: 10),
-                          Image.asset("assets/web/Example.png", scale: 25),
+                          Image.asset("assets/web/qr.png", scale: 25),
                           const Spacer(),
                         ],
                       ),
