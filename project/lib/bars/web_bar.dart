@@ -12,7 +12,7 @@ class CustomWebBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSmallScreen = MediaQuery.of(context).size.width < 1080;
+    final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
 
     return Container(
       margin: const EdgeInsets.all(15),
@@ -129,8 +129,9 @@ class CustomWebBar extends StatelessWidget {
             text,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16// Make the text thicker
+              fontSize: 16, // Make the text thicker
             ),
+            maxLines: 1,
           ),
           style: ButtonStyle(
             overlayColor: MaterialStateColor.resolveWith(
