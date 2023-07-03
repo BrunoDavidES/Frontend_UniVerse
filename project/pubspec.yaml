@@ -100,8 +100,10 @@ flutter:
 
   assets:
     - assets/app/map.png
+    - assets/titles/restaurants.png
     - assets/capi.png
     - assets/titles/events.png
+    - assets/titles/buildings.png
     - assets/app/links.png
     - assets/man.png
     - assets/titles/area.png

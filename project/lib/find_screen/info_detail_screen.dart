@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
 class InfoDetailScreen extends StatelessWidget {
-  InfoDetailScreen( {super.key});
+  final Map<String, String> data;
+  InfoDetailScreen( {super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class InfoDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, bottom: 5),
               child: Text(
-                "Divisão de Eventos e Apoio ao Estudante Diplomado",
+                data.values.first,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,

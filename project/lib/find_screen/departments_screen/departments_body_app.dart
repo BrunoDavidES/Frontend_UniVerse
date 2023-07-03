@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
+import '../../utils/search/info.dart';
+import '../info_detail_screen.dart';
 
 class DepartmentsBodyApp extends StatelessWidget {
 
@@ -43,57 +45,22 @@ class DepartmentsBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 14,
-              (BuildContext context, int index) {
-                if (index == 0)
-                  return ListButtonSimple(
-                      text: "Departamento de Ciências e Engenharia do Ambiente", tobeBold: true,
-                      press: () {});
-                else if (index == 1)
-                  return ListButtonSimple(
-                      text: "Departamento de Ciência dos Materiais",tobeBold: true,
-                      press: () {});
-                else if (index == 2)
-                  return ListButtonSimple(
-                      text: "Departamento de Conservação e Restauro",tobeBold: true,
-                      press: () {});
-                else if (index == 3)
-                  return ListButtonSimple(
-                      text: "Departamento de Ciências Sociais Aplicadas",tobeBold: true,
-                      press: () {});
-                else if (index == 4)
-                  return ListButtonSimple(
-                      text: "Departamento de Ciências da Terra",tobeBold: true, press: () {});
-                else if (index == 5)
-                  return ListButtonSimple(
-                      text: "Departamento de Ciências da Vida",tobeBold: true,
-                      press: () {});
-                else if (index == 6)
-                  return ListButtonSimple(
-                      text: "Departamento de Engenharia Civil",tobeBold: true, press: () {});
-                else if (index == 7)
-                  return ListButtonSimple(
-                      text: "Departamento de Engenharia Eletrotécnica e de Computadores",tobeBold: true,
-                      press: () {});
-                else if (index == 8)
-                  return ListButtonSimple(
-                      text: "Departamento de Engenharia Mecânica e Industrial",tobeBold: true,
-                      press: () {});
-                else if (index == 9)
-                  return ListButtonSimple(
-                      text: "Departamento de Física",tobeBold: true,
-                      press: () {});
-                else if (index == 10)
-                  return ListButtonSimple(
-                      text: "Departamento de Informática",tobeBold: true, press: () {});
-                else if (index == 11)
-                  return ListButtonSimple(
-                      text: "Departamento de Matemática", tobeBold: true,press: () {});
-                else if (index == 12)
-                  return ListButtonSimple(
-                      text: "Divisão de Química",tobeBold: true, press: () {});
-                else if (index == 13)
-                  return SizedBox(height: 70);
+              childCount: 13,
+                  (BuildContext context, int index) {
+                final item = departments[index];
+                return ListButtonSimple(tobeBold: true,
+                    text: item.values.first,
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                    });
+              }
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+              childCount: 1,
+                  (BuildContext context, int index) {
+                return SizedBox(height: 70);
               }
           ),
         ),

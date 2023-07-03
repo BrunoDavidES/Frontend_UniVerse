@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
+import '../../utils/search/info.dart';
 
 class ServicesBodyApp extends StatelessWidget {
 
@@ -47,70 +48,22 @@ class ServicesBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 15,
+            childCount: 18,
               (BuildContext context, int index) {
-                if (index == 0)
-                  return ListButtonSimple(
-                      text: "Divisão Académica", tobeBold: true, press: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen()));
-                  });
-                else if (index == 1)
-                  return ListButtonSimple(
-                      text: "Divisão de Acompanhamento de Parcerias",
-                      tobeBold: true,
-                      press: () {
-                      });
-                else if (index == 2)
-                  return ListButtonSimple(
-                      text: "Divisão de Apoio à Formação Avançada",
-                      tobeBold: true,
-                      press: () {});
-                else if (index == 3)
-                  return ListButtonSimple(
-                      text: "Divisão de Apoio Geral",tobeBold: true, press: () {});
-                else if (index == 4)
-                  return ListButtonSimple(
-                      text: "Divisão de Apoio Técnico",tobeBold: true, press: () {});
-                else if (index == 5)
-                  return ListButtonSimple(
-                      text: "Divisão de Comunicação e Relações Exteriores",
-                      tobeBold: true,
-                      press: () {});
-                else if (index == 6)
-                  return ListButtonSimple(
-                      text: "Divisão de Documentação e Cultura",tobeBold: true, press: () {});
-                else if (index == 7)
-                  return ListButtonSimple(
-                      text: "Divisão de Eventos e Apoio ao Estudante Diplomado",
-                      tobeBold: true,
-                      press: () {});
-                else if (index == 8)
-                  return ListButtonSimple(
-                      text: "Divisão de Infraestruturas Informáticas",
-                      tobeBold: true,
-                      press: () {});
-                else if (index == 9)
-                  return ListButtonSimple(
-                      text: "Divisão de Planeamento e Gestão de Qualidade",
-                      tobeBold: true,
-                      press: () {});
-                else if (index == 10)
-                  return ListButtonSimple(
-                      text: "Divisão de Recursos Financeiros", tobeBold: true,
-                      press: () {});
-                else if (index == 11)
-                  return ListButtonSimple(
-                      text: "Divisão de Recursos Humanos", tobeBold: true,
-                      press: () {});
-                else if (index == 12)
-                  return ListButtonSimple(
-                      text: "Divisão de Relações Internacionais", tobeBold: true,
-                      press: () {});
-                else if (index == 13)
-                  return ListButtonSimple(
-                      text: "Gabinete de Apoio à Direção",tobeBold: true, press: () {});
-                else if (index == 14)
-                  return SizedBox(height: 70);
+                final item = services[index];
+                return ListButtonSimple(tobeBold: true,
+                    text: item.values.first,
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                    });
+              }
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+              childCount: 1,
+                  (BuildContext context, int index) {
+                return SizedBox(height: 70);
               }
           ),
         ),

@@ -11,27 +11,37 @@ class ListButtonSimple extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: TextButton(
-        style: TextButton.styleFrom(
-            foregroundColor: cPrimaryLightColor,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left:20)
-        ),
-        onPressed: (){
-          press();
-        },
-        child:
-            Text(
-                text,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontWeight: tobeBold ? FontWeight.bold :FontWeight.normal,
-                    color: cHeavyGrey,
-                )
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: TextButton(
+            style: TextButton.styleFrom(
+                foregroundColor: cPrimaryLightColor,
+              alignment: Alignment.center,
+            ),
+            onPressed: (){
+              press();
+            },
+            child:
+                Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: tobeBold ? FontWeight.bold :FontWeight.normal,
+                        color: cHeavyGrey,
+                    )
+                ),
             ),
         ),
+        SizedBox(
+          width: 150,
+          child: Divider(
+            thickness: 1,
+            color: cHeavyGrey.withOpacity(0.2),
+          ),
+        )
+      ],
     );
   }
 }
