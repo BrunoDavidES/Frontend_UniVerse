@@ -12,7 +12,8 @@ class MapsPageWeb extends StatefulWidget {
 
 class _MapsPageState extends State<MapsPageWeb> {
   final Map<String, Marker> _markers = {};
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  GoogleMapController? controller;
+  Future<void> _onMapCreated(controller) async {
     final fctplaces = await locations.getFCTplaces();
     setState(() {
       _markers.clear();
@@ -30,6 +31,11 @@ class _MapsPageState extends State<MapsPageWeb> {
     });
   }
 
+  LatLngBounds mapBounds = LatLngBounds(
+    southwest: LatLng(38.655, -9.215), // Lower left corner of the desired bounds
+    northeast: LatLng(38.665, -9.195), // Upper right corner of the desired bounds
+  );
+
   @override
   Widget build(BuildContext context) {
 
@@ -42,6 +48,15 @@ class _MapsPageState extends State<MapsPageWeb> {
             zoom: 16,
           ),
           markers: _markers.values.toSet(),
+          onCameraMove: (CameraPosition position) {
+            // Check if the new camera target is within the desired bounds
+            if (!mapBounds.contains(position.target)) {
+              // Move the camera back to the last valid position within the bounds
+              controller?.animateCamera(
+                CameraUpdate.newLatLng(LatLng(38.660992, -9.205782)),
+              );
+            }
+          },
         ),
       ),
     );

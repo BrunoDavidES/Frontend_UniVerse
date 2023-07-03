@@ -50,7 +50,7 @@ class User {
     if (user != null) {
       return user.emailVerified == true;
     }
-    return false;
+    return true;
   }
 
   static bool isActive() {
@@ -62,7 +62,7 @@ class User {
     return true;
   }
 
-  Future<int> getProfile(String token) async {
+  Future<int> get(String token) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty)
       return 403;
@@ -87,7 +87,7 @@ class User {
     return response.statusCode;
   }
 
-  Future<int> updateProfile(String name, String status, String licensePlate) async {
+  Future<int> update(String name, String status, String licensePlate) async {
     String token = await Authentication.getTokenID();
     String url = '$magikarp/modify/attributes';
 
@@ -95,7 +95,7 @@ class User {
       return 403;
 
     final http.Response response = await http.post(
-      Uri.parse(reportUrl),
+      Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
@@ -116,32 +116,30 @@ class User {
     return response.statusCode;
   }
 
-  /*Future<void> deleteUser(String token, ModifyAttributesData data) async {
-    const String apiUrl = '$modifyUrl/delete';
+  static Future<int> delete() async {
+    String token = await Authentication.getTokenID();
+    const String url = '$magikarp/modify/delete';
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 403;
+    }
 
-    final String requestBody = jsonEncode(data.toJson());
-
-    try {
-      final http.Response response = await http.delete(
-        Uri.parse(apiUrl),
-        headers: headers,
-        body: requestBody,
-      );
+    final http.Response response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: json.encode({
+        'target': User.getUsername(),
+      }),
+    );
 
       if (response.statusCode == 200) {
-        final String id = response.body;
-        print('Delete user successful with ID: $id');
-      } else {
-        print('Delete user failed with status code: ${response.statusCode}');
+        Authentication.userIsLoggedIn = false;
       }
-    } catch (e) {
-      print('Error occurred while deleting user: $e');
-    }
-  }*/
+      return response.statusCode;
+  }
 
 }

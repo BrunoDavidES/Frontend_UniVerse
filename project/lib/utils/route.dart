@@ -1,6 +1,7 @@
 import 'package:UniVerse/find_screen/find_test.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/tester/tester.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
@@ -115,21 +116,16 @@ class Routing {
               UniverseInfoWeb(),
         ),
         GoRoute(
+          path: '/map',
+          builder: (BuildContext context, GoRouterState state) =>
+              MapPage(),
+        ),
+        GoRoute(
             name: 'Área Pessoal',
             path: '/personal',
             builder: (BuildContext context, GoRouterState state) =>
-                PageNotFound(),
+                PersonalPageWeb(i: 0,),
             routes: [
-              GoRoute(
-                path: 'main',
-                builder: (BuildContext context, GoRouterState state) =>
-                    PersonalPageWeb(i: 0,),
-                /* redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
-                      return '/home';
-                    }
-                  }*/
-              ),
               GoRoute(
                   path: 'profile',
                   builder: (BuildContext context, GoRouterState state) =>

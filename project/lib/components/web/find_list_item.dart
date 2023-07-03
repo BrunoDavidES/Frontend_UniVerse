@@ -1,6 +1,9 @@
 
+import 'package:UniVerse/components/web/web_menu.dart';
+import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../consts/color_consts.dart';
 import '../list_button_simple.dart';
 
@@ -45,24 +48,31 @@ class FindListItem extends StatelessWidget {
             ),
             children: [
               if(name=='Serviços')
-              ListButtonSimple(
-                  text: "Divisão Académica", tobeBold: false, press: () => context.go('/find/services')),
-              if(i==1)
-              ListButtonSimple(
-                  text: "Divisão de Acompanhamento de Parcerias",tobeBold: false,
-                  press: () {}),
-              ListButtonSimple(
-                  text: "Divisão de Apoio à Formação Avançada",tobeBold: false,
-                  press: () {}),
-              ListButtonSimple(
-                  text: "Divisão de Apoio Geral", tobeBold: false,press: () {}),
-              ListButtonSimple(
-                  text: "Divisão de Apoio Técnico", tobeBold: false,press: () {}),
-              ListButtonSimple(
-                  text: "Divisão de Comunicação e Relações Exteriores",tobeBold: false,
-                  press: () {}),
-              ListButtonSimple(
-                  text: "Divisão de Documentação e Cultura",tobeBold: false, press: () {}),
+                ...services.map((e) => ListButtonSimple(
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/services/${e.keys.first}'))).toList(),
+              if(name=='Contactos')
+                ...services.map((e) => ListButtonSimple(
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/services/${e.keys.first}'))).toList(),
+              if(name=='Links')
+                ...links.map((e) => ListButtonSimple(
+                    text: e.keys.first, tobeBold: false, press: () => launchUrl(Uri.parse(e.values.first)))).toList(),
+              if(name=='Cursos')
+                ...courses.map((e) => ListButtonSimple(
+                    text: e.keys.first, tobeBold: false, press: () => launchUrl(Uri.parse(e.values.first)))).toList(),
+              if(name=='Departamentos')
+                ...departments.map((e) => ListButtonSimple(
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/departments/${e.keys.first}'))).toList(),
+              if(name=='Edifícios')
+                ...buildings.map((e) => ListButtonSimple(
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/buildings/${e.keys.first}'))).toList(),
+              if(name=='Restaurantes')
+                ...restaurants.map((e) => ListButtonSimple(
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/restaurants/${e.keys.first}'))).toList(),
+              if(name=='Núcleos')
+                ...organizations.map((e) => ListButtonSimple(
+                    text: e.values.first[0], tobeBold: false, press: () => context.go('/find/organizations/${e.keys.first}'))).toList(),
+              if(name=='Galeria')
+                  SoonPopUp(),
             ]
         ),
       ),

@@ -36,7 +36,7 @@ class WebHomePage extends StatelessWidget {
                   width: size.width,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/web/foto.jpg"),
+                        image: AssetImage("assets/images/welcome_photo.jpg"),
                         colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
                         fit: BoxFit.cover
                     ),
@@ -172,16 +172,16 @@ class WebHomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                     FAQbox(
-                      question: 'É necessário criar uma conta?',
-                      answer: 'Não! \nSe és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito. \n',
+                      question: 'O que é a UniVerse?',
+                      answer: 'A UniVerse é a mais recente plataforma que vai trazer uma nova vida ao campus da tua faculdade!\nCom todo o Universo da FCT NOVA num só lugar, vai ser mais fácil encontrares informações básicas, avisos, eventos, organizares o teu dia-a-dia e muito mais. Junta-te já ao Universo!',
                     ),
                     FAQbox(
                       question: 'É necessário criar uma conta?',
-                      answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                      answer: 'Sim. Estamos a trabalhar no sentido de tornar a UniVerse mais acessível para ti e, por isso, por enquanto, é necessário registares-te. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
                     ),
                     FAQbox(
-                      question: 'É necessário criar uma conta?',
-                      answer: 'Não! Se és estudante, docente ou funcionário na FCT NOVA, então podes juntar-te já ao universo. Insere as tuas credenciais do clip e está feito.',
+                      question: 'Onde posso saber mais sobre a UniVerse?',
+                      answer: 'Não queremos que o Universo esteja distante. Podes saber mais na nossa página de Ajuda.',
                     ),
             ]
                         ),

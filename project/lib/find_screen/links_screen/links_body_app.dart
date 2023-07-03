@@ -1,10 +1,13 @@
 
 import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
+import '../info_detail_screen.dart';
 
 class LinksBodyApp extends StatelessWidget {
 
@@ -44,30 +47,56 @@ class LinksBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 14,
+            childCount: 1,
               (BuildContext context, int index) {
-                if (index == 0)
+              final item = services[index];
+              return ListButtonSimple(tobeBold: true,
+                  text: item.values.first,
+                  press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                  });
+                /*if (index == 0)
                   return ListButtonSimple(tobeBold: true,
                       text: "Clip",
-                      press: () {});
+                      press: () async {
+                        Uri toLaunch = Uri.parse("https://clip.fct.unl.pt");
+                        var urllaunchable = await canLaunchUrl(toLaunch);
+                        if (urllaunchable) {
+                          await launchUrl(
+                              toLaunch,
+                              mode: LaunchMode.inAppWebView
+                          );
+                        }
+                      });
                 else if (index == 1)
                   return ListButtonSimple(tobeBold: true,
                       text: "Moodle",
-                      press: () {});
+                      press: () {
+                        //https://moodle.fct.unl.pt/
+                      });
                 else if (index == 2)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Departamento de Ciências Sociais Aplicadas",
-                      press: () {});
+                      text: "Website FCT", press: () {
+                    //https://www.fct.unl.pt/pt-pt
+                      });
                 else if (index == 3)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Website FCT", press: () {});
+                      text: "Website UNL",
+                      press: () {
+                    //https://www.unl.pt/
+                      });
                 else if (index == 4)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Website UNL",
-                      press: () {});
+                      text: "Guia de Cursos", press: () {
+                    //https://guia.unl.pt/pt/2023/fct
+                      });
                 else if (index == 5)
                   return ListButtonSimple(tobeBold: true,
-                      text: "Guia de Cursos", press: () {});
+                      text: "AEFCT", press: () {
+                        //https://ae.fct.unl.pt/
+                      });
+                else if (index == 6)
+                  return SizedBox(height:70);*/
               }
           ),
         ),

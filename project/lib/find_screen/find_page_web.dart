@@ -5,6 +5,7 @@ import '../components/web/find_list_item.dart';
 import '../consts/color_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import '../main_screen/components/about_bottom_body.dart';
+import 'Item.dart';
 import 'findTest/right_side.dart';
 
 class FindWebPage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _FindWebPageState extends State<FindWebPage> {
                     width: size.width,
                     color: cDirtyWhite,
                     child: Container(
-                      height:size.height+size.height/3+size.height/7,
+                      height:size.height+235+size.height/7,
                       color: cDirtyWhite,
                       child: Column(
                         children: [
@@ -55,60 +56,21 @@ class _FindWebPageState extends State<FindWebPage> {
                           Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 50, top: 30),
-                                child: SizedBox(
-                                  height: size.height-size.height/7,
-                                  width: size.width/4.5,
-                                  child: ListView(
-                                    children:  [
-                                      Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.work_outline_rounded), name: "Serviços", i:0),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.local_phone), name: "Contactos", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.link_outlined), name: "Links", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.account_balance_outlined), name: "Departamentos", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.home_work_outlined), name: "Edifícios", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.restaurant_outlined), name: "Restaurantes", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.local_activity_outlined), name: "Núcleos", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.camera_alt_outlined), name: "Galeria", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.directions_bus), name: "Transportes", i:1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom:5),
-                                            child: FindListItem(icon: Icon(Icons.person_search_outlined), name: "Pessoas", i:1),
-                                          ),
-                                          FindListItem(icon: Icon(Icons.rule_outlined), name: "Regras", i:1),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                  padding: const EdgeInsets.only(left: 50, top: 30),
+                                  child: SizedBox(
+                                      height: size.height-size.height/7,
+                                      width: size.width/4.5,
+                                      child: ListView.builder(
+                                          itemCount: 11,
+                                          itemBuilder: (BuildContext context, int index) {
+                                            final item = Item.findItems[index+1];
+                                            return Padding(
+                                              padding: EdgeInsets.only(bottom: 5),
+                                              child: FindListItem(
+                                                  icon: Icon(item.icon!), name: item.text!, i: index),);
+                                          }
+                                      )
+                                  )
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(50.0),
@@ -117,25 +79,25 @@ class _FindWebPageState extends State<FindWebPage> {
                             ],
                           ),
                           BottomAbout(size: size,),
-                        ],
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-                Container(
-                  color: cDirtyWhite,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CustomWebBar(),
-                    ],
-                  ),
-                ),
-              ],
             ),
           ),
         ),
+      Container(
+        color: cDirtyWhite,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            CustomWebBar(),
+          ],
+        ),
       ),
+      ],
+    ),
+    ),
+    ),
+    ),
     );
   }
 }

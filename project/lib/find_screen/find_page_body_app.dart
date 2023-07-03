@@ -3,9 +3,11 @@ import 'package:UniVerse/consts/color_consts.dart';
 
 import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
+import '../components/web/web_menu.dart';
 import '../main_screen/app/homepage_app.dart';
 import 'chosen_page_app.dart';
 import 'maps_screen/maps_page_app.dart';
+import 'package:UniVerse/find_screen/Item.dart';
 import 'services_screen/services_body_app.dart';
 
 class FindPageBodyApp extends StatelessWidget {
@@ -36,7 +38,7 @@ class FindPageBodyApp extends StatelessWidget {
           ];
         },
         body: GridView.builder(
-          itemCount: 14,
+          itemCount: 12,
           gridDelegate:
               SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 250,
@@ -46,51 +48,13 @@ class FindPageBodyApp extends StatelessWidget {
               ),
          // SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (context, index) {
-            if(index == 0) {
-              return InkWell(
-                child: GridBox(text: "Mapas", icon: Icons.location_on_outlined),
+            final item = Item.findItems[index];
+            return InkWell(
+                child: GridBox(text: item.text!, icon: item.icon!),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MapsPageApp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChosenPageApp(page:item.page!)));
                 },
               );
-            } else if(index==1) {
-              return InkWell(
-                child: GridBox(text: "Serviços", icon: Icons.work_outline_rounded),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 1)));
-                },
-              );
-            }else if(index==2) {
-              return GridBox(text: "Contactos", icon: Icons.local_phone);
-            }else if(index==3) {
-              return InkWell(
-              child: GridBox(text: "Links", icon: Icons.link_outlined),
-            onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 3)));
-            },
-            );
-            }else if(index==4) {
-              return InkWell(
-                child: GridBox(text: "Departamentos", icon: Icons.account_balance_outlined),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChosenPageApp(i: 4)));
-                },
-              );
-            }else if(index==5) {
-             return GridBox(text: "Edifícios", icon: Icons.home_work_outlined);
-            } else if(index==6) {
-              return GridBox(text: "Restaurantes", icon: Icons.restaurant_outlined);
-            }else if(index==7) {
-              return GridBox(text: "Núcleos", icon: Icons.local_activity_outlined);
-            }else if(index==8) {
-              return GridBox(text: "Galeria", icon: Icons.camera_alt_outlined);
-            }else if(index==9) {
-              return GridBox(text: "Transportes", icon: Icons.directions_bus);
-            }else if(index==10) {
-              return GridBox(text: "Pessoas", icon: Icons.person_search_outlined);
-            }else if(index==11) {
-              return GridBox(text: "Regras", icon: Icons.rule_outlined);
-            }
           },
         )
       );

@@ -1,5 +1,7 @@
+import 'package:UniVerse/find_screen/buildings_screen/buildings_body_app.dart';
 import 'package:UniVerse/find_screen/departments_screen/departments_body_app.dart';
 import 'package:UniVerse/find_screen/links_screen/links_body_app.dart';
+import 'package:UniVerse/find_screen/restaurants_screen/restaurants_screen.dart';
 import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +9,9 @@ import '../../bars/app_bar.dart';
 import '../../consts/color_consts.dart';
 
 class ChosenPageApp extends StatefulWidget {
-  final int i;
-  const ChosenPageApp({super.key, required this.i});
+
+  final Widget page;
+  const ChosenPageApp({super.key, required this.page, });
 
   @override
   State<ChosenPageApp> createState() => _MyChosenPageState();
@@ -27,12 +30,7 @@ class _MyChosenPageState extends State<ChosenPageApp> {
         ),
         child: Stack(
           children: <Widget>[
-            if(widget.i==1)
-              ServicesBodyApp(),
-            if(widget.i==3)
-              LinksBodyApp(),
-            if(widget.i==4)
-              DepartmentsBodyApp(),
+            widget.page,
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:1),

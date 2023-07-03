@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
+import '../../utils/search/info.dart';
+import '../info_detail_screen.dart';
 
-class LinksBodyApp extends StatelessWidget {
+class BuildingsBodyApp extends StatelessWidget {
 
-  const LinksBodyApp({super.key});
+  const BuildingsBodyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,57 +46,22 @@ class LinksBodyApp extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: 14,
-              (BuildContext context, int index) {
-                if (index == 0)
-                  return ListButtonSimple(
-                      text: "Edifício I",tobeBold: true,
-                      press: () {});
-                else if (index == 1)
-                  return ListButtonSimple(
-                      text: "Edifício II",tobeBold: true,
-                      press: () {});
-                else if (index == 2)
-                  return ListButtonSimple(
-                      text: "Edifício III",tobeBold: true,
-                      press: () {});
-                else if (index == 3)
-                  return ListButtonSimple(
-                      text: "Edifício IV",tobeBold: true,
-                      press: () {});
-                else if (index == 4)
-                  return ListButtonSimple(
-                      text: "Edifício V", tobeBold: true,press: () {});
-                else if (index == 5)
-                  return ListButtonSimple(
-                      text: "Departamental",tobeBold: true,
-                      press: () {});
-                else if (index == 6)
-                  return ListButtonSimple(
-                      text: "Edifício VII", tobeBold: true,press: () {});
-                else if (index == 7)
-                  return ListButtonSimple(
-                      text: "Edifício VIII",tobeBold: true,
-                      press: () {});
-                else if (index == 8)
-                  return ListButtonSimple(
-                      text: "Edifício IX",tobeBold: true,
-                      press: () {});
-                else if (index == 9)
-                  return ListButtonSimple(
-                      text: "Edifício X",tobeBold: true,
-                      press: () {});
-                else if (index == 10)
-                  return ListButtonSimple(
-                      text: "Edifício VI",tobeBold: true, press: () {});
-                else if (index == 11)
-                  return ListButtonSimple(
-                      text: "CENIMAT", tobeBold: true,press: () {});
-                else if (index == 12)
-                  return ListButtonSimple(
-                      text: "Divisão de Química",tobeBold: true, press: () {});
-                else if (index == 13)
-                  return SizedBox(height: 70);
+              childCount: 19,
+                  (BuildContext context, int index) {
+                final item = buildings[index];
+                return ListButtonSimple(tobeBold: true,
+                    text: item.values.first,
+                    press: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                    });
+              }
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+              childCount: 1,
+                  (BuildContext context, int index) {
+                return SizedBox(height: 70);
               }
           ),
         ),

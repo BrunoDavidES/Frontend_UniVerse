@@ -42,6 +42,7 @@ class FAQbox extends StatelessWidget {
             backgroundColor: cDarkLightBlueColor,
             textColor: Colors.white,
             collapsedIconColor: cHeavyGrey,
+            iconColor: cDirtyWhiteColor,
             collapsedTextColor: cHeavyGrey,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
