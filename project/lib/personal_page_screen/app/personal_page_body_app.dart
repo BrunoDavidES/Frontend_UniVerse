@@ -3,6 +3,7 @@ import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/login_screen/functions/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
+import 'package:UniVerse/proof_screen/proof_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'dart:io';
@@ -110,7 +111,10 @@ class Menu extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i: 1, title: Image.asset("assets/app/report.png", scale: 6,),)));
                 },);
                 else if(index==1)
-                  return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined, press: () { });
+                  return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProofScreen()));
+
+                  });
                 else if(index==2)
                   return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));

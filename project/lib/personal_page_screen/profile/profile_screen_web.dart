@@ -60,31 +60,6 @@ class ProfileScreenState extends State<ProfileScreenWeb> {
               width: size.width/9,
               height: size.height/1.75,
               margin: EdgeInsets.only(left:15, right:20, bottom: 20),
-              child: ListView(
-                children:  [
-                  Column(
-                    children: <Widget>[
-                      WebMenuCard(text: 'Gestão de Backoffice', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.manage_accounts_outlined, press: () {
-                        launchUrl(Uri.parse("https://universe-fct.oa.r.appspot.com/backoffice/index.html"));
-                      },),
-                      WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
-                      WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
-                      WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
-                      WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
-                      WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
-                      WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () {
-    if(!Authentication.userIsLoggedIn)
-    Navigator.pushNamed(context, "/home");
-    else Navigator.pushNamed(context, "/personal/calendar");
-                      }),
-                      WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                      WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                      WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                      WebMenuCard(text: 'Upload', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                    ],
-                  ),
-                ],
-              ),
             ),
           ],
         ),

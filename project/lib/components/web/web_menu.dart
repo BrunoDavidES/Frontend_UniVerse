@@ -2,7 +2,9 @@ import 'package:UniVerse/components/confirm_dialog_box.dart';
 import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../calendar_screen/personal_event_web.dart';
 import '../../consts/color_consts.dart';
 import '../simple_dialog_box.dart';
 import '../web_menu_card.dart';
@@ -50,16 +52,52 @@ class WebMenu extends StatelessWidget {
             children:  [
               Column(
                 children: <Widget>[
-                  WebMenuCard(text: 'O Meu Perfil', description: 'Vê e altera as tuas informações pessoais.', icon: Icons.person_outline),
-                  WebMenuCard(text: 'QR Scan', description: 'Entra numa sala digitalizando o código QR na sua porta.', icon: Icons.qr_code_scanner_outlined),
-                  WebMenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA.',icon: Icons.card_membership_outlined),
-                  WebMenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus.',icon: Icons.report_outlined),
-                  WebMenuCard(text: 'Fóruns', description: 'Encontra os teus fóruns aqui. Nunca foi tão fácil encontrar',icon: Icons.message_outlined),
-                  WebMenuCard(text: 'Calendário', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                  WebMenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                  WebMenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                  WebMenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined),
-                  WebMenuCard(text: 'Apagar Conta', description: '',icon: Icons.delete, press: () {
+                  WebMenuCard(text: 'Gestão de Backoffice', icon: Icons.manage_accounts_outlined, press: () {
+                    launchUrl(Uri.parse("https://universe-fct.oa.r.appspot.com/backoffice/index.html"));
+                  },),
+                  WebMenuCard(text: 'O Meu Perfil', icon: Icons.person_outline, press: () {
+                    context.go('/personal/profile');
+                  }),
+                  WebMenuCard(text: 'Comprovativo', icon: Icons.card_membership_outlined, press: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          child: SoonPopUp(),
+                        )
+                    );
+                  },),
+                  WebMenuCard(text: 'Calendário',icon: Icons.calendar_month_outlined, press: () {
+                    context.go("/personal/calendar");
+                  },),
+                  WebMenuCard(text: 'Fóruns',icon: Icons.message_outlined, press: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          child: QRPopUp(),
+                        )
+                    );
+                  },),
+                  WebMenuCard(text: 'Inquéritos', icon: Icons.edit_document),
+                  WebMenuCard(text: 'Reportar',icon: Icons.report_outlined, press: () {
+                    context.go("/report");
+                  },),
+                  WebMenuCard(text: 'Organizar Evento',icon: Icons.event_available_outlined, press: () {
+                    context.go("/events/submit");
+                  },),
+                  WebMenuCard(text: 'Feedback',icon: Icons.bar_chart_outlined),
+                  WebMenuCard(text: 'Apagar Conta',icon: Icons.delete, press: () {
                     showDialog(
                         context: context,
                         builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
@@ -86,6 +124,96 @@ class WebMenu extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class QRPopUp extends StatelessWidget {
+  const QRPopUp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: 400,
+      height: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            cDirtyWhiteColor,
+            cDirtyWhite,
+            cPrimaryOverLightColor.withOpacity(0.4),
+            cPrimaryLightColor.withOpacity(0.5)
+          ],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("Acede ao teu comprovativo na nossa aplicação!".toUpperCase(),
+            style: TextStyle(
+                color: cPrimaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Spacer(),
+          Image.asset("assets/web/Example.png", scale: 10,),
+          Text("Digitaliza o código QR para instalares a aplicação.",
+            style: TextStyle(
+                color: cHeavyGrey
+            ),),
+          Spacer(),
+        ],
+      ),
+    );
+  }
+}
+
+class SoonPopUp extends StatelessWidget {
+  const SoonPopUp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: 300,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            cDirtyWhiteColor,
+            cDirtyWhite,
+            cPrimaryOverLightColor.withOpacity(0.4),
+            cPrimaryLightColor.withOpacity(0.5)
+          ],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Brevemente Disponível na UniVerse".toUpperCase(),
+            style: TextStyle(
+              color: cPrimaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }

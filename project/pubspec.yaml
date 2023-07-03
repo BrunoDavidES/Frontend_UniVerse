@@ -105,6 +105,8 @@ flutter:
     - assets/app/links.png
     - assets/man.png
     - assets/titles/area.png
+    - assets/img.png
+    - assets/bill.jpg
     - assets/app/area.png
     - assets/titles/calendar.png
     - assets/app/report.png

@@ -5,7 +5,6 @@ import '../consts/color_consts.dart';
 
 class WebMenuCard extends StatelessWidget {
   final String text;
-  final String description;
   final IconData icon;
   final Function()? press;
 
@@ -13,7 +12,6 @@ class WebMenuCard extends StatelessWidget {
     Key? key,
     required this.text,
     required this.icon,
-    required this.description,
     this.press,
   }) : super(key: key);
 
