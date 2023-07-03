@@ -1,6 +1,7 @@
 import 'package:UniVerse/components/url_launchable_icon_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../components/url_launchable_item.dart';
 
@@ -61,10 +62,15 @@ class FCTinfoBodyApp extends StatelessWidget {
               "Faculdade de Ciências e Tecnologia\n2829-516 Caparica\nPortugal",
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 60),
-            child: Text(
-              "Telefone: (+351) 212 948 300\nFax: (+351) 212 954 461",
+          InkWell(
+            onTap: () {
+              launchUrl(Uri.parse("tel://212948300"));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: Text(
+                "Telefone: (+351) 212 948 300\nFax: (+351) 212 954 461",
+              ),
             ),
           ),
         ],

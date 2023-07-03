@@ -42,7 +42,7 @@ class _FindWebPageState extends State<FindWebPage> {
                     width: size.width,
                     color: cDirtyWhite,
                     child: Container(
-                      height:size.height+size.height/3+size.height/7,
+                      height:size.height+235+size.height/7,
                       color: cDirtyWhite,
                       child: Column(
                         children: [

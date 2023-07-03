@@ -99,6 +99,7 @@ flutter_icons:
 flutter:
 
   assets:
+    - assets/images/welcome_photo.jpg
     - assets/app/map.png
     - assets/titles/restaurants.png
     - assets/capi.png
@@ -146,10 +147,7 @@ flutter:
     - assets/app/faq_title.png
     - assets/app/logo_full_background.png
     - assets/web/icon.ico
-    - assets/app/welcome_app.jpg
-    - assets/web/BackGround.jpg
     - assets/web/combo_logo.png
-    - assets/web/FCT-NOVA.jpg
     - assets/web/logoNovaBranco.png
     - assets/app/logo_nova_horiz.png
     - assets/app/logo_no_reference_no_white.png

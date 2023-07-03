@@ -36,7 +36,7 @@ class WebHomePage extends StatelessWidget {
                   width: size.width,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/web/foto.jpg"),
+                        image: AssetImage("assets/images/welcome_photo.jpg"),
                         colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
                         fit: BoxFit.cover
                     ),

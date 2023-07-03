@@ -18,7 +18,7 @@ class AppHomePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white70,
             image: DecorationImage(
-              image: AssetImage("assets/web/foto.jpg"),
+              image: AssetImage("assets/images/welcome_photo.jpg"),
               colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
               //colorFilter: ColorFilter.mode(cDirtyWhiteColor, BlendMode.saturation),
               fit: BoxFit.cover,

@@ -20,7 +20,7 @@ class _RightSideState extends State<RightSide> {
         height: containerHeight,
         width: containerWidth,
         color: cDirtyWhite,
-            child: Container(
+            child: /*Container(
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -86,10 +86,16 @@ class _RightSideState extends State<RightSide> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ),*/
+            Container(
+              padding: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                color: cPrimaryLightColor,
+                borderRadius: BorderRadius.circular(5),
               ),
-            ),
+              child: Center(child: MapsPageWeb()),
+              ),
+
             /*child: Container(
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
