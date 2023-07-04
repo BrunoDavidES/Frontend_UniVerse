@@ -1,21 +1,18 @@
 import 'dart:math';
 
-import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:UniVerse/bars/web_bar.dart';
+import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
+import 'package:UniVerse/utils/news/article_data.dart';
+
 import '../Components/default_button.dart';
 import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
-import '../utils/news/article_data.dart';
-import 'news_web_Aux.dart';
-import 'news_web_AuxEndPage.dart';
 
 class NewsWebPage extends StatefulWidget {
-  NewsWebPage({super.key});
-
   @override
   State<NewsWebPage> createState() => _NewsWebPageState();
 }
@@ -24,9 +21,12 @@ class _NewsWebPageState extends State<NewsWebPage> {
   ScrollController yourScrollController = ScrollController();
   late Future<int> fetchDone;
 
+  int loadedArticlesCount = 5;
+  int totalArticlesCount = Article.news.length;
+
   @override
   void initState() {
-    fetchDone = Article.fetchNews(5, 0, {});
+    fetchDone = Article.fetchNews(loadedArticlesCount, 0, {});
     super.initState();
   }
 
@@ -35,225 +35,251 @@ class _NewsWebPageState extends State<NewsWebPage> {
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
     return Scaffold(
-        body: Scrollbar(
-          thumbVisibility: true, //always show scrollbar
-          thickness: 8, //width of scrollbar
-          interactive: true,
-          radius: const Radius.circular(20), //corner radius of scrollbar
-          scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+      body: Scrollbar(
+        thumbVisibility: true,
+        thickness: 8,
+        interactive: true,
+        radius: const Radius.circular(20),
+        scrollbarOrientation: ScrollbarOrientation.right,
+        controller: yourScrollController,
+        child: SingleChildScrollView(
           controller: yourScrollController,
-          child: SingleChildScrollView(
-            controller: yourScrollController,
-            child: Container(
-              color: cDirtyWhite,
-              child: Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: size.height / 7),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 50, top: 20),
-                          child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Image.asset("assets/titles/news.png", scale: 4.5,)
+          child: Container(
+            color: cDirtyWhite,
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: size.height / 7),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50, top: 20),
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Image.asset(
+                            "assets/titles/news.png",
+                            scale: 4.5,
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 30),
-                          //Zona do Feed
-                          height: 1650,
-                          width: size.width/1.20,
-                          color: cDirtyWhite,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 30),
+                        height: 315 * loadedArticlesCount as double,
+                        width: size.width / 1.20,
+                        color: cDirtyWhite,
+                        child: FutureBuilder<int>(
+                          future: fetchDone,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data == 500) {
+                                return Error500();
+                              } else {
+                                return ListView.builder(
+                                  itemCount: loadedArticlesCount,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    if (index >= Article.news.length) {
+                                      return Container(); // Return an empty container if the index is out of range
+                                    }
 
-                          child: FutureBuilder(
-                              future: fetchDone,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  if (snapshot.data == 500) {
-                                    return Error500();
-                                  }
-                                  else {
-                                    return ListView.builder(
-                                    itemCount: 5,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      //Article.news.map((e) => NewsCard(e)).toList(),
-                                      final item = Article.news[index];
-                                      return Column(
-                                        children: [
-                                          SizedBox(
-                                            child: Divider(
-                                              thickness: 2,
-                                              color: toRandom[cindex],
-                                            ),
+                                    final item = Article.news[index];
+                                    return Column(
+                                      children: [
+                                        SizedBox(
+                                          child: Divider(
+                                            thickness: 2,
+                                            color: toRandom[cindex],
                                           ),
-                                          Container(
-                                            height: 280,
-                                            decoration: BoxDecoration(
-                                              color: cDirtyWhiteColor,
-                                              borderRadius: BorderRadius.circular(15),
-                                            ),
-                                            margin: EdgeInsets.only(top: 5, bottom: 5),
-                                            padding: const EdgeInsets.all(5),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    width: size.width / 4,
-                                                    height: 260,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(
-                                                          15.0),
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(item.urlToImage!),
-                                                      ),
-                                                      border: Border.all(
-                                                        color: cHeavyGrey,
-                                                      ),
-                                                      boxShadow: [ BoxShadow(
-                                                        color: Colors.grey.withOpacity(0.75),
-                                                        spreadRadius: 3,
-                                                        blurRadius: 7,
-                                                        offset: const Offset(0, 0),
-                                                      ),
-                                                      ],
-                                                    )
+                                        ),
+                                        Container(
+                                          height: 280,
+                                          decoration: BoxDecoration(
+                                            color: cDirtyWhiteColor,
+                                            borderRadius:
+                                            BorderRadius.circular(15),
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              top: 5, bottom: 5),
+                                          padding: const EdgeInsets.all(5),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: size.width / 4,
+                                                height: 260,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      15.0),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      item.urlToImage!,
+                                                    ),
+                                                  ),
+                                                  border: Border.all(
+                                                    color: cHeavyGrey,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.75),
+                                                      spreadRadius: 3,
+                                                      blurRadius: 7,
+                                                      offset:
+                                                      const Offset(0, 0),
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(width: 15,),
-                                                Container(
-                                                    width: size.width / 1.95,
-                                                    height: 260,
-                                                    margin: EdgeInsets.only(
-                                                        top: 5, bottom: 5),
-                                                    padding: EdgeInsets.all(10),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment
-                                                          .start,
-                                                      mainAxisAlignment: MainAxisAlignment
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Container(
+                                                width: size.width / 1.95,
+                                                height: 260,
+                                                margin: EdgeInsets.only(
+                                                    top: 5, bottom: 5),
+                                                padding: EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "${item.title}"
+                                                          .toUpperCase(),
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontSize: 20,
+                                                      ),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                      TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    Text(
+                                                      "${item.text}",
+                                                      maxLines: 10,
+                                                      overflow:
+                                                      TextOverflow.ellipsis,
+                                                    ),
+                                                    Spacer(),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
                                                           .center,
                                                       children: [
-                                                        Text(
-                                                          "${item.title}".toUpperCase(),
-                                                          style: const TextStyle(
-                                                              fontWeight: FontWeight.bold,
-                                                              fontSize: 20),
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow.ellipsis,
+                                                        Expanded(
+                                                          child: Text(
+                                                            "Autoria de ${item.author} · ${item.date}",
+                                                            style: TextStyle(
+                                                              color: cHeavyGrey,
+                                                            ),
+                                                          ),
                                                         ),
-                                                        SizedBox(height: 15,),
-                                                        Text(
-                                                          "${item.text}",
-                                                          maxLines: 10,
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        Spacer(),
                                                         Row(
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                "Autoria de ${item.author} · ${item.date}",
-                                                                style: TextStyle(color: cHeavyGrey),
+                                                            IconButton(
+                                                              onPressed: () {},
+                                                              icon: Icon(
+                                                                Icons.share,
+                                                                color:
+                                                                cHeavyGrey,
                                                               ),
                                                             ),
-                                                            Row(
-                                                              children: [
-                                                                IconButton(
-                                                                  onPressed: () {},
-                                                                  icon: Icon(Icons.share, color: cHeavyGrey),
-                                                                ),
-                                                                IconButton(
-                                                                  onPressed: () => context.go("/news/full/${item.id}", extra: item),
-                                                                  icon: Icon(Icons.remove_red_eye, color: cHeavyGrey),
-                                                                ),
-                                                              ],
+                                                            IconButton(
+                                                              onPressed: () =>
+                                                                  context.go(
+                                                                    "/news/full/${item.id}",
+                                                                    extra: item,
+                                                                  ),
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .remove_red_eye,
+                                                                color:
+                                                                cHeavyGrey,
+                                                              ),
                                                             ),
                                                           ],
-                                                        )
+                                                        ),
                                                       ],
                                                     )
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  }
-                                }
-                                return Center(
-                                    child: LinearProgressIndicator());
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               }
-                          ),
+                            }
+                            return Center(
+                              child: LinearProgressIndicator(),
+                            );
+                          },
                         ),
-                        SizedBox(
-                          width: size.width/1.15,
-                          child: Divider(
-                            thickness: 2,
-                            color: toRandom[cindex],
-                          ),
-                        ),
+                      ),
+                      if (loadedArticlesCount < totalArticlesCount)
                         Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 60.0),
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 60.0,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               DefaultButton(
-                                  text: "Próxima Página",
-                                  press: () {
-                                    Article.news.length > 6 ?
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            NewsWebPageAux(indexAux: 1))) :
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            NewsWebPageAuxEnd(indexAux: 1)));
-                                  }),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icons.navigate_next_outlined,
-                                ].map((e) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Article.news.length > 6 ?
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              NewsWebPageAux(indexAux: 1))) :
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) =>
-                                              NewsWebPageAuxEnd(indexAux: 1)));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 50, color: cPrimaryColor),
-                                    ),
-                                  );
-                                }).toList(),
-                              )
+                                text: "Carregar mais",
+                                press: () {
+                                  setState(() {
+                                    loadedArticlesCount += 5;
+                                    if (loadedArticlesCount >
+                                        totalArticlesCount) {
+                                      loadedArticlesCount = totalArticlesCount;
+                                    }
+                                    fetchDone = Article.fetchNews(
+                                      loadedArticlesCount,
+                                      0,
+                                      {},
+                                    );
+                                  });
+                                },
+                              ),
                             ],
                           ),
                         ),
-                        BottomAbout(size: size),
-                      ],
-                    ),
+                      if (!(loadedArticlesCount < totalArticlesCount))
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 60.0,
+                          ),
+                        ),
+                      BottomAbout(size: size),
+                    ],
                   ),
-                  Container(
-                    color: cDirtyWhite,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        CustomWebBar(),
-                      ],
-                    ),
+                ),
+                Container(
+                  color: cDirtyWhite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      CustomWebBar(),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        )
+        ),
+      ),
     );
   }
-
 }

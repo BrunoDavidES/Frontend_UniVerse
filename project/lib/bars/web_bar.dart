@@ -13,6 +13,7 @@ class CustomWebBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
+    final bool isSmallScreen2 = MediaQuery.of(context).size.width < 700;
 
     return Container(
       margin: const EdgeInsets.all(15),
@@ -30,7 +31,8 @@ class CustomWebBar extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          InkWell(
+          if(!isSmallScreen2)
+            InkWell(
             onTap: () => context.go('/home'),
             child: Image.asset(
               "assets/web/logo.png",
@@ -65,36 +67,56 @@ class CustomWebBar extends StatelessWidget {
           if (Authentication.userIsLoggedIn)
             const PopUpMenu()
           else if (isSmallScreen)
-            PopupMenuButton<String>(
-              itemBuilder: (_) => [
-                PopupMenuItem<String>(
-                  child: Text("Início"),
-                  value: "/home",
+            Row(
+              children: [
+                PopupMenuButton<String>(
+                  itemBuilder: (_) => [
+                    PopupMenuItem<String>(
+                      child: Text("Início"),
+                      value: "/home",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Procurar"),
+                      value: "/find",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Notícias"),
+                      value: "/news",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Eventos"),
+                      value: "/events",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Ajuda"),
+                      value: "/help",
+                    ),
+                  ],
+                  onSelected: (route) {
+                    context.go(route);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const Icon(Icons.more_vert),
+                  ),
                 ),
-                PopupMenuItem<String>(
-                  child: Text("Procurar"),
-                  value: "/find",
-                ),
-                PopupMenuItem<String>(
-                  child: Text("Notícias"),
-                  value: "/news",
-                ),
-                PopupMenuItem<String>(
-                  child: Text("Eventos"),
-                  value: "/events",
-                ),
-                PopupMenuItem<String>(
-                  child: Text("Ajuda"),
-                  value: "/help",
+                DefaultButton(
+                  text: "LOGIN",
+                  press: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                        content: LoginPageWeb(),
+                      ),
+                    );
+                  },
                 ),
               ],
-              onSelected: (route) {
-                context.go(route);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: const Icon(Icons.more_vert),
-              ),
             )
           else
             DefaultButton(
@@ -120,22 +142,24 @@ class CustomWebBar extends StatelessWidget {
 
   Widget _buildNavButton(BuildContext context, String text, String route) {
     return Expanded(
-      child: Container(
-        width: 100,
-        height: 40,// Adjust the width value to control the button width
-        child: TextButton(
-          onPressed: () => context.go(route),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16, // Make the text thicker
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust the horizontal padding as needed
+        child: Container(
+          height: 40,
+          child: TextButton(
+            onPressed: () => context.go(route),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              maxLines: 1,
             ),
-            maxLines: 1,
-          ),
-          style: ButtonStyle(
-            overlayColor: MaterialStateColor.resolveWith(
-                  (states) => cPrimaryLightColor.withOpacity(0.15), // Remove overlay color
+            style: ButtonStyle(
+              overlayColor: MaterialStateColor.resolveWith(
+                    (states) => cPrimaryLightColor.withOpacity(0.15),
+              ),
             ),
           ),
         ),
