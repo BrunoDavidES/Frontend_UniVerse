@@ -200,7 +200,7 @@ class _ChatScreenState extends State<ChatScreenWeb> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(receiverID: contactName,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(forumID: contactName, forumName: '',)));
                                     },
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,

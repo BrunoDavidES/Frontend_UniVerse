@@ -4,17 +4,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
+import '../consts/api_consts.dart';
 import '../consts/color_consts.dart';
 
 import 'package:UniVerse/utils/chat/chat_utils.dart';
 
 class ChatPageApp extends StatefulWidget {
-  final String receiverID;
+  String forumID;
+  String forumName;
 
   ChatPageApp({
     Key? key,
-    required this.receiverID,
+    required this.forumID,
+    required this.forumName,
   }) : super(key: key);
 
   @override
@@ -24,10 +28,11 @@ class ChatPageApp extends StatefulWidget {
 class _MyChatPageState extends State<ChatPageApp> {
   final TextEditingController messageController = TextEditingController();
   late StreamSubscription _chatStream;
-  final StreamController<dynamic> _streamController = StreamController<
-      dynamic>();
-  String currentPage = 'Homepage';
-  String forumID = '-NZGuFwlRhrbHrrMpOMA';
+  late StreamSubscription _forumStream;
+  late StreamSubscription _memberStream;
+  final StreamController<dynamic> _chatStreamController = StreamController<dynamic>();
+  final StreamController<dynamic> _forumStreamController = StreamController<dynamic>();
+  final StreamController<dynamic> _memberStreamController = StreamController<dynamic>();
 
   @override
   void initState() {
@@ -38,35 +43,55 @@ class _MyChatPageState extends State<ChatPageApp> {
   @override
   void deactivate() {
     _chatStream.cancel();
+    _forumStream.cancel();
+    _memberStream.cancel();
+    _chatStreamController.add(null);
+    _memberStreamController.add(null);
     super.deactivate();
   }
 
   void _activateListeners() async {
-    String? senderID = FirebaseAuth.instance.currentUser?.uid;
-    print(senderID);
-    _chatStream = FirebaseDatabase.instance
-        .ref()
-        .child('forums/$forumID/feed/')
-        .onValue
-        .listen((event) {
-      print('Firebase Request: forums/$forumID/feed/');
-      var snapshot = event.snapshot;
-      var children = snapshot.value as Map<dynamic, dynamic>;
+    String? userID = FirebaseAuth.instance.currentUser?.uid;
+    print(widget.forumID);
+    print(userID);
 
-      children.forEach((key, value) {
-        var description = value['description'];
-        var time = value['time'];
-        var author = value['author'];
+    if (widget.forumID != null) {
+      _chatStream = FirebaseDatabase.instance
+          .ref()
+          .child('forums/${widget.forumID}/feed/')
+          .onValue
+          .listen((event) {
+        var snapshot = event.snapshot;
+        var children = snapshot.value as Map<dynamic, dynamic>;
 
-        print('Description: $description, Time: $time, Author: $author');
+        _chatStreamController.add(children);
       });
 
-      print('Firebase Response: $children');
+      _memberStream = FirebaseDatabase.instance
+          .ref()
+          .child('forums/${widget.forumID}/members/')
+          .onValue
+          .listen((event) {
+        var snapshot = event.snapshot;
+        var children = snapshot.value as Map<dynamic, dynamic>;
 
-      _streamController.add(children);
-    });
+        _memberStreamController.add(children);
+      });
+    }
+
+    if (userID != null) {
+      _forumStream = FirebaseDatabase.instance
+          .ref()
+          .child('users/${userID.replaceAll(".", "-")}/')
+          .onValue
+          .listen((event) {
+        var snapshot = event.snapshot;
+        var children = snapshot.value as Map<dynamic, dynamic>;
+
+        _forumStreamController.add(children);
+      });
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +116,7 @@ class _MyChatPageState extends State<ChatPageApp> {
           },
         ),
         title: Text(
-          currentPage, // Display the current page name
+          widget.forumName, // Display the current page name
           style: const TextStyle(
             color: Colors.black,
             fontSize: 25,
@@ -136,92 +161,109 @@ class _MyChatPageState extends State<ChatPageApp> {
   }
 
   Widget buildLeftColumn() {
-    return Align(
-      alignment: Alignment.centerLeft, // Align buttons to the left
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // Align text within buttons to the left
-        children: [
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                currentPage =
-                'Homepage'; // Update the current page to 'Homepage'
-              });
-              // Action to perform when Homepage button is pressed
-            },
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(
-                  Colors.blue.withOpacity(0.2)),
-              // Slightly darker background on hover
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+    return StreamBuilder(
+      stream: _forumStreamController.stream,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (!snapshot.hasData || snapshot.data == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        var forums = snapshot.data as Map<dynamic, dynamic>;
+
+        return SingleChildScrollView(
+          child: Column(
+            children: forums.entries.map((entry) {
+              var forumID = entry.key;
+              var forumData = entry.value;
+              var forumName = forumData['name'];
+
+              return ListTile(
+                title: Text(forumName),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.exit_to_app),
+                      onPressed: () {
+                        // Perform the desired action when the IconButton is pressed
+                        // (e.g., leave the forum)
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text('Confirmation'),
+                            content: Text('Are you sure you want to leave this forum?'),
+                            actions: [
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context); // Close the confirmation dialog
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Leave'),
+                                onPressed: () {
+                                  Navigator.pop(context); // Close the confirmation dialog
+                                  ChatUtils.leaveForum(forumID);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        // Perform the desired action when the delete button is pressed
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text('Confirmation'),
+                            content: Text('Are you sure you want to delete this forum?'),
+                            actions: [
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context); // Close the confirmation dialog
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Delete'),
+                                onPressed: () {
+                                  Navigator.pop(context); // Close the confirmation dialog
+                                  ChatUtils.deleteForum(forumID);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            icon: const Icon(Icons.home), // Icon on the left side
-            label: const Text('Homepage'),
+                onTap: () {
+                  setState(() {
+                    widget.forumName = forumName;
+                    widget.forumID = forumID;
+                    deactivate();
+                    _activateListeners();
+                  });
+                },
+              );
+            }).toList(),
           ),
-
-          const SizedBox(height: 8), // Adding spacing between buttons
-
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                currentPage = 'Grades'; // Update the current page to 'Grades'
-              });
-              // Action to perform when Grades button is pressed
-            },
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(
-                  Colors.blue.withOpacity(0.2)),
-              // Slightly darker background on hover
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            icon: const Icon(Icons.grade), // Icon on the left side
-            label: const Text('Grades'),
-          ),
-
-          const SizedBox(height: 8), // Adding spacing between buttons
-
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                currentPage =
-                'Evaluations'; // Update the current page to 'Evaluations'
-              });
-              // Action to perform when Evaluations button is pressed
-            },
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all<Color>(
-                  Colors.blue.withOpacity(0.2)),
-              // Slightly darker background on hover
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            icon: const Icon(Icons.rate_review), // Icon on the left side
-            label: const Text('Evaluations'),
-          ),
-
-          const SizedBox(height: 8), // Adding spacing between buttons
-        ],
-      ),
+        );
+      },
     );
   }
+
+
 
   Widget buildMiddleColumn() {
     final scrollController = ScrollController();
@@ -231,7 +273,7 @@ class _MyChatPageState extends State<ChatPageApp> {
       children: [
         Expanded(
           child: StreamBuilder(
-            stream: _streamController.stream,
+            stream: _chatStreamController.stream,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
@@ -259,11 +301,11 @@ class _MyChatPageState extends State<ChatPageApp> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: children.entries.map((entry) {
-                    var key = entry.key;
+                    var postID = entry.key;
                     var value = entry.value;
-                    var description = value['description'];
-                    var time = value['time'];
                     var author = value['author'];
+                    var message = value['message'];
+                    var posted = value['posted'];
 
                     return Container(
                       margin: const EdgeInsets.all(7.5),
@@ -277,8 +319,83 @@ class _MyChatPageState extends State<ChatPageApp> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Text(
-                        '$author - $time \n\n$description',
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '$author - $posted \n\n$message',
+                            ),
+                          ),
+                          PopupMenuButton(
+                            itemBuilder: (BuildContext context) => [
+                              PopupMenuItem(
+                                child: Text('Edit'),
+                                value: 'edit',
+                              ),
+                              PopupMenuItem(
+                                child: Text('Delete'),
+                                value: 'delete',
+                              ),
+                            ],
+                            onSelected: (value) async {
+                              if (value == 'edit') {
+                                // Handle edit functionality
+                                var editedMessage = await showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: Text('Edit Message'),
+                                    content: TextFormField(
+                                      initialValue: message,
+                                      maxLines: null,
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('Cancel'),
+                                        onPressed: () {
+                                          Navigator.pop(context); // Close the dialog without saving changes
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text('Save'),
+                                        onPressed: () {
+                                          Navigator.pop(context, messageController.text); // Pass the edited message back to the caller
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                                if (editedMessage != null) {
+                                  // Update the message in the database
+                                  //ChatUtils.updateMessage(forumID, postID, editedMessage);
+                                }
+                              } else if (value == 'delete') {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: Text('Confirmation'),
+                                    content: Text('Are you sure you want to delete this message?'),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('Cancel'),
+                                        onPressed: () {
+                                          Navigator.pop(context); // Close the confirmation dialog
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text('Delete'),
+                                        onPressed: () {
+                                          Navigator.pop(context); // Close the confirmation dialog
+                                          ChatUtils.deletePost(widget.forumID, postID);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
                       ),
                     );
                   }).toList(),
@@ -293,9 +410,55 @@ class _MyChatPageState extends State<ChatPageApp> {
   }
 
   Widget buildRightColumn() {
-    // Replace with your Firebase alerts widgets
-    return Container(
-      // Add your Firebase alerts here
+    return StreamBuilder(
+      stream: _memberStreamController.stream,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (!snapshot.hasData || snapshot.data == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        var members = snapshot.data as Map<dynamic, dynamic>;
+
+        return SingleChildScrollView(
+          child: Column(
+            children: members.entries.map((entry) {
+              var memberID = entry.key;
+              var memberData = entry.value;
+              var memberName = memberData['name'];
+              var memberRole = memberData['role'];
+
+              return ListTile(
+                title: Text(memberName),
+                subtitle: Text('Role: $memberRole'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        ChatUtils.promoteMember(widget.forumID, memberID);
+                      },
+                      child: Text('Promote'),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        ChatUtils.demoteMember(widget.forumID, memberID);
+                      },
+                      child: Text('Demote'),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 
@@ -304,7 +467,7 @@ class _MyChatPageState extends State<ChatPageApp> {
       String message = messageController.text;
 
       // Call the sendMessage function from chat_utils.dart
-      ChatUtils.sendMessage(forumID, message);
+      ChatUtils.sendMessage(widget.forumID, message);
 
       // Clear the message text field
       messageController.clear();
@@ -355,4 +518,6 @@ class _MyChatPageState extends State<ChatPageApp> {
       ),
     );
   }
+
+
 }
