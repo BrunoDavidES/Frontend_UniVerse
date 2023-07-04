@@ -41,7 +41,7 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
-    /*String newsUrl = '/feed/numberOf/News';
+    String newsUrl = '/feed/numberOf/News';
     var response;
     if(numNews == 0) {
       response = await http.post(
@@ -56,7 +56,7 @@ class Article {
       }
       else return 500;
     }
-    newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+    /*newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     response = await http.post(
       Uri.parse(baseUrl + newsUrl),

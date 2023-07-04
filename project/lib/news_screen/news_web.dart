@@ -141,10 +141,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                     top: 5, bottom: 5),
                                                 padding: EdgeInsets.all(10),
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       "${item.title}"

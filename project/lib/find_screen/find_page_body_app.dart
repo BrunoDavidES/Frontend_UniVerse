@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:flutter/services.dart';
 
 import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
@@ -19,8 +20,12 @@ class FindPageBodyApp extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool isScrolled) {
           return [
             SliverAppBar(
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: cHeavyGrey.withOpacity(0.2),
+                statusBarIconBrightness: Brightness.dark
+              ),
               automaticallyImplyLeading: false,
-              title: Image.asset("assets/app/find_title.png", scale:6),
+              title: Image.asset("assets/titles/find.png", scale:6),
               backgroundColor: cDirtyWhiteColor,
               titleSpacing: 15,
               actions: [

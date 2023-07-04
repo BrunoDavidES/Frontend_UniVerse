@@ -6,10 +6,9 @@ import 'package:UniVerse/consts/api_consts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
-import '../../login_screen/functions/auth.dart';
+import '../authentication/auth.dart';
 
 class User {
-
 
   static String getUsername() {
     var user = FirebaseAuth.instance.currentUser;
@@ -87,7 +86,7 @@ class User {
     return response.statusCode;
   }
 
-  Future<int> update(String name, String status, String licensePlate) async {
+  static Future<int> update(String name, String status, String licensePlate) async {
     String token = await Authentication.getTokenID();
     String url = '$magikarp/modify/attributes';
 
@@ -116,16 +115,99 @@ class User {
     return response.statusCode;
   }
 
+  static bool areCompliant(oldPwd, newPwd, confirmation) {
+    return oldPwd.isNotEmpty && newPwd.isNotEmpty && confirmation.isNotEmpty;
+  }
+
+  static bool areEqual(newPwd, confirmation) {
+    return newPwd == confirmation;
+  }
+
+  static bool match (newPwd) {
+    var validator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
+    return newPwd.matches(validator);
+  }
+
+  static Future<int> updatePwd(oldPwd, newPwd, confirmation) async {
+    String token = await Authentication.getTokenID();
+    const String url = '$magikarp/modify/pwd';
+
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
+
+    final http.Response response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: json.encode({
+        'password': oldPwd,
+        'newPwd': newPwd,
+        'confimation': confirmation
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Authentication.userIsLoggedIn = false;
+    }
+    return response.statusCode;
+  }
+  /*
+  var response = await User.updatePwd(oldPwd, newPwd, confirmation);
+  //meter validacao internet
+        if (response == 200) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Sucesso!",
+                  descriptions: "Já alterámos a tua palavra-passe. Inicia sessão de novo, por favor",
+                  text: "OK",
+                );
+              }
+          );
+        } else if (response==401) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "Parece que não tens sessão iniciada.",
+                  text: "OK",
+                );
+              }
+          );
+        } else if (response==400) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                  text: "OK",
+                );
+              }
+          );
+        }else {
+            context.go("/error");
+        }
+      }
+    setState(() {
+      isLoading = false;
+    });
+  }
+   */
+
   static Future<int> delete() async {
     String token = await Authentication.getTokenID();
     const String url = '$magikarp/modify/delete';
 
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
-      return 403;
+      return 401;
     }
 
-    final http.Response response = await http.post(
+    final http.Response response = await http.delete(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',

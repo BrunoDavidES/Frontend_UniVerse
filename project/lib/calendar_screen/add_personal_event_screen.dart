@@ -92,7 +92,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
         );
       }
       else {
-        var response = await CalendarEvent.addEvent(User.getUsername(), title, location, date, hour);
+        var response = await CalendarEvent.add(User.getUsername(), title, location, date, hour);
         if (response == 200) {
           showDialog(context: context,
               builder: (BuildContext context){

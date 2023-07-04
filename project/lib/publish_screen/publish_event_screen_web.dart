@@ -10,6 +10,8 @@ import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -31,6 +33,7 @@ import '../login_screen/login_app.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
+import '../utils/events/event_data.dart';
 import '../utils/users/user_data.dart';
 import 'organized_events_screen.dart';
 
@@ -45,16 +48,14 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
   bool isLoading = false;
   late TextEditingController titleController;
   late TextEditingController capacityController;
-  //late TextEditingController departmentController;
   late TextEditingController locationController;
-  //late TextEditingController timeController;
   late TextEditingController startDateController;
   late TextEditingController endDateController;
   late TextEditingController descriptionController;
-  late String isItPaid;
-  late String isItPublic;
+  String? isItPaid;
+  String? isItPublic;
   Uint8List imageUint8 = Uint8List(8);
-  File? pickedImage;
+  File? thumbnail;
 
   @override
   void initState() {
@@ -72,60 +73,91 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
     super.dispose();
   }
 
-  void submitButtonPressed(String title, String location, String description) async {
-    bool areControllersCompliant = Report.isCompliant(title, location, description);
-    if (!areControllersCompliant) {
-      showDialog(context: context,
-          builder: (BuildContext context){
-            return CustomDialogBox(
-              title: "Ups!",
-              descriptions: "Existem campos vazios. Preenche-os, por favor.",
-              text: "OK",
-            );
-          }
-      );
-      setState(() {
-        isLoading = false;
-      });
-    }
-    //else if(File.isEmpty)
-    else{
-      var response = await Report.send(
-          title, location, description);
-      if (response == 200) {
+  void submitEventButtonPressed(title, startDate, endDate, isPublic, isItPaid, location, capacity, description) async {
+      bool areControllersCompliant = Event.areCompliant(title, startDate, location, capacity, description);
+      if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context) {
               return CustomDialogBox(
-                title: "Obrigado!",
-                descriptions: "Já recebemos a tua submissão.",
+                title: "Ups!",
+                descriptions: "Existem campos obrigatórios vazios. Preenche-os, por favor.",
                 text: "OK",
               );
             }
         );
-      } else if (response == 403) {
+      } else if (thumbnail == null) {
         showDialog(context: context,
             builder: (BuildContext context) {
               return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta.",
-                  text: "OK",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                  }
+                title: "Ups!",
+                descriptions: "Parece que não adicionaste nenhuma thumbnail do evento. Precisamos que o faças",
+                text: "OK",
               );
             }
         );
       } else {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) =>
-                Error500WithBar(i: 3,
-                    title: Image.asset(
-                      "assets/app/login.png", scale: 6,))));
+        showDialog(
+            context: context,
+            builder: (_) =>
+                ConfirmDialogBox(
+                    descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
+                    press: () async {
+                      var response = await Event.post(
+                          title,
+                          startDate,
+                          endDate,
+                          isPublic,
+                          isItPaid,
+                          location,
+                          capacity,
+                          description,
+                          imageUint8);
+                      if (response == 200) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Sucesso!",
+                                descriptions: "Já recebemos a tua submissão. Após validação, constará no feed da UniVerse!",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      } else if (response == 401) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Parece que não tens sessão iniciada.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      } else if (response == 403) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Parece que não tens permissões para esta operação.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      } else if (response == 400) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      } else {
+                        context.go("/error");
+                      }
+                    }
+                ));
       }
-    }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -261,14 +293,41 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                           ),
                           InkWell(
                             onTap: () async {
-                              final ImagePicker picker = ImagePicker();
-                              XFile? image = await picker.pickImage(source: ImageSource.gallery);
-                              if(image!=null) {
-                                var f = await image.readAsBytes();
-                                imageUint8= f;
-                                setState(() {
-                                  pickedImage = File("a");
-                                });
+                              try {
+                                final ImagePicker picker = ImagePicker();
+                                XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (image != null) {
+                                  File img = File(image.path);
+                                  var f = await image.readAsBytes();
+                                  if(f.lengthInBytes > 5000000) {
+                                    print("REACHED!!!!!!!");
+                                    showDialog(context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomDialogBox(
+                                            title: "Ups!",
+                                            descriptions: "A imagem excede o tamanho máximo permitido de 5 MB.",
+                                            text: "OK",
+                                          );
+                                        }
+                                    );
+                                    return;
+                                  }
+                                  imageUint8 = f;
+                                  setState(() {
+                                    thumbnail = img;
+                                  });
+                                }
+                              } on PlatformException catch (e) {
+                                showDialog(context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title: "Ups!",
+                                        descriptions: "Não conseguimos obter a imagem que escolheste. Tenta novamente, por favor.",
+                                        text: "OK",
+                                      );
+                                    }
+                                );
                               }
                             },
                             child:  Container(
@@ -281,7 +340,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left:12),
-                                    child: pickedImage!=null
+                                    child: thumbnail!=null
                                         ?Text(
                                       "Thumbnail adicionada!",
                                       style: TextStyle(
@@ -355,7 +414,15 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                                 text: "SUBMETER",
                                 color: cPrimaryColor,
                                 press: () {
-                                  submitButtonPressed(titleController.text, locationController.text, descriptionController.text);
+                                                submitEventButtonPressed(
+                                                    titleController.text,
+                                                    startDateController.text,
+                                                    endDateController.text,
+                                                    isItPublic,
+                                                    isItPaid,
+                                                    locationController.text,
+                                                    capacityController.text,
+                                                    descriptionController.text,);
                                 },
                                 height: 20),
                           ],

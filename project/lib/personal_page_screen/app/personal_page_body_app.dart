@@ -1,6 +1,6 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
 import 'package:UniVerse/proof_screen/proof_screen.dart';

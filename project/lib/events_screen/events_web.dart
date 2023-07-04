@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'package:UniVerse/login_screen/functions/auth.dart';
-import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
@@ -10,8 +9,7 @@ import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
-import '../utils/events/event_data.dart';
-import '../utils/news/article_data.dart';
+import '../utils/events/event_data_aux.dart';
 
 class EventsWebPage extends StatefulWidget {
   EventsWebPage({Key? key}) : super(key: key);
@@ -24,12 +22,13 @@ class _EventsWebPageState extends State<EventsWebPage> {
   ScrollController yourScrollController = ScrollController();
   late Future<int> fetchDone;
 
-  int loadedArticlesCount = 5;
   int totalArticlesCount = Event.events.length;
+  int loadedArticlesCount = 5;
 
   @override
   void initState() {
     fetchDone = Event.fetchEvents(loadedArticlesCount, 0, {});
+    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 30),
-                        height: 315 * loadedArticlesCount as double,
+                        height: totalArticlesCount > 5? 315 * loadedArticlesCount as double: 315 * totalArticlesCount as double,
                         width: size.width / 1.20,
                         color: cDirtyWhite,
                         child: FutureBuilder(
@@ -100,7 +99,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                   ListView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: loadedArticlesCount,
+                                    itemCount: totalArticlesCount > 5? loadedArticlesCount: totalArticlesCount,
                                     itemBuilder: (BuildContext context, int index) {
                                       final event = events[index];
                                       return Column(
@@ -112,7 +111,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                             ),
                                           ),
                                           Container(
-                                            height: size.height / 3,
+                                            height: 280,
                                             decoration: BoxDecoration(
                                               color: cDirtyWhiteColor,
                                               borderRadius: BorderRadius.circular(15),
@@ -123,7 +122,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                               children: [
                                                 Container(
                                                   width: size.width / 4,
-                                                  height: size.height / 3,
+                                                  height: 260,
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(15.0),
                                                     image: DecorationImage(
@@ -146,7 +145,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                 SizedBox(width: 15),
                                                 Container(
                                                   width: size.width / 1.95,
-                                                  height: size.height / 3,
+                                                  height: 260,
                                                   margin: EdgeInsets.only(top: 5, bottom: 5),
                                                   padding: EdgeInsets.all(10),
                                                   child: Column(
@@ -242,23 +241,6 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                       );
                                     },
                                   ),
-                                  if (loadedArticlesCount < totalArticlesCount)
-                                    SizedBox(
-                                      width: size.width - 300,
-                                      child: DefaultButton(
-                                        text: "Carregar mais",
-                                        press: () {
-                                          setState(() {
-                                            loadedArticlesCount += 5;
-                                            if (loadedArticlesCount >
-                                                totalArticlesCount) {
-                                              loadedArticlesCount = totalArticlesCount;
-                                            }
-                                            fetchDone = Event.fetchEvents(loadedArticlesCount, 0, {});
-                                          });
-                                        },
-                                      ),
-                                    ),
                                 ],
                               );
                             }
@@ -266,11 +248,30 @@ class _EventsWebPageState extends State<EventsWebPage> {
                           },
                         ),
                       ),
-                      SizedBox(
-                        width: size.width - 300,
-                        child: Divider(
-                          thickness: 2,
-                          color: toRandom[cindex],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 0,
+                          bottom: 60.0,
+                        ),
+                      ),
+                      if (loadedArticlesCount < totalArticlesCount)
+                        DefaultButton(
+                          text: "Carregar mais",
+                          press: () {
+                            setState(() {
+                              loadedArticlesCount += 5;
+                              if (loadedArticlesCount >
+                                  totalArticlesCount) {
+                                loadedArticlesCount = totalArticlesCount;
+                              }
+                              fetchDone = Event.fetchEvents(loadedArticlesCount, 0, {});
+                            });
+                          },
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          bottom: 60.0,
                         ),
                       ),
                       BottomAbout(size: size),

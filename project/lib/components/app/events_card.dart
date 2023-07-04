@@ -1,7 +1,7 @@
 
 import 'dart:math';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/events/event_data.dart';
 import 'package:flutter/material.dart';
 import '../../consts/list_consts.dart';

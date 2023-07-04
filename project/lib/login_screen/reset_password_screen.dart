@@ -23,7 +23,7 @@ import '../personal_page_screen/web/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
-import 'functions/auth.dart';
+import '../utils/authentication/auth.dart';
 import 'login_app.dart';
 
 class ResetScreen extends StatefulWidget {

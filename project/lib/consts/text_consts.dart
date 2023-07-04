@@ -1,1 +1,1 @@
-List<String> monthsInText = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "agosto", "setembro", "outubro", "novembro", "dezembro",];
+List<String> monthsInText = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro",];

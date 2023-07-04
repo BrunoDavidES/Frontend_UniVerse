@@ -1,4 +1,4 @@
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 

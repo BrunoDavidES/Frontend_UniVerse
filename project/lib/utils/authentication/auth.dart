@@ -8,17 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:requests/requests.dart';
 
-import '../../utils/users/user_data.dart';
+import '../users/user_data.dart';
 
 class Authentication {
 
   static bool userIsLoggedIn = false;
 
-  static bool isCompliant(String id, String password) {
-    return id.isEmpty || password.isEmpty ? false : true;
+  static bool areCompliant(String email, String password) {
+    return email.isNotEmpty && password.isNotEmpty;
   }
 
-  static Future<int> loginUser(String email, String password) async {
+  static Future<int> login(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -32,7 +32,6 @@ class Authentication {
       else return 401;
       }
     }
-
 
   static Future<int> revoge() async {
     try{

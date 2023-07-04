@@ -10,7 +10,6 @@ import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +27,8 @@ import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import 'package:intl/intl.dart';
+
+import '../utils/users/user_data.dart';
 
 class PersonalEventScreen extends StatefulWidget {
   final CalendarEvent data;
@@ -149,7 +150,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                   ),
                 ),
             SizedBox(height:5),
-            widget.data.isEditable!
+            widget.data.authorUsername==User.getUsername()
             ?Text(
               "Evento Pessoal",
               style: TextStyle(
@@ -175,7 +176,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                       Navigator.pop(context);
                     },
                     height: 20),
-                if(widget.data.isEditable!)
+                if(widget.data.authorUsername==User.getUsername())
                 DefaultButtonSimple(
                     text: "EDITAR",
                     color: cDarkLightBlueColor,

@@ -27,7 +27,7 @@ import '../personal_page_screen/web/personal_page_web.dart';
 import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
-import 'functions/auth.dart';
+import '../utils/authentication/auth.dart';
 import 'login_app.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,9 +40,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  bool isLoading = false;
   late TextEditingController idController;
   late TextEditingController passwordController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -59,13 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    idController.dispose();
-    passwordController.dispose();
-    _connectivity.disposeStream();
     super.dispose();
   }
 
-  void logInButtonPressed(String id, String password) async {
+  void logInButtonPressed(email, password) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -80,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.isCompliant(id.toLowerCase(), password);
+      bool areControllersCompliant = Authentication.areCompliant(email, password);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
@@ -94,13 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           isLoading = false;
         });
-      }
-      else {
-        var response = await Authentication.loginUser(id.toLowerCase(), password);
+      } else {
+        var response = await Authentication.login(email, password);
         if (response == 200) {
           if(kIsWeb) {
             Navigator.pop(context);
-            context.go("/personal/main");
+            context.go("/personal");
           }
           else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {
@@ -117,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if(kIsWeb)
             context.go("/error");
           else
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
         }
       }
     }
@@ -137,108 +133,104 @@ class _LoginScreenState extends State<LoginScreen> {
           titleSpacing: 15,
           elevation: 0,
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
-                    child: Image.asset('assets/images/icon_no_white.png', scale:3),
-                  ),
-                  const Text(
-                    "Entra no Universo!",
-                    style: TextStyle(
-                        fontSize: 25
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  MyTextField(controller: idController, hintText: 'Introduz o teu e-mail institucional', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
-                  MyPasswordField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            if(kIsWeb) {
-                              Navigator.of(context).pop();
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => const AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.all(
-                                            Radius.circular(10.0)
-                                        )
-                                    ),
-                                    content: ResetPageWeb(),
-                                  )
-                              );
-                            }
-                            else
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResetPageApp()));
-                          },
-                          child: Text(
-                            "Esquesceste a palavra-passe?",
-                            style: TextStyle(
-                                color: Colors.black
-                            ),
-                          ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
+                child: Image.asset('assets/images/icon_no_white.png', scale:3),
+              ),
+              const Text(
+                "Entra no Universo!",
+                style: TextStyle(
+                    fontSize: 25
+                ),
+              ),
+              const SizedBox(height: 20),
+              MyTextField(controller: idController, hintText: '', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
+              MyPasswordField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
+              const SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if(kIsWeb) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (_) => const AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(10.0)
+                                    )
+                                ),
+                                content: ResetPageWeb(),
+                              )
+                          );
+                        }
+                        else
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResetPageApp()));
+                      },
+                      child: Text(
+                        "Esquesceste a palavra-passe?",
+                        style: TextStyle(
+                            color: Colors.black
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  isLoading
-                      ? Container(
-                      width: 150,
-                      child: const LinearProgressIndicator(
-                        color: cPrimaryColor,
-                        backgroundColor: cPrimaryOverLightColor,
-                      )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              isLoading
+                  ? Container(
+                  width: 150,
+                  child: const LinearProgressIndicator(
+                    color: cPrimaryColor,
+                    backgroundColor: cPrimaryOverLightColor,
                   )
-                      : Column(
-                    children: [
-                      DefaultButtonSimple(
-                          text: "ENTRAR",
-                          color: cPrimaryColor,
-                          press: () {
-                            logInButtonPressed(idController.text, passwordController.text);
-                            setState(() {
-                              isLoading = true;
-                            });
-                          },
-                          height: 20),
-                      DefaultButtonSimple(
-                          text: "CRIAR CONTA",
-                          color: cHeavyGrey,
-                          press: () {
-                            if(kIsWeb) {
-                              Navigator.of(context).pop();
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => const AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.all(
-                                            Radius.circular(10.0)
-                                        )
-                                    ),
-                                    content: RegisterPageWeb(),
-                                  )
-                              );
-                            }
-                            else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
-                          },
-                          height: 20),
-                    ],
-                  ),
+              )
+                  : Column(
+                children: [
+                  DefaultButtonSimple(
+                      text: "ENTRAR",
+                      color: cPrimaryColor,
+                      press: () {
+                        logInButtonPressed(idController.text, passwordController.text);
+                        setState(() {
+                          isLoading = true;
+                        });
+                      },
+                      height: 20),
+                  DefaultButtonSimple(
+                      text: "CRIAR CONTA",
+                      color: cHeavyGrey,
+                      press: () {
+                        if(kIsWeb) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (_) => const AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(10.0)
+                                    )
+                                ),
+                                content: RegisterPageWeb(),
+                              )
+                          );
+                        }
+                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
+                      },
+                      height: 20),
                 ],
               ),
-            ),
+            ],
           ),
         )
     );

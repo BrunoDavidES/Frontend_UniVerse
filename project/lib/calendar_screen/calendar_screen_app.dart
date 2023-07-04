@@ -5,7 +5,7 @@ import 'package:UniVerse/calendar_screen/personal_event_web.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/consts/text_consts.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:table_calendar/table_calendar.dart';

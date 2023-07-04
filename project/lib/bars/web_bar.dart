@@ -1,6 +1,6 @@
 import 'package:UniVerse/bars/components/popup_item.dart';
 import 'package:UniVerse/components/default_button_simple.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,8 +53,7 @@ class CustomWebBar extends StatelessWidget {
           ),
           const Spacer(),
           if (!isSmallScreen)
-            Expanded(
-              child: Row(
+              Row(
                 children: [
                   _buildNavButton(context, "Início", "/home"),
                   _buildNavButton(context, "Procurar", "/find"),
@@ -63,7 +62,6 @@ class CustomWebBar extends StatelessWidget {
                   _buildNavButton(context, "Ajuda", "/help"),
                 ],
               ),
-            ),
           if (Authentication.userIsLoggedIn)
             const PopUpMenu()
           else if (isSmallScreen)
@@ -141,29 +139,14 @@ class CustomWebBar extends StatelessWidget {
   }
 
   Widget _buildNavButton(BuildContext context, String text, String route) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust the horizontal padding as needed
-        child: Container(
-          height: 40,
-          child: TextButton(
-            onPressed: () => context.go(route),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-              maxLines: 1,
-            ),
-            style: ButtonStyle(
-              overlayColor: MaterialStateColor.resolveWith(
-                    (states) => cPrimaryLightColor.withOpacity(0.15),
-              ),
-            ),
-          ),
+    return SizedBox(
+      height: 40,// Adjust the width value to control the button width
+      child: DefaultButtonSimple(
+        press: () => context.go(route),
+        text: text,
+        height: 20,
+        color: cPrimaryColor,
         ),
-      ),
-    );
+      );
   }
 }

@@ -2,8 +2,9 @@
 import 'dart:math';
 
 import 'package:UniVerse/Components/default_button.dart';
+import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
 
   @override
   void initState() {
+    CalendarEvent.fetchEvents(07, 2023);
     Random random = Random();
     int cindex = random.nextInt(toRandom2.length);
     color = toRandom2[cindex];
@@ -53,56 +55,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
     print(size.height);
     return Row(
           children: [
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left:20, top:20, bottom: 5),
-          child: Text(
-              "MENU DE OPÇÕES",
-          style:TextStyle(
-            color: cHeavyGrey,
-            fontWeight: FontWeight.bold
-          ),),
-        ),
-        Container(
-        decoration: BoxDecoration(
-        color: cDirtyWhiteColor,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow:[ BoxShadow(
-              color: Colors.grey.withOpacity(0.7),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: const Offset(0,0),
-            ),
-            ]
-        ),
-        alignment: Alignment.bottomCenter,
-        width: size.width/9,
-        height: size.height/1.75,
-        margin: EdgeInsets.only(left:20, right:20, bottom: 20),
-        child: ListView(
-        children:  [
-        Column(
-        children: <Widget>[
-        WebMenuCard(text: 'Logout', icon: Icons.logout_outlined),
-        WebMenuCard(text: 'O Meu Perfil', icon: Icons.person_outline),
-        WebMenuCard(text: 'QR Scan', icon: Icons.qr_code_scanner_outlined),
-        WebMenuCard(text: 'Comprovativo',icon: Icons.card_membership_outlined),
-        WebMenuCard(text: 'Reportar',icon: Icons.report_outlined),
-        WebMenuCard(text: 'Fóruns',icon: Icons.message_outlined),
-        WebMenuCard(text: 'Calendário',icon: Icons.account_circle_outlined),
-        WebMenuCard(text: 'Feedback',icon: Icons.account_circle_outlined),
-        WebMenuCard(text: 'Inquéritos',icon: Icons.account_circle_outlined),
-        WebMenuCard(text: 'Estatísticas',icon: Icons.account_circle_outlined),
-        WebMenuCard(text: 'Upload',icon: Icons.account_circle_outlined),
-        ],
-        ),
-        ],
-        ),
-        ),
-      ],
-    ),
+            WebMenu(width: size.width/9, height: size.height/1.75,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -252,12 +205,12 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                               ),
                             ),
                           ),
-                          Container(
+                          /*Container(
                             width: size.width/2,
                             child: Column(
                               children: CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element, color: color)).toList(),
                             ),
-                          )
+                          )*/
                         ],
                       ),
                   ],
@@ -265,8 +218,8 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
               ],
             ),
           ],
-                ),
-                ]
+                )
+    ]
     );
   }
 }
