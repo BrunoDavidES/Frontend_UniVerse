@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -20,7 +21,7 @@ import '../login_screen/login_app.dart';
 import '../login_screen/login_web.dart';
 import '../personal_page_screen/app/personal_page_app.dart';
 import '../utils/connectivity.dart';
-import 'functions/reg.dart';
+import '../utils/authentication/reg.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -32,12 +33,12 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  bool isLoading = false;
   late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController passwordController;
   late TextEditingController passwordConfirmationController;
   late TextEditingController emailController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -57,14 +58,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    passwordConfirmationController.dispose();
-    _connectivity.disposeStream();
     super.dispose();
   }
 
-  void registerButtonPressed(String id, String name, String email, String password, String confirmation) async {
+  void registerButtonPressed(name, email, password, confirmation) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -76,8 +73,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }
       );
     } else {
-      bool areControllersCompliant = Registration.isCompliant(email, name, password, confirmation);
-      if (!areControllersCompliant) {
+      bool areCompliant = Registration.areCompliant(email, name, password, confirmation);
+      if (!areCompliant) {
+        setState(() {
+          isLoading = false;
+        });
         showDialog(context: context,
             builder: (BuildContext context){
               return CustomDialogBox(
@@ -87,30 +87,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               );
             }
         );
-        setState(() {
-          isLoading = false;
-        });
-      }
-      else {
-        areControllersCompliant =
-            Registration.areCompliant(password, confirmation);
-        if (!areControllersCompliant) {
+      }  else {
+        areCompliant = Registration.match(password, confirmation);
+        if (!areCompliant) {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "A confirmação da palavra-passe está errada",
+                  descriptions: "A confirmação da palavra-passe que introduziste está errada.",
                   text: "OK",
                 );
               }
           );
-          setState(() {
-            isLoading = false;
-          });
         } else {
-          var response = await Registration.registUser(
-              password, confirmation, name, email);
-          print(response);
+          var response = await Registration.regist(password, confirmation, name, email);
           if (response == 200) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -121,23 +111,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     press: () {
                       if(kIsWeb) {
                         Navigator.pop(context);
-                        context.go("/personal/main");
+                        context.go("/personal");
                       }else
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AppPersonalPage()));
                     },
                   );
                 }
             );
-          } else if (response == 400) {
-            showDialog(context: context,
-                builder: (BuildContext context) {
-                  return CustomDialogBox(
-                    title: "Ups!",
-                    descriptions: "O email indicado já foi registado.",
-                    text: "OK",
-                  );
-                }
-            );
+            setState(() {
+              isLoading = false;
+            });
           } else if (response == 00) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -153,25 +136,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 builder: (BuildContext context) {
                   return CustomDialogBox(
                     title: "Ups!",
-                    descriptions: "A palavra-passe não está de acordo com as restrições estabelecidas.",
+                    descriptions: "A palavra-passe não segue as restrições estabelecidas.",
+                    text: "OK",
+                  );
+                }
+            );
+          } else if (response == 400) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "Ocorreu um erro inesperado. Tenta novamente, por favor.",
+                    text: "OK",
+                  );
+                }
+            );
+          }
+          else if (response == 401) {
+            showDialog(context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "Parece que este e-mail já foi registado.",
                     text: "OK",
                   );
                 }
             );
           }
           else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) =>
-                    Error500WithBar(i: 3,
-                        title: Image.asset(
-                          "assets/app/registo.png", scale: 6,))));
+            if(kIsWeb)
+              context.go("/error");
+            else
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
           }
         }
       }
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -185,90 +185,93 @@ class _RegisterScreenState extends State<RegisterScreen> {
           titleSpacing: 15,
           elevation: 0,
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top:20, left:20, right: 20, bottom:10),
-                    child: Image.asset('assets/images/icon_no_white.png', scale:3),
-                  ),
-                  const Text(
-                    "Junta-te ao Universo!",
-                    style: TextStyle(
-                        fontSize: 25
-                    ),
-                  ),
-                  const Text(
-                      "Preenche os campos com as tuas informações!",
-                      style:TextStyle(
-                          fontSize: 15
-                      )),
-                  const SizedBox(height: 20),
-                  MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined, ),
-                  MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
-                  MyPasswordField(controller: passwordController, hintText: 'No mínimo: 6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
-                  MyPasswordField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            if(kIsWeb) {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => const AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.all(
-                                            Radius.circular(10.0)
-                                        )
-                                    ),
-                                    content: LoginPageWeb(),
-                                  )
-                              );
-                            }
-                            else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                          },
-                          child: Text(
-                            "Já tenho uma conta",
-                            style: TextStyle(
-                                color: Colors.black
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  isLoading
-                      ? const SizedBox(
-                      width: 150,
-                      child: LinearProgressIndicator(
-                        color: cPrimaryColor,
-                        backgroundColor: cPrimaryOverLightColor,
-                      )
-                  )
-                      :DefaultButtonSimple(
-                      text: "REGISTAR",
-                      color: cPrimaryColor,
-                      press: () {
-                        registerButtonPressed(idController.text, nameController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
-                        setState(() {
-                          isLoading = true;
-                        });
-                      },
-                      height: 20),
-                  if(!kIsWeb)
-                    SizedBox(height:70)
-                ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top:10, left:20, right: 20, bottom:10),
+                child: Image.asset('assets/images/icon_no_white.png', scale:3),
               ),
-            ),
+              const Text(
+                "Junta-te ao Universo!",
+                style: TextStyle(
+                    fontSize: 25
+                ),
+              ),
+              const Text(
+                  "Preenche os campos com as tuas informações!",
+                  style:TextStyle(
+                      fontSize: 15
+                  )),
+              Text(
+                  "Todos os campos são obrigatórios.",
+                  style:TextStyle(
+                      fontSize: 13,
+                    color: Colors.redAccent
+                  )),
+              const SizedBox(height: 20),
+              MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined, ),
+              MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
+              MyPasswordField(controller: passwordController, hintText: '6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
+              MyPasswordField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        if(kIsWeb) {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const Dialog(
+                                backgroundColor: cDirtyWhiteColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(10.0)
+                                    )
+                                ),
+                                child: LoginPageWeb(),
+                              )
+                          );
+                        }
+                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                      },
+                      child: Text(
+                        "Já tenho uma conta",
+                        style: TextStyle(
+                            color: Colors.black
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
+              isLoading
+                  ? const SizedBox(
+                  width: 150,
+                  child: LinearProgressIndicator(
+                    color: cPrimaryColor,
+                    backgroundColor: cPrimaryOverLightColor,
+                  )
+              )
+                  :DefaultButtonSimple(
+                  text: "REGISTAR",
+                  color: cPrimaryColor,
+                  press: () {
+                    registerButtonPressed(nameController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
+                    setState(() {
+                      isLoading = true;
+                    });
+                  },
+                  height: 20),
+              if(!kIsWeb)
+                SizedBox(height:70)
+            ],
           ),
         )
     );

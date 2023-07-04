@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
@@ -40,6 +41,8 @@ class _ReportScreenState extends State<ReportScreenApp> {
   late TextEditingController titleController;
   late TextEditingController locationController;
   late TextEditingController descriptionController;
+  File? pickedImage;
+  Uint8List imageUint8 = Uint8List(8);
 
   @override
   void initState() {
@@ -78,7 +81,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Report.isCompliant(title, location, description);
+      bool areControllersCompliant = Report.areCompliant(title, location, description);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
@@ -96,7 +99,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
       //else if(File.isEmpty)
       else{
         var response = await Report.send(
-            title, location, description);
+            title, location, description, imageUint8);
         if (response == 200) {
           showDialog(context: context,
               builder: (BuildContext context) {

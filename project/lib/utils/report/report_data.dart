@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:UniVerse/consts/api_consts.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/users/users_local_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,17 +11,17 @@ import 'package:http/http.dart' as http;
 import '../../utils/users/user_data.dart';
 
 class Report {
-  static bool isCompliant(String title, String location, String description) {
-    return title.isEmpty || location.isEmpty || description.isEmpty ? false : true;
+
+  static bool areCompliant(title, location, description) {
+    return title.isNotEmpty && location.isNotEmpty && description.isNotEmpty;
   }
 
-  /*static bool fileExists(File image) {
-
-  }*/
-
-  static Future<int> send(String title, String location, String description) async {
+  static Future<int> send(title, location, description, Uint8List image) async {
     String token = await Authentication.getTokenID();
-    if (token != "") {
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
       final http.Response response = await http.post(
         Uri.parse(reportUrl),
         headers: {
@@ -33,14 +34,16 @@ class Report {
         }),
       );
       if (response.statusCode == 200) {
-        //final String id = response.body;
+        String id = response.body;
+        final ref = FirebaseStorage.instance.ref().child("Reports/$id");
+        ref.putData(image, SettableMetadata(contentType: 'image/jpeg'));
+        //ref.putData(Uint8List.fromList(utf8.encode(description)), SettableMetadata(contentEncoding: 'text/plain;charset=UTF-8'));
         return 200;
       } else if (response.statusCode == 401) {
         Authentication.userIsLoggedIn = false;
         Authentication.revoge();
       }
       return response.statusCode;
-    } else return 401;
   }
     /*final response = await http.post(
       Uri.parse(baseUrl + reportUrl),

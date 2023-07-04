@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../consts/color_consts.dart';
-import '../../login_screen/functions/auth.dart';
+import '../../utils/authentication/auth.dart';
 import '../../utils/users/user_data.dart';
 
 class PopUpMenu extends StatelessWidget {
@@ -18,7 +18,7 @@ class PopUpMenu extends StatelessWidget {
         elevation: 10,
         onSelected: (value) async {
           if(value=="area") {
-            context.go('/personal/main');
+            context.go('/personal');
           } else {
             var response = await Authentication.revoge();
             if(response==200)

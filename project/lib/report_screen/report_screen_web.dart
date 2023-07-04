@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
@@ -10,6 +11,8 @@ import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -53,11 +56,17 @@ class _ReportScreenState extends State<ReportScreenWeb> {
     super.initState();
   }
 
-  void submitButtonPressed(String title, String location, String description) async {
-    bool areControllersCompliant = Report.isCompliant(title, location, description);
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void submitButtonPressed(title, location, description) async {
+    bool areControllersCompliant = Report.areCompliant(
+        title, location, description);
     if (!areControllersCompliant) {
       showDialog(context: context,
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return CustomDialogBox(
               title: "Ups!",
               descriptions: "Existem campos vazios. Preenche-os, por favor.",
@@ -65,125 +74,196 @@ class _ReportScreenState extends State<ReportScreenWeb> {
             );
           }
       );
-      setState(() {
-        isLoading = false;
-      });
     }
-    //else if(File.isEmpty)
-    else{
-      var response = await Report.send(
-          title, location, description);
-      if (response == 200) {
-        showDialog(context: context,
-            builder: (BuildContext context) {
-              return CustomDialogBox(
-                title: "Obrigado!",
-                descriptions: "Já recebemos a tua submissão.",
-                text: "OK",
-              );
-            }
-        );
-      } else if (response == 403) {
-        showDialog(context: context,
-            builder: (BuildContext context) {
-              return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta.",
-                  text: "OK",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+    else if (pickedImage == null) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "Parece que não adicionaste nenhuma fotgrafia do problema. Precisamos que o faças",
+              text: "OK",
+            );
+          }
+      );
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) =>
+              ConfirmDialogBox(
+                  descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
+                  press: () async {
+                    Navigator.pop(context);
+                    var response = await Report.send(
+                        title, location, description, imageUint8);
+                    if (response == 200) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Obrigado!",
+                              descriptions: "Já recebemos a tua submissão.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 401) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Parece que não tens sessão iniciada.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 403) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Parece que não tens permissões para esta operação.",
+                                text: "OK",
+                                press: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (
+                                          context) => const LoginPageApp()));
+                                }
+                            );
+                          }
+                      );
+                    } else
+                      context.go('/error');
                   }
-              );
-            }
-        );
-      } else {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) =>
-                Error500WithBar(i: 3,
-                    title: Image.asset(
-                      "assets/app/login.png", scale: 6,))));
-      }
+              ));
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    Uint8List imageUint8 = Uint8List(8);
-    File? pickedImage;
-    return Row(
-        children: [
-          WebMenu(width: size.width/9, height: size.height/1.15,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Image.asset("assets/app/report.png", scale: 4.5,)
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:30, top:15, bottom: 15),
-                  child: const Text(
-                    "Encontraste um problema no campus? Preenche os campos abaixo para que possamos conhecer a situação e agir o mais rapidamente possível.",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 15
+    @override
+    Widget build(BuildContext context) {
+      Size size = MediaQuery
+          .of(context)
+          .size;
+      return Row(
+          children: [
+            WebMenu(width: size.width / 9, height: size.height / 1.15,),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30, top: 20, bottom: 20),
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset("assets/titles/report.png", scale: 4.5,)
                     ),
                   ),
-                ),
-               Container(
-                 alignment: Alignment.center,
-                      height: size.height/1.25,
-                      width: size.width/2,
-                      padding: const EdgeInsets.only(left: 20, right:20, top: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30, top: 15, bottom: 15),
+                    child: const Text(
+                      "Encontraste um problema no campus? Preenche os campos abaixo para que possamos conhecer a situação e agir o mais rapidamente possível.",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 15
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 30, top: 15, bottom: 15),
+                    child: const Text(
+                      "Todos os campos são obrigatórios",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.redAccent
+                      ),
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      height: size.height / 1.25,
+                      width: size.width / 2,
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 10),
                       margin: EdgeInsets.only(left: 250, right: 100),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          MyTextField(controller: titleController, hintText: 'Introduz um título', obscureText: false, label: 'Título', icon: Icons.title,),
-                          MyTextField(controller: locationController, hintText: 'Onde ecnontraste o problema?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
+                          MyTextField(controller: titleController,
+                            hintText: 'Introduz um título',
+                            obscureText: false,
+                            label: 'Título',
+                            icon: Icons.title,),
+                          MyTextField(controller: locationController,
+                            hintText: 'Onde econtraste o problema?',
+                            obscureText: false,
+                            label: 'Localização',
+                            icon: Icons.location_on_outlined,),
                           DescriptionField(controller: descriptionController),
                           InkWell(
                             onTap: () async {
-                              final ImagePicker picker = ImagePicker();
-                              XFile? image = await picker.pickImage(source: ImageSource.gallery);
-                              if(image!=null) {
-                                var f = await image.readAsBytes();
-                                imageUint8= f;
-                                setState(() {
-                                  pickedImage = File("a");
-                                });
+                              try {
+                                final ImagePicker picker = ImagePicker();
+                                XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (image != null) {
+                                  File img = File(image.path);
+                                  var f = await image.readAsBytes();
+                                  if(f.lengthInBytes > 5000000) {
+                                    print("REACHED!!!!!!!");
+                                    showDialog(context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomDialogBox(
+                                            title: "Ups!",
+                                            descriptions: "A imagem excede o tamanho máximo permitido de 5 MB.",
+                                            text: "OK",
+                                          );
+                                        }
+                                    );
+                                    return;
+                                  }
+                                  imageUint8 = f;
+                                  setState(() {
+                                    pickedImage = img;
+                                  });
+                                }
+                              } on PlatformException catch (e) {
+                                showDialog(context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title: "Ups!",
+                                        descriptions: "Não conseguimos obter a imagem que escolheste. Tenta novamente, por favor.",
+                                        text: "OK",
+                                      );
+                                    }
+                                );
                               }
                             },
-
-
                             child: Container(
                               padding: const EdgeInsets.only(left: 25, top: 10),
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left:5),
-                                    child: Icon(Icons.camera_alt_outlined, color: cDarkBlueColor),
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Icon(Icons.camera_alt_outlined,
+                                        color: cDarkBlueColor),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left:12),
-                                    child: pickedImage!=null
-                                        ?Container(
-                                      height: size.width/8,
-                                      width: size.width/4,
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: pickedImage != null
+                                        ? Container(
+                                      height: size.width / 8,
+                                      width: size.width / 4,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15)
+                                          borderRadius: BorderRadius.circular(
+                                              15)
                                       ),
-                                      child: Image.memory(imageUint8, fit: BoxFit.scaleDown, scale: 5),
+                                      child: Image.memory(
+                                          imageUint8, fit: BoxFit.scaleDown,
+                                          scale: 5),
                                     )
                                         : Text(
-                                      "Adciona uma foto do problema aqui",
+                                      "Adciona uma foto do problema aqui (max 5 MB)",
                                       style: TextStyle(
                                           color: cDarkBlueColor
                                       ),
@@ -209,7 +289,9 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                                   text: "SUBMETER",
                                   color: cPrimaryColor,
                                   press: () {
-                                    submitButtonPressed(titleController.text, locationController.text, descriptionController.text);
+                                    submitButtonPressed(titleController.text,
+                                        locationController.text,
+                                        descriptionController.text);
                                   },
                                   height: 20),
                             ],
@@ -217,13 +299,10 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                         ],
                       )
                   ),
-                //MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
-              ]
-          ),
+                  //MyTextField(controller: locationController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icon(Icons.lock_outline),),
+                ]
+            ),
 
-        ]
-    );
-
-
-  }
-}
+          ]
+      );
+    }  }

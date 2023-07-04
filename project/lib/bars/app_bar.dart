@@ -3,7 +3,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/feed_screen/feed_page_app.dart';
 import 'package:UniVerse/find_screen/find_page_app.dart';
-import 'package:UniVerse/login_screen/functions/auth.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/login_screen/login_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';

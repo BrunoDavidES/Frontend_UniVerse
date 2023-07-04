@@ -31,93 +31,7 @@ class WebHomePage extends StatelessWidget {
           controller: yourScrollController,
           child: Column(
               children: <Widget>[
-                Container(                    //Zona principal
-                  height: size.height-75,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/welcome_photo.jpg"),
-                        colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
-                        fit: BoxFit.cover
-                    ),
-                    color: cDirtyWhite,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CustomWebBar(),
-                      const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Finalmente, tão perto!".toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 80,
-                            color: cDirtyWhiteColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "E aqui que encontras o que precisas a qualquer altura\nBem vindo!!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: cDirtyWhite,
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: InkWell(
-                            onTap: () {
-                              yourScrollController.animateTo(650,
-                                  duration: Duration(seconds: 1), curve: Curves.easeIn);
-                            },
-                            child: FittedBox(
-                              child: Container (
-                                margin: const EdgeInsets.symmetric(vertical: 20),
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: cDarkBlueColorTransparent,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      " ver mais".toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: cDirtyWhite,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                      /*Row(
-                        children: [
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Image.asset("assets/web/logoNovaBranco.png", scale:9.5),
-                          ),
-                        ],
-                      ),*/
-                    ],
-                  ),
-                ),
+                WelcomeArea(size: size, yourScrollController: yourScrollController),
                 Container(                //Zona das noticias
                   height: 700,
                   width: size.width,
@@ -249,6 +163,97 @@ class WebHomePage extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+}
+
+class WelcomeArea extends StatelessWidget {
+  const WelcomeArea({
+    super.key,
+    required this.size,
+    required this.yourScrollController,
+  });
+
+  final Size size;
+  final ScrollController yourScrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(                    //Zona principal
+      height: size.height-75,
+      width: size.width,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/images/welcome_photo.jpg"),
+            colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
+            fit: BoxFit.cover
+        ),
+        color: cDirtyWhite,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          CustomWebBar(),
+          const Spacer(),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Todo o universo, num só lugar!".toUpperCase(),
+              style: const TextStyle(
+                fontSize: 70,
+                color: cDirtyWhite,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "Com a UniVerse, o dia-a-dia no campus nunca foi tão fácil!\nSê bem-vindo!",
+              style: TextStyle(
+                fontSize: 20,
+                color: cDirtyWhite,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: InkWell(
+                onTap: () {
+                  yourScrollController.animateTo(650,
+                      duration: Duration(seconds: 1), curve: Curves.easeIn);
+                },
+                child: FittedBox(
+                  child: Container (
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: cDarkBlueColorTransparent,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          " ver mais".toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: cDirtyWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+          SizedBox(height: 150,)
+        ],
+      ),
     );
   }
 }

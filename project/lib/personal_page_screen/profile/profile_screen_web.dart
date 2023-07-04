@@ -11,7 +11,7 @@ import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import '../../login_screen/functions/auth.dart';
+import '../../utils/authentication/auth.dart';
 
 class ProfileScreenWeb extends StatefulWidget {
   const ProfileScreenWeb({super.key});

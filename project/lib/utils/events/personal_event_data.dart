@@ -4,23 +4,23 @@ import 'dart:convert';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/users/user_data.dart';
 
-import '../../login_screen/functions/auth.dart';
+import '../authentication/auth.dart';
 import 'package:http/http.dart' as http;
 
 class CalendarEvent {
 
   static Map<String, List<CalendarEvent>> events = {};
-  //verificado com o username
-  final bool? isEditable;
-  final String? id;
-  final String? title;
+
+  String? authorUsername;
+  String? id;
+  String? title;
   //final String? planner;
-  final String? location;
-  final String? hour;
-  final String? date;
+  String? location;
+  String? hour;
+  String? date;
 
   CalendarEvent(
-      this.isEditable,
+      this.authorUsername,
       this.id,
       this.title,
       this.location,
@@ -28,17 +28,54 @@ class CalendarEvent {
       this.date
       );
 
-  static bool areCompliant(String title, String location, String date, String hour) {
+   CalendarEvent.fromJson(Map<String, dynamic> json) {
+    var properties = json['properties'];
+    id = properties['id']['value'];
+    title = properties['title']['value'];
+    authorUsername = properties['username']['value'];
+    location = properties['location']['value'];
+    hour = properties['hour']['value'];
+    date = properties['beginning']['value'];
+  }
+
+  static Future<int> fetchEvents(month, year) async {
+    String eventsUrl = '$magikarp/profile/personalEvent/monthly/$month-$year';
+    String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
+    var response;
+    response = await http.get(
+      Uri.parse(eventsUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
+    if(response.statusCode==200) {
+      var decodedEvents = json.decode(response.body);
+      print(decodedEvents);
+      for (var decoded in decodedEvents) {
+        var event = CalendarEvent.fromJson(decoded);
+        events[event.date]?.add(event);
+      }
+    }
+    return response.statusCode;
+    //return 200;
+  }
+
+  static bool areCompliant(title, location, date, hour) {
     return title.isNotEmpty && location.isNotEmpty && date.isNotEmpty && hour.isNotEmpty;
   }
 
-  static Future<int> addEvent(String username, String title, String location, String date, String hour) async {
+  static Future<int> add(username, title, location, date, hour) async {
     String apiUrl = '$magikarp/profile/personalEvent/add';
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
-      return 403;
+      return 401;
     }
 
     final http.Response response = await http.post(
@@ -58,21 +95,23 @@ class CalendarEvent {
 
       if (response.statusCode == 200) {
         if(events[date]!=null) {
-          events[date]!.add(CalendarEvent(username==User.getUsername(),response.body, title, location, hour, date));
+          events[date]!.add(CalendarEvent(username,response.body, title, location, hour, date));
         } else {
-          events[date]=[CalendarEvent(username==User.getUsername(), response.body, title, location, hour, date)];
+          events[date]=[CalendarEvent(username, response.body, title, location, hour, date)];
         }
       }
       return response.statusCode;
   }
 
-  static Future<int> editPersonalEvent(String id, String title, String location, String date, String hour) async {
+  static Future<int> edit(id, title, location, date, hour) async {
     final String apiUrl = '$magikarp/profile/personalEvent/edit/$id';
+
+    String username = User.getUsername();
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
-      return 403;
+      return 401;
     }
 
     final http.Response response = await http.post(
@@ -91,46 +130,33 @@ class CalendarEvent {
     );
 
       if (response.statusCode == 200) {
-        //events[date]!.remove(CalendarEvent(true,id, title, location, hour, date));
-       // events[date]!.add(CalendarEvent(true),response.body, title, location, hour, date))
+        events[date]!.remove(CalendarEvent(username, id, title, location, hour, date));
+        events[date]!.add(CalendarEvent(username,id, title, location, hour, date));
       }
       return response.statusCode;
   }
 
-  /*Future<void> deletePersonalEvent(String token, String id, String oldTitle) async {
-    final String apiUrl = '$profileUrl/personalEvent/edit/$oldTitle';
+  Future<int> delete(String id) async {
+    final String apiUrl = '$magikarp/profile/personalEvent/delete/$id';
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
+    String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
 
-    try {
-      final http.Response response = await http.patch(
+      final http.Response response = await http.delete(
         Uri.parse(apiUrl),
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
       );
 
       if (response.statusCode == 200) {
-        final String id = response.body;
-        print('Delete personal event successful with ID: $id');
-      } else {
-        print('Delete personal event failed with status code: ${response.statusCode}');
+        events[date]!.remove(CalendarEvent(authorUsername ,id, title, location, hour, date));
       }
-    } catch (e) {
-      print('Error occurred while deleting personal event : $e');
-    }
-  }*/
-
-
-  /*CalendarEvent.fromJson(Map<String, dynamic> json ) {
-    var properties = json['properties'];
-    isEditable = properties['id']['value'];
-    title = properties['title']['value'];
-    planner = properties['authorName']['value'];
-    location = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    hour = images[Random().nextInt(images.length)];
-    date =
-  }*/
+      return response.statusCode;
+  }
 
 }
