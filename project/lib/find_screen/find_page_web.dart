@@ -38,7 +38,7 @@ class _FindWebPageState extends State<FindWebPage> {
                 Padding(
                   padding: EdgeInsets.only(top: size.height/7),
                   child: Container(
-                    height:size.height + 228,
+                    height:size.height+270,
                     color: cDirtyWhite,
                     child: Column(
                       children: [

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../authentication/auth.dart';
 
-class User {
+class UniverseUser {
 
   static String getUsername() {
     var user = FirebaseAuth.instance.currentUser;
@@ -214,7 +214,7 @@ class User {
         'Authorization': token,
       },
       body: json.encode({
-        'target': User.getUsername(),
+        'target': UniverseUser.getUsername(),
       }),
     );
 

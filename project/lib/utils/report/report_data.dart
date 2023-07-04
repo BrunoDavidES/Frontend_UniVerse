@@ -7,10 +7,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 import '../../utils/users/user_data.dart';
 
 class Report {
+
+  static String? imagePath;
 
   static bool areCompliant(title, location, description) {
     return title.isNotEmpty && location.isNotEmpty && description.isNotEmpty;
@@ -35,9 +38,10 @@ class Report {
       );
       if (response.statusCode == 200) {
         String id = response.body;
-        final ref = FirebaseStorage.instance.ref().child("Reports/$id");
+        var ref = FirebaseStorage.instance.ref().child("Reports/$id");
         ref.putData(image, SettableMetadata(contentType: 'image/jpeg'));
-        //ref.putData(Uint8List.fromList(utf8.encode(description)), SettableMetadata(contentEncoding: 'text/plain;charset=UTF-8'));
+        ref = FirebaseStorage.instance.ref().child("Reports/$id.txt");
+        ref.putString(description, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
         return 200;
       } else if (response.statusCode == 401) {
         Authentication.userIsLoggedIn = false;

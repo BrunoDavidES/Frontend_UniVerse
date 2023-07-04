@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 class ListButtonSimple extends StatelessWidget {
   final String text;
   final Function press;
@@ -13,14 +14,14 @@ class ListButtonSimple extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: kIsWeb ? CrossAxisAlignment.center :CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: TextButton(
             style: TextButton.styleFrom(
                 foregroundColor: cPrimaryLightColor,
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
             ),
             onPressed: (){
               press();

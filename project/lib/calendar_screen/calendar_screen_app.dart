@@ -192,7 +192,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
-              ...CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element, color: color)),
+              //...CalendarEvent.events[focusedDay]!.map((element) => element.map((value) => CalendarEventCard(value., color: color)),
               SizedBox(height: 70,)
             ],
           ),

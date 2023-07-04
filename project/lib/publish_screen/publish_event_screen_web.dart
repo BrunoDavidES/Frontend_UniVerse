@@ -163,7 +163,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String job = User.getJob();
+    String job = UniverseUser.getJob();
     return Row(
         children: [
           WebMenu(width: size.width/9, height: size.height/1.25,),

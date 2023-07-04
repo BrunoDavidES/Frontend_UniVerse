@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import '../components/confirm_dialog_box.dart';
+import '../login_screen/login_app.dart';
 import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/login_screen/reset_password_app.dart';
@@ -150,7 +152,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                   ),
                 ),
             SizedBox(height:5),
-            widget.data.authorUsername==User.getUsername()
+            widget.data.authorUsername==UniverseUser.getUsername()
             ?Text(
               "Evento Pessoal",
               style: TextStyle(
@@ -159,7 +161,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
               ),
             )
             :Text(
-              "Organizado por ${widget.data.location!}",
+              "Organizado por ${widget.data.department!}",
               style: TextStyle(
                 color: cHeavyGrey,
                 fontSize: 12,
@@ -176,7 +178,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                       Navigator.pop(context);
                     },
                     height: 20),
-                if(widget.data.authorUsername==User.getUsername())
+                if(widget.data.authorUsername==UniverseUser.getUsername())
                 DefaultButtonSimple(
                     text: "EDITAR",
                     color: cDarkLightBlueColor,
@@ -188,7 +190,24 @@ class _EventScreenState extends State<PersonalEventScreen> {
                     text: "EXCLUIR",
                     color: cDarkLightBlueColor,
                     press: () {
-                      //Função de eliminar
+                      showDialog(
+                          context: context,
+                          builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar este evento?", press: () {
+                            final response = UniverseUser.delete();
+                            if(response == 200)
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
+                            else showDialog(
+                                context: context,
+                                builder: (_) => CustomDialogBox(
+                                    title: "Ups!",
+                                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
+                                    text: "OK",
+                                    press: () {
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                                    }
+                                )
+                            );
+                          },));
                     },
                     height: 20),
               ],

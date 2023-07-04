@@ -6,6 +6,7 @@ import 'package:UniVerse/find_screen/services_screen/testing.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +38,8 @@ Future main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  if(FirebaseAuth.instance.currentUser!=null)
+    Authentication.userIsLoggedIn=true;
   runApp(const MyApp());
 }
 

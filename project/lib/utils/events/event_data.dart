@@ -70,7 +70,7 @@ class Event {
     var response;
     if(numEvents == 0) {
       response = await http.post(
-        Uri.parse(baseUrl + eventsUrl),
+        Uri.parse(magikarp + eventsUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -83,7 +83,7 @@ class Event {
     }
     eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     response = await http.post(
-      Uri.parse(baseUrl + eventsUrl),
+      Uri.parse(magikarp + eventsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

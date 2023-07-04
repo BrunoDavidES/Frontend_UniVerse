@@ -63,6 +63,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void registerButtonPressed(name, email, password, confirmation) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+      setState(() {
+        isLoading = false;
+      });
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
@@ -171,6 +174,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }
         }
       }
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -226,15 +232,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if(kIsWeb) {
                           showDialog(
                               context: context,
-                              builder: (_) => const Dialog(
-                                backgroundColor: cDirtyWhiteColor,
+                              builder: (_) => const AlertDialog(
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.all(
                                         Radius.circular(10.0)
                                     )
                                 ),
-                                child: LoginPageWeb(),
+                                content: LoginPageWeb(),
                               )
                           );
                         }

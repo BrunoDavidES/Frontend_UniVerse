@@ -36,7 +36,7 @@ class LocalDB {
 
   // TODO: Draft function. You should adapt after extending the user table
   // with its last position
-  Future<void> addUser(final User u) async {
+  Future<void> addUser(final UniverseUser u) async {
 
     // The `conflictAlgorithm` is used to select the strategy to be used in case
     // the user already exists. In this case, replace any previous data.

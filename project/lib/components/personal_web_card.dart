@@ -14,12 +14,12 @@ class PersonalWebCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String name =  User.getName();
-    String role = User.getRole();
-    String job = User.getJob();
+    String name =  UniverseUser.getName();
+    String role = UniverseUser.getRole();
+    String job = UniverseUser.getJob();
     Color color;
-    if(User.isVerified()) {
-      if (User.isActive())
+    if(UniverseUser.isVerified()) {
+      if (UniverseUser.isActive())
         color = Colors.green;
       else color = Colors.orange;
     } else color = Colors.red;
@@ -62,7 +62,7 @@ class PersonalWebCard extends StatelessWidget {
                 ),
               ),
             ),
-      User.isVerified()
+      UniverseUser.isVerified()
           ?Padding(
               padding: const EdgeInsets.only(left: 18, bottom:5),
               child: Text(
@@ -78,7 +78,7 @@ class PersonalWebCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 18),
               child: Text(
-                User.isVerified()
+                UniverseUser.isVerified()
                     ? job
                     : "CONTA NÃO VERIFICADA",
                 textAlign: TextAlign.start,

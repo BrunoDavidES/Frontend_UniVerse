@@ -159,7 +159,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
 
   @override
   Widget build(BuildContext context) {
-    String job = User.getJob();
+    String job = UniverseUser.getJob();
     Uint8List imageUint8 = Uint8List(8);
     File? pickedImage;
     return Scaffold(

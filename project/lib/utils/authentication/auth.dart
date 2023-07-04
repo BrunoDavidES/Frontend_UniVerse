@@ -24,6 +24,8 @@ class Authentication {
         email: email,
         password: password,
       );
+      if(!kIsWeb)
+        FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
       userIsLoggedIn = true;
       return 200;
     } on FirebaseAuthException catch (e) {

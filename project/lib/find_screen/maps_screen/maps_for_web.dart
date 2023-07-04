@@ -30,15 +30,8 @@ class _MapsPageState extends State<MapsPageWeb> {
       }
     });
   }
-
-  LatLngBounds mapBounds = LatLngBounds(
-    southwest: LatLng(38.655, -9.215), // Lower left corner of the desired bounds
-    northeast: LatLng(38.665, -9.195), // Upper right corner of the desired bounds
-  );
-
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
         body: GoogleMap(
@@ -61,4 +54,8 @@ class _MapsPageState extends State<MapsPageWeb> {
       ),
     );
   }
+  LatLngBounds mapBounds = LatLngBounds(
+    southwest: LatLng(38.655, -9.215), // Lower left corner of the desired bounds
+    northeast: LatLng(38.665, -9.195), // Upper right corner of the desired bounds
+  );
   }

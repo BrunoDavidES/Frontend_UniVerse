@@ -18,6 +18,7 @@ import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class CalendarScreenWeb extends StatefulWidget {
   const CalendarScreenWeb({super.key});
@@ -35,23 +36,26 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
   late Map<DateTime, List<CalendarEvent>> selectedEvents;
   late int op;
   late Color color;
+  late String dateString;
 
 
   @override
   void initState() {
-    CalendarEvent.fetchEvents(07, 2023);
+    CalendarEvent.fetchEvents("07", "2023");
     Random random = Random();
     int cindex = random.nextInt(toRandom2.length);
     color = toRandom2[cindex];
     initializeDateFormatting('pt_PT', null);
     selectedDayString = selectedDay.day.toString();
     selectedMonthString = monthsInText[selectedDay.month-1];
+    dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(DateTime.now());
     print(size.height);
     return Row(
           children: [
@@ -108,6 +112,7 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                                     focusedDay = focusDay;
                                     selectedDayString = selectDay.day.toString();
                                     selectedMonthString = monthsInText[selectedDay.month-1];
+                                    dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
                                   });
                                 },
                                 calendarFormat: format,
@@ -205,12 +210,12 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                               ),
                             ),
                           ),
-                          /*Container(
+                          /*if(CalendarEvent.events[dateString]!=null)
+                          Container(
                             width: size.width/2,
                             child: Column(
-                              children: CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element, color: color)).toList(),
-                            ),
-                          )*/
+                              children: CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element, color: color)).toList(),*/
+                                  ]),
                         ],
                       ),
                   ],
@@ -218,8 +223,6 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
               ],
             ),
           ],
-                )
-    ]
     );
   }
 }
