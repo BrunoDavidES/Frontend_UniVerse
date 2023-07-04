@@ -251,7 +251,7 @@ class WelcomeArea extends StatelessWidget {
           ],
         ),
       ),
-          SizedBox(height: 150,)
+          SizedBox(height: 200,)
         ],
       ),
     );

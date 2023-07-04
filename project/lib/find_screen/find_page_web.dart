@@ -37,62 +37,49 @@ class _FindWebPageState extends State<FindWebPage> {
               children: <Widget> [
                 Padding(
                   padding: EdgeInsets.only(top: size.height/7),
-                  child: Container(                //Zona das do Find
-                    height: size.height+size.height/3,
-                    width: size.width,
+                  child: Container(
+                    height:size.height + 228,
                     color: cDirtyWhite,
-                    child: Container(
-                      height:size.height+235+size.height/7,
-                      color: cDirtyWhite,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left:50, top: 20),
-                            child: Container(
-                                alignment: Alignment.centerLeft,
-                                child: Image.asset("assets/titles/find.png", scale: 4.5,)
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left:50, top: 20),
+                          child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Image.asset("assets/titles/find.png", scale: 4.5,)
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.only(left: 50, top: 30),
+                                child: SizedBox(
+                                    height: size.height-size.height/7,
+                                    width: size.width/4.5,
+                                    child: ListView.builder(
+                                        itemCount: 11,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          final item = Item.findItems[index+1];
+                                          return Padding(
+                                            padding: EdgeInsets.only(bottom: 5),
+                                            child: FindListItem(
+                                                icon: Icon(item.icon!), name: item.text!, i: index),);
+                                        }
+                                    )
+                                )
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.only(left: 50, top: 30),
-                                  child: SizedBox(
-                                      height: size.height-size.height/7,
-                                      width: size.width/4.5,
-                                      child: ListView.builder(
-                                          itemCount: 11,
-                                          itemBuilder: (BuildContext context, int index) {
-                                            final item = Item.findItems[index+1];
-                                            return Padding(
-                                              padding: EdgeInsets.only(bottom: 5),
-                                              child: FindListItem(
-                                                  icon: Icon(item.icon!), name: item.text!, i: index),);
-                                          }
-                                      )
-                                  )
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(50.0),
-                                child: RightSide(),
-                              ),
-                            ],
-                          ),
-                          BottomAbout(size: size,),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 50, left: 50, right: 50),
+                              child: RightSide(),
+                            ),
+                          ],
+                        ),
+                        BottomAbout(size: size,),
                   ],
                 ),
             ),
-          ),
         ),
-      Container(
-        color: cDirtyWhite,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CustomWebBar(),
-          ],
-        ),
-      ),
+      CustomWebBar(),
       ],
     ),
     ),

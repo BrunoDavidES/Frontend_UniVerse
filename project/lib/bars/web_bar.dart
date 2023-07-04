@@ -12,7 +12,7 @@ class CustomWebBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSmallScreen = MediaQuery.of(context).size.width < 1080;
+    final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
 
     return Container(
       margin: const EdgeInsets.all(15),
