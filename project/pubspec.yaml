@@ -61,6 +61,7 @@ dependencies:
   requests: ^4.7.0
   hash_password: 0.0.3
   firebase_database: ^10.2.3
+  firebase_messaging: ^14.6.4
 
   #webview_flutter: ^4.2.2
 

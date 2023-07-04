@@ -106,6 +106,7 @@ class _ContactsScreenState extends State<ContactsScreenApp> {
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
+                      ChatUtils.joinForum(joinForumID, joinForumPassword);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ChatPageApp(

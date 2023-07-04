@@ -9,6 +9,7 @@ import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'api/firebase_api.dart';
 import 'calendar_screen/personal_page_web_test.dart';
 import 'components/not_found.dart';
 import 'firebase_options.dart';
@@ -38,6 +39,7 @@ Future main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseApi().initNotifications();
   runApp(const MyApp());
 }
 
