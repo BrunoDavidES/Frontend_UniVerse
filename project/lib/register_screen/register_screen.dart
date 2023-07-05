@@ -259,10 +259,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   text: "REGISTAR",
                   color: cPrimaryColor,
                   press: () {
-                    registerButtonPressed(nameController.text, emailController.text, passwordController.text, passwordConfirmationController.text);
                     setState(() {
                       isLoading = true;
                     });
+                    if(nameController.text == "" || emailController == "" || passwordConfirmationController == "" || passwordController == "")
+                      setState(() {
+                        isLoading = false;
+                        showDialog(context: context,
+                            builder: (BuildContext context){
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Existem campos vazios. Preenche-os, por favor.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      });
+                    else
+                        registerButtonPressed(nameController.text, emailController.text.trim(), passwordController.text, passwordConfirmationController.text);
                   },
                   height: 20),
               if(!kIsWeb)
