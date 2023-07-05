@@ -43,7 +43,7 @@ class CalendarEvent {
 
   static Future<int> fetchEvents(month, year) async {
      String query = "$month-$year";
-    String eventsUrl = '$magikarp/profile/personalEvent/monthly/$query';
+    String eventsUrl = '$baseUrl/profile/personalEvent/monthly/$query';
     String token = await Authentication.getTokenID();
 
     if(token.isEmpty) {
@@ -75,7 +75,7 @@ class CalendarEvent {
   }
 
   static Future<int> add(username, title, department, location, date, hour) async {
-    String apiUrl = '$magikarp/profile/personalEvent/add';
+    String apiUrl = '$baseUrl/profile/personalEvent/add';
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
@@ -118,7 +118,7 @@ class CalendarEvent {
   }
 
   static Future<int> edit(id, title, location, date, hour) async {
-    final String apiUrl = '$magikarp/profile/personalEvent/edit/$id';
+    final String apiUrl = '$baseUrl/profile/personalEvent/edit/$id';
 
     String username = UniverseUser.getUsername();
 
@@ -152,7 +152,7 @@ class CalendarEvent {
   }
 
   static Future<int> delete(String id, String date) async {
-    /*final String apiUrl = '$magikarp/profile/personalEvent/delete/$id';
+    /*final String apiUrl = '$baseUrl/profile/personalEvent/delete/$id';
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {

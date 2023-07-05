@@ -70,7 +70,7 @@ class Event {
     var response;
     if(numEvents == 0) {
       response = await http.post(
-        Uri.parse(magikarp + eventsUrl),
+        Uri.parse(baseUrl + eventsUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -83,7 +83,7 @@ class Event {
     }
     eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     response = await http.post(
-      Uri.parse(magikarp + eventsUrl),
+      Uri.parse(baseUrl + eventsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -146,7 +146,7 @@ class Event {
   }
 
   static Future<int> edit(id, title, startDate, endDate, department, isPublic, isItPaid, location, capacity, description, File? thumbnail) async {
-    String url = '$magikarp/feed/edit/Event/$id';
+    String url = '$baseUrl/feed/edit/Event/$id';
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
@@ -232,7 +232,7 @@ class Event {
    */
 
   static Future<int> delete(String id) async {
-    String url = '$magikarp/feed/delete/Event/$id';
+    String url = '$baseUrl/feed/delete/Event/$id';
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;

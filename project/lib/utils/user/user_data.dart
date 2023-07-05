@@ -125,10 +125,12 @@ class UniverseUser {
 
   static Future<int> update(name, phone, linkedin, office, license_plate, isPublic) async {
     String token = await Authentication.getTokenID();
-    String url = '$magikarp/modify/attributes';
+    String url = '$baseUrl/modify/attributes';
 
-    if(token.isEmpty)
-      return 403;
+    if(token.isEmpty) {
+
+      return 401;
+    }
 
     final http.Response response = await http.post(
       Uri.parse(url),
@@ -167,7 +169,7 @@ class UniverseUser {
 
   static Future<int> updatePwd(oldPwd, newPwd, confirmation) async {
     String token = await Authentication.getTokenID();
-    const String url = '$magikarp/modify/pwd';
+    const String url = '$baseUrl/modify/pwd';
 
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
@@ -237,7 +239,7 @@ class UniverseUser {
 
   static Future<int> delete() async {
     String token = await Authentication.getTokenID();
-    const String url = '$magikarp/modify/delete';
+    const String url = '$baseUrl/modify/delete';
 
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;

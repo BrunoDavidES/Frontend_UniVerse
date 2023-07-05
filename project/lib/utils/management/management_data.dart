@@ -3,7 +3,7 @@ import 'package:UniVerse/consts/api_consts.dart';
 class Management {
 
   /*Future<void> addMemberToDepartment(String id, DepartmentData data) async {
-    final String apiUrl = '$magikarp/department/add/member/$id';
+    final String apiUrl = '$baseUrl/department/add/member/$id';
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',

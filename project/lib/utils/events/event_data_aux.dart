@@ -134,7 +134,7 @@ class Event {
   }
 
   Future<int> editEvent(String id, String title, String startDate, String endDate, String department, String isPublic, String isItPaid, String location, String capacity) async {
-    String url = '$magikarp/feed/edit/Event/$id';
+    String url = '$baseUrl/feed/edit/Event/$id';
     String token = await Authentication.getTokenID();
     if(token.isEmpty)
       return 403;
@@ -167,7 +167,7 @@ class Event {
   }
 
   Future<int> deleteEvent(String id) async {
-    String url = '$magikarp/feed/delete/Event/$id';
+    String url = '$baseUrl/feed/delete/Event/$id';
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
