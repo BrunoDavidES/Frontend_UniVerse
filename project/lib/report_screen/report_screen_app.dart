@@ -10,7 +10,9 @@ import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import '../Components/default_button.dart';
 import '../components/app/500_app_with_bar.dart';
@@ -63,78 +65,84 @@ class _ReportScreenState extends State<ReportScreenApp> {
    titleController.dispose();
    locationController.dispose();
    descriptionController.dispose();
+
    super.dispose();
   }
 
-  void submitButtonPressed(String title, String location, String description) async {
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+  void submitButtonPressed(title, location, description) async {
+    bool areControllersCompliant = Report.areCompliant(
+        title, location, description);
+    if (!areControllersCompliant) {
       showDialog(context: context,
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return CustomDialogBox(
-              title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para reportares um problema precisamos que te ligues a uma rede.",
+              title: "Ups!",
+              descriptions: "Existem campos vazios. Preenche-os, por favor.",
               text: "OK",
             );
           }
       );
-      setState(() {
-        isLoading = false;
-      });
+    }
+    else if (pickedImage == null) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "Parece que não adicionaste nenhuma fotgrafia do problema. Precisamos que o faças",
+              text: "OK",
+            );
+          }
+      );
     } else {
-      bool areControllersCompliant = Report.areCompliant(title, location, description);
-      if (!areControllersCompliant) {
-        showDialog(context: context,
-            builder: (BuildContext context){
-              return CustomDialogBox(
-                title: "Ups!",
-                descriptions: "Existem campos vazios. Preenche-os, por favor.",
-                text: "OK",
-              );
-            }
-        );
-        setState(() {
-          isLoading = false;
-        });
-      }
-      //else if(File.isEmpty)
-      else{
-        var response = await Report.send(
-            title, location, description, imageUint8);
-        if (response == 200) {
-          showDialog(context: context,
-              builder: (BuildContext context) {
-                return CustomDialogBox(
-                  title: "Obrigado!",
-                  descriptions: "Já recebemos a tua submissão.",
-                  text: "OK",
-                );
-              }
-          );
-        } else if (response == 401) {
-          showDialog(context: context,
-              builder: (BuildContext context) {
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
-                  text: "OK",
-                  press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+      showDialog(
+          context: context,
+          builder: (_) =>
+              ConfirmDialogBox(
+                  descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
+                  press: () async {
+                    Navigator.pop(context);
+                    var response = await Report.send(
+                        title, location, description, imageUint8);
+                    if (response == 200) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Obrigado!",
+                              descriptions: "Já recebemos a tua submissão.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 401) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Parece que não tens sessão iniciada.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 403) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Parece que não tens permissões para esta operação.",
+                                text: "OK",
+                                press: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (
+                                          context) => const LoginPageApp()));
+                                }
+                            );
+                          }
+                      );
+                    } else
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
                   }
-                );
-              }
-          );
-        } else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) =>
-                  Error500WithBar(i: 3,
-                      title: Image.asset(
-                        "assets/app/login.png", scale: 6,))));
-        }
-        }
-      }
-    setState(() {
-      isLoading = false;
-    });
+              ));
+    }
   }
 
   @override
@@ -173,9 +181,44 @@ class _ReportScreenState extends State<ReportScreenApp> {
                   MyTextField(controller: locationController, hintText: 'Onde ecnontraste o problema?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
                   DescriptionField(controller: descriptionController),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
-                    added = true;
+                     try {
+                        /*final ImagePicker picker = ImagePicker();
+                        XFile? image = await picker.pickImage(
+                            source: ImageSource.gallery);*/
+                        if (Report.imagePath !=null) {
+                          File img = File(Report.imagePath!);
+                          var f = await img.readAsBytes();
+                          if(f.lengthInBytes > 5000000) {
+                            print("REACHED!!!!!!!");
+                            showDialog(context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                    title: "Ups!",
+                                    descriptions: "A imagem excede o tamanho máximo permitido de 5 MB.",
+                                    text: "OK",
+                                  );
+                                }
+                            );
+                            return;
+                          }
+                          imageUint8 = f;
+                          setState(() {
+                            pickedImage = img;
+                          });
+                        }
+                      } on PlatformException catch (e) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Não conseguimos obter a imagem que escolheste. Tenta novamente, por favor.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.only(left: 25, top: 10),
@@ -187,7 +230,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left:12),
-                            child: added==true
+                            child: imageUint8 != null
                                 ?Text(
                               "Fotografia adicionada!",
                               style: TextStyle(

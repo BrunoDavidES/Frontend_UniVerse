@@ -6,6 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
+import '../report/report_data.dart';
 
 class ImagePreview extends StatefulWidget {
 XFile pic;
@@ -80,12 +81,14 @@ class ImagePreviewState extends State<ImagePreview> {
                         height: 50,
                         child: MaterialButton(
                             shape: CircleBorder(),
-                            child: Text("ENVIAR",
+                            child: Text("ANEXAR",
                               style: TextStyle(
                                   color: cPrimaryLightColor
                               ),),
                             onPressed: () async {
-                              Navigator.of(context).pop();
+                              Report.imagePath = widget.pic.path;
+                              Navigator.pop(context);
+                              Navigator.pop(context);
                             }
                         ),
                       ),

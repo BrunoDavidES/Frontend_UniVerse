@@ -133,9 +133,9 @@ class UniverseAppBar extends StatelessWidget {
   }
 
   void _navigateToScreenPersonal(BuildContext context) {
-    //Authentication.userIsLoggedIn
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
-       // : Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+    Authentication.userIsLoggedIn
+    ?Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()))
+       : Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPageApp()));
   }
 
   void _navigateToScreenFind(BuildContext context) {

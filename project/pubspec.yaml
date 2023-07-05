@@ -58,8 +58,10 @@ dependencies:
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
   firebase_storage: ^11.2.4
+  path_provider: ^2.0.6
   cloud_firestore: ^4.8.1
   requests: ^4.7.0
+  share_plus: ^4.0.4
   toggle_switch: ^2.1.0
   hash_password: 0.0.3
 
@@ -112,6 +114,7 @@ flutter:
     - assets/app/logo_nova_horiz.png
     - assets/app/profile_title.png
     - assets/titles/about_us.png
+    - assets/titles/edit.png
     - assets/titles/area.png
     - assets/titles/buildings.png
     - assets/titles/calendar.png

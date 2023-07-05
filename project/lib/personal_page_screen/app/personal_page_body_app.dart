@@ -150,7 +150,7 @@ class Menu extends StatelessWidget {
     showDialog(
     context: context,
     builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
-    final response = User.delete();
+    final response = UniverseUser.delete();
     if(response == 200)
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
     else showDialog(

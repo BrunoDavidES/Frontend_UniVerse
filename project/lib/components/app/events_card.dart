@@ -4,6 +4,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/events/event_data.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../consts/list_consts.dart';
 import '../../events_screen/events_app_detail_screen.dart';
 
@@ -72,7 +73,10 @@ class EventsCardState extends State<EventsCard> {
                   Authentication.userIsLoggedIn
                   ?Icon(Icons.bookmark_outline)
                   :SizedBox(width: 1,),
-                  Icon(Icons.share_outlined),
+                  IconButton(icon: Icon(Icons.share_outlined), onPressed: () {
+                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${widget.data.id.toString()}";
+                    Share.share("Encontrei um evento! | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "${widget.data.title.toString()} | UniVerse ּ  FCT NOVA");
+                  },),
                 ],
               ),
             ),

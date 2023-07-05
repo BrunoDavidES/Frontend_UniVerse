@@ -64,7 +64,7 @@ class PopUpMenu extends StatelessWidget {
               color: cPrimaryColor,
           ),
           child: Text(
-            User.getName(),
+            UniverseUser.getName(),
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white

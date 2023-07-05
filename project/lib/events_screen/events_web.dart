@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
@@ -215,11 +214,15 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                           Spacer(),
                                                           if (Authentication.userIsLoggedIn)
                                                             IconButton(
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                              },
                                                               icon: Icon(Icons.bookmark, color: cHeavyGrey),
                                                             ),
                                                           IconButton(
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              //final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${event.id.toString()}";
+                                                              //Share.share("${event.title.toString()} | UniVerse ּ  FCT NOVA\n\n${urlPreview}", subject: "${event.title.toString()} | UniVerse ּ  FCT NOVA");
+                                                            },
                                                             icon: Icon(Icons.share, color: cHeavyGrey),
                                                           ),
                                                           IconButton(

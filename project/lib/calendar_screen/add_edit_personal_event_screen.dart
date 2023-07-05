@@ -79,7 +79,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = CalendarEvent.areCompliant(title, location, date, hour);
+      bool areControllersCompliant = CalendarEvent.areCompliant(title, "o", location, date, hour);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
@@ -92,7 +92,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
         );
       }
       else {
-        var response = await CalendarEvent.add(User.getUsername(), title, location, date, hour);
+        var response = await CalendarEvent.add(UniverseUser.getUsername(), title, "", location, date, hour);
         if (response == 200) {
           showDialog(context: context,
               builder: (BuildContext context){
@@ -146,7 +146,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
               children: [
@@ -203,16 +203,14 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                             ),
                           )*/
                       );
-
                       if(pickedTime != null ){
                         print(pickedTime.format(context));   //output 10:51 PM
-                        DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                        DateTime parsedTime = DateFormat("h:mm a").parse(pickedTime.format(context));
                         //converting to DateTime so that we can further format on different pattern.
                         print(parsedTime); //output 1970-01-01 22:53:00.000
                         String formattedTime = DateFormat('HH:mm').format(parsedTime);
                         print(formattedTime); //output 14:59:00
                         //DateFormat() is from intl package, you can format the time on any pattern you need.
-
                         setState(() {
                           timeController.text = formattedTime; //set the value of text field.
                         });

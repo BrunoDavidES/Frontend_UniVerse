@@ -45,7 +45,7 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
     Size size = MediaQuery.of(context).size;
     return Row(
       children: [
-        if(User.isVerified() && User.isActive())
+        if(UniverseUser.isVerified() && UniverseUser.isActive())
         WebMenu(width: size.width/9, height: size.height/2),
         Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
               SizedBox(height: 30,)
             ]
         ),
-        !User.isVerified() || !User.isActive()
+        !UniverseUser.isVerified() || !UniverseUser.isActive()
         ?Info()
             :SizedBox()
       ],

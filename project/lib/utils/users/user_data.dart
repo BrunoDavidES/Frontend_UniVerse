@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../authentication/auth.dart';
 
-class User {
+class UniverseUser {
 
   static String getUsername() {
     var user = FirebaseAuth.instance.currentUser;
@@ -86,7 +86,7 @@ class User {
     return response.statusCode;
   }
 
-  static Future<int> update(String name, String status, String licensePlate) async {
+  static Future<int> update(name, phone, linkedin, office, license_plate, isPublic) async {
     String token = await Authentication.getTokenID();
     String url = '$magikarp/modify/attributes';
 
@@ -101,8 +101,8 @@ class User {
       },
       body: json.encode({
         'name': name,
-        'status': status,
-        'licensePlate': licensePlate,
+        'status': isPublic,
+        'licensePlate': license_plate,
       }),
     );
     if (response.statusCode == 200) {
@@ -214,7 +214,7 @@ class User {
         'Authorization': token,
       },
       body: json.encode({
-        'target': User.getUsername(),
+        'target': UniverseUser.getUsername(),
       }),
     );
 

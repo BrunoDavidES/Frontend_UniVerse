@@ -97,11 +97,12 @@ class WebMenu extends StatelessWidget {
                     context.go("/events/submit");
                   },),
                   WebMenuCard(text: 'Feedback',icon: Icons.bar_chart_outlined),
+                  WebMenuCard(text: 'Mudar Palavra-passe',icon: Icons.password_outlined),
                   WebMenuCard(text: 'Apagar Conta',icon: Icons.delete, press: () {
                     showDialog(
                         context: context,
                         builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
-                          final response = User.delete();
+                          final response = UniverseUser.delete();
                           if(response == 200)
                             context.go('/home');
                           else showDialog(
@@ -155,7 +156,7 @@ class QRPopUp extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Acede ao teu comprovativo na nossa aplicação!".toUpperCase(),
+          Text("Acede aos fóruns na nossa aplicação!".toUpperCase(),
             style: TextStyle(
                 color: cPrimaryColor,
                 fontWeight: FontWeight.bold,

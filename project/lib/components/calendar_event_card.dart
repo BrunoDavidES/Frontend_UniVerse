@@ -61,6 +61,8 @@ class CalendarEventState extends State<CalendarEventCard> {
                   Row(
                     children: [
                       const SizedBox(width: 20),
+                      Icon(Icons.location_on_outlined, color: cDirtyWhite,),
+                      SizedBox(width: 5,),
                       Text(
                         widget.data.location!,
                         style: const TextStyle(
@@ -69,6 +71,8 @@ class CalendarEventState extends State<CalendarEventCard> {
                         ),
                       ),
                       Spacer(),
+                      Icon(Icons.access_time, color: cDirtyWhite,),
+                      SizedBox(width:5),
                       Text(
                         widget.data.hour!,
                         style: const TextStyle(

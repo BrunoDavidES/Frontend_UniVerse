@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
 
-class Testing extends StatelessWidget {
+class OrganizationsInfoWeb extends StatelessWidget {
+  final String id;
+  final List<String> data;
+
+  const OrganizationsInfoWeb({super.key, required this.id, required this.data});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,14 +34,14 @@ class Testing extends StatelessWidget {
         child: Row(
             children: [
         Container(
-        width: containerWidth/3.5-15,
+        width: containerWidth-containerWidth/3.5-15,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left:15, top: 15, bottom:5),
                 child: Text(
-                  "Divisão de Eventos e Apoio ao Estudante Diplomado",
+                  data[0],
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
@@ -49,8 +54,7 @@ class Testing extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(left:15),
                 width: double.infinity,
-                height: containerHeight/3.5-15,
-
+                height: containerHeight/1.5,
                 child:SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(5),
@@ -64,11 +68,12 @@ class Testing extends StatelessWidget {
             ],
           ),
         ),
+          Spacer(),
           Container(
               width: containerWidth/3.5-15,
               decoration: BoxDecoration(
               image: DecorationImage(
-              image: AssetImage("assets/web/foto.jpg"),
+              image: NetworkImage(data[1]),
           fit: BoxFit.cover),
       borderRadius: BorderRadius.circular(15),
     ),
