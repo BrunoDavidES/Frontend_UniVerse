@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:UniVerse/calendar_screen/personal_event_web.dart';
+import 'package:UniVerse/personal_event_screen/personal_event_web.dart';
 
 import '../components/confirm_dialog_box.dart';
 import '../login_screen/login_app.dart';

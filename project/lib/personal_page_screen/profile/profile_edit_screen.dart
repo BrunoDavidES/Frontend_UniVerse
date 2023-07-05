@@ -91,7 +91,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
           builder: (_) => ConfirmDialogBox(
               descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
               press: () async {
-                var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
+                var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic, imageUint8);
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {

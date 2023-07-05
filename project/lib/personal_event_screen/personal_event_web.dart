@@ -1,12 +1,12 @@
 import 'package:UniVerse/calendar_screen/edit_personal_event_screen.dart';
 
 import '../utils/events/personal_event_data.dart';
-import 'package:UniVerse/calendar_screen/personal_event_screen.dart';
+import 'package:UniVerse/personal_event_screen/personal_event_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 import '../login_screen/login_screen.dart';
-import 'add_personal_event_screen.dart';
+import '../calendar_screen/add_personal_event_screen.dart';
 
 class PersonalEventWeb extends StatelessWidget {
   final bool toCreate;

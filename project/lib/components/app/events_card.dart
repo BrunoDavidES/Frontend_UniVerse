@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../consts/list_consts.dart';
 import '../../events_screen/events_app_detail_screen.dart';
+import '../../utils/events/personal_event_data.dart';
 
 class EventsCard extends StatefulWidget {
   EventsCard(this.data, {super.key});
@@ -71,7 +72,9 @@ class EventsCardState extends State<EventsCard> {
                   ),
                   Spacer(),
                   Authentication.userIsLoggedIn
-                  ?Icon(Icons.bookmark_outline)
+                  ?IconButton(icon: Icon(Icons.bookmark_outline), onPressed: () {
+                    CalendarEvent.add(widget.data.planner, widget.data.title, widget.data.department, widget.data.location, widget.data.startDate, "");
+                  },)
                   :SizedBox(width: 1,),
                   IconButton(icon: Icon(Icons.share_outlined), onPressed: () {
                     final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${widget.data.id.toString()}";

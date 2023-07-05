@@ -111,7 +111,7 @@ class NewsCardState extends State<NewsCard> {
                   ),
                   Spacer(),
                   Text(
-                    "Autoria de "+widget.data.author!,
+                    "Autoria de ${widget.data.author!}",
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey

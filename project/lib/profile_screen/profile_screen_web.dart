@@ -109,7 +109,7 @@ class ProfileScreenWeb extends StatelessWidget {
                       ),
                 ],
               ),
-              Container(
+              SizedBox(
                 width: size.width-size.width/6.50,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

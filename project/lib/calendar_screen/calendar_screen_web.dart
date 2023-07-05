@@ -1,19 +1,12 @@
 
 import 'dart:math';
-
-import 'package:UniVerse/Components/default_button.dart';
 import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/utils/authentication/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../components/default_button_simple.dart';
-import '../components/web_menu_card.dart';
 import '../consts/list_consts.dart';
-import '../login_screen/login_web.dart';
-import 'personal_event_web.dart';
+import '../personal_event_screen/personal_event_web.dart';
 import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/consts/text_consts.dart';

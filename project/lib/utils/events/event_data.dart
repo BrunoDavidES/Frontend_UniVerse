@@ -2,19 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-
-import 'package:UniVerse/consts/color_consts.dart';
-import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../consts/api_consts.dart';
 import '../authentication/auth.dart';
-import '../user/user_data.dart';
 
 class Event {
-  //static List<Event> events = <Event>[];
   static Map<String, Event> organizedEvents = Map<String, Event>();
   static int numEvents = 0;
   String? id;
@@ -56,13 +49,8 @@ class Event {
     location=properties['location']['value'];
     startDate =properties['startDate']['value'];
     isPaid = properties['isItPaid']['value'];
-    //date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    urlToImage = images[Random().nextInt(images.length)];
-    description="Olá";
-    print(id);
-    print(title);
-    print(planner);
-    print("OLÁ");
+    urlToImage = "";
+    description= "";
   }
 
   static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
@@ -100,9 +88,8 @@ class Event {
     return 200;
   }
 
-
   static bool areCompliant(title, startDate, location, capacity, description) {
-    return title.isNotEmpty && startDate.isNotEmpty && location.isNotEmpty && capacity.isNotEmpty;
+    return title.isNotEmpty && startDate.isNotEmpty && location.isNotEmpty && capacity.isNotEmpty && description.isNotEmpty;
   }
 
   static Future<int> post(title, startDate, endDate, isPublic, isItPaid, location, capacity, description, Uint8List thumbnail) async {
@@ -120,12 +107,9 @@ class Event {
       body: jsonEncode({
         'title': title,
         'startDate': startDate,
-        //pode ser null
         'endDate': location,
-        //pode ser null
         'isPublic': isPublic,
         'capacity': capacity,
-        //pode ser null
         'isItPaid': isItPaid,
       }),
     );
@@ -135,25 +119,23 @@ class Event {
       organizedEvents.addAll({id:Event("", title, location, "", capacity, "", startDate, endDate, "", "", "")});
       var ref = FirebaseStorage.instance.ref().child("Events/$id");
       ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
-      ref = FirebaseStorage.instance.ref().child("Reports/$id.txt");
+      ref = FirebaseStorage.instance.ref().child("Events/$id.txt");
       ref.putString(description, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
-      return 200;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();
     }
+
     return response.statusCode;
   }
 
-  static Future<int> edit(id, title, startDate, endDate, department, isPublic, isItPaid, location, capacity, description, File? thumbnail) async {
-    String url = '$baseUrl/feed/edit/Event/$id';
-
+  static Future<int> edit(id, title, startDate, endDate, isPublic, isItPaid, location, capacity, description, Uint8List? thumbnail) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
       return 401;
     }
-
+    String url = '$baseUrl/feed/edit/Event/$id';
     final http.Response response = await http.patch(
       Uri.parse(url),
       headers: {
@@ -174,7 +156,15 @@ class Event {
     if (response.statusCode == 200) {
       String id = response.body;
       organizedEvents[id] = Event("", title, location, "", capacity, "", startDate, endDate, "", "", "");
-      return 200;
+      if(thumbnail !=null) {
+        var ref = FirebaseStorage.instance.ref().child("Events/$id");
+        ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
+        ref = FirebaseStorage.instance.ref().child("Events/$id.txt");
+        ref.putString(description, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
+      }
+    } else if(response.statusCode == 401) {
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
     }
     return response.statusCode;
   }
@@ -231,13 +221,13 @@ class Event {
   }
    */
 
-  static Future<int> delete(String id) async {
-    String url = '$baseUrl/feed/delete/Event/$id';
+  static Future<int> delete(id) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
       return 401;
     }
+    String url = '$baseUrl/feed/delete/Event/$id';
     final http.Response response = await http.delete(
       Uri.parse(url),
       headers: {
@@ -248,7 +238,13 @@ class Event {
 
     if (response.statusCode == 200) {
       organizedEvents.remove(id);
-      return 200;
+      var ref = FirebaseStorage.instance.ref().child("Events/$id");
+      ref.delete();
+      ref = FirebaseStorage.instance.ref().child("Events/$id.txt");
+      ref.delete();
+    } else if(response.statusCode == 401) {
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
     }
     return response.statusCode;
   }

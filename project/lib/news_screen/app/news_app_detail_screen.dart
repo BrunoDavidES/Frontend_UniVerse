@@ -76,7 +76,7 @@ class NewsDetailScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "Autoria de "+data.author!,
+                    "Autoria de ${data.author!}",
                     style: TextStyle(
                         fontSize: 13,
                         color: cHeavyGrey

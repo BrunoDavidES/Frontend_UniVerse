@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:UniVerse/utils/authentication/auth.dart';
+import 'package:UniVerse/utils/events/personal_event_data.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
@@ -215,6 +216,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                           if (Authentication.userIsLoggedIn)
                                                             IconButton(
                                                               onPressed: () {
+                                                                CalendarEvent.add(event.planner, event.title, event.department, event.location, event.startDate, "");
                                                               },
                                                               icon: Icon(Icons.bookmark, color: cHeavyGrey),
                                                             ),

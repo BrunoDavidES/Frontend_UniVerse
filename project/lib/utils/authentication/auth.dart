@@ -61,7 +61,37 @@ class Authentication {
     }
   }
 
-  //modifyPassword
-  final passwordValidator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
+  /*static bool match (newPwd) {
+    var validator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
+    return newPwd.matches(validator);
+  }*/
+
+  static Future<int> updatePwd(oldPwd, newPwd, confirmation) async {
+   /* String token = await Authentication.getTokenID();
+    const String url = '$baseUrl/modify/pwd';
+
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
+
+    final http.Response response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: json.encode({
+        'password': oldPwd,
+        'newPwd': newPwd,
+        'confimation': confirmation
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Authentication.userIsLoggedIn = false;
+    }*/
+    return 200;
+  }
 
 }

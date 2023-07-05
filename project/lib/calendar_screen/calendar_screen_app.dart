@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'package:UniVerse/calendar_screen/personal_event_app.dart';
-import 'package:UniVerse/calendar_screen/personal_event_web.dart';
+import 'package:UniVerse/personal_event_screen/personal_event_web.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/consts/text_consts.dart';
@@ -14,6 +13,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import '../components/app/500_app_with_bar.dart';
 import '../components/app/menu_card.dart';
 import '../components/default_button_simple.dart';
+import '../personal_event_screen/personal_event_app.dart';
 import '../personal_page_screen/components/personal_card.dart';
 import '../consts/list_consts.dart';
 import '../report_screen/report_app.dart';

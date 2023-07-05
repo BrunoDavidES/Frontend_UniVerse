@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../calendar_screen/personal_event_web.dart';
+import '../../personal_event_screen/personal_event_web.dart';
 import '../../consts/color_consts.dart';
 import '../simple_dialog_box.dart';
 import '../web_menu_card.dart';
@@ -90,7 +90,6 @@ class WebMenu extends StatelessWidget {
                         )
                     );
                   },),
-                  WebMenuCard(text: 'Inquéritos', icon: Icons.edit_document),
                   WebMenuCard(text: 'Reportar',icon: Icons.report_outlined, press: () {
                     context.go("/report");
                   },),

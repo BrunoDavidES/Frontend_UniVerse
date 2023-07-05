@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import '../authentication/auth.dart';
 
@@ -47,7 +50,7 @@ class UniverseUser {
       return token.;
     }
     return "UNKNOWN ERROR";*/
-    return "Aluno";
+    return "T";
   }
 
   static String getJob() {
@@ -104,7 +107,7 @@ class UniverseUser {
     String username = getUsername();
     String url = '$baseUrl/profile/$username';
 
-    final http.Response response = await http.post(
+    final http.Response response = await http.get(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
@@ -123,15 +126,15 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  static Future<int> update(name, phone, linkedin, office, license_plate, isPublic) async {
+  static Future<int> update(name, phone, linkedin, office, license_plate, isPublic, Uint8List? image) async {
     String token = await Authentication.getTokenID();
-    String url = '$baseUrl/modify/attributes';
 
     if(token.isEmpty) {
-
+      Authentication.userIsLoggedIn = false;
       return 401;
     }
 
+    String url = '$baseUrl/modify/attributes';
     final http.Response response = await http.post(
       Uri.parse(url),
       headers: {
@@ -141,11 +144,19 @@ class UniverseUser {
       body: json.encode({
         'name': name,
         'status': isPublic,
-        'licensePlate': license_plate,
+        'license_plate': license_plate,
+        'office': office,
+        'phone': phone,
+        'linkedin': linkedin,
+        'isPublic': isPublic,
       }),
     );
     if (response.statusCode == 200) {
-      //final String id = response.body;
+      if(image!=null) {
+        var username = UniverseUser.getUsername();
+        var ref = FirebaseStorage.instance.ref().child("Reports/$username");
+        ref.putData(image, SettableMetadata(contentType: 'image/jpeg'));
+      }
       return 200;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
@@ -154,46 +165,6 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  static bool areCompliant(oldPwd, newPwd, confirmation) {
-    return oldPwd.isNotEmpty && newPwd.isNotEmpty && confirmation.isNotEmpty;
-  }
-
-  static bool areEqual(newPwd, confirmation) {
-    return newPwd == confirmation;
-  }
-
-  static bool match (newPwd) {
-    var validator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
-    return newPwd.matches(validator);
-  }
-
-  static Future<int> updatePwd(oldPwd, newPwd, confirmation) async {
-    String token = await Authentication.getTokenID();
-    const String url = '$baseUrl/modify/pwd';
-
-    if(token.isEmpty) {
-      Authentication.userIsLoggedIn = false;
-      return 401;
-    }
-
-    final http.Response response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      },
-      body: json.encode({
-        'password': oldPwd,
-        'newPwd': newPwd,
-        'confimation': confirmation
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      Authentication.userIsLoggedIn = false;
-    }
-    return response.statusCode;
-  }
   /*
   var response = await User.updatePwd(oldPwd, newPwd, confirmation);
   //meter validacao internet
@@ -257,8 +228,9 @@ class UniverseUser {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
     }
     return response.statusCode;
   }

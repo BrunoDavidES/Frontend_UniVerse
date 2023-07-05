@@ -2,8 +2,8 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../calendar_screen/personal_event_app.dart';
-import '../calendar_screen/personal_event_web.dart';
+import '../personal_event_screen/personal_event_app.dart';
+import '../personal_event_screen/personal_event_web.dart';
 import '../utils/events/personal_event_data.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
