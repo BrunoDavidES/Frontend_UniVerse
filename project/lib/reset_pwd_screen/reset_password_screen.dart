@@ -1,39 +1,31 @@
-import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
+
+import 'package:UniVerse/login_screen/login_web.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../components/default_button_simple.dart';
-import '../components/password_field.dart';
-import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../consts/color_consts.dart';
-import '../register_screen/register_app.dart';
-import '../register_screen/register_web.dart';
-import '../reset_pwd_screen/reset_password_web.dart';
+import '../login_screen/login_app.dart';
 import '../utils/connectivity.dart';
-import '../utils/authentication/auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ResetScreen extends StatefulWidget {
+  const ResetScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ResetScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<ResetScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  late TextEditingController idController;
-  late TextEditingController passwordController;
+  late TextEditingController emailController;
   bool isLoading = false;
 
   @override
   void initState() {
-    idController = TextEditingController();
-    passwordController = TextEditingController();
+    emailController = TextEditingController();
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
@@ -43,16 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void logInButtonPressed(email, password) async {
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+  void resetButtonPressed(email) async {
+/*if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
-            return const CustomDialogBox(
+            return CustomDialogBox(
               title: "Sem internet",
               descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
               text: "OK",
@@ -63,11 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.areCompliantToLogin(email, password);
+      bool areControllersCompliant = Authentication.isCompliant(id, password);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
-              return const CustomDialogBox(
+              return CustomDialogBox(
                 title: "Ups!",
                 descriptions: "Existem campos vazios. Preenche-os, por favor.",
                 text: "OK",
@@ -77,35 +64,30 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           isLoading = false;
         });
-      } else {
-        var response = await Authentication.login(email, password);
+      }
+      else {
+        var response = await Authentication.loginUser(id, password);
         if (response == 200) {
-          if(kIsWeb) {
-            Navigator.pop(context);
-            context.go("/personal");
-          }
-          else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {
           showDialog(context: context,
               builder: (BuildContext context){
-                return const CustomDialogBox(
+                return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "O email e/ou password estão incorretos. Tenta novamente.",
+                  descriptions: "O utilizador e/ou password incorretos. Tenta novamente.",
                   text: "OK",
                 );
               }
           );
         } else {
-          if(kIsWeb)
-            context.go("/error");
-          else
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Error500()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
+              }
         }
       }
-    }
     setState(() {
       isLoading = false;
-    });
+    });*/
   }
 
   @override
@@ -123,21 +105,25 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
+                padding: EdgeInsets.only(top:20, left: 20, right: 20, bottom:10),
                 child: Image.asset('assets/images/icon_no_white.png', scale:3),
               ),
               const Text(
-                "Entra no Universo!",
+                "Redefine a tua palavra-passe!",
                 style: TextStyle(
                     fontSize: 25
                 ),
               ),
+              const Text(
+                  "Indica-nos o e-mail com o qual te registaste.",
+                  style:TextStyle(
+                      fontSize: 15
+                  )),
               const SizedBox(height: 20),
-              MyTextField(controller: idController, hintText: '', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
-              MyPasswordField(controller: passwordController, hintText: '', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline,),
+              MyTextField(controller: emailController, hintText: '', obscureText: false, label: 'E-mail', icon: Icons.person_outline,),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -154,15 +140,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Radius.circular(10.0)
                                     )
                                 ),
-                                content: ResetPageWeb(),
+                                content: LoginPageWeb(),
                               )
                           );
                         }
-                        else
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResetPageApp()));
+                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
                       },
-                      child: const Text(
-                        "Esqueceste a palavra-passe?",
+                      child: Text(
+                        "Iniciar sessão",
                         style: TextStyle(
                             color: Colors.black
                         ),
@@ -183,35 +168,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   : Column(
                 children: [
                   DefaultButtonSimple(
-                      text: "ENTRAR",
+                      text: "REDEFINIR",
                       color: cPrimaryColor,
                       press: () {
-                        logInButtonPressed(idController.text, passwordController.text);
+                        resetButtonPressed(emailController.text);
                         setState(() {
                           isLoading = true;
                         });
-                      },
-                      height: 20),
-                  DefaultButtonSimple(
-                      text: "CRIAR CONTA",
-                      color: cHeavyGrey,
-                      press: () {
-                        if(kIsWeb) {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.all(
-                                        Radius.circular(10.0)
-                                    )
-                                ),
-                                content: RegisterPageWeb(),
-                              )
-                          );
-                        }
-                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
                       },
                       height: 20),
                 ],

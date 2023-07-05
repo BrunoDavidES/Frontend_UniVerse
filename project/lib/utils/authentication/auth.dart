@@ -1,21 +1,20 @@
-import 'dart:convert';
-
-import 'package:UniVerse/consts/api_consts.dart';
-import 'package:UniVerse/utils/users/users_local_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:requests/requests.dart';
-
-import '../users/user_data.dart';
 
 class Authentication {
 
   static bool userIsLoggedIn = false;
 
-  static bool areCompliantToLogin(String email, String password) {
+  static bool areCompliantToLogin(email, password) {
     return email.isNotEmpty && password.isNotEmpty;
+  }
+
+  static bool areCompliantToModify(oldPwd, newPwd, confirmation) {
+    return oldPwd.isNotEmpty && newPwd.isNotEmpty && confirmation.isNotEmpty;
+  }
+
+  static bool match(password, confirmation) {
+    return password == confirmation;
   }
 
   static Future<int> login(String email, String password) async {
@@ -24,34 +23,29 @@ class Authentication {
         email: email,
         password: password,
       );
-      if(!kIsWeb)
+      if(!kIsWeb) {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+      }
       userIsLoggedIn = true;
       return 200;
     } on FirebaseAuthException catch (e) {
-      if(e=='internal-error')
+      if(e=='internal-error') {
         return 500;
-      else return 401;
+      } else {
+        return 401;
+      }
       }
     }
 
-  static Future<int> revoge() async {
-    try{
+  static Future<int> revoke() async {
+    try {
       await FirebaseAuth.instance.signOut();
       userIsLoggedIn = false;
       return 200;
     } on FirebaseAuthException catch (e) {
       return 500;
     }
-      /*FirebaseAuth.instance.signOut();
-      final response = await http.post(
-        Uri.parse(baseUrl + logoutUrl),
-      );
-      print(response.statusCode);
-      if(response.statusCode == 200)
-        userIsLoggedIn = false;
-      return response.statusCode;*/
-    }
+  }
 
   static Future<String> getTokenID() async {
     var user = FirebaseAuth.instance.currentUser;
@@ -60,24 +54,14 @@ class Authentication {
         String idToken = await user.getIdToken();
         return idToken;
       } catch (e) {
-        return "";
+        return "ERROR";
       }
-    } else
-      return "";
+    } else {
+      return "ERROR";
+    }
   }
 
-  static bool areCompliantToModify(oldPwd, newPwd, confirmation) {
-    return oldPwd.isNotEmpty && newPwd.isNotEmpty && confirmation.isNotEmpty;
-  }
-
-  /*static Future<int> validateLogin() async {
-    final url = Uri.parse('https://majikarp-fct.oa.r.appspot.com/rest/login/validate');
-
-    final response = await http.get(url, headers: {
-      'Content-Type': 'application/json',
-    });
-
-    return response.statusCode;
-  }*/
+  //modifyPassword
+  final passwordValidator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
 
 }

@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:UniVerse/consts/api_consts.dart';
-import 'package:UniVerse/utils/users/user_data.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 
 import '../authentication/auth.dart';
 import 'package:http/http.dart' as http;

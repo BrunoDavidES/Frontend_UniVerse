@@ -1,21 +1,8 @@
-
-import 'package:UniVerse/components/text_field.dart';
 import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_edit_page_web.dart';
-import 'package:UniVerse/personal_page_screen/profile/profile_edit_screen.dart';
-import 'package:UniVerse/utils/users/user_data.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../components/custom_shape.dart';
-import '../../components/web_menu_card.dart';
-import 'package:UniVerse/components/calendar_event_card.dart';
-import 'package:UniVerse/consts/text_consts.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
-import '../../utils/authentication/auth.dart';
-
 class ProfileScreenWeb extends StatelessWidget {
   const ProfileScreenWeb({super.key});
 
@@ -31,7 +18,7 @@ class ProfileScreenWeb extends StatelessWidget {
             WebMenu(width: size.width/9, height: size.height/1.5,)
           ],
         ),
-    Column(
+        Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -50,18 +37,7 @@ class ProfileScreenWeb extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Spacer(),
-                            Container(
-                              height: 140,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: cDirtyWhite, width: 5),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage("assets/man.png")
-                                  )
-                              ),
-                            ),
+                            ProfilePhoto(),
                             Padding(
                               padding: const EdgeInsets.only(top:30),
                               child: Column(
@@ -200,6 +176,28 @@ class ProfileScreenWeb extends StatelessWidget {
             ],
           ),
       ],
+    );
+  }
+}
+
+class ProfilePhoto extends StatelessWidget {
+  const ProfilePhoto({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 140,
+      width: 140,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: cDirtyWhite, width: 5),
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("assets/man.png")
+          )
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:UniVerse/calendar_screen/calendar_app.dart';
 import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/profile/profile_page_app.dart';
+import 'package:UniVerse/profile_screen/profile_page_app.dart';
 import 'package:UniVerse/proof_screen/proof_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
@@ -19,7 +19,7 @@ import '../components/info.dart';
 import '../components/personal_card.dart';
 import '../../report_screen/report_app.dart';
 import '../../report_screen/report_screen_app.dart';
-import '../../utils/users/user_data.dart';
+import '../../utils/user/user_data.dart';
 
 final pageBucket = PageStorageBucket();
 
@@ -42,7 +42,7 @@ class PersonalPageBodyApp extends StatelessWidget {
         actions: [
          InkWell(
                 onTap: () {
-                  var response = Authentication.revoge();
+                  var response = Authentication.revoke();
                   if(response==500)
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/area.png", scale: 6,))));
                   else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));

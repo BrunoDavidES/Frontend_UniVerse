@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
-import '../profile/profile_page_app.dart';
-import '../../utils/users/user_data.dart';
+import '../../profile_screen/profile_page_app.dart';
+import '../../utils/user/user_data.dart';
 
 class PersonalCard extends StatelessWidget {
   const PersonalCard({

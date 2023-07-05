@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../consts/api_consts.dart';
 import '../authentication/auth.dart';
-import '../users/user_data.dart';
+import '../user/user_data.dart';
 
 class Event {
   //static List<Event> events = <Event>[];

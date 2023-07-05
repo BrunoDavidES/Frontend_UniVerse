@@ -34,7 +34,7 @@ import '../register_screen/register_app.dart';
 import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import '../utils/events/event_data.dart';
-import '../utils/users/user_data.dart';
+import '../utils/user/user_data.dart';
 import 'organized_events_screen.dart';
 
 class PublishEventScreenWeb extends StatefulWidget {

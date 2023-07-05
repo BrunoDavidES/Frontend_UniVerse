@@ -1,6 +1,6 @@
 import 'package:UniVerse/components/confirm_dialog_box.dart';
 import 'package:UniVerse/modify_password_screen/modify_password_page_web.dart';
-import 'package:UniVerse/utils/users/user_data.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';

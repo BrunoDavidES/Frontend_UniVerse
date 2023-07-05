@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
-import '../utils/users/user_data.dart';
+import '../utils/user/user_data.dart';
 
 class PersonalWebCard extends StatelessWidget {
   const PersonalWebCard({

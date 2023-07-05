@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/login_screen/reset_password_app.dart';
-import 'package:UniVerse/login_screen/reset_password_screen.dart';
-import 'package:UniVerse/login_screen/reset_password_web.dart';
+import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
-import 'package:UniVerse/utils/users/user_data.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';

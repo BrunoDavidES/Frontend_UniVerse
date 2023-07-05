@@ -1,22 +1,13 @@
-import 'dart:convert';
-
 import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-
-import '../Components/default_button.dart';
-import '../components/app/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
 import '../components/password_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
-import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_app.dart';
 import '../login_screen/login_web.dart';
 import '../personal_page_screen/app/personal_page_app.dart';
@@ -70,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (BuildContext context){
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para te registares precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -139,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 builder: (BuildContext context) {
                   return CustomDialogBox(
                     title: "Ups!",
-                    descriptions: "A palavra-passe não segue as restrições estabelecidas.",
+                    descriptions: "A palavra-passe não segue as restrições estabelecidas de, no mínimo, 6 caracteres, 1 número e 1 maiúscula.",
                     text: "OK",
                   );
                 }
@@ -187,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         appBar: AppBar(
           title: Image.asset("assets/titles/regist.png", scale:6),
           automaticallyImplyLeading: false,
-          backgroundColor: cDirtyWhiteColor,
+          backgroundColor: Colors.transparent,
           titleSpacing: 15,
           elevation: 0,
         ),
@@ -216,9 +207,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: Colors.redAccent
                   )),
               const SizedBox(height: 20),
-              MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'Email', icon: Icons.email_outlined, ),
+              MyTextField(controller: emailController, hintText: 'Introduz o teu email institucional', obscureText: false, label: 'E-mail', icon: Icons.email_outlined, ),
               MyTextField(controller: nameController, hintText: 'Introduz o teu nome', obscureText: false, label: 'Nome', icon: Icons.person_outline),
-              MyPasswordField(controller: passwordController, hintText: '6 caracteres, 1 número, 1 maíuscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
+              MyPasswordField(controller: passwordController, hintText: '6 caracteres, 1 número, 1 maiúscula', obscureText: true, label: 'Palavra-passe', icon: Icons.lock_outline),
               MyPasswordField(controller: passwordConfirmationController, hintText: 'Introduz novamente a palavra-passe', obscureText: true, label: 'Confirmação',icon: Icons.lock_outline),
               SizedBox(height: 10),
               Padding(

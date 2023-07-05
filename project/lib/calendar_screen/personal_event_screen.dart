@@ -7,9 +7,7 @@ import '../components/confirm_dialog_box.dart';
 import '../login_screen/login_app.dart';
 import '../utils/events/personal_event_data.dart';
 import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/login_screen/reset_password_app.dart';
-import 'package:UniVerse/login_screen/reset_password_screen.dart';
-import 'package:UniVerse/login_screen/reset_password_web.dart';
+import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
@@ -32,7 +30,7 @@ import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import 'package:intl/intl.dart';
 
-import '../utils/users/user_data.dart';
+import '../utils/user/user_data.dart';
 
 class PersonalEventScreen extends StatefulWidget {
   final CalendarEvent data;

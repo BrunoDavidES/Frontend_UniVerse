@@ -100,7 +100,7 @@ class UniverseUser {
       return 200;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
-      Authentication.revoge();
+      Authentication.revoke();
     }
     return response.statusCode;
   }
@@ -129,7 +129,7 @@ class UniverseUser {
       return 200;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
-      Authentication.revoge();
+      Authentication.revoke();
     }
     return response.statusCode;
   }

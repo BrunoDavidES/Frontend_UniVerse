@@ -11,13 +11,13 @@ import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:UniVerse/utils/users/user_data.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../components/web/web_menu.dart';
-import '../../utils/users/user_data.dart';
+import '../../utils/user/user_data.dart';
 import '../components/info.dart';
 
 

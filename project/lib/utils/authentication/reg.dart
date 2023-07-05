@@ -1,16 +1,13 @@
 import 'dart:convert';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 
 class Registration {
 
   static bool areCompliant(password, confirmation, name, email) {
-    return password.isNotEmpty || confirmation.isNotEmpty || name.isNotEmpty ||email.isNotEmpty;
+    return password.isNotEmpty && confirmation.isNotEmpty && name.isNotEmpty && email.isNotEmpty;
   }
 
   static bool match(String password, String confirmation) {
@@ -32,7 +29,6 @@ class Registration {
     if(!passwordValidator.hasMatch(password))
     return 01;
     else return register(password, confirmation, name, email);
-    // return true;
   }
 
 
@@ -57,19 +53,5 @@ class Registration {
     }
       return response.statusCode;
   }
-/*final response = await http.post(
-        Uri.parse(baseUrl + registUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(<String, String>{
-          'email': email,
-          'password': password,
-          'confirmation': confirmation,
-          'name': name
-        }),
-      );
-     print(response.statusCode);
-      return response.statusCode;*/
 
 }

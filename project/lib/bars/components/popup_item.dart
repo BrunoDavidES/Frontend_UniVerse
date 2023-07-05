@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../consts/color_consts.dart';
 import '../../utils/authentication/auth.dart';
-import '../../utils/users/user_data.dart';
+import '../../utils/user/user_data.dart';
 
 class PopUpMenu extends StatelessWidget {
   const PopUpMenu({super.key});
@@ -20,7 +20,7 @@ class PopUpMenu extends StatelessWidget {
           if(value=="area") {
             context.go('/personal');
           } else {
-            var response = await Authentication.revoge();
+            var response = await Authentication.revoke();
             if(response==200)
               context.go('/home');
           }
