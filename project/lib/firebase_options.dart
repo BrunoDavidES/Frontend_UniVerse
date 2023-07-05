@@ -50,22 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCBTc9fONJ-u1rYcDBLP3P9WWDIom0oHg0',
-    appId: '1:1069096740543:web:bedc2afef6f6c3ba9a880a',
-    messagingSenderId: '1069096740543',
-    projectId: 'magikarp-fct',
-    authDomain: 'magikarp-fct.firebaseapp.com',
-    databaseURL: 'https://magikarp-fct-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'magikarp-fct.appspot.com',
-    measurementId: 'G-GQWLDZVBFF',
+    apiKey: 'AIzaSyB8lbZJXbOkWNkgRxvzqwhLtgGQf5GmpS4',
+    appId: '1:493010584500:web:9c958f30725cd60533a8e1',
+    messagingSenderId: '493010584500',
+    projectId: 'universe-fct',
+    authDomain: 'universe-fct.firebaseapp.com',
+    databaseURL: 'https://universe-fct-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'universe-fct.appspot.com',
+    measurementId: 'G-XB1FHSZ4M0',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCrs7a6MMyohlBTaAU_oU80KdgDeihybD0',
-    appId: '1:1069096740543:android:2c8e114e009d7ffe9a880a',
-    messagingSenderId: '1069096740543',
-    projectId: 'magikarp-fct',
-    databaseURL: 'https://magikarp-fct-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'magikarp-fct.appspot.com',
+    apiKey: 'AIzaSyAU88oAVq67egEovJ90EjhWm1oHL5Ylpm8',
+    appId: '1:493010584500:android:771032ce1257f06a33a8e1',
+    messagingSenderId: '493010584500',
+    projectId: 'universe-fct',
+    databaseURL: 'https://universe-fct-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'universe-fct.appspot.com',
   );
 }

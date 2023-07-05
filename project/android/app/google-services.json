@@ -1,37 +1,27 @@
 {
   "project_info": {
-    "project_number": "1069096740543",
-    "firebase_url": "https://magikarp-fct-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "magikarp-fct",
-    "storage_bucket": "magikarp-fct.appspot.com"
+    "project_number": "493010584500",
+    "firebase_url": "https://universe-fct-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "universe-fct",
+    "storage_bucket": "universe-fct.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1069096740543:android:2c8e114e009d7ffe9a880a",
+        "mobilesdk_app_id": "1:493010584500:android:771032ce1257f06a33a8e1",
         "android_client_info": {
           "package_name": "com.example.project"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1069096740543-ae6c9uhl9dop9ltk58qkbasci6fl1uut.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCrs7a6MMyohlBTaAU_oU80KdgDeihybD0"
+          "current_key": "AIzaSyAU88oAVq67egEovJ90EjhWm1oHL5Ylpm8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1069096740543-ae6c9uhl9dop9ltk58qkbasci6fl1uut.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
