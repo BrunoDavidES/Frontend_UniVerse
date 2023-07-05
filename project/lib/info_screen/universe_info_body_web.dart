@@ -2,8 +2,6 @@ import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
-import '../find_screen/findTest/left_side.dart';
-import '../find_screen/findTest/right_side.dart';
 import '../main_screen/components/about_bottom.dart';
 
 class UniverseInfoBodyWeb extends StatelessWidget {
