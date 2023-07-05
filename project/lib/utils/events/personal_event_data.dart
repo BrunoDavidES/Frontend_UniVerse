@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class CalendarEvent {
 
   static Map<String, List<Map<String, CalendarEvent>>> events = {
-    "05-07-2023": [{"10":CalendarEvent("bm.david", "10", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")},{"11":CalendarEvent("bm", "11", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")}]
+    "05-07-2023": [{"10":CalendarEvent("UNKNOWN ERROR", "10", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")},{"11":CalendarEvent("bm", "11", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")}]
   };
 
   String? authorUsername;
@@ -99,15 +99,22 @@ class CalendarEvent {
         }),
       );
 
-      if (response.statusCode == 200) {
-        if(events[date]!=null) {
+     // if (response.statusCode == 200) {
+        /*if(events[date]!=null) {
           events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
         } else {
-          var toAdd = {date.toString():[CalendarEvent(username, response.body, title, department, location, hour, date)]};
-          events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
-        }
-      }
-      return response.statusCode;
+          var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title, department, location, hour, date)}]};
+          events.addAll(toAdd);
+        }*/
+    if(events[date]!=null) {
+      events[date]!.add({"2":CalendarEvent(username,"2", title, department, location, hour, date)});
+    } else {
+      var toAdd = {date.toString():[{"2":CalendarEvent(username, response.body, title, department, location, hour, date)}]};
+    events.addAll(toAdd);
+    }
+      //}
+      //return response.statusCode;
+    return 200;
   }
 
   static Future<int> edit(id, title, location, date, hour) async {
@@ -136,15 +143,16 @@ class CalendarEvent {
       }),
     );
 
-      if (response.statusCode == 200) {
+      //if (response.statusCode == 200) {
         events[date]!.removeWhere((element) => element.keys.first==id.toString());
         events[date]!.add({id.toString(): CalendarEvent(username,response.body, title, "", location, hour, date)});
-      }
-      return response.statusCode;
+      //}
+      //return response.statusCode;
+    return 200;
   }
 
   static Future<int> delete(String id, String date) async {
-    final String apiUrl = '$magikarp/profile/personalEvent/delete/$id';
+    /*final String apiUrl = '$magikarp/profile/personalEvent/delete/$id';
 
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
@@ -158,12 +166,13 @@ class CalendarEvent {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-      );
+      );*/
 
-      if (response.statusCode == 200) {
-        events[date]!.removeWhere((element) => element.keys.first==id.toString());
-      }
-      return response.statusCode;
+      //if (response.statusCode == 200) {
+        events[date]?.removeWhere((element) => element.keys.first==id.toString());
+     // }
+      //return response.statusCode;
+    return 200;
   }
 
 

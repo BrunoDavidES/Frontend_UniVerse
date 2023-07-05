@@ -2,9 +2,9 @@ import 'package:UniVerse/main_screen/components/body.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
-import '../components/faq_item.dart';
-import '../find_screen/maps_screen/map_page_web.dart';
-import '../consts/color_consts.dart';
+import '../faq_item.dart';
+import '../../find_screen/maps_screen/map_page_web.dart';
+import '../../consts/color_consts.dart';
 
 class PageNotFound extends StatelessWidget {
   PageNotFound({super.key});
@@ -12,12 +12,12 @@ class PageNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(                    //Zona principal
+      body: Container(
         height: size.height,
         width: size.width,
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/web/404.png"),
+              image: AssetImage("assets/images/404.png"),
               fit: BoxFit.cover
           ),
         ),

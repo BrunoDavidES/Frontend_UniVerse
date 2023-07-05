@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:UniVerse/components/web/500_web.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
-import 'package:UniVerse/find_screen/services_screen/testing.dart';
+import 'package:UniVerse/find_screen/services_screen/info_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'components/not_found.dart';
+import 'components/web/not_found.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

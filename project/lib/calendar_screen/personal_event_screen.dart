@@ -193,7 +193,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                       showDialog(
                           context: context,
                           builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar este evento?", press: () {
-                            final response = UniverseUser.delete();
+                            final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
                             if(response == 200)
                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
                             else showDialog(

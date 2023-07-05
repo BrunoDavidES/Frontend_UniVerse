@@ -105,7 +105,7 @@ List<Map<String, String>> restaurants = [
 ];
 
 List<Map<String, List<String>>> organizations = [
-  {"nc":["Núcleo de Cinema", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logos-N%C3%BAcleos-17.png"]},
+  {"nc":["Núcleo de Cinema", "https://ae.fct.unl.pt/wp-content/uploads/2022/11/preview-site.png"]},
   {"nea":["Núcleo de Estudantes Africanos", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logo-NEA.png"]},
   {"nnt":["Novo Núcleo de Teatro", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logos-N%C3%BAcleos-19.png"]},
   {"nufoto":["Núcleo de Fotografia", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logos-N%C3%BAcleos-22.png"]},

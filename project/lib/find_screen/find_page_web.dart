@@ -9,7 +9,8 @@ import 'Item.dart';
 import 'findTest/right_side.dart';
 
 class FindWebPage extends StatefulWidget {
-  FindWebPage({super.key});
+  final Widget rightSide;
+  FindWebPage({super.key, required this.rightSide});
 
   @override
   State<FindWebPage> createState() => _FindWebPageState();
@@ -70,7 +71,7 @@ class _FindWebPageState extends State<FindWebPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 50, left: 50, right: 50),
-                              child: RightSide(),
+                              child: widget.rightSide,
                             ),
                           ],
                         ),

@@ -1,17 +1,21 @@
+import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:UniVerse/find_screen/find_test.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
+import 'package:UniVerse/find_screen/organizations_screen/organizations_info_web.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/tester/tester.dart';
+import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 
-import '../components/not_found.dart';
+import '../components/web/not_found.dart';
 import '../components/web/500_web.dart';
 import '../events_screen/events_web.dart';
 import '../events_screen/events_web_detail_screen.dart';
 import '../faq_screen/faq_web.dart';
 import '../find_screen/find_page_web.dart';
+import '../find_screen/services_screen/info_web.dart';
 import '../info_screen/universe_info_web.dart';
 import '../main_screen/homepage_web.dart';
 import '../news_screen/news_web.dart';
@@ -37,14 +41,64 @@ class Routing {
         GoRoute(
             name: 'Procurar',
             path: '/find',
-            builder: (BuildContext context, GoRouterState state) => FindWebPage(),
-          routes: [
+            builder: (BuildContext context, GoRouterState state) => FindWebPage(rightSide: RightSide()),
+            routes: [
+              GoRoute(
+              path: 'services/:id',
+              builder: (BuildContext context, GoRouterState state) {
+                var id = state.pathParameters['id'];
+                final found = services.where((element) => element.keys.first==id);
+                if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+              },
+            ),
+              GoRoute(
+                path: 'departments/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  var id = state.pathParameters['id'];
+                  final found = departments.where((element) => element.keys.first==id);
+                  if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                },
+              ),
+              GoRoute(
+                path: 'buildings/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  var id = state.pathParameters['id'];
+                  final found = buildings.where((element) => element.keys.first==id);
+                  if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                },
+              ),
+              GoRoute(
+                path: 'restaurants/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  var id = state.pathParameters['id'];
+                  final found = restaurants.where((element) => element.keys.first==id);
+                  if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                },
+              ),
+              GoRoute(
+                path: 'organizations/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  var id = state.pathParameters['id'];
+                  final found = organizations.where((element) => element.keys.first==id);
+                  if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide: OrganizationsInfoWeb(id: found.first.keys.first, data: found.first.values.first));
+                },
+              ),
               /* redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';
                     }
                   }*/
-          ]
+            ]
         ),
         GoRoute(
             name: 'Notícias',

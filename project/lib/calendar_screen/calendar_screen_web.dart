@@ -210,12 +210,13 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                               ),
                             ),
                           ),
-                          /*if(CalendarEvent.events[dateString]!=null)
+                          if(CalendarEvent.events[dateString]!=null)
                           Container(
                             width: size.width/2,
                             child: Column(
-                              children: CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element, color: color)).toList(),*/
-                                  ]),
+                              children: CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element.values.first, color: color)).toList(),
+    ),
+    )
                         ],
                       ),
                   ],
@@ -223,6 +224,8 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
               ],
             ),
           ],
+    )
+          ]
     );
   }
 }

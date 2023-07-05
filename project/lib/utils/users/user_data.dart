@@ -86,7 +86,7 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  static Future<int> update(String name, String status, String licensePlate) async {
+  static Future<int> update(name, phone, linkedin, office, license_plate, isPublic) async {
     String token = await Authentication.getTokenID();
     String url = '$magikarp/modify/attributes';
 
@@ -101,8 +101,8 @@ class UniverseUser {
       },
       body: json.encode({
         'name': name,
-        'status': status,
-        'licensePlate': licensePlate,
+        'status': isPublic,
+        'licensePlate': license_plate,
       }),
     );
     if (response.statusCode == 200) {

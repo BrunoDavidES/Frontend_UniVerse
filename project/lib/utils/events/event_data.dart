@@ -66,7 +66,7 @@ class Event {
   }
 
   static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
-    String eventsUrl = '/feed/numberOf/Event';
+    /*String eventsUrl = '/feed/numberOf/Event';
     var response;
     if(numEvents == 0) {
       response = await http.post(
@@ -96,8 +96,8 @@ class Event {
         events.add(Event.fromJson(decoded));
       }
     }
-    return response.statusCode;
-    //return 200;
+    return response.statusCode;*/
+    return 200;
   }
 
 
@@ -133,11 +133,10 @@ class Event {
     if (response.statusCode == 200) {
       var id = response.body;
       organizedEvents.addAll({id:Event("", title, location, "", capacity, "", startDate, endDate, "", "", "")});
-      final ref = FirebaseStorage.instance.ref().child("Events/$id");
+      var ref = FirebaseStorage.instance.ref().child("Events/$id");
       ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
-      /*var txt = File("/$id.txt");
-        txt.writeAsString(description, encoding: utf8);
-        ref.putFile(txt, SettableMetadata(contentEncoding: 'text/plain;charset=UTF-8'));*/
+      ref = FirebaseStorage.instance.ref().child("Reports/$id.txt");
+      ref.putString(description, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
       return 200;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;

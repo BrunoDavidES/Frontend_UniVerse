@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 import '../login_screen/login_screen.dart';
-import 'add_personal_event_screen.dart';
+import 'add_edit_personal_event_screen.dart';
 
 class PersonalEventWeb extends StatelessWidget {
   final bool toCreate;
