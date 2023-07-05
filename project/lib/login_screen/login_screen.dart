@@ -200,10 +200,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "ENTRAR",
                       color: cPrimaryColor,
                       press: () {
-                        logInButtonPressed(idController.text, passwordController.text);
                         setState(() {
                           isLoading = true;
                         });
+                        logInButtonPressed(idController.text.trim(), passwordController.text);
                       },
                       height: 20),
                   DefaultButtonSimple(
