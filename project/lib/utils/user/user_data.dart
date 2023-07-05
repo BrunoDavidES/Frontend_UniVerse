@@ -1,11 +1,7 @@
-
-
 import 'dart:convert';
-
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-
 import '../authentication/auth.dart';
 
 class UniverseUser {
@@ -34,7 +30,7 @@ class UniverseUser {
     if (user != null) {
       return user.uid;
     }
-    return "UNKNOWN ERROR";
+    return "ERROR";
   }
 
   static String getName() {
@@ -80,24 +76,46 @@ class UniverseUser {
     return true;
   }
 
-  Future<int> get(String token) async {
+  UniverseUser.fromJson(Map<String, dynamic> json ) {
+    var properties = json['properties'];
+    department = properties['department']['value'];
+    //job
+    //phone
+    //linkedin
+    //isPublic
+    email = properties['email']['value'];
+    license_plate = properties['license_plate']['value'];
+    name = properties['name']['value'];
+    organization =properties['organization']['value'];
+    office=properties['office']['value'];
+    status =properties['status']['value'];
+    creation = properties['time_creation']['value'];
+  }
+
+  //401, 400, 200
+  Future<int> get() async {
     String token = await Authentication.getTokenID();
-    if(token.isEmpty)
-      return 403;
+
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
 
     String username = getUsername();
-    String url = '$magikarp/profile/$username';
+    String url = '$baseUrl/profile/$username';
 
     final http.Response response = await http.post(
-      Uri.parse(reportUrl),
+      Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
       },
     );
     if (response.statusCode == 200) {
-      //fazer decode
-      return 200;
+      var decoded = json.decode(response.body);
+      UniverseUser.fromJson(decoded);
+      var toSplit = email;
+      username = toSplit!.split("@")[0];
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();
@@ -237,10 +255,10 @@ class UniverseUser {
       }),
     );
 
-      if (response.statusCode == 200) {
-        Authentication.userIsLoggedIn = false;
-      }
-      return response.statusCode;
+    if (response.statusCode == 200) {
+      Authentication.userIsLoggedIn = false;
+    }
+    return response.statusCode;
   }
 
 }
