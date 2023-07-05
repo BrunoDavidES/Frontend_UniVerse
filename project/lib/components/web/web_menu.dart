@@ -1,4 +1,5 @@
 import 'package:UniVerse/components/confirm_dialog_box.dart';
+import 'package:UniVerse/modify_password_screen/modify_password_page_web.dart';
 import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -68,7 +69,7 @@ class WebMenu extends StatelessWidget {
                                   Radius.circular(10.0)
                               )
                           ),
-                          child: SoonPopUp(),
+                          child: QRPopUp(text: "Acede ao teu comprovativo na nossa aplicação!",),
                         )
                     );
                   },),
@@ -85,7 +86,7 @@ class WebMenu extends StatelessWidget {
                                   Radius.circular(10.0)
                               )
                           ),
-                          child: QRPopUp(),
+                          child: QRPopUp(text: "Acede aos fórus na nossa aplicação!",),
                         )
                     );
                   },),
@@ -97,7 +98,19 @@ class WebMenu extends StatelessWidget {
                     context.go("/events/submit");
                   },),
                   WebMenuCard(text: 'Feedback',icon: Icons.bar_chart_outlined),
-                  WebMenuCard(text: 'Mudar Palavra-passe',icon: Icons.password_outlined),
+                  WebMenuCard(text: 'Mudar Palavra-passe',icon: Icons.password_outlined, press: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          content: ModifyPasswordPageWeb(),
+                        ));
+                  }),
                   WebMenuCard(text: 'Apagar Conta',icon: Icons.delete, press: () {
                     showDialog(
                         context: context,
@@ -108,16 +121,16 @@ class WebMenu extends StatelessWidget {
                           else showDialog(
                               context: context,
                               builder: (_) => CustomDialogBox(
-                              title: "Ups!",
-                              descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
-                              text: "OK",
-                              press: () {
-                                context.go('/home');
-                              }
-                        )
-                    );
-                  },));
-    }
+                                  title: "Ups!",
+                                  descriptions: "Parece que não iniciaste sessão na tua conta. Precisamos que o faças",
+                                  text: "OK",
+                                  press: () {
+                                    context.go('/home');
+                                  }
+                              )
+                          );
+                        },));
+                  }
                   )
                 ],
               ),
@@ -130,8 +143,9 @@ class WebMenu extends StatelessWidget {
 }
 
 class QRPopUp extends StatelessWidget {
+  final String text;
   const QRPopUp({
-    super.key,
+    super.key, required this.text,
   });
 
   @override
@@ -156,7 +170,7 @@ class QRPopUp extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Acede aos fóruns na nossa aplicação!".toUpperCase(),
+          Text(text.toUpperCase(),
             style: TextStyle(
                 color: cPrimaryColor,
                 fontWeight: FontWeight.bold,
@@ -207,9 +221,9 @@ class SoonPopUp extends StatelessWidget {
         children: [
           Text("Brevemente Disponível na UniVerse".toUpperCase(),
             style: TextStyle(
-              color: cPrimaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 18
+                color: cPrimaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18
             ),
             textAlign: TextAlign.center,
           ),

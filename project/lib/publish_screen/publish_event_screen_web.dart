@@ -197,6 +197,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                           showDialog(
                               context: context,
                               builder: (_) => const AlertDialog(
+                                backgroundColor: cDirtyWhiteColor,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                       BorderRadius.all(

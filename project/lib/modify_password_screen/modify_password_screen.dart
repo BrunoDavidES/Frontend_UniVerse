@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
+import 'package:UniVerse/components/password_field.dart';
 import 'package:UniVerse/login_screen/reset_password_app.dart';
 import 'package:UniVerse/login_screen/reset_password_screen.dart';
 import 'package:UniVerse/login_screen/reset_password_web.dart';
@@ -31,34 +32,26 @@ import '../../utils/authentication/auth.dart';
 import '../../utils/connectivity.dart';
 
 
-class ProfileEditScreen extends StatefulWidget {
-  final UniverseUser data;
-  const ProfileEditScreen({super.key, required this.data});
+class ModifyPasswordScreen extends StatefulWidget {
+  const ModifyPasswordScreen({super.key});
 
   @override
-  State<ProfileEditScreen> createState() => _ProfileEditState();
+  State<ModifyPasswordScreen> createState() => _ModifyPasswordState();
 }
 
-class _ProfileEditState extends State<ProfileEditScreen> {
+class _ModifyPasswordState extends State<ModifyPasswordScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  late TextEditingController nameController= TextEditingController();
-  late TextEditingController phoneController= TextEditingController();
-  late TextEditingController linkedinController= TextEditingController();
-  late TextEditingController officeController= TextEditingController();
-  late TextEditingController license_plateController= TextEditingController();
-  String? isPublic;
+  late TextEditingController oldPwdController;
+  late TextEditingController newPwdController;
+  late TextEditingController confirmationController;
   bool isLoading = false;
-  Uint8List imageUint8 = Uint8List(8);
-  File? pickedImage;
 
   @override
   void initState() {
-    nameController.text = widget.data.name!;
-    phoneController.text = widget.data.phone!;
-    linkedinController.text = widget.data.linkedin!;
-    officeController.text = widget.data.office!;
-    license_plateController.text = widget.data.license_plate!;
+    oldPwdController = TextEditingController();
+    newPwdController = TextEditingController();
+    confirmationController = TextEditingController();
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
@@ -73,7 +66,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
     super.dispose();
   }
 
-  void submitButtonPressed(name, phone, linkedin, office, license_plate, isPublic) async {
+  void submitButtonPressed(name, phone, linkedin) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -93,7 +86,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
           builder: (_) => ConfirmDialogBox(
               descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
               press: () async {
-                var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
+               // var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
+                var response = 200;
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
@@ -156,7 +150,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
-          title: Image.asset("assets/titles/edit.png", scale:6),
+          title: Image.asset("assets/titles/modify_pwd.png", scale:4.5),
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,
@@ -167,7 +161,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "O teu perfil na UniVerse não é vinculativo com as tuas informações nos serviços da faculdade.",
+                "Todos os campos são obrigatórios.",
                 style:TextStyle(
                   fontSize: 13,
                   color: Colors.redAccent,
@@ -175,118 +169,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              MyTextField(controller: nameController, hintText: '', obscureText: false, label: 'Nome', icon: Icons.person_outline,),
-              MyTextField(controller: phoneController, hintText: '', obscureText: false, label: 'Telémovel', icon: Icons.phone_outlined,),
-              MyTextField(controller: linkedinController, hintText: '', obscureText: false, label: 'Perfil LinkedIn', icon: Icons.link_outlined,),
-              MyTextField(controller: officeController, hintText: '', obscureText: false, label: 'Gabinete', icon: Icons.work_outline,),
-              MyTextField(controller: license_plateController, hintText: '', obscureText: false, label: 'Matrícula', icon: Icons.directions_car_filled,),
-
-              Container(
-                margin: const EdgeInsets.only(left: 20, right:20, top: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      "Visibilidadade da conta:",
-                      style: TextStyle(
-                          color: cDarkBlueColor
-                      ),
-                    ),
-                    SizedBox(width: 15),
-                    ToggleSwitch(
-                      customWidths: [80, 80.0],
-                      cornerRadius: 15.0,
-                      activeBgColors: [[cDarkLightBlueColor], [cDarkLightBlueColor]],
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: cDirtyWhiteColor,
-                      inactiveFgColor: cHeavyGrey,
-                      totalSwitches: 2,
-                      labels: ['Pública', 'Privada'],
-                      onToggle: (index) {
-                        if(index==0)
-                          isPublic = 'yes';
-                        else isPublic = 'no';
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: Text(
-                  "Ao tornares a tua conta pública, só pessoas que estejam registada na UniVerse poderão visualizá-la.",
-                  style: TextStyle(
-                    color: cDarkBlueColor,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  try {
-                    final ImagePicker picker = ImagePicker();
-                    XFile? image = await picker.pickImage(
-                        source: ImageSource.gallery);
-                    if (image != null) {
-                      File img = File(image.path);
-                      var f = await image.readAsBytes();
-                      if(f.lengthInBytes > 3000000) {
-                        print("REACHED!!!!!!!");
-                        showDialog(context: context,
-                            builder: (BuildContext context) {
-                              return CustomDialogBox(
-                                title: "Ups!",
-                                descriptions: "A imagem excede o tamanho máximo permitido de 3 MB.",
-                                text: "OK",
-                              );
-                            }
-                        );
-                        return;
-                      }
-                      imageUint8 = f;
-                      setState(() {
-                        pickedImage = img;
-                      });
-                    }
-                  } on PlatformException catch (e) {
-                    showDialog(context: context,
-                        builder: (BuildContext context) {
-                          return CustomDialogBox(
-                            title: "Ups!",
-                            descriptions: "Não conseguimos obter a imagem que escolheste. Tenta novamente, por favor.",
-                            text: "OK",
-                          );
-                        }
-                    );
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 25, top: 10),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Icon(Icons.camera_alt_outlined,
-                            color: cDarkBlueColor),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: pickedImage != null
-                            ? Text(
-                          "Fotografia Adicionada!",
-                          style: TextStyle(
-                              color: Colors.green
-                          ),
-                        )
-                            : Text(
-                          "Muda a tua foto de perfil aqui (max 3 MB)",
-                          style: TextStyle(
-                              color: cDarkBlueColor
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              MyPasswordField(controller: oldPwdController, hintText: '00', obscureText: true, label: 'Palavra-passe atual', icon: Icons.lock_outline),
+              MyPasswordField(controller: newPwdController, hintText: '6 caracteres, 1 número, 1 maiúscula', obscureText: true, label: 'Nova Palavra-passe', icon: Icons.lock_outline),
+              MyPasswordField(controller: confirmationController, hintText: 'Introduz novamente a palavra-passe nova', obscureText: true, label: 'Confirmação', icon: Icons.lock_outline),
               const SizedBox(height: 20),
               isLoading
                   ? Row(
@@ -316,7 +201,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       text: "CONFIRMAR ALTERAÇÕES",
                       color: cPrimaryColor,
                       press: () {
-                        submitButtonPressed(nameController.text, phoneController.text, linkedinController.text, officeController.text, license_plateController.text, isPublic);
+                        submitButtonPressed(oldPwdController.text, newPwdController.text, confirmationController.text);
                         setState(() {
                           isLoading = true;
                         });

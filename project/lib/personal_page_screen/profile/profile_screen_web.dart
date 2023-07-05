@@ -4,6 +4,7 @@ import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_edit_page_web.dart';
 import 'package:UniVerse/personal_page_screen/profile/profile_edit_screen.dart';
+import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,6 +21,7 @@ class ProfileScreenWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UniverseUser user = UniverseUser("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
     Size size = MediaQuery.of(context).size;
     return Row(
       children: [
@@ -64,13 +66,13 @@ class ProfileScreenWeb extends StatelessWidget {
                               padding: const EdgeInsets.only(top:30),
                               child: Column(
                                 children: [
-                                    Text("Nome Utilizador",
+                                    Text(user.name!,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
                                     ),
                                   SizedBox(height: 5,),
-                                  Text("identificador",
+                                  Text(user.username!,
                                       style: TextStyle(
                                           fontSize: 15,
                                           color: cHeavyGrey
@@ -83,7 +85,7 @@ class ProfileScreenWeb extends StatelessWidget {
 
                              Padding(
                                padding: const EdgeInsets.only(top: 40),
-                               child: Text("Role Principal",
+                               child: Text(user.role!,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -92,7 +94,7 @@ class ProfileScreenWeb extends StatelessWidget {
                                 SizedBox(width:10,),
                               Padding(
                                 padding: const EdgeInsets.only(top: 45),
-                                child: Text("Função mais alta",
+                                child: Text(user.job!,
                                       style: TextStyle(
                                           fontSize: 15,
                                           color: cHeavyGrey
@@ -119,7 +121,7 @@ class ProfileScreenWeb extends StatelessWidget {
                                           Radius.circular(10.0),
                                         ),
                                       ),
-                                      content: ProfileEditPageWeb(),
+                                      content: ProfileEditPageWeb(data: user),
                                     ),
                                   );
                                 }, icon: Icon(Icons.edit_outlined, color: cHeavyGrey,)),
@@ -142,11 +144,11 @@ class ProfileScreenWeb extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height:size.height/10),
-                          MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: "identificador@campus.fct.unl.pt",),
-                          MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: "+351 999999999",),
-                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: "@",),
-                          MyReadOnlyField(icon: Icons.work, text: "Gabinete:", content: "Gabinete 3.5/2",),
-                          MyReadOnlyField(icon: Icons.directions_car_filled, text: "Matrícula:", content: "Sem registo",),
+                          MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: user.email!,),
+                          MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: user.phone!,),
+                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email!,),
+                          MyReadOnlyField(icon: Icons.work, text: "Gabinete:", content: user.office!,),
+                          MyReadOnlyField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate!,),
                         ],
                       ),
                     ),
@@ -164,7 +166,7 @@ class ProfileScreenWeb extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Text("Na UniVerse desde 11/07/2023",
+                        Text("Na UniVerse desde ${user.creation}",
                           style: TextStyle(
                             fontSize: 18,
                             color: cHeavyGrey.withOpacity(0.5)
@@ -172,18 +174,18 @@ class ProfileScreenWeb extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:10),
-                          child: Text("Conta Pública",
+                          child: Text(user.isPublic!,
                             style: TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
-                        Text("Departamento",
+                        Text(user.department!,
                           style: TextStyle(
                             fontSize: 15,
                           ),
                         ),
-                        Text("Núcleo (se tiver)",
+                        Text(user.organization!,
                           style: TextStyle(
                             fontSize: 15,
                           ),

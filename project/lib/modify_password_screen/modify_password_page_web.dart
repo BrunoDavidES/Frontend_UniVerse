@@ -3,19 +3,18 @@ import 'package:UniVerse/utils/users/user_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
+import 'modify_password_screen.dart';
 
-class ProfileEditPageWeb extends StatelessWidget {
-  UniverseUser? data;
+class ModifyPasswordPageWeb extends StatelessWidget {
 
-  ProfileEditPageWeb({super.key, this.data});
-
+  ModifyPasswordPageWeb({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-        width: size.width/2, height: size.height/1.25,
-        child: ProfileEditScreen(data: data!)
-        );
+        width: size.width/3.5, height: size.height/2,
+        child: ModifyPasswordScreen()
+    );
   }
 }

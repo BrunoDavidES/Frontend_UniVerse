@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:UniVerse/calendar_screen/personal_event_web.dart';
+
 import '../components/confirm_dialog_box.dart';
 import '../login_screen/login_app.dart';
 import '../utils/events/personal_event_data.dart';
@@ -183,7 +185,18 @@ class _EventScreenState extends State<PersonalEventScreen> {
                     text: "EDITAR",
                     color: cDarkLightBlueColor,
                     press: () {
-
+                      showDialog(
+                          context: context,
+                          builder: (_) => Dialog(
+                          backgroundColor: cDirtyWhiteColor,
+                          shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.all(
+                          Radius.circular(10.0)
+                      )
+                      ),
+                      child: PersonalEventWeb(toCreate: true, toEdit: true, data: widget.data/*focusDay: focusedDay*/)
+                      ));
                     },
                     height: 20),
                 DefaultButtonSimple(

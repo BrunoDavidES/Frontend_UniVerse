@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:UniVerse/Components/default_button.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../consts/list_consts.dart';
 import '../../utils/connectivity.dart';
 import '../../utils/events/event_data.dart';
 import '../../utils/news/article_data.dart';
+import '../components/default_button_2.dart';
 import 'organized_events_info_screen.dart';
 
 class OrganizedEventsFeed extends StatefulWidget {
@@ -75,6 +77,7 @@ class EventsState extends State<OrganizedEventsFeed> {
     else
       width = size.width;
     return Container(
+      color: cDirtyWhiteColor,
 width: width,
       height: size.height/2,
       padding: EdgeInsets.only(left: 5, top: 5, right: 5),
@@ -104,6 +107,7 @@ width: width,
                             showDialog(
                                 context: context,
                                 builder: (_) =>  AlertDialog(
+                                  backgroundColor: cDirtyWhiteColor,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                         BorderRadius.all(
@@ -113,16 +117,11 @@ width: width,
                                     content: OrganizedEventInfo(data: element)
                                 )
                                 ),
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Text(
-                              element.title!,
-                              style: TextStyle(
-                                color: cDarkBlueColor,
-                                fontSize: 18
-                              ),
-                            ),
-                          ),
+                          child: DefaultButton2(
+                            width: size.width,
+                            text: element.title!,
+                            press: () {},
+                          )
                         )).toList(),
                       );
                     }

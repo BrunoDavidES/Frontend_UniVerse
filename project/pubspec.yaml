@@ -115,6 +115,7 @@ flutter:
     - assets/app/profile_title.png
     - assets/titles/about_us.png
     - assets/titles/edit.png
+    - assets/titles/modify_pwd.png
     - assets/titles/area.png
     - assets/titles/buildings.png
     - assets/titles/calendar.png

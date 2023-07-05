@@ -169,7 +169,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                                               Radius.circular(10.0)
                                           )
                                       ),
-                                      child: PersonalEventApp(toCreate: true/*focusDay: focusedDay*/),
+                                      child: PersonalEventApp(toCreate: true, toEdit: false,/*focusDay: focusedDay*/),
                                     )
                                 );
                               }

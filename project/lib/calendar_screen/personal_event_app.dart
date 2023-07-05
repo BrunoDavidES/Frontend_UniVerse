@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 import '../login_screen/login_screen.dart';
-import 'add_edit_personal_event_screen.dart';
+import 'add_personal_event_screen.dart';
+import 'edit_personal_event_screen.dart';
 
 class PersonalEventApp extends StatelessWidget {
   final bool toCreate;
+  final bool toEdit;
   final CalendarEvent? data;
   //final DateTime focusDay;
-  const PersonalEventApp({super.key, required this.toCreate, this.data/*required this.focusDay*/});
+  const PersonalEventApp({super.key, required this.toCreate, this.data, required this.toEdit/*required this.focusDay*/});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class PersonalEventApp extends StatelessWidget {
         width: size.width,
         height: toCreate ?size.height/1.7 :size.height/4,
         child: toCreate
-            ?PersonalEventCreationScreen()
+            ?toEdit ?PersonalEventEditScreen(data: data!) :PersonalEventCreationScreen()
             :PersonalEventScreen(data: data!,)
     );
   }

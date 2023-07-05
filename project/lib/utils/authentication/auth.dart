@@ -14,7 +14,7 @@ class Authentication {
 
   static bool userIsLoggedIn = false;
 
-  static bool areCompliant(String email, String password) {
+  static bool areCompliantToLogin(String email, String password) {
     return email.isNotEmpty && password.isNotEmpty;
   }
 
@@ -66,6 +66,9 @@ class Authentication {
       return "";
   }
 
+  static bool areCompliantToModify(oldPwd, newPwd, confirmation) {
+    return oldPwd.isNotEmpty && newPwd.isNotEmpty && confirmation.isNotEmpty;
+  }
 
   /*static Future<int> validateLogin() async {
     final url = Uri.parse('https://majikarp-fct.oa.r.appspot.com/rest/login/validate');

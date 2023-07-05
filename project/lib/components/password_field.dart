@@ -4,13 +4,13 @@ import '../consts/color_consts.dart';
 
 class MyPasswordField extends StatefulWidget {
 
-  final controller;
+  final TextEditingController controller;
   final String hintText;
   final String label;
   final bool obscureText;
   final IconData? icon;
 
-  const MyPasswordField({super.key, this.controller, required this.hintText, required this.obscureText, required this.label, this.icon});
+  const MyPasswordField({super.key, required this.controller, required this.hintText, required this.obscureText, required this.label, this.icon});
 
   @override
   State<MyPasswordField> createState() => _MyPasswordFieldState();

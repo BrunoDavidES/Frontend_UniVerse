@@ -33,8 +33,8 @@ class CalendarEventState extends State<CalendarEventCard> {
                  )
              ),
              content: kIsWeb
-             ?PersonalEventWeb(toCreate: false, data: widget.data,/*focusDay: focusedDay*/)
-             :PersonalEventApp(toCreate: false, data: widget.data,/*focusDay: focusedDay*/)
+             ?PersonalEventWeb(toCreate: false, toEdit:false, data: widget.data,/*focusDay: focusedDay*/)
+             :PersonalEventApp(toCreate: false, toEdit:false, data: widget.data,/*focusDay: focusedDay*/)
            )
        );
      },

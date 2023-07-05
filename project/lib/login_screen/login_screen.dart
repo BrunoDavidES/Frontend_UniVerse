@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.areCompliant(email, password);
+      bool areControllersCompliant = Authentication.areCompliantToLogin(email, password);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){

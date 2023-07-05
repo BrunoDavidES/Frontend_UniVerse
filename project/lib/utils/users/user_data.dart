@@ -10,6 +10,25 @@ import '../authentication/auth.dart';
 
 class UniverseUser {
 
+  String? name, username, role, job, email, phone, linkedin, office, license_plate, department, organization, status, creation, isPublic;
+
+  UniverseUser(
+      this.name,
+      this.username,
+      this.role,
+      this.job,
+      this.email,
+      this.phone,
+      this.linkedin,
+      this.office,
+      this.license_plate,
+      this.department,
+      this.organization,
+      this.status,
+      this.creation,
+      this.isPublic
+      );
+
   static String getUsername() {
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {

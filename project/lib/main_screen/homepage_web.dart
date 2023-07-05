@@ -204,7 +204,7 @@ class WelcomeArea extends StatelessWidget {
               "Todo o universo, num só lugar!".toUpperCase(),
               style: const TextStyle(
                 fontSize: 70,
-                color: cDirtyWhite,
+                color: cDirtyWhiteColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
