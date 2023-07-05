@@ -49,7 +49,7 @@ class ChatUtils {
         'Authorization': token
       };
 
-      final response = await http.post(
+      final response = await http.delete(
         url,
         headers: headers,
       );
@@ -104,7 +104,7 @@ class ChatUtils {
         'Authorization': token
       };
 
-      final response = await http.post(
+      final response = await http.delete(
         url,
         headers: headers,
       );
@@ -133,7 +133,7 @@ class ChatUtils {
       final response = await http.post(
         url,
         body: json.encode({
-          'post': message
+          'message': message
         }),
         headers: headers,
       );
@@ -159,7 +159,7 @@ class ChatUtils {
         'Authorization': token
       };
 
-      final response = await http.post(
+      final response = await http.delete(
         url,
         headers: headers,
       );

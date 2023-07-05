@@ -82,7 +82,7 @@ class _MyChatPageState extends State<ChatPageApp> {
     if (userID != null) {
       _forumStream = FirebaseDatabase.instance
           .ref()
-          .child('users/${userID.replaceAll(".", "-")}/')
+          .child('users/${userID.replaceAll(".", "-")}/forums/')
           .onValue
           .listen((event) {
         var snapshot = event.snapshot;
