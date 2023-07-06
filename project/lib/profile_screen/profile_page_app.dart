@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
 import '../components/custom_shape.dart';
-import '../personal_page_screen/profile/edit_profile_page_app.dart';
+import '../profile_edit_screen/edit_profile_page_app.dart';
 
 class ProfilePageApp extends StatelessWidget {
   const ProfilePageApp({super.key});

@@ -1,8 +1,9 @@
 import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/personal_page_screen/profile/profile_edit_page_web.dart';
+import 'package:UniVerse/profile_edit_screen/profile_edit_page_web.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
+
 class ProfileScreenWeb extends StatelessWidget {
   const ProfileScreenWeb({super.key});
 

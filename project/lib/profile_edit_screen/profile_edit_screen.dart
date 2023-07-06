@@ -1,32 +1,23 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../components/confirm_dialog_box.dart';
-import '../../components/default_button_simple.dart';
-import '../../components/simple_dialog_box.dart';
-import '../../components/text_field.dart';
-import '../../consts/color_consts.dart';
-import '../../login_screen/login_app.dart';
-import '../../register_screen/register_app.dart';
-import '../../register_screen/register_web.dart';
-import '../../utils/authentication/auth.dart';
-import '../../utils/connectivity.dart';
+import '../components/confirm_dialog_box.dart';
+import '../components/default_button_simple.dart';
+import '../components/simple_dialog_box.dart';
+import '../components/text_field.dart';
+import '../consts/color_consts.dart';
+import '../login_screen/login_app.dart';
+import '../utils/connectivity.dart';
 
 
 class ProfileEditScreen extends StatefulWidget {
@@ -71,13 +62,13 @@ class _ProfileEditState extends State<ProfileEditScreen> {
     super.dispose();
   }
 
-  void submitButtonPressed(name, phone, linkedin, office, license_plate, isPublic) async {
+  void submitButtonPressed(name, phone, linkedin, office, licensePlate, isPublic) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para confirmares as alterações precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para confirmares as alterações no teu perfil precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -91,7 +82,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
           builder: (_) => ConfirmDialogBox(
               descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
               press: () async {
-                var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic, imageUint8);
+                Navigator.pop(context);
+                var response = await UniverseUser.update(name, phone, linkedin, office, licensePlate, isPublic, imageUint8);
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
@@ -99,6 +91,12 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                           title: "Sucesso",
                           descriptions: "Já atualizámos o teu perfil! Espera uns minutos para visualizares as tuas informações de novo.",
                           text: "OK",
+                          press: () {
+                            if(kIsWeb) {
+                              Navigator.pop(context);
+                              context.go("/personal");
+                            } else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PersonalPageBodyApp()));
+                          }
                         );
                       }
                   );
@@ -107,8 +105,14 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       builder: (BuildContext context) {
                         return CustomDialogBox(
                           title: "Ups!",
-                          descriptions: "Parece que a tua sessão expirou. Precisamos que inicies sessão novamente, por favor.",
+                          descriptions: "Parece que a tua sessão expirou. Precisamos que inicies sessão novamente.",
                           text: "OK",
+                          press: () {
+                            Navigator.pop(context);
+                            if(kIsWeb)
+                              context.go("/home");
+                            else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                          }
                         );
                       }
                   );
@@ -120,9 +124,10 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                             descriptions: "Parece que não tens permissões para esta operação.",
                             text: "OK",
                             press: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (
-                                      context) => const LoginPageApp()));
+                              Navigator.pop(context);
+                              if(kIsWeb)
+                                context.go("/home");
+                              else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PersonalPageBodyApp()));
                             }
                         );
                       }
@@ -178,7 +183,6 @@ class _ProfileEditState extends State<ProfileEditScreen> {
               MyTextField(controller: linkedinController, hintText: '', obscureText: false, label: 'Perfil LinkedIn', icon: Icons.link_outlined,),
               MyTextField(controller: officeController, hintText: '', obscureText: false, label: 'Gabinete', icon: Icons.work_outline,),
               MyTextField(controller: license_plateController, hintText: '', obscureText: false, label: 'Matrícula', icon: Icons.directions_car_filled,),
-
               Container(
                 margin: const EdgeInsets.only(left: 20, right:20, top: 10),
                 child: Row(
@@ -227,7 +231,6 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       File img = File(image.path);
                       var f = await image.readAsBytes();
                       if(f.lengthInBytes > 3000000) {
-                        print("REACHED!!!!!!!");
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(

@@ -1,35 +1,19 @@
-import 'dart:convert';
+
 import 'dart:ui';
-
 import 'package:UniVerse/personal_event_screen/personal_event_web.dart';
+import 'package:go_router/go_router.dart';
 
+import '../components/500.dart';
 import '../components/confirm_dialog_box.dart';
 import '../login_screen/login_app.dart';
 import '../utils/events/personal_event_data.dart';
-import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import '../Components/default_button.dart';
-import '../components/app/500_app_with_bar.dart';
 import '../components/default_button_simple.dart';
 import '../components/simple_dialog_box.dart';
-import '../components/text_field.dart';
-import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info_screen/universe_info_app.dart';
-import '../personal_page_screen/web/personal_page_web.dart';
-import '../register_screen/register_app.dart';
-import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
-import 'package:intl/intl.dart';
-
 import '../utils/user/user_data.dart';
 
 class PersonalEventScreen extends StatefulWidget {
@@ -57,13 +41,13 @@ class _EventScreenState extends State<PersonalEventScreen> {
     super.initState();
   }
 
-  void submitButtonPressed(String title, String location, String date, String time) async {
+  void buttonPressed(id, date) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para excluires este evento da tua agenda, precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -72,45 +56,51 @@ class _EventScreenState extends State<PersonalEventScreen> {
         isLoading = false;
       });
     } else {
-      /*bool areControllersCompliant = Authentication.isCompliant(id, password);
-      if (!areControllersCompliant) {
-        showDialog(context: context,
-            builder: (BuildContext context){
-              return CustomDialogBox(
-                title: "Ups!",
-                descriptions: "Existem campos vazios. Preenche-os, por favor.",
-                text: "OK",
-              );
-            }
-        );
-        setState(() {
-          isLoading = false;
-        });
-      }
-      else {
-        var response = await Authentication.loginUser(id, password);
+      ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar este evento?", press: () {
+        final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
         if (response == 200) {
-          if(kIsWeb) {
-            Navigator.pushNamed(context, "/personal/main");
-          }
-          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
-        } else if (response==401) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return CustomDialogBox(
+                  title: "Sucesso!",
+                  descriptions: "O evento foi eliminado",
+                  text: "OK",
+                );
+              }
+          );
+        } if (response == 401) {
+          showDialog(context: context,
+              builder: (BuildContext context) {
+                return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
+                    text: "OK",
+                    press: () {
+                      if (kIsWeb) {
+                        context.go("/home");
+                      } else
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) => const LoginPageApp()));
+                    });
+              }
+          );
+        } else if (response==400) {
           showDialog(context: context,
               builder: (BuildContext context){
                 return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "O email e/ou password estão incorretos. Tenta novamente.",
+                  descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
                   text: "OK",
                 );
               }
           );
         } else {
           if(kIsWeb)
-            Navigator.popAndPushNamed(context, "/error");
+            context.go("/error");
           else
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
         }
-      }*/
+      });
     }
     setState(() {
       isLoading = false;
@@ -201,24 +191,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
                     text: "EXCLUIR",
                     color: cDarkLightBlueColor,
                     press: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar este evento?", press: () {
-                            final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
-                            if(response == 200)
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
-                            else showDialog(
-                                context: context,
-                                builder: (_) => CustomDialogBox(
-                                    title: "Ups!",
-                                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
-                                    text: "OK",
-                                    press: () {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                                    }
-                                )
-                            );
-                          },));
+                      buttonPressed(widget.data.id, widget.data.date);
                     },
                     height: 20),
               ],

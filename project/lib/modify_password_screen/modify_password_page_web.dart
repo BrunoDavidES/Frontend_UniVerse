@@ -1,4 +1,4 @@
-import 'package:UniVerse/personal_page_screen/profile/profile_edit_screen.dart';
+import 'package:UniVerse/profile_edit_screen/profile_edit_screen.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 

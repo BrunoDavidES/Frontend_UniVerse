@@ -1,32 +1,15 @@
-import 'dart:convert';
-
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/components/my_date_field.dart';
-import 'package:UniVerse/login_screen/login_web.dart';
-import 'package:UniVerse/reset_pwd_screen/reset_password_app.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
-import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-
-import '../Components/default_button.dart';
-import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
-import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_app.dart';
-import '../personal_page_screen/web/personal_page_web.dart';
-import '../register_screen/register_app.dart';
-import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 import 'package:intl/intl.dart';
 
@@ -70,7 +53,7 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
           builder: (BuildContext context) {
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para editares este evento, precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -80,7 +63,7 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
       });
     } else {
       bool areControllersCompliant = CalendarEvent.areCompliant(
-          title, "o", location, date, hour);
+          title, location, date, hour);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context) {
@@ -97,47 +80,44 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
             context: context,
             builder: (_) =>
                 ConfirmDialogBox(
-                    descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
+                    descriptions: "Tens a certeza que queres atualizar este evento?",
                     press: () async {
-                      var response = await CalendarEvent.edit(
-                          id, title, location, date, hour);
+                      var response = await CalendarEvent.edit(id, title, location, date, hour);
                       if (response == 200) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(
                                 title: "Sucesso!",
-                                descriptions: "O evento criado foi adicionado ao teu calendário.",
+                                descriptions: "O evento editado!",
                                 text: "OK",
                               );
                             }
                         );
-                      } else if (response == 403) {
+                      } else if (response == 401) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(
                                 title: "Ups!",
-                                descriptions: "",
+                                descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
                                 text: "OK",
                                 press: () {
                                   if (kIsWeb) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) =>
-                                        const AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.all(
-                                                  Radius.circular(10.0)
-                                              )
-                                          ),
-                                          content: LoginPageWeb(),
-                                        )
-                                    );
+                                    context.go("/home");
                                   } else
                                     Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (
                                             context) => const LoginPageApp()));
                                 },
+                              );
+                            }
+                        );
+                      } else if (response==400) {
+                        showDialog(context: context,
+                            builder: (BuildContext context){
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                                text: "OK",
                               );
                             }
                         );

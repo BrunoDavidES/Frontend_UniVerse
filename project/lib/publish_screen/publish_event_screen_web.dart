@@ -1,38 +1,18 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
-import 'package:UniVerse/utils/camera/camera_screen.dart';
-import 'package:UniVerse/utils/report/report_data.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
-import '../Components/default_button.dart';
-import '../components/app/500_app_with_bar.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
-import '../components/description_field.dart';
 import '../components/my_date_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
-import '../components/url_launchable_item.dart';
 import '../components/web/web_menu.dart';
-import '../components/web_menu_card.dart';
 import '../consts/color_consts.dart';
-import '../info_screen/universe_info_app.dart';
-import '../login_screen/login_app.dart';
-import '../register_screen/register_app.dart';
-import '../register_screen/register_web.dart';
-import '../utils/connectivity.dart';
 import '../utils/events/event_data.dart';
 import '../utils/user/user_data.dart';
 import 'organized_events_screen.dart';
@@ -100,7 +80,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
             context: context,
             builder: (_) =>
                 ConfirmDialogBox(
-                    descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
+                    descriptions: "A submissão de um evento é validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
                     press: () async {
                       var response = await Event.post(
                           title,
@@ -127,8 +107,11 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                             builder: (BuildContext context) {
                               return CustomDialogBox(
                                 title: "Ups!",
-                                descriptions: "Parece que não tens sessão iniciada.",
+                                descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
                                 text: "OK",
+                                press: () {
+                                  context.go("/home");
+                                },
                               );
                             }
                         );
@@ -139,6 +122,9 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                                 title: "Ups!",
                                 descriptions: "Parece que não tens permissões para esta operação.",
                                 text: "OK",
+                                press: () {
+                                  context.go("/personal");
+                                },
                               );
                             }
                         );

@@ -66,11 +66,11 @@ class CalendarEvent {
     return response.statusCode;
   }
 
-  static bool areCompliant(title, department, location, date, hour) {
-    return title.isNotEmpty && (department==null || department.isNotEmpty) && location.isNotEmpty && date.isNotEmpty && hour.isNotEmpty;
+  static bool areCompliant(title,location, date, hour) {
+    return title.isNotEmpty && location.isNotEmpty && date.isNotEmpty && hour.isNotEmpty;
   }
 
-  static Future<int> add(username, title, department, location, date, hour) async {
+  static Future<int> add(username, title, String? department, location, date, hour) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
