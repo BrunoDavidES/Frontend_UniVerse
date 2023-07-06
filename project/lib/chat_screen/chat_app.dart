@@ -18,13 +18,8 @@ class _MyFindPageState extends State<ChatScreenApp> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
           children: <Widget>[
             ContactsScreenApp(),
             Container(
@@ -33,7 +28,6 @@ class _MyFindPageState extends State<ChatScreenApp> {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 }

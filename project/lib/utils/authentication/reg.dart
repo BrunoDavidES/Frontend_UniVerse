@@ -15,7 +15,7 @@ class Registration {
   }
 
   static Future<int> regist(String password, String confirmation,
-      String name, String email) async {
+      String name, String email, passwordUnHashed) async {
     final emailValidator = RegExp("^[A-Za-z0-9._%+-]+@(fct\.unl\.pt|campus\.fct\.unl\.pt)");
     final passwordValidator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
     /*Password_Hasher(
@@ -26,7 +26,7 @@ class Registration {
     )*/
     if (!emailValidator.hasMatch(email))
       return 00;
-    if(!passwordValidator.hasMatch(password))
+    if(!passwordValidator.hasMatch(passwordUnHashed))
     return 01;
     else return register(password, confirmation, name, email);
   }

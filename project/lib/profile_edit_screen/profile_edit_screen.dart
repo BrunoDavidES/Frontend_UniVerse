@@ -158,10 +158,26 @@ class _ProfileEditState extends State<ProfileEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
-        appBar: AppBar(
+        appBar: kIsWeb
+        ?AppBar(
           title: Image.asset("assets/titles/edit.png", scale:6),
-          automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
+          automaticallyImplyLeading: false,
+          titleSpacing: 15,
+          elevation: 0,
+        )
+        :AppBar(
+          title: Image.asset("assets/titles/edit.png", scale:6),
+          backgroundColor: cDirtyWhiteColor,
+          leading: Builder(
+              builder: (context) {
+                return IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {Navigator.pop(context);},
+                    color: cDarkLightBlueColor);
+              }
+          ),
+          leadingWidth: 20,
           titleSpacing: 15,
           elevation: 0,
         ),
@@ -185,7 +201,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
               MyTextField(controller: license_plateController, hintText: '', obscureText: false, label: 'Matrícula', icon: Icons.directions_car_filled,),
               Container(
                 margin: const EdgeInsets.only(left: 20, right:20, top: 10),
-                child: Row(
+                child: kIsWeb
+                  ? Row(
                   children: [
                     Text(
                       "Visibilidadade da conta:",
@@ -210,7 +227,34 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       },
                     ),
                   ],
-                ),
+                )
+                    : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Visibilidadade da conta:",
+                      style: TextStyle(
+                          color: cDarkBlueColor
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    ToggleSwitch(
+                      customWidths: [80, 80.0],
+                      cornerRadius: 15.0,
+                      activeBgColors: [[cDarkLightBlueColor], [cDarkLightBlueColor]],
+                      activeFgColor: Colors.white,
+                      inactiveBgColor: cDirtyWhiteColor,
+                      inactiveFgColor: cHeavyGrey,
+                      totalSwitches: 2,
+                      labels: ['Pública', 'Privada'],
+                      onToggle: (index) {
+                        if(index==0)
+                          isPublic = 'yes';
+                        else isPublic = 'no';
+                      },
+                    ),
+                  ],
+                )
               ),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -325,6 +369,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       height: 20),
                 ],
               ),
+              !kIsWeb
+              ? SizedBox(height: 70)
+                  :SizedBox()
             ],
           ),
         )

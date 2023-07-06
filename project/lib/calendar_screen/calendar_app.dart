@@ -16,24 +16,14 @@ class _MyCalendarPageState extends State<CalendarPageApp> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
+    return Stack(
           children: <Widget>[
-            CalendarScreenApp(),
+            const CalendarScreenApp(),
             Container(
               alignment: Alignment.bottomCenter,
-              child:CustomAppBar(i:3),
+              child:const CustomAppBar(i:3),
             )
           ],
-        ),
-      ),
     );
   }
 }

@@ -1,32 +1,20 @@
-import 'dart:convert';
-import 'dart:io';
 
+import 'dart:io';
 import 'package:UniVerse/components/500.dart';
-import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
-import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
-import 'package:UniVerse/utils/camera/camera_screen.dart';
 import 'package:UniVerse/utils/report/report_data.dart';
+import 'package:camera/camera.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-
-import '../Components/default_button.dart';
-import '../components/app/500_app_with_bar.dart';
+import '../camera_screen/camera_screen.dart';
 import '../components/confirm_dialog_box.dart';
 import '../components/default_button_simple.dart';
 import '../components/description_field.dart';
 import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
-import '../components/url_launchable_item.dart';
 import '../consts/color_consts.dart';
-import '../info_screen/universe_info_app.dart';
 import '../login_screen/login_app.dart';
-import '../register_screen/register_app.dart';
-import '../register_screen/register_web.dart';
 import '../utils/connectivity.dart';
 
 class ReportScreenApp extends StatefulWidget {
@@ -70,78 +58,95 @@ class _ReportScreenState extends State<ReportScreenApp> {
   }
 
   void submitButtonPressed(title, location, description) async {
-    bool areControllersCompliant = Report.areCompliant(
-        title, location, description);
-    if (!areControllersCompliant) {
+    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
-          builder: (BuildContext context) {
-            return CustomDialogBox(
-              title: "Ups!",
-              descriptions: "Existem campos vazios. Preenche-os, por favor.",
+          builder: (BuildContext context){
+            return const CustomDialogBox(
+              title: "Sem internet",
+              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
       );
-    }
-    else if (pickedImage == null) {
-      showDialog(context: context,
-          builder: (BuildContext context) {
-            return CustomDialogBox(
-              title: "Ups!",
-              descriptions: "Parece que não adicionaste nenhuma fotgrafia do problema. Precisamos que o faças",
-              text: "OK",
-            );
-          }
-      );
+      setState(() {
+        isLoading = false;
+      });
     } else {
-      showDialog(
-          context: context,
-          builder: (_) =>
-              ConfirmDialogBox(
-                  descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
-                  press: () async {
-                    Navigator.pop(context);
-                    var response = await Report.send(
-                        title, location, description, imageUint8);
-                    if (response == 200) {
-                      showDialog(context: context,
-                          builder: (BuildContext context) {
-                            return CustomDialogBox(
-                              title: "Obrigado!",
-                              descriptions: "Já recebemos a tua submissão.",
-                              text: "OK",
-                            );
-                          }
-                      );
-                    } else if (response == 401) {
-                      showDialog(context: context,
-                          builder: (BuildContext context) {
-                            return CustomDialogBox(
-                              title: "Ups!",
-                              descriptions: "Parece que não tens sessão iniciada.",
-                              text: "OK",
-                            );
-                          }
-                      );
-                    } else if (response == 403) {
-                      showDialog(context: context,
-                          builder: (BuildContext context) {
-                            return CustomDialogBox(
-                                title: "Ups!",
-                                descriptions: "Parece que não tens permissões para esta operação.",
+      bool areControllersCompliant = Report.areCompliant(
+          title, location, description);
+      if (!areControllersCompliant) {
+        showDialog(context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Existem campos vazios. Preenche-os, por favor.",
+                text: "OK",
+              );
+            }
+        );
+      }
+      else if (pickedImage == null) {
+        showDialog(context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: "Ups!",
+                descriptions: "Parece que não adicionaste nenhuma fotgrafia do problema. Precisamos que o faças",
+                text: "OK",
+              );
+            }
+        );
+      } else {
+        showDialog(
+            context: context,
+            builder: (_) =>
+                ConfirmDialogBox(
+                    descriptions: "A submissão de um report é previamente validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
+                    press: () async {
+                      Navigator.pop(context);
+                      var response = await Report.send(
+                          title, location, description, imageUint8);
+                      if (response == 200) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Obrigado!",
+                                descriptions: "Já recebemos a tua submissão.",
                                 text: "OK",
-                                press: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (
-                                          context) => const LoginPageApp()));
-                                }
-                            );
-                          }
-                      );
-                    } else
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-                  }
-              ));
+                              );
+                            }
+                        );
+                      } else if (response == 401) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Parece que não tens sessão iniciada.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      } else if (response == 403) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                  title: "Ups!",
+                                  descriptions: "Parece que não tens permissões para esta operação.",
+                                  text: "OK",
+                                  press: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (
+                                                context) => const LoginPageApp()));
+                                  }
+                              );
+                            }
+                        );
+                      } else
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => Error500()));
+                    }
+                ));
+      }
     }
   }
 
@@ -151,7 +156,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
         appBar: AppBar(
-          title: Image.asset("assets/app/report.png", scale:6),
+          title: Image.asset("assets/titles/report.png", scale:6),
           automaticallyImplyLeading: false,
           backgroundColor: cDirtyWhiteColor,
           titleSpacing: 15,
@@ -182,7 +187,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                   DescriptionField(controller: descriptionController),
                   InkWell(
                     onTap: () async {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen()));
+                      await availableCameras().then((value) => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen(cameras: value,))));
                      try {
                         /*final ImagePicker picker = ImagePicker();
                         XFile? image = await picker.pickImage(
@@ -230,7 +235,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left:12),
-                            child: imageUint8 != null
+                            child: pickedImage != null
                                 ?Text(
                               "Fotografia adicionada!",
                               style: TextStyle(

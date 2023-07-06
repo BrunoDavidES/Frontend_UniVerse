@@ -6,7 +6,6 @@ import 'package:UniVerse/components/personal_web_card.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
-import 'package:UniVerse/utils/camera/camera_screen.dart';
 import 'package:UniVerse/utils/report/report_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';

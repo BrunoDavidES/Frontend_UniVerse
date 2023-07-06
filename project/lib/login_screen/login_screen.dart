@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pop(context);
             context.go("/personal");
           }
-          else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {
           showDialog(context: context,
               builder: (BuildContext context){
@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         }
                         else
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResetPageApp()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResetPageApp()));
                       },
                       child: const Text(
                         "Esqueceste a palavra-passe?",
@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                           );
                         }
-                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
+                        else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RegisterPageApp()));
                       },
                       height: 20),
                 ],

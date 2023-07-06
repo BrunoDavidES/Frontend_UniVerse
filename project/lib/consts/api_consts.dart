@@ -5,3 +5,5 @@ const logoutUrl = '/logout';
 const reportUrl =  '$baseUrl/reports/post';
 const sendMsgUrl = '/message/send';
 const postEventUrl = '$baseUrl/feed/post/Event';
+const messageUrl = '$baseUrl/message';
+const forumUrl = '$baseUrl/forum';

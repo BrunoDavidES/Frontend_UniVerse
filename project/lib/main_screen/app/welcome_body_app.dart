@@ -1,10 +1,12 @@
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_fct_screen/info_app.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/list_item.dart';
+import '../../consts/text_consts.dart';
 
 class WelcomeBodyApp extends StatelessWidget {
+  var monthString = monthsInText[DateTime.now().month-1];
   @override
   Widget build(BuildContext context) {
     var pad;
@@ -25,43 +27,11 @@ class WelcomeBodyApp extends StatelessWidget {
             child:Image.asset("assets/app/logo_no_reference_no_white.png", scale: 3.5),
           ),
           Image.asset("assets/app/logo_nova_horiz.png", scale: 12),
-       Spacer(),
-
-       Container(
-         padding: EdgeInsets.all(15),
-         width: size.width,
-         height: size.height/3,
-         decoration: BoxDecoration(
-           color: cHeavyGrey.withOpacity(0.4),
-           borderRadius: BorderRadius.circular(15)
-         ),
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             Row(
-               children: [
-                 Text(
-                   "HOJE NA FCT",
-                   style: TextStyle(
-                     color: cDirtyWhite,
-                     fontWeight: FontWeight.bold,
-                     fontSize: 20
-                   ),
-                 ),
-                 Spacer(),
-                 Text(
-                   "${DateTime.now().day}-${DateTime.now().month}",
-                   style: TextStyle(
-                       color: cDirtyWhite,
-                       fontSize: 20
-                   ),
-                 ),
-               ],
-             )
-           ],
-         ),
-       ),
-       Spacer(),
+       const Spacer(),
+       Authentication.userIsLoggedIn
+       ?TodayWidget(size: size, monthString: monthString)
+       :WelcomeTextWidget(),
+       const Spacer(),
        Padding(
          padding: EdgeInsets.only(bottom:80, right: pad),
          child: Align(
@@ -75,7 +45,7 @@ class WelcomeBodyApp extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FCTinfoApp()));},
                           child:
-                            Icon(
+                            const Icon(
                                 Icons.info_outline,
                               color: Colors.white,
                               size:25
@@ -90,5 +60,89 @@ class WelcomeBodyApp extends StatelessWidget {
       ),
     );
 
+  }
+}
+
+class WelcomeTextWidget extends StatelessWidget {
+  const WelcomeTextWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        children: [
+          Text(
+            "Todo o Universo,\nnum só lugar!".toUpperCase(),
+            style: TextStyle(
+                color: cDirtyWhiteColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 30
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 10,),
+          Text(
+            "Inicia sessão para saberes o que se passa Hoje na FCT.",
+            style: TextStyle(
+                color: cDirtyWhite.withOpacity(0.8),
+                fontSize: 15
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TodayWidget extends StatelessWidget {
+  const TodayWidget({
+    super.key,
+    required this.size,
+    required this.monthString,
+  });
+
+  final Size size;
+  final String monthString;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      width: size.width,
+      height: size.height/3,
+      decoration: BoxDecoration(
+        color: cDirtyWhiteColor.withOpacity(0.6),
+        borderRadius: BorderRadius.circular(15)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Text(
+                "HOJE NA FCT",
+                style: TextStyle(
+                  color: cHeavyGrey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+                ),
+              ),
+              const Spacer(),
+              Text(
+                "${DateTime.now().day} $monthString",
+                style: const TextStyle(
+                    color: cHeavyGrey,
+                    fontSize: 20
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/profile_edit_screen/profile_edit_page_web.dart';
+import 'package:UniVerse/profile_screen/profile_photo.dart';
+import 'package:UniVerse/profile_screen/read_only_field.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 
@@ -177,80 +179,6 @@ class ProfileScreenWeb extends StatelessWidget {
             ],
           ),
       ],
-    );
-  }
-}
-
-class ProfilePhoto extends StatelessWidget {
-  const ProfilePhoto({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 140,
-      width: 140,
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: cDirtyWhite, width: 5),
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("assets/man.png")
-          )
-      ),
-    );
-  }
-}
-
-class MyReadOnlyField extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final String content;
-  const MyReadOnlyField({
-    super.key, required this.icon, required this.text, required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30, bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(icon, color: cHeavyGrey),
-          SizedBox(width: 5,),
-          Text(
-            text,
-            style: TextStyle(
-                fontSize: 15,
-                color: cHeavyGrey
-            ),
-          ),
-         Spacer(),
-          Container(
-            width: 450,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: cDirtyWhiteColor,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: cHeavyGrey,
-                width: 2
-              )
-            ),
-            child: Text(
-              content,
-              style: TextStyle(
-                fontSize: 15,
-                color: cHeavyGrey
-              ),
-              textAlign: TextAlign.center,
-            ),
-          )
-        ],
-      ),
     );
   }
 }

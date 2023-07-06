@@ -1,23 +1,14 @@
 import 'dart:math';
-
-import 'package:UniVerse/personal_event_screen/personal_event_web.dart';
 import 'package:UniVerse/components/calendar_event_card.dart';
-import 'package:UniVerse/components/app/grid_item.dart';
 import 'package:UniVerse/consts/text_consts.dart';
-import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import '../components/app/500_app_with_bar.dart';
-import '../components/app/menu_card.dart';
 import '../components/default_button_simple.dart';
 import '../personal_event_screen/personal_event_app.dart';
-import '../personal_page_screen/components/personal_card.dart';
 import '../consts/list_consts.dart';
-import '../report_screen/report_app.dart';
-import '../report_screen/report_screen_app.dart';
 import '../utils/events/personal_event_data.dart';
 
 
@@ -49,8 +40,12 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
@@ -192,6 +187,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
+              if(CalendarEvent.events[focusedDay]!=null)
               ...CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element.values.first, color: color)),
               SizedBox(height: 70,)
             ],

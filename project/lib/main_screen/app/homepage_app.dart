@@ -1,6 +1,5 @@
 import 'package:UniVerse/bars/app_bar.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import 'package:UniVerse/faq_screen/faq_app.dart';
 import 'package:UniVerse/main_screen/app/welcome_body_app.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class AppHomePage extends StatelessWidget {
      body: Container(
         height: size.height,
           width: size.width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/welcome_photo.jpg"),
               colorFilter: ColorFilter.mode(cBlackOp, BlendMode.darken),
@@ -25,7 +24,6 @@ class AppHomePage extends StatelessWidget {
        child: Stack(
          children: <Widget>[
            WelcomeBodyApp(),
-           //const Spacer(),
            Container(
              alignment: Alignment.bottomCenter,
              child:CustomAppBar(i:0),

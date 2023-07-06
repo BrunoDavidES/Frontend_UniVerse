@@ -90,7 +90,7 @@ class PersonalCard extends StatelessWidget {
               Spacer(),
               Padding(
                 padding: const EdgeInsets.all(5),
-                child: Image.asset("assets/dot.png", scale: 2, alignment: Alignment.bottomRight),
+                child: Image.asset("assets/images/dot.png", scale: 2, alignment: Alignment.bottomRight),
               ),
             ],
           )

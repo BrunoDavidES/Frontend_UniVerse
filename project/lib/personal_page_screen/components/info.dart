@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
@@ -12,7 +13,7 @@ class Info extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width/2,
+      width: kIsWeb ?size.width/2 :size.width,
       child: Column(
         children: [
           Padding(

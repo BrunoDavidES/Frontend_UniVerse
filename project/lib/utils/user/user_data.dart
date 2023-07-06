@@ -67,7 +67,7 @@ class UniverseUser {
     if (user != null) {
       return user.emailVerified == true;
     }
-    return true;
+    return false;
   }
 
   static bool isActive() {

@@ -1,12 +1,11 @@
 
 import 'dart:io';
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts/color_consts.dart';
-import '../report/report_data.dart';
+import '../utils/report/report_data.dart';
 
 class ImagePreview extends StatefulWidget {
 XFile pic;
@@ -25,7 +24,7 @@ class ImagePreviewState extends State<ImagePreview> {
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Image.asset("assets/app/report.png", scale: 6),
+        title: Image.asset("assets/titles/report.png", scale: 6),
         backgroundColor: cDirtyWhiteColor,
         titleSpacing: 15,
         elevation: 0,
@@ -34,13 +33,15 @@ class ImagePreviewState extends State<ImagePreview> {
           children: [
           Center(
             child: Container(
+              width: double.infinity,
+              height: double.infinity,
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
+                image: DecorationImage(image: FileImage(picture)),
                 border: Border.all(
                   color:cHeavyGrey
                 )
               ),
-                child: Image.file(picture)
             ),
           ),
             Column(
