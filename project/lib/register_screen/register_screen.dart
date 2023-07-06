@@ -13,6 +13,8 @@ import '../login_screen/login_web.dart';
 import '../personal_page_screen/app/personal_page_app.dart';
 import '../utils/connectivity.dart';
 import '../utils/authentication/reg.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -94,7 +96,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               }
           );
         } else {
-          var response = await Registration.regist(password, confirmation, name, email);
+          var bytes = utf8.encode(password); // Convert text to bytes
+          var digest = sha256.convert(bytes); // Perform SHA-256 hash
+          var bytes2 = utf8.encode(confirmation); // Convert text to bytes
+          var digest2 = sha256.convert(bytes2); // Perform SHA-256 hash
+          var response = await Registration.regist(digest.toString(), digest2.toString(), name, email);
           if (response == 200) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -106,8 +112,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if(kIsWeb) {
                         Navigator.pop(context);
                         context.go("/personal");
-                      }else
+                      }else {
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+                      }
                     },
                   );
                 }
@@ -158,10 +165,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
           }
           else {
-            if(kIsWeb)
+            if(kIsWeb) {
               context.go("/error");
-            else
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
+            } else {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
+            }
           }
         }
       }
@@ -234,7 +242,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               )
                           );
                         }
-                        else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                        else {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                        }
                       },
                       child: Text(
                         "Já tenho uma conta",
@@ -262,7 +272,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       isLoading = true;
                     });
-                    if(nameController.text == "" || emailController == "" || passwordConfirmationController == "" || passwordController == "")
+                    if(nameController.text == "" || emailController == "" || passwordConfirmationController == "" || passwordController == "") {
                       setState(() {
                         isLoading = false;
                         showDialog(context: context,
@@ -275,8 +285,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                         );
                       });
-                    else
+                    } else {
                         registerButtonPressed(nameController.text, emailController.text.trim(), passwordController.text, passwordConfirmationController.text);
+                      }
                   },
                   height: 20),
               if(!kIsWeb)

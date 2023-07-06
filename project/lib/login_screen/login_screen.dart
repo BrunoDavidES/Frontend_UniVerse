@@ -15,6 +15,8 @@ import '../register_screen/register_web.dart';
 import '../reset_pwd_screen/reset_password_web.dart';
 import '../utils/connectivity.dart';
 import '../utils/authentication/auth.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.areCompliantToLogin(email, password);
+      var bytes = utf8.encode(password); // Convert text to bytes
+      var digest = sha256.convert(bytes); // Perform SHA-256 hash
+      bool areControllersCompliant = Authentication.areCompliantToLogin(email, digest.toString());
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){

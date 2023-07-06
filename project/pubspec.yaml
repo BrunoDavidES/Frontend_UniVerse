@@ -64,6 +64,7 @@ dependencies:
   share_plus: ^4.0.4
   toggle_switch: ^2.1.0
   hash_password: 0.0.3
+  crypto: ^3.0.1
 
   #webview_flutter: ^4.2.2
 
