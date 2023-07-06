@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
 import '../utils/chat/chat_utils.dart';
+import '../tester/tester.dart';
 import 'chat_screen_app.dart';
 
 class ContactsScreenApp extends StatefulWidget {
@@ -184,6 +185,7 @@ class _ContactsScreenState extends State<ContactsScreenApp> {
                   ElevatedButton(
                     onPressed: () async {
                       String createForumID = await ChatUtils.createForum(createForumName, createForumPassword);
+                      await Tester().sendEmail();
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ChatPageApp(
