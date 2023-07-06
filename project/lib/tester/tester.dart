@@ -1041,5 +1041,28 @@ class Tester {
     }
   }
 
+  Future<void> modifyPassword(String newPassword, String oldPassword) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final email = currentUser?.email;
+
+    if (currentUser != null && email != null) {
+      final credential = EmailAuthProvider.credential(email: email, password: oldPassword);
+      final authResult = await currentUser.reauthenticateWithCredential(credential);
+
+      if (authResult.user != null) {
+        await currentUser.updatePassword(newPassword);
+        print('Password updated successfully.');
+      } else {
+        print('Incorrect old password. Update failed.');
+      }
+    } else {
+      print('User is not signed in.');
+    }
+  }
+
+  void resetPassword(String email) async {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
 
 }
