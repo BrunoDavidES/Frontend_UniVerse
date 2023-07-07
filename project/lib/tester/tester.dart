@@ -1086,6 +1086,17 @@ class Tester {
     }
   }
 
+  Future<void> handleResetPassword(String newPassword) async {
+    String hashedPassword = newPassword; // TODO HASH
+
+    final String? code  = Uri.base.queryParameters['oobCode' ?? ''];
+
+    if(code != null) {
+      FirebaseAuth.instance.confirmPasswordReset(
+          code: code, newPassword: hashedPassword);
+    }
+  }
+
 
 
 }
