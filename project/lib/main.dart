@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:js_interop';
 
 import 'package:UniVerse/components/web/500_web.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
 import 'package:UniVerse/find_screen/services_screen/info_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
+import 'package:UniVerse/services/firebase_messaging_service.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'components/web/not_found.dart';
@@ -21,6 +25,9 @@ import 'main_screen/homepage_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:UniVerse/utils/route.dart';
+import 'package:UniVerse/services/firebase_messaging_service.dart';
+import 'package:UniVerse/services/notification_service.dart';
+import 'package:provider/provider.dart';
 
 import 'news_screen/news_web_detail_screen.dart';
 
@@ -40,31 +47,69 @@ Future main() async{
   );
   if(FirebaseAuth.instance.currentUser!=null)
     Authentication.userIsLoggedIn=true;
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<NotificationService>(
+          create: (context) => NotificationService(),
+        ),
+        Provider<FirebaseMessagingService>(
+          create: (context) => FirebaseMessagingService(context.read<NotificationService>()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
+
+
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    if(kIsWeb) {
-      return MaterialApp.router(
-        title: 'UniVerse ּ  FCT NOVA',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        routerConfig: Routing.router,
-      ).animate().fadeIn(duration: 500.ms);
-    } else {
-      return MaterialApp(
-        title: 'UniVerse ּ  FCT NOVA',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const AppHomePage(),
-      );
-    }
-  }
+  State<MyApp> createState() => _MyAppState();
 }
+
+  class _MyAppState extends State<MyApp> {
+    @override
+    void initState() {
+      super.initState();
+      initializeFirebaseMessaging();
+      checkNotifications();
+    }
+
+    initializeFirebaseMessaging() async {
+      await Provider.of<FirebaseMessagingService>(context, listen: false)
+          .initialize();
+    }
+
+    checkNotifications() async {
+      await Provider.of<NotificationService>(context, listen: false)
+          .checkForNotificaitons();
+    }
+
+    // This widget is the root of your application.
+    @override
+    Widget build(BuildContext context) {
+      if (kIsWeb) {
+        return MaterialApp.router(
+          title: 'UniVerse ּ  FCT NOVA',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          routerConfig: Routing.router,
+        ).animate().fadeIn(duration: 500.ms);
+      } else {
+        return MaterialApp(
+          title: 'UniVerse ּ  FCT NOVA',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const AppHomePage(),
+        );
+      }
+    }
+
+
+  }
