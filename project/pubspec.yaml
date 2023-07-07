@@ -61,12 +61,16 @@ dependencies:
   path_provider: ^2.0.6
   cloud_firestore: ^4.8.1
   firebase_database: ^10.2.3
+  firebase_messaging: ^14.6.4
   requests: ^4.7.0
   share_plus: ^4.0.4
   toggle_switch: ^2.1.0
   hash_password: 0.0.3
   crypto: ^3.0.1
   hive: ^2.2.3
+  timezone: ^0.8.0
+  flutter_native_timezone: ^2.0.0
+  flutter_local_notifications: ^9.4.0
 
   #webview_flutter: ^4.2.2
 

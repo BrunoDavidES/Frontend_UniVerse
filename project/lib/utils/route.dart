@@ -226,4 +226,6 @@ class Routing {
         ),
       ]
   );
+
+  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 }
