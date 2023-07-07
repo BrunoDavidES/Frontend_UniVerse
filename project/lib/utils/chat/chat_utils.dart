@@ -39,30 +39,24 @@ class Chat {
     return response.statusCode;
   }
 
-  static Future<String> delete(id) async {
-    try {
+  static Future<int> delete(id) async {
       final url = Uri.parse('$forumUrl/$id/delete');
 
       String token = await Authentication.getTokenID();
-
-      final Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      };
+      if(token.isEmpty) {
+        Authentication.userIsLoggedIn = false;
+        return 401;
+      }
 
       final response = await http.delete(
         url,
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
       );
 
-      if (response.statusCode == 200) {
-        return response.body;
-      } else {
-        return('Failed to delete forum. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      return('Error deleting forum: $error');
-    }
+      return response.statusCode;
   }
 
   static Future<int> join(id, password) async {
@@ -90,30 +84,22 @@ class Chat {
       return response.statusCode;
   }
 
-  static Future<void> leaveForum(String forumID) async {
-    try {
+  static Future<int> leave(forumID) async {
+    String token = await Authentication.getTokenID();
+      if(token.isEmpty) {
+        Authentication.userIsLoggedIn = false;
+        return 401;
+      }
+
       final url = Uri.parse('$forumUrl/$forumID/leave');
-
-      String token = await Authentication.getTokenID();
-
-      final Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      };
-
       final response = await http.delete(
         url,
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
       );
-
-      if (response.statusCode == 200) {
-        print('Forum left successfully');
-      } else {
-        print('Failed to leave forum. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error leaving forum: $error');
-    }
+      return response.statusCode;
   }
 
   static Future<void> sendMessage(String forumID, String message) async {
@@ -145,60 +131,63 @@ class Chat {
     }
   }
 
-  static Future<void> deletePost(String forumID, String postID) async {
-    try {
-      final url = Uri.parse('$forumUrl/$forumID/$postID/delete');
+  static Future<int> editPost(forumID, postID, message) async {
+    String token = await Authentication.getTokenID();
+      if(token.isEmpty) {
+        Authentication.userIsLoggedIn = false;
+        return 401;
+      }
+      final url = Uri.parse('$forumUrl/$forumID/$postID/edit');
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: json.encode({
+          'message': message
+        }),
+      );
+      return response.statusCode;
+  }
 
+  static Future<int> deletePost(forumID, postID) async {
       String token = await Authentication.getTokenID();
-
-      final Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      };
-
+      if(token.isEmpty) {
+        Authentication.userIsLoggedIn = false;
+        return 401;
+      }
+      final url = Uri.parse('$forumUrl/$forumID/$postID/delete');
       final response = await http.delete(
         url,
-        headers: headers,
+        headers:  {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
       );
-
-      if (response.statusCode == 200) {
-        print('Message deleted successfully');
-      } else {
-        print('Failed to delete message. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error deleting message: $error');
-    }
+      return response.statusCode;
   }
 
-  static Future<void> promoteMember(String forumID, String memberID) async {
-    final String apiUrl = '$forumUrl/$forumID/$memberID/promote';
+  static Future<int> promote(forumID, memberUsername) async {
 
     String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      return 401;
+    }
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
-
-    try {
+    final String url = '$forumUrl/$forumID/$memberUsername/promote';
       final http.Response response = await http.post(
-        Uri.parse(apiUrl),
-        headers: headers,
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
       );
 
-      if (response.statusCode == 200) {
-        final String id = response.body;
-        print('User promoted: $id');
-      } else {
-        print('User promotion failed: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error occurred while promoting user: $e');
-    }
+      return response.statusCode;
   }
 
-  static Future<void> demoteMember(String forumID, String memberID) async {
+  static Future<void> demote(forumID, String memberID) async {
     final String apiUrl = '$forumUrl/$forumID/$memberID/demote';
 
     String token = await Authentication.getTokenID();

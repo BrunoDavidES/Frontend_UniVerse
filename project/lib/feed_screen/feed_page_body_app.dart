@@ -38,7 +38,7 @@ class FeedPageBodyApp extends StatelessWidget {
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  title: Image.asset("assets/app/feed_title.png", scale:6),
+                  title: Image.asset("assets/titles/feed.png", scale:6),
                   automaticallyImplyLeading: false,
                   backgroundColor: cDirtyWhiteColor,
                   titleSpacing: 15,

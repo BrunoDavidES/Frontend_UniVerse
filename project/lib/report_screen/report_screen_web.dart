@@ -181,7 +181,7 @@ class _ReportScreenState extends State<ReportScreenWeb> {
                             obscureText: false,
                             label: 'Localização',
                             icon: Icons.location_on_outlined,),
-                          DescriptionField(controller: descriptionController),
+                          DescriptionField(label: "Descrição", max:300, controller: descriptionController),
                           InkWell(
                             onTap: () async {
                               try {

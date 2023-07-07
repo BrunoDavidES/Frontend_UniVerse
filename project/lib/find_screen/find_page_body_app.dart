@@ -6,12 +6,15 @@ import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
 import '../components/web/web_menu.dart';
 import '../main_screen/app/homepage_app.dart';
+import '../utils/search/info_search.dart';
 import 'chosen_page_app.dart';
 import 'maps_screen/maps_page_app.dart';
 import 'package:UniVerse/find_screen/Item.dart';
 import 'services_screen/services_body_app.dart';
 
 class FindPageBodyApp extends StatelessWidget {
+  const FindPageBodyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +31,13 @@ class FindPageBodyApp extends StatelessWidget {
               title: Image.asset("assets/titles/find.png", scale:6),
               backgroundColor: cDirtyWhiteColor,
               titleSpacing: 15,
-              actions: [
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right:15),
-                    child: Icon(Icons.search_outlined, color: cPrimaryColor,),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchPage()));
-                  },
-                )
+              actions: <Widget>[
+                IconButton(onPressed: () {
+                  /*ShowSearch(
+                      context: context,
+                      delegate: MySearchDelegate()
+                  );*/
+                }, icon: Icon(Icons.search_outlined, color: cPrimaryColor,))
               ],
             ),
           ];
@@ -69,6 +69,8 @@ class FindPageBodyApp extends StatelessWidget {
 
 
 class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
   @override
   State<SearchPage> createState() => SearchPageState();
 }

@@ -107,8 +107,8 @@ class UniverseAppBar extends StatelessWidget {
               },
             ),
             GButton(
-              icon: Icons.settings_rounded,
-              text: 'Definições',
+              icon: Icons.question_mark,
+              text: 'Ajuda',
               onPressed: (){
                 _navigateToScreenSettings(context);
               },

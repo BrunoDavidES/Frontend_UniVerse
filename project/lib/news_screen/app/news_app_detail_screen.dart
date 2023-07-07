@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../consts/color_consts.dart';
 import '../../utils/news/article_data.dart';
@@ -74,7 +75,7 @@ class NewsDetailScreen extends StatelessWidget {
                         color: cHeavyGrey
                     ),
                   ),
-                  Spacer(),
+                  SizedBox(width: 25,),
                   Text(
                     "Autoria de ${data.author!}",
                     style: TextStyle(
@@ -82,29 +83,39 @@ class NewsDetailScreen extends StatelessWidget {
                         color: cHeavyGrey
                     ),
                   ),
+                  Spacer(),
+                  InkWell(child: Icon(Icons.share_outlined), onTap: () {
+                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${data.id.toString()}";
+                    Share.share("${data.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Uma notícia FCT | UniVerse ּ FCT NOVA");
+                  },),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
-              child: Text(
-                data.title!.toUpperCase(),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
               ),
             ),
             Expanded(
               flex: 1,
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    data.text!,
-                    textAlign: TextAlign.justify,
-                  ),
-                  //SizedBox(height: 10,)
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
+                      child: Text(
+                        data.title!.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        data.text!,
+                        textAlign: TextAlign.justify,
+                      ),
+                      //SizedBox(height: 10,)
+                    ),
+                  ],
                 ),
               ),
             ),

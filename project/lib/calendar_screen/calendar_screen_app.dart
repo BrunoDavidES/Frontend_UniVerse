@@ -108,6 +108,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                         });
                       },
                       calendarStyle: CalendarStyle(
+                        markersAlignment: Alignment.bottomRight,
                           isTodayHighlighted: true,
                         selectedDecoration: BoxDecoration(
                           color: color,

@@ -7,7 +7,9 @@ import '../authentication/auth.dart';
 import 'package:http/http.dart' as http;
 
 class CalendarEvent {
-  static Map<String, List<Map<String, CalendarEvent>>> events = {};
+  static Map<String, List<Map<String, CalendarEvent>>> events = {
+    "05-07-2023": [{"10":CalendarEvent("UNKNOWN ERROR", "10", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")},{"11":CalendarEvent("bm", "11", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")}]
+  };
   String? authorUsername;
   String? id;
   String? title;

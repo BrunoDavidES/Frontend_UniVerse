@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../Components/default_button.dart';
 import '../components/500.dart';
@@ -182,7 +183,10 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                         Row(
                                                           children: [
                                                             IconButton(
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${item.id.toString()}";
+                                                                Share.share("${item.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Uma notícia FCT | UniVerse ּ FCT NOVA");
+                                                              },
                                                               icon: Icon(
                                                                 Icons.share,
                                                                 color:

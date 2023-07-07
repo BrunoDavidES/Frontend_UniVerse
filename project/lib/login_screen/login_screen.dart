@@ -65,9 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = false;
       });
     } else {
-      var bytes = utf8.encode(password); // Convert text to bytes
-      var digest = sha256.convert(bytes); // Perform SHA-256 hash
-      bool areControllersCompliant = Authentication.areCompliantToLogin(email, digest.toString());
+      bool areControllersCompliant = Authentication.areCompliantToLogin(email, password);
       if (!areControllersCompliant) {
         showDialog(context: context,
             builder: (BuildContext context){
@@ -82,7 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading = false;
         });
       } else {
-        var response = await Authentication.login(email, password);
+        var bytes = utf8.encode(password); // Convert text to bytes
+        var digest = sha256.convert(bytes); // Perform SHA-256 hash
+        var response = await Authentication.login(email, digest.toString());
         if (response == 200) {
           if(kIsWeb) {
             Navigator.pop(context);

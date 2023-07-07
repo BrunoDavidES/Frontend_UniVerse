@@ -1,10 +1,12 @@
 
 import 'package:UniVerse/login_screen/login_web.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../components/default_button_simple.dart';
+import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../consts/color_consts.dart';
 import '../login_screen/login_app.dart';
@@ -36,12 +38,12 @@ class _LoginScreenState extends State<ResetScreen> {
   }
 
   void resetButtonPressed(email) async {
-/*if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+    if (!kIsWeb && _source.keys.toList()[0] == ConnectivityResult.none) {
       showDialog(context: context,
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para repores a tua palavra-passe precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -50,10 +52,9 @@ class _LoginScreenState extends State<ResetScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Authentication.isCompliant(id, password);
-      if (!areControllersCompliant) {
+      if (email.isEmpty) {
         showDialog(context: context,
-            builder: (BuildContext context){
+            builder: (BuildContext context) {
               return CustomDialogBox(
                 title: "Ups!",
                 descriptions: "Existem campos vazios. Preenche-os, por favor.",
@@ -66,28 +67,31 @@ class _LoginScreenState extends State<ResetScreen> {
         });
       }
       else {
-        var response = await Authentication.loginUser(id, password);
-        if (response == 200) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const AppPersonalPage()));
-        } else if (response==401) {
+        var response = Authentication.reset(email);
+        if(response==404)
           showDialog(context: context,
-              builder: (BuildContext context){
+              builder: (BuildContext context) {
                 return CustomDialogBox(
                   title: "Ups!",
-                  descriptions: "O utilizador e/ou password incorretos. Tenta novamente.",
+                  descriptions: "Parece que o e-mail que indicaste não está associado a nenhum utilizador registado na UniVerse.",
                   text: "OK",
                 );
               }
           );
-        } else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/login.png", scale: 6,))));
-              }
-        }
+        else showDialog(context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: "Sucesso",
+                descriptions: "Enviámos um e-mail para poderes redefinir a tua palavra-passe.",
+                text: "OK",
+              );
+            }
+        );
       }
-    setState(() {
-      isLoading = false;
-    });*/
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

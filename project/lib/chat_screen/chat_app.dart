@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 
 import '../bars/app_bar.dart';
-import 'contacts_screen_app.dart';
+import 'foruns_screen_app.dart';
 
 class ChatScreenApp extends StatefulWidget {
 
@@ -21,7 +21,7 @@ class _MyFindPageState extends State<ChatScreenApp> {
       resizeToAvoidBottomInset: false,
       body: Stack(
           children: <Widget>[
-            ContactsScreenApp(),
+            ForunsScreenApp(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:3),

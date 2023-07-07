@@ -24,7 +24,7 @@ class Registration {
       controller: password,
       restrict: false,
     )*/
-    if (!emailValidator.hasMatch(email))
+   if (!emailValidator.hasMatch(email))
       return 00;
     if(!passwordValidator.hasMatch(passwordUnHashed))
     return 01;

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
 class DescriptionField extends StatelessWidget {
+  final String label;
+  final int max;
   const DescriptionField({
     super.key,
-    required this.controller,
+    required this.controller, required this.label, required this.max,
   });
 
   final TextEditingController controller;
@@ -15,11 +17,11 @@ class DescriptionField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 20, right:20, top: 10),
       child: TextFormField(
-        maxLength: 300,
+        maxLength: max,
         maxLines: 5,
         controller: controller,
         decoration: InputDecoration(
-            labelText: "Descrição",
+            labelText: label,
             labelStyle: TextStyle(
                 color: cDarkLightBlueColor
             ),

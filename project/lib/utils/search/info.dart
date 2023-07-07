@@ -151,4 +151,10 @@ List<Map<String, List<String>>> organizations = [
 //transports
 
 
+List<String> searchResults = [
+  "Via Cópia",
+  "Mininova"
+];
+
+
 

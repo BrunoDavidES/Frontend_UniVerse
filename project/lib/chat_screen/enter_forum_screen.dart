@@ -15,7 +15,8 @@ import '../utils/connectivity.dart';
 import 'chat_screen_app.dart';
 
 class EnterForumScreen extends StatefulWidget {
-  EnterForumScreen({super.key});
+  final String forumName;
+  EnterForumScreen({super.key, required this.forumName});
 
   @override
   State<EnterForumScreen> createState() => _MyChatPageState();
@@ -87,7 +88,7 @@ class _MyChatPageState extends State<EnterForumScreen> {
                         Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => ChatPageApp(
-                                forumID: id,),
+                                forumID: id, forumName: widget.forumName,),
                             ));
                       }
                       if (response == 401) {

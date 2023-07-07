@@ -190,9 +190,11 @@ class QRPopUp extends StatelessWidget {
   }
 }
 
-class SoonPopUp extends StatelessWidget {
-  const SoonPopUp({
-    super.key,
+class InfoPopUp extends StatelessWidget {
+  final String text;
+
+  const InfoPopUp({
+    super.key, required this.text,
   });
 
   @override
@@ -218,7 +220,7 @@ class SoonPopUp extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Brevemente Disponível na UniVerse".toUpperCase(),
+          Text(text.toUpperCase(),
             style: TextStyle(
                 color: cPrimaryColor,
                 fontWeight: FontWeight.bold,
