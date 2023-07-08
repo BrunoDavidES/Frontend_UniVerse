@@ -1,4 +1,6 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
+import 'package:UniVerse/components/web/web_menu.dart';
+import 'package:UniVerse/profile_screen/profile_app.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
 import 'package:UniVerse/profile_screen/profile_page_app.dart';
@@ -12,6 +14,7 @@ import '../../components/app/menu_card.dart';
 import '../../components/confirm_dialog_box.dart';
 import '../../components/simple_dialog_box.dart';
 import '../../login_screen/login_app.dart';
+import '../../modify_password_screen/modify_password_page_web.dart';
 import '../../publish_screen/publish_app.dart';
 import '../components/info.dart';
 import '../components/personal_card.dart';
@@ -104,60 +107,85 @@ class Menu extends StatelessWidget {
               },
               itemBuilder: (context, index) {
                 if(index == 0)
-                  return MenuCard(text: 'O meu perfil', description: 'Vê o teu perfil e edita as tuas informações',icon: Icons.person_outline, press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePageApp()));
+                  return MenuCard(text: 'Gestão de Backoffice', description: '',icon: Icons.manage_accounts_outlined, press: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          child: InfoPopUp(text: "disponível no nosso website.",),
+                        )
+                    );
                   });
-                else if(index==1)
-                  return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA',icon: Icons.card_membership_outlined, press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProofScreen()));
-
+                if(index == 1)
+                  return MenuCard(text: 'O meu perfil', description: 'Vê o teu perfil e edita as tuas informações',icon: Icons.person_outline, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileApp()));
                   });
                 else if(index==2)
-                  return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus',icon: Icons.report_outlined, press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));
+                  return MenuCard(text: 'Comprovativo', description: 'Acede ao comprovativo da tua vinculação com a FCT NOVA',icon: Icons.card_membership_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProofScreen()));
                   });
                 else if(index==3)
-                  return MenuCard(text: 'Fóruns', description: 'Acede a fóruns informativos e mantém-te informado',icon: Icons.message_outlined, press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
-                  });
-                else if(index==4)
-                  return MenuCard(text: 'APAGAR', description: '',icon: Icons.delete, press: () { });
-                else if(index==5)
-                  return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
-                else if(index==6)
-                  return MenuCard(text: 'Inquéritos', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
-                else if(index==7)
-                  return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
-                else if(index==8)
-                  return MenuCard(text: 'APAGAR', description: '',icon: Icons.delete, press: () { });
-                else if(index==9)
                   return MenuCard(text: 'Calendário', description: 'Tem à mão a tua agenda para te organizares facilmente',icon: Icons.calendar_month_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarPageApp()));
                   });
-                else if(index==11)
+                else if(index==4)
+                  return MenuCard(text: 'Fóruns', description: 'Acede a fóruns informativos e mantém-te informado',icon: Icons.message_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
+                  });
+                else if(index==5)
+                  return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus',icon: Icons.report_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ReportPageApp()));
+                  });
+                else if(index==6)
                   return MenuCard(text: 'Organizar evento', description: 'Organiza um evento na faculdade de forma fácil e rápida',icon: Icons.event_available_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppPublishPage()));
                   });
-                else if(index==12)
+                else if(index==7)
+                  return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
+
+                else if(index==8)
+                  return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
+
+                else if(index==9)
+                  return MenuCard(text: 'Mudar Palavra-passe',description: '', icon: Icons.password_outlined, press: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          content: ModifyPasswordPageWeb(),
+                        ));
+                  });
+
+                else if(index==10)
                   return MenuCard(text: 'Apagar Conta', description: '',icon: Icons.delete, press: () {
-    showDialog(
-    context: context,
-    builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
-    final response = UniverseUser.delete();
-    if(response == 200)
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
-    else showDialog(
-    context: context,
-    builder: (_) => CustomDialogBox(
-    title: "Ups!",
-    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
-    text: "OK",
-    press: () {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-    }
-    )
-    );
-    },));
+                    showDialog(
+                        context: context,
+                        builder: (_) => ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar a tua conta?", press: () {
+                          final response = UniverseUser.delete();
+                          if(response == 200)
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
+                          else showDialog(
+                              context: context,
+                              builder: (_) => CustomDialogBox(
+                                  title: "Ups!",
+                                  descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
+                                  text: "OK",
+                                  press: () {
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                                  }
+                              )
+                          );
+                        },));
                   });
               }
           ),

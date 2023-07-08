@@ -105,7 +105,7 @@ List<Map<String, String>> restaurants = [
 ];
 
 List<Map<String, List<String>>> organizations = [
-  {"nc":["Núcleo de Cinema", "https://ae.fct.unl.pt/wp-content/uploads/2022/11/preview-site.png"]},
+  {"nc":["Núcleo de Cinema", "gs://universe-fct.appspot.com/News/9223372035166008207d936afa6-96db-440f-b612-095e8ae23a98"]},
   {"nea":["Núcleo de Estudantes Africanos", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logo-NEA.png"]},
   {"nnt":["Novo Núcleo de Teatro", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logos-N%C3%BAcleos-19.png"]},
   {"nufoto":["Núcleo de Fotografia", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logos-N%C3%BAcleos-22.png"]},
@@ -149,6 +149,12 @@ List<Map<String, List<String>>> organizations = [
 ];
 
 //transports
+
+
+List<String> searchResults = [
+  "Via Cópia",
+  "Mininova"
+];
 
 
 

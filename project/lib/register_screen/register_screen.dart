@@ -100,8 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           var digest = sha256.convert(bytes); // Perform SHA-256 hash
           var bytes2 = utf8.encode(confirmation); // Convert text to bytes
           var digest2 = sha256.convert(bytes2); // Perform SHA-256 hash
-          //var response = await Registration.regist(digest.toString(), digest2.toString(), name, email, password);
-          var response = await Registration.regist(password, confirmation, name, email, password);
+          var response = await Registration.regist(digest.toString(), digest2.toString(), name, email, password);
+          //var response = await Registration.regist(password, confirmation, name, email, password);
           if (response == 200) {
             showDialog(context: context,
                 builder: (BuildContext context) {

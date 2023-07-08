@@ -1,20 +1,19 @@
+import 'package:UniVerse/components/default_button_simple.dart';
+import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/find_screen/info_detail_screen.dart';
+import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/list_button_simple.dart';
 import '../../main_screen/app/homepage_app.dart';
 
-/*class InfoSearch extends SearchDelegate<String> {
-  List<String> searchResults = [
-    'Serviços',
-    'Departamentos',
-    'Mapa',
-    'Contactos',
-  ];
+class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) =>
       IconButton(
         onPressed: () => close(context, null),
-        icon: const Icon(Icons.clear),
+        icon: const Icon(Icons.arrow_back),
       );
 
   @override
@@ -29,21 +28,22 @@ import '../../main_screen/app/homepage_app.dart';
         }
       },
       icon: const Icon(Icons.clear),
-    );
+    )
 ];
 
   @override
-  void buildResults(BuildContext context) {
-
+  Widget buildResults(BuildContext context) {
+    return Container();
+    /*return InfoDetailScreen(
+    data: services.where((element) => element.values.first==query)
+    );*/
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) => Container();
-  {
+  Widget buildSuggestions(BuildContext context) {
     List<String> suggestions = searchResults.where((searchResult) {
       final result = searchResult.toLowerCase();
       final input = query.toLowerCase();
-
       return result.contains(input);
     }).toList();
     return ListView.builder(
@@ -51,9 +51,10 @@ import '../../main_screen/app/homepage_app.dart';
         itemBuilder: (context, index) {
           final suggestion = suggestions[index];
 
-          return ListTile(
-            title: Text(suggestion),
-            onTap: () {
+          return ListButtonSimple(
+  text: suggestion,
+            tobeBold: true,
+            press: () {
               query = suggestion;
               showResults(context);
             },
@@ -61,4 +62,4 @@ import '../../main_screen/app/homepage_app.dart';
         }
     );
   }
-}*/
+}

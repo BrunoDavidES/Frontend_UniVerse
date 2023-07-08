@@ -13,24 +13,24 @@ import '../personal_page_screen/app/personal_page_app.dart';
 import '../utils/chat/chat_utils.dart';
 import '../utils/connectivity.dart';
 
-class CreateForumScreen extends StatefulWidget {
-  CreateForumScreen({super.key});
+class PromoteDepromoteScreen extends StatefulWidget {
+  final bool toPromote;
+  final String forumID;
+  PromoteDepromoteScreen({super.key, required this.toPromote, required this.forumID});
 
   @override
-  State<CreateForumScreen> createState() => _MyChatPageState();
+  State<PromoteDepromoteScreen> createState() => _MyChatPageState();
 }
 
-class _MyChatPageState extends State<CreateForumScreen> {
+class _MyChatPageState extends State<PromoteDepromoteScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  late TextEditingController nameController;
-  late TextEditingController pwdController;
+  late TextEditingController usernameController;
   bool isLoading = false;
 
   @override
   void initState() {
-    nameController = TextEditingController();
-    pwdController = TextEditingController();
+    usernameController = TextEditingController();
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
@@ -42,18 +42,17 @@ class _MyChatPageState extends State<CreateForumScreen> {
 
   @override
   void dispose() {
-    nameController.dispose();
-    pwdController.dispose();
+    usernameController.dispose();
     super.dispose();
   }
 
-  void createButtonPressed(name, pwd) async {
+  void actionButtonPressed(username) async {
     if (_source.keys.toList()[0] == ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context) {
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para criares um fórum, precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para efetuares ações sobre este fórum precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -62,8 +61,7 @@ class _MyChatPageState extends State<CreateForumScreen> {
         isLoading = false;
       });
     } else {
-      bool areControllersCompliant = Chat.areCompliant(name, pwd);
-      if (!areControllersCompliant) {
+      if (username.isEmpty) {
         showDialog(context: context,
             builder: (BuildContext context) {
               return CustomDialogBox(
@@ -78,15 +76,15 @@ class _MyChatPageState extends State<CreateForumScreen> {
             context: context,
             builder: (_) =>
                 ConfirmDialogBox(
-                    descriptions: "O fórum com o nome $name e código de acesso $pwd será criado.",
+                    descriptions: widget.toPromote ?"O utilizador com o identificador $username, terá permissões de edição sobre este fórum. Confirmas?" :"O utilizador com o identificador $username deixará de ter permissões sobre este fórum. Confirmas?",
                     press: () async {
-                      var response = await Chat.create(name, pwd);
+                      var response =await Chat.promote(widget.forumID, username); //:await Chat.
                       if (response == 200) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(
                                 title: "Sucesso!",
-                                descriptions: "Um novo fórum do qual és administrador foi criado.\nID:${Chat.idCreated}\nCÓDIGO DE ACESSO: $pwd",
+                                descriptions: "As permissões deste fórum foram atualizadas.",
                                 text: "OK",
                               );
                             }
@@ -132,7 +130,18 @@ class _MyChatPageState extends State<CreateForumScreen> {
                               );
                             }
                         );
-                      } else {
+                      }else if (response == 404) {
+                        showDialog(context: context,
+                            builder: (BuildContext context) {
+                              return CustomDialogBox(
+                                title: "Ups!",
+                                descriptions: "Não encontrámos nenhum utilizador associado ao identificador que indicaste. Assegura-te que esse utilizador está registado na UniVerse.",
+                                text: "OK",
+                              );
+                            }
+                        );
+                      }
+                      else {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
                       }
                     }
@@ -149,15 +158,15 @@ class _MyChatPageState extends State<CreateForumScreen> {
         child: Column(
           children: [
             Text(
-              "Criar um Fórum",
+              widget.toPromote
+              ? "Promover utilizador" :"Despromover utilizador",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: cHeavyGrey,
                   fontSize: 20
               ),
             ),
-            MyTextField(controller: nameController, hintText: '', obscureText: false, label: 'Nome do Fórum', icon: Icons.title,),
-            MyPasswordField(controller: pwdController, hintText: "", obscureText: true, label: 'Código de Acesso', icon: Icons.lock_outline),
+            MyTextField(controller: usernameController, hintText: '', obscureText: false, label: 'ID Utilizador', icon: Icons.person_outlined,),
             const SizedBox(height: 15),
             isLoading
                 ? Container(
@@ -178,10 +187,10 @@ class _MyChatPageState extends State<CreateForumScreen> {
                     },
                     height: 10),
                 DefaultButtonSimple(
-                    text: "CRIAR",
+                    text: "PROMOVER",
                     color: cPrimaryColor,
                     press: () {
-                      createButtonPressed(nameController.text, pwdController.text);
+                      actionButtonPressed(usernameController.text);
                     },
                     height: 10),
               ],

@@ -72,7 +72,7 @@ class FindListItem extends StatelessWidget {
                 ...organizations.map((e) => ListButtonSimple(
                     text: e.values.first[0], tobeBold: false, press: () => context.go('/find/organizations/${e.keys.first}'))).toList(),
               if(name=='Galeria')
-                  SoonPopUp(),
+                  InfoPopUp(text: "brevemente disponível na universe",),
             ]
         ),
       ),

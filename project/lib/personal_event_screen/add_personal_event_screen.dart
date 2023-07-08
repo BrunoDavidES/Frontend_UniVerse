@@ -13,6 +13,7 @@ import '../consts/color_consts.dart';
 import '../login_screen/login_app.dart';
 import '../utils/connectivity.dart';
 import '../utils/events/personal_event_data.dart';
+import 'package:intl/intl.dart';
 
 class PersonalEventCreationScreen extends StatefulWidget {
   const PersonalEventCreationScreen({super.key});
@@ -73,7 +74,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
         );
       }
       else {
-        var response = await CalendarEvent.add(UniverseUser.getUsername(), title, "", location, date, hour);
+        var response = await CalendarEvent.add(UniverseUser.getUsername(), title, "i", location, date, hour);
         if (response == 200) {
           showDialog(context: context,
               builder: (BuildContext context){
@@ -140,7 +141,60 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                 ),
                 MyTextField(controller: titleController, hintText: '', obscureText: false, label: 'Título', icon: Icons.title,),
                 MyTextField(controller: locationController, hintText: '', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
-                MyDateField(controller: dateController, label: "Data",),
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              child: TextField(
+                controller: dateController,
+                //editing controller of this TextField
+                decoration: InputDecoration(
+                    labelText: "Data",
+                    labelStyle: TextStyle(
+                        color: cDarkLightBlueColor
+                    ),
+                    prefixIcon: Icon(Icons.calendar_today, color: cDarkLightBlueColor),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: cDarkLightBlueColor,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: cDarkBlueColor,
+                        )
+                    ),
+                    fillColor: Colors.white60,
+                    filled: true,
+                    hintText: "dd-MM-yyyy",
+                    hintStyle: TextStyle(
+                        color: Colors.grey
+                    )
+                ),
+                readOnly: true, //set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      initialDatePickerMode: DatePickerMode.day,
+                      //locale: Locale('pt', 'PT'),
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2023),
+                      //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2030));
+                  if (pickedDate != null) {
+                    print(
+                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                    String formattedDate =
+                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    setState(() {
+                      dateController.text =
+                          formattedDate; //set output date to TextField value.
+                    });
+                  } else {}
+                },
+              ),
+            ),
                 MyTimeField(controller: timeController, label: "Hora de início"),
                 const SizedBox(height: 15),
                 isLoading

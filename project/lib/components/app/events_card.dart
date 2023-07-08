@@ -30,7 +30,7 @@ class EventsCardState extends State<EventsCard> {
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.all(2),
-        height: 230,
+        height: 250,
         decoration: BoxDecoration(
             color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
@@ -75,10 +75,10 @@ class EventsCardState extends State<EventsCard> {
                   ?IconButton(icon: Icon(Icons.bookmark_outline), onPressed: () {
                     CalendarEvent.add(widget.data.planner, widget.data.title, widget.data.department, widget.data.location, widget.data.startDate, "");
                   },)
-                  :SizedBox(width: 1,),
+                  :SizedBox(),
                   IconButton(icon: Icon(Icons.share_outlined), onPressed: () {
                     final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${widget.data.id.toString()}";
-                    Share.share("Encontrei um evento! | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "${widget.data.title.toString()} | UniVerse ּ  FCT NOVA");
+                    Share.share("${widget.data.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Um evento na FCT | UniVerse ּ  FCT NOVA");
                   },),
                 ],
               ),

@@ -60,9 +60,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             ),
             child: Column(
               children: <Widget>[
-                Text(widget.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                SelectableText(widget.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                 SizedBox(height: 15,),
-                Text(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
+                SelectableText(widget.descriptions,style: TextStyle(fontSize: 14),textAlign: TextAlign.justify,),
                 Spacer(),
                 DefaultButtonSimple(
                     text: widget.text,

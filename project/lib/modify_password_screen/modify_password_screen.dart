@@ -63,8 +63,8 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
     super.dispose();
   }
 
-  void submitButtonPressed(name, phone, linkedin) async {
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+  void submitButtonPressed(oldPwd, newPwd, confirmation) async {
+   /* if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
@@ -81,16 +81,16 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
       showDialog(
           context: context,
           builder: (_) => ConfirmDialogBox(
-              descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
+              descriptions: "Tens a certeza que queres atualizar a tua palavra-passe na UniVerse?",
               press: () async {
-               // var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
+               var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
                 var response = 200;
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
                         return CustomDialogBox(
                           title: "Sucesso",
-                          descriptions: "Já atualizámos o teu perfil! Espera uns minutos para visualizares as tuas informações de novo.",
+                          descriptions: "Já atualizámos a tua pala",
                           text: "OK",
                         );
                       }
@@ -138,8 +138,7 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
                 }
               }
           )
-      );
-    }
+      );*/
   }
 
   @override

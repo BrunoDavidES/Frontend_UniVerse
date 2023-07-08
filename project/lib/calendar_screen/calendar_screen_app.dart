@@ -10,6 +10,7 @@ import '../components/default_button_simple.dart';
 import '../personal_event_screen/personal_event_app.dart';
 import '../consts/list_consts.dart';
 import '../utils/events/personal_event_data.dart';
+import 'package:intl/intl.dart';
 
 
 class CalendarScreenApp extends StatefulWidget {
@@ -108,6 +109,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                         });
                       },
                       calendarStyle: CalendarStyle(
+                        markersAlignment: Alignment.bottomRight,
                           isTodayHighlighted: true,
                         selectedDecoration: BoxDecoration(
                           color: color,
@@ -187,8 +189,8 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
-              if(CalendarEvent.events[focusedDay]!=null)
-              ...CalendarEvent.events[focusedDay]!.map((element) => CalendarEventCard(element.values.first, color: color)),
+              if(CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!=null)
+              ...CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!.map((element) => CalendarEventCard(element.values.first, color: color)),
               SizedBox(height: 70,)
             ],
           ),

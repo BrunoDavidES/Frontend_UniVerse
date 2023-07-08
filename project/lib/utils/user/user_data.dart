@@ -83,9 +83,9 @@ class UniverseUser {
     var properties = json['properties'];
     department = properties['department']['value'];
     //job
-    //phone
-    //linkedin
-    //isPublic
+    phone = properties['phone']['value'];
+    linkedin = properties['linkedin']['value'];
+    isPublic = properties['isPublic']['value'];
     email = properties['email']['value'];
     license_plate = properties['license_plate']['value'];
     name = properties['name']['value'];
@@ -96,18 +96,17 @@ class UniverseUser {
   }
 
   //401, 400, 200
-  Future<int> get() async {
+  Future<UniverseUser?> get() async {
     String token = await Authentication.getTokenID();
 
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
-      return 401;
+      return null;
     }
 
     String username = getUsername();
     String url = '$baseUrl/profile/$username';
-
-    final http.Response response = await http.get(
+    final response = await http.get(
       Uri.parse(url),
       headers: {
         'Content-Type': 'application/json',
@@ -122,8 +121,10 @@ class UniverseUser {
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();
+      return null;
     }
-    return response.statusCode;
+    print(response.statusCode);
+    return null;
   }
 
   static Future<int> update(name, phone, linkedin, office, license_plate, isPublic, Uint8List? image) async {

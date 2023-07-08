@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:math';
+import 'package:UniVerse/chat_screen/create_forum_screen.dart';
+import 'package:UniVerse/chat_screen/promote_depromote_screen.dart';
 import 'package:UniVerse/chat_screen/receiver_container.dart';
 import 'package:UniVerse/chat_screen/sender_container.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
@@ -8,27 +11,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/500.dart';
+import '../components/my_text_button.dart';
 import '../consts/color_consts.dart';
 
 import'package:UniVerse/utils/chat/chat_utils.dart';
 
-class ChatPageApp extends StatefulWidget {
+import '../consts/list_consts.dart';
+
+class MembersPageApp extends StatefulWidget {
   final String forumID;
   final String forumName;
 
-  ChatPageApp({super.key, required this.forumID, required this.forumName,});
+  MembersPageApp({super.key, required this.forumID, required this.forumName,});
 
   @override
-  State<ChatPageApp> createState() => _MyChatPageState();
+  State<MembersPageApp> createState() => _MembersPageState();
 }
 
-class _MyChatPageState extends State<ChatPageApp> {
+class _MembersPageState extends State<MembersPageApp> {
   final scrollController = ScrollController();
-  final TextEditingController messageController = TextEditingController();
-  late StreamSubscription _chatStream;
   late StreamSubscription _forumStream;
-  final StreamController<dynamic> _chatStreamController = StreamController<dynamic>();
+  late StreamSubscription _memberStream;
   final StreamController<dynamic> _forumStreamController = StreamController<dynamic>();
+  final StreamController<dynamic> _memberStreamController = StreamController<dynamic>();
   bool isSending = false;
 
   @override
@@ -39,27 +44,25 @@ class _MyChatPageState extends State<ChatPageApp> {
 
   @override
   void deactivate() {
-    _chatStream.cancel();
     _forumStream.cancel();
-    _chatStreamController.add(null);
+    _memberStream.cancel();
+    _forumStreamController.add(null);
+    _memberStreamController.add(null);
     super.deactivate();
   }
 
   void activateListeners() async {
     String? userID = FirebaseAuth.instance.currentUser?.uid;
     if (widget.forumID != null) {
-      _chatStream = FirebaseDatabase.instance
+      _memberStream = FirebaseDatabase.instance
           .ref()
-          .child('forums/${widget.forumID}/feed/')
+          .child('forums/${widget.forumID}/members/')
           .onValue
           .listen((event) {
         var snapshot = event.snapshot;
         var children = snapshot.value as Map<dynamic, dynamic>;
 
-        _chatStreamController.add(children);
-        setState(() {
-          isSending = false;
-        });
+        _memberStreamController.add(children);
       });
     }
 
@@ -98,7 +101,7 @@ class _MyChatPageState extends State<ChatPageApp> {
               }
           ),
           title: Text(
-            widget.forumName,
+            "Membros do fórum ${widget.forumName}",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: cHeavyGrey,
@@ -126,7 +129,7 @@ class _MyChatPageState extends State<ChatPageApp> {
               children: [
                 Expanded(
                   child: StreamBuilder(
-                    stream: _chatStreamController.stream,
+                    stream: _memberStreamController.stream,
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
 
@@ -135,7 +138,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                       } else if(!snapshot.hasData || snapshot.data == null) {
                         return Center(
                           child: Text(
-                            "AINDA NÃO EXISTEM MENSAGENS NESTE FÓRUM",
+                            "AINDA NÃO EXISTEM MEmbros NESTE FÓRUM",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -160,102 +163,93 @@ class _MyChatPageState extends State<ChatPageApp> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: children.entries.map((entry) {
-                            var postID = entry.key;
-                            var value = entry.value;
-                            var author = value['author'];
-                            var name = author['name'];
-                            var username = author['username'];
-                            var message = value['message'];
-                            var posted = value['posted'];
+                            var memberID = entry.key;
+                            var memberData = entry.value;
+                            var memberName = memberData['name'];
+                            var memberRole = memberData['role'];
 
-                            if(username==UniverseUser.getUsername())
-                            return SenderContainer(size: size, posted: posted, message: message, postID: postID, forumID: widget.forumID);
-                            else return ReceiverContainer(size: size, author: name, posted: posted, message: message, postID: postID);
-
-                            //return ReceiverContainer(size: size, author: author, posted: posted, message: message, messageController: messageController, widget: widget, postID: postID);
+                            return MemberCard(data: memberData, username: memberID);
                           }).toList(),
                         ),
                       );
                     },
                   ),
                 ),
-                buildInput(),
               ],
             )
         )
     );
   }
 
-  Widget buildInput() {
-    void sendMessage() {
-      String message = messageController.text;
-      Chat.sendMessage(widget.forumID, message);
-      messageController.clear();
-      setState(() {
-        isSending = true;
-      });
+}
+
+class MemberCard extends StatelessWidget {
+  const MemberCard({
+    super.key, required this.data, required this.username,
+  });
+
+  final data;
+  final String username;
+
+  @override
+  Widget build(BuildContext context) {
+    Random random = Random();
+    int cindex = random.nextInt(toRandom2.length);
+    var memberName = data['name'];
+    var memberRole = data['role'];
+    String role="";
+    bool toBold = false;
+    Color color=cHeavyGrey;
+    switch(memberRole){
+      case "A": role = "ADMINISTRADOR";
+      color = Colors.green;
+      toBold=true;
+      break;
+      case "ASS": role = "ASSISTENTE";
+      color = Colors.green.withOpacity(0.7);
+      toBold=true;
+      break;
+      case "MEMBER": role = "MEMBRO";
     }
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: RawKeyboardListener(
-              focusNode: FocusNode(),
-              onKey: (RawKeyEvent event) {
-                if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
-                  if (!event.isShiftPressed) {
-                    sendMessage();
-                  }
-                }
-              },
-              child: TextFormField(
-                maxLength: 500,
-                obscureText: false,
-                controller: messageController,
-                maxLines: null,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(
-                      color: cDarkLightBlueColor,
-                    ),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: cDarkLightBlueColor,
-                    ),
-                  ),
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: "mensagem",
-                ),
-              ),
-            ),
-          ),
-          !isSending
-          ?Padding(
-            padding: const EdgeInsets.only(top:5),
-            child: IconButton(
-              onPressed: () {
-                if(messageController.text.isNotEmpty)
-                  sendMessage();
-              },
-              icon: const Icon(Icons.send_sharp, color: cDarkBlueColor),
-            ),
+    return Container(
+      height: 50,
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          border: Border.all(
+              color: toRandom2[cindex],
+              width: 2
           )
-              : Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(
-            color: cDarkBlueColor,
-                  backgroundColor: cDarkLightBlueColor.withOpacity(0.5),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            memberName,
+            style: TextStyle(
+                fontSize: 17,
+            ),
           ),
-              )
+          SizedBox(width:10),
+          Text(
+            username.replaceAll("-", "."),
+            style: TextStyle(
+                fontSize: 15,
+                color: cHeavyGrey
+            ),
+          ),
+          Spacer(),
+          Text(
+            role,
+            style: TextStyle(
+                fontSize: 17,
+                fontWeight: toBold ?FontWeight.bold :FontWeight.normal,
+                color: color
+            ),
+          ),
         ],
       ),
     );
   }
-
 }
-

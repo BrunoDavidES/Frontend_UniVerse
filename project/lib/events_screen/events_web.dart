@@ -4,6 +4,7 @@ import 'package:UniVerse/utils/events/personal_event_data.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import '../Components/default_button.dart';
 import '../components/500.dart';
 import '../consts/color_consts.dart';
@@ -222,8 +223,8 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                             ),
                                                           IconButton(
                                                             onPressed: () {
-                                                              //final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${event.id.toString()}";
-                                                              //Share.share("${event.title.toString()} | UniVerse ּ  FCT NOVA\n\n${urlPreview}", subject: "${event.title.toString()} | UniVerse ּ  FCT NOVA");
+                                                              final urlPreview = "https://universe-fct.oa.r.appspot.com/#/events/full/${event.id.toString()}";
+                                                              Share.share("${event.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Um evento na FCT | UniVerse ּ  FCT NOVA");
                                                             },
                                                             icon: Icon(Icons.share, color: cHeavyGrey),
                                                           ),
