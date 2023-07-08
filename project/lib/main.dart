@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js_interop';
 
 import 'package:UniVerse/components/web/500_web.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
