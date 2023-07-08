@@ -165,10 +165,10 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                         text: "ADICIONAR",
                         color: cPrimaryColor,
                         press: () {
-                          submitButtonPressed(titleController.text, locationController.text, dateController.text, timeController.text);
                           setState(() {
                             isLoading = true;
                           });
+                          submitButtonPressed(titleController.text, locationController.text, dateController.text, timeController.text);
                         },
                         height: 10),
                   ],
