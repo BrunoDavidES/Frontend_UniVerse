@@ -55,9 +55,9 @@ List<Map<String, String>>  courses= [
 ];
 
 
-List<Map<String, String>> departments = [
-  {"dep-ambiente":"Departamento de Ciências e Engenharia do Ambiente"},
-  {"dep-materiais":"Departamento de Ciência dos Materiais"},
+List<Map<String, List<String>>> departments = [
+  {"dep-ambiente":["Departamento de Ciências e Engenharia do Ambiente"]},
+  {"dep-materiais":["Departamento de Ciência dos Materiais"]},
   {"dep-restauro":"Departamento de Conservação e Restauro"},
   {"dep-sociais":"Departamento de Ciências Sociais Aplicadas"},
   {"dep-terra":"Departamento de Ciências da Terra"},
