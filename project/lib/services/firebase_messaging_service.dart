@@ -1,9 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:UniVerse/utils/route.dart';
 import 'package:UniVerse/services/notification_service.dart';
 
-import 'notification_service.dart';
+import '../utils/authentication/auth.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:UniVerse/consts/api_consts.dart';
 
 class FirebaseMessagingService {
   final NotificationService _notificationService;
@@ -18,6 +20,7 @@ class FirebaseMessagingService {
     );
     getDeviceFirebaseToken();
     _onMessage();
+    _onMessageOpenedApp();
   }
 
   getDeviceFirebaseToken() async {
@@ -54,6 +57,23 @@ class FirebaseMessagingService {
     if(route.isNotEmpty) {
       Routing.navigatorKey?.currentState?.pushNamed(route);
     }
+  }
+
+  static Future<void> registerDevice(String token) async {
+    const String apiUrl = '$notificationUrl/register';
+
+    String token = await Authentication.getTokenID();
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+    );
+
   }
 
 }

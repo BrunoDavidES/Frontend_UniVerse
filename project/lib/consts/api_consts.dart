@@ -7,3 +7,4 @@ const sendMsgUrl = '/message/send';
 const postEventUrl = '$baseUrl/feed/post/Event';
 const messageUrl = '$baseUrl/message';
 const forumUrl = '$baseUrl/forum';
+const notificationUrl = '$baseUrl/notification';
