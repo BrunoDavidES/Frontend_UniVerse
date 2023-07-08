@@ -88,8 +88,9 @@ class CalendarEvent {
       body: jsonEncode({
         'title': title,
         'username': username,
-        "department": department,
+        "department": "Departamento de Teste",
         'beginningDate': date,
+        'username': 'gab.silva',
         'hours': hour,
         'location': location
         }),
@@ -128,15 +129,21 @@ class CalendarEvent {
         'title': title,
         'username': UniverseUser.getUsername(),
         'beginningDate': date,
+        'department': 'Departamento de Teste',
         'hours': hour,
         'location': location
       }),
     );
 
       if (response.statusCode == 200) {
-        events[date]!.removeWhere((element) => element.keys.first==id.toString());
-        events[date]!.add({id.toString(): CalendarEvent(username,response.body, title, "", location, hour, date)});
-      } else if(response.statusCode == 401) {
+        events[date]!.removeWhere((element) => element.containsKey(id.toString())==id.toString());
+        if(events[date]!=null) {
+          events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, "", location, hour, date)});
+        } else {
+          var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title,"", location, hour, date)}]};
+          events.addAll(toAdd);
+        //events[date]!.add({id.toString(): CalendarEvent(username,response.body, title, "", location, hour, date)});
+      } } else if(response.statusCode == 401) {
         Authentication.userIsLoggedIn = false;
         Authentication.revoke();
       }

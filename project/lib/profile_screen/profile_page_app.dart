@@ -5,6 +5,7 @@ import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import '../components/500.dart';
 import '../components/custom_shape.dart';
 import '../profile_edit_screen/profile_edit_screen.dart';
 import '../utils/user/user_data.dart';
@@ -15,7 +16,7 @@ class ProfilePageApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UniverseUser user = UniverseUser("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
@@ -41,14 +42,42 @@ class ProfilePageApp extends StatelessWidget {
           )
         ],
       ),
-      body: Stack(
-        children: [
-          BasicInfo(user: user),
-          FullInfo(user: user),
-          BlueCurve(),
-          PhotoRole(user: user),
+      body: FutureBuilder(
+        future: user.get(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+          return Stack(
+            children: [
+              BasicInfo(user: snapshot.data!),
+              FullInfo(user: snapshot.data!),
+              BlueCurve(),
+              PhotoRole(user: snapshot.data!),
             ],
-          ),
+          );
+        }
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            LinearProgressIndicator(color: cPrimaryOverLightColor,
+              minHeight: 10,
+              backgroundColor: cPrimaryLightColor,),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "A CARREGAR NOTÍCIAS",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: cPrimaryLightColor
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
+      ),
       );
   }
 }

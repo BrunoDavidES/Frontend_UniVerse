@@ -240,7 +240,7 @@ class _MyChatPageState extends State<ChatPageApp> {
             child: IconButton(
               onPressed: () {
                 if(messageController.text.isNotEmpty)
-                sendMessage;
+                  sendMessage();
               },
               icon: const Icon(Icons.send_sharp, color: cDarkBlueColor),
             ),

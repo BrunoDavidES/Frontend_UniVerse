@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
@@ -52,15 +53,18 @@ class _MyTimeFieldState extends State<MyTimeField> {
             context: context,
           );
           if(pickedTime != null ){
-            print(pickedTime.format(context));   //output 10:51 PM
-            DateTime parsedTime = DateFormat("h:mm a").parse(pickedTime.format(context));
-            //converting to DateTime so that we can further format on different pattern.
-            print(parsedTime); //output 1970-01-01 22:53:00.000
-            String formattedTime = DateFormat('HH:mm').format(parsedTime);
-            print(formattedTime); //output 14:59:00
-            //DateFormat() is from intl package, you can format the time on any pattern you need.
+            if(kIsWeb) {
+              print(pickedTime.format(context)); //output 10:51 PM
+              DateTime parsedTime = DateFormat("h:mm a").parse(
+                  pickedTime.format(context));
+              //converting to DateTime so that we can further format on different pattern.
+              print(parsedTime); //output 1970-01-01 22:53:00.000
+              String formattedTime = DateFormat('HH:mm').format(parsedTime);
+              print(formattedTime); //output 14:59:00
+              //DateFormat() is from intl package, you can format the time on any pattern you need.
+            }
             setState(() {
-              widget.controller.text = formattedTime; //set the value of text field.
+              widget.controller.text = pickedTime.format(context); //set the value of text field.
             });
           }else{
             print("Time is not selected");
