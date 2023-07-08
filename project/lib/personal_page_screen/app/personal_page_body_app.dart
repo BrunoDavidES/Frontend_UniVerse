@@ -1,27 +1,24 @@
 import 'package:UniVerse/calendar_screen/calendar_app.dart';
 import 'package:UniVerse/components/web/web_menu.dart';
+import 'package:UniVerse/feedback_screen/feedback_app.dart';
+import 'package:UniVerse/modify_password_screen/modify_password_app.dart';
 import 'package:UniVerse/profile_screen/profile_app.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/main_screen/app/homepage_app.dart';
-import 'package:UniVerse/profile_screen/profile_page_app.dart';
 import 'package:UniVerse/proof_screen/proof_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-
-import '../../chat_screen/chat_app.dart';
-import '../../components/app/500_app_with_bar.dart';
+import '../../foruns_screen/forum_app.dart';
+import '../../components/500.dart';
 import '../../components/app/menu_card.dart';
 import '../../components/confirm_dialog_box.dart';
 import '../../components/simple_dialog_box.dart';
 import '../../login_screen/login_app.dart';
-import '../../modify_password_screen/modify_password_page_web.dart';
 import '../../publish_screen/publish_app.dart';
 import '../components/info.dart';
 import '../components/personal_card.dart';
 import '../../report_screen/report_app.dart';
 import '../../utils/user/user_data.dart';
-
-final pageBucket = PageStorageBucket();
 
 class PersonalPageBodyApp extends StatelessWidget {
 
@@ -33,43 +30,43 @@ class PersonalPageBodyApp extends StatelessWidget {
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
-        title: Image.asset("assets/titles/area.png", scale:6),
+        title: Image.asset("assets/titles/area.png", scale:5),
         automaticallyImplyLeading: false,
         leadingWidth: 20,
         backgroundColor: cDirtyWhiteColor,
         titleSpacing: 15,
         elevation: 0,
         actions: [
-         InkWell(
-                onTap: () {
-                  var response = Authentication.revoke();
-                  if(response==500)
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Error500WithBar(i:3, title: Image.asset("assets/app/area.png", scale: 6,))));
-                  else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
-                },
-                child:Center(
-                  child: Padding(
-                          padding: const EdgeInsets.only(right:10),
-                          child: Text(
-                            "SAIR",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: cHeavyGrey
-                            ),
-                          ),
-                        ),
+          InkWell(
+            onTap: () {
+              var response = Authentication.revoke();
+              if(response==500)
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
+              else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
+            },
+            child:Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right:10),
+                child: Text(
+                  "SAIR",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: cHeavyGrey
+                  ),
                 ),
-                    ),
+              ),
+            ),
+          ),
         ],
       ),
-    body: Column(
-          children: <Widget>[
-            PersonalCard(size: size),
-            !UniverseUser.isVerified() || !UniverseUser.isActive()
-            ?Info()
-                :Menu(size: size)
-          ],
+      body: Column(
+        children: <Widget>[
+          PersonalCard(size: size),
+          !UniverseUser.isVerified() || !UniverseUser.isActive()
+              ?Info()
+              :Menu(size: size)
+        ],
       ),
     );
   }
@@ -92,9 +89,9 @@ class Menu extends StatelessWidget {
           padding: const EdgeInsets.only(top:30, left: 20),
           child: Text("MENU DE OPÇÕES",
               style: TextStyle(
-                color: cHeavyGrey,
-            fontWeight: FontWeight.bold
-          )
+                  color: cHeavyGrey,
+                  fontWeight: FontWeight.bold
+              )
           ),
         ),
         Container(
@@ -135,7 +132,7 @@ class Menu extends StatelessWidget {
                   });
                 else if(index==4)
                   return MenuCard(text: 'Fóruns', description: 'Acede a fóruns informativos e mantém-te informado',icon: Icons.message_outlined, press: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreenApp()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForumScreenApp()));
                   });
                 else if(index==5)
                   return MenuCard(text: 'Reportar', description: 'Reporta um problema que encontraste no campus',icon: Icons.report_outlined, press: () {
@@ -146,27 +143,14 @@ class Menu extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppPublishPage()));
                   });
                 else if(index==7)
-                  return MenuCard(text: 'Feedback', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
-
-                else if(index==8)
-                  return MenuCard(text: 'Estatísticas', description: 'Entra numa sala digitalizando o código QR na sua porta',icon: Icons.account_circle_outlined, press: () { });
-
-                else if(index==9)
-                  return MenuCard(text: 'Mudar Palavra-passe',description: '', icon: Icons.password_outlined, press: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(
-                                  Radius.circular(10.0)
-                              )
-                          ),
-                          content: ModifyPasswordPageWeb(),
-                        ));
+                  return MenuCard(text: 'Feedback', description: 'A tua opiião é importante para nós. Submete-a aqui',icon: Icons.bar_chart_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FeedbackPageApp()));
                   });
-
-                else if(index==10)
+                else if(index==8)
+                  return MenuCard(text: 'Mudar Palavra-passe',description: '', icon: Icons.password_outlined, press: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ModifyPwdPageApp()));
+                  });
+                else if(index==9)
                   return MenuCard(text: 'Apagar Conta', description: '',icon: Icons.delete, press: () {
                     showDialog(
                         context: context,
@@ -174,23 +158,35 @@ class Menu extends StatelessWidget {
                           final response = UniverseUser.delete();
                           if(response == 200)
                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppHomePage()));
-                          else showDialog(
-                              context: context,
-                              builder: (_) => CustomDialogBox(
-                                  title: "Ups!",
-                                  descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
-                                  text: "OK",
-                                  press: () {
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
-                                  }
-                              )
-                          );
-                        },));
-                  });
-              }
-          ),
-        ),
-      ],
+                          else if(response ==401)
+                            showDialog(
+                                context: context,
+                                builder: (_) => CustomDialogBox(
+                                    title: "Ups!",
+                                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente para conseguires aceder à UniVerse.",
+                                    text: "OK",
+                                    press: () {
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPageApp()));
+                                    }
+                                )
+                            );
+                          else if(response == 400)
+                            showDialog(context: context,
+                                builder: (BuildContext context) {
+                                  return CustomDialogBox(
+                                    title: "Ups!",
+                                    descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                                    text: "OK",
+                                  );
+                                }
+                            );
+                          else Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                builder: (context) => Error500()));
+                        }));
+                  }
+                  );
+              }),
+        )],
     );
   }
 }

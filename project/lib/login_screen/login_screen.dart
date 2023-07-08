@@ -47,6 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    idController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -56,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (BuildContext context){
             return const CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para iniciares sessão precisas de te ligar a uma rede.",
               text: "OK",
             );
           }
@@ -64,22 +66,20 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = false;
       });
-    } else {
-      bool areControllersCompliant = Authentication.areCompliantToLogin(email, password);
-      if (!areControllersCompliant) {
-        showDialog(context: context,
-            builder: (BuildContext context){
-              return const CustomDialogBox(
-                title: "Ups!",
-                descriptions: "Existem campos vazios. Preenche-os, por favor.",
-                text: "OK",
-              );
-            }
-        );
-        setState(() {
-          isLoading = false;
-        });
-      } else {
+    } else if (!Authentication.areCompliantToLogin(email, password)) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return const CustomDialogBox(
+              title: "Ups!",
+              descriptions: "Existem campos vazios. Preenche-os, por favor.",
+              text: "OK",
+            );
+          }
+      );
+      setState(() {
+        isLoading = false;
+      });
+    }else {
         var bytes = utf8.encode(password); // Convert text to bytes
         var digest = sha256.convert(bytes); // Perform SHA-256 hash
         var response = await Authentication.login(email, digest.toString());
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pop(context);
             context.go("/personal");
           }
-          else Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
+          else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
         } else if (response==401) {
           showDialog(context: context,
               builder: (BuildContext context){
@@ -99,6 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               }
           );
+          setState(() {
+            isLoading = false;
+          });
         } else {
           if(kIsWeb)
             context.go("/error");
@@ -107,10 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

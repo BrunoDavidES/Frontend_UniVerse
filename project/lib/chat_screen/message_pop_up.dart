@@ -183,7 +183,7 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            DescriptionField(label: "", max: 500, controller: messageController),
+            DescriptionField(label: "", hint:"",maxLength: 500, maxLines: 5, controller: messageController),
             const SizedBox(height: 15),
             isLoading
                 ? Container(

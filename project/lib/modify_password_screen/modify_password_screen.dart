@@ -8,6 +8,7 @@ import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +65,12 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
   }
 
   void submitButtonPressed(oldPwd, newPwd, confirmation) async {
-   /* if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
+    if (!kIsWeb && _source.keys.toList()[0] == ConnectivityResult.none) {
       showDialog(context: context,
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para confirmares as alterações precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para alterares a tua palavra-passe precisamos que te ligues a uma rede.",
               text: "OK",
             );
           }
@@ -77,78 +78,115 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
       setState(() {
         isLoading = false;
       });
+    } else if(!Authentication.areCompliantToModify(oldPwd, newPwd, confirmation)) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "Existem campos vazios. Preenche-os, por favor.",
+              text: "OK",
+            );
+          }
+      );
+    } else if(!Authentication.match(newPwd)) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "A nova palavra-passe não segue as restrições estabelecidas de, no mínimo, 6 caracteres, 1 número e 1 maiúscula.",
+              text: "OK",
+            );
+          }
+      );
+    } else if(!Authentication.areEqual(newPwd, confirmation)) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "A confirmação da palavra-passe que introduziste está errada.",
+              text: "OK",
+            );
+          }
+      );
     } else {
       showDialog(
           context: context,
-          builder: (_) => ConfirmDialogBox(
-              descriptions: "Tens a certeza que queres atualizar a tua palavra-passe na UniVerse?",
-              press: () async {
-               var response = await UniverseUser.update(name, phone, linkedin, office, license_plate, isPublic);
-                var response = 200;
-                if (response == 200) {
-                  showDialog(context: context,
-                      builder: (BuildContext context) {
-                        return CustomDialogBox(
-                          title: "Sucesso",
-                          descriptions: "Já atualizámos a tua pala",
-                          text: "OK",
-                        );
-                      }
-                  );
-                } else if (response==401) {
-                  showDialog(context: context,
-                      builder: (BuildContext context) {
-                        return CustomDialogBox(
-                          title: "Ups!",
-                          descriptions: "Parece que a tua sessão expirou. Precisamos que inicies sessão novamente, por favor.",
-                          text: "OK",
-                        );
-                      }
-                  );
-                } else if (response == 403) {
-                  showDialog(context: context,
-                      builder: (BuildContext context) {
-                        return CustomDialogBox(
-                            title: "Ups!",
-                            descriptions: "Parece que não tens permissões para esta operação.",
-                            text: "OK",
-                            press: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (
-                                      context) => const LoginPageApp()));
-                            }
-                        );
-                      }
-                  );
-                } else if (response==400) {
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return CustomDialogBox(
-                          title: "Ups!",
-                          descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
-                          text: "OK",
-                        );
-                      }
-                  );
-                } else {
-                  if(kIsWeb)
-                    context.go("/error");
-                  else
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-                }
-              }
-          )
-      );*/
+          builder: (_) =>
+              ConfirmDialogBox(
+                  descriptions: "Tens a certeza que queres atualizar a tua palavra-passe na UniVerse?",
+                  press: () async {
+                    var bytes = utf8.encode(oldPwd); // Convert text to bytes
+                    var digest = sha256.convert(bytes); // Perform SHA-256 hash
+                    var bytes2 = utf8.encode(newPwd); // Convert text to bytes
+                    var digest2 = sha256.convert(bytes2);
+                    var response = await Authentication.updatePwd(digest.toString(), digest2.toString());
+                    if (response == 200) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Sucesso",
+                              descriptions: "Já atualizámos a tua palavra-passe",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 401) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Parece que a tua sessão expirou. Precisamos que inicies sessão novamente, por favor.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if (response == 400) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else {
+                      if (kIsWeb)
+                        context.go("/error");
+                      else
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => Error500()));
+                    }
+                  }
+              )
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: cDirtyWhiteColor,
-        appBar: AppBar(
-          title: Image.asset("assets/titles/modify_pwd.png", scale:4.5),
-          automaticallyImplyLeading: false,
+        appBar: kIsWeb
+            ?AppBar(
+          title: Image.asset("assets/titles/modify_pwd.png", scale:6),
           backgroundColor: cDirtyWhiteColor,
+          automaticallyImplyLeading: false,
+          titleSpacing: 15,
+          elevation: 0,
+        )
+            :AppBar(
+          title: Image.asset("assets/titles/modify_pwd.png", scale:4),
+          backgroundColor: cDirtyWhiteColor,
+          leading: Builder(
+              builder: (context) {
+                return IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {Navigator.pop(context);},
+                    color: cDarkLightBlueColor);
+              }
+          ),
+          leadingWidth: 20,
           titleSpacing: 15,
           elevation: 0,
         ),
@@ -165,7 +203,7 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              MyPasswordField(controller: oldPwdController, hintText: '00', obscureText: true, label: 'Palavra-passe atual', icon: Icons.lock_outline),
+              MyPasswordField(controller: oldPwdController, hintText: '', obscureText: true, label: 'Palavra-passe atual', icon: Icons.lock_outline),
               MyPasswordField(controller: newPwdController, hintText: '6 caracteres, 1 número, 1 maiúscula', obscureText: true, label: 'Nova Palavra-passe', icon: Icons.lock_outline),
               MyPasswordField(controller: confirmationController, hintText: 'Introduz novamente a palavra-passe nova', obscureText: true, label: 'Confirmação', icon: Icons.lock_outline),
               const SizedBox(height: 20),
@@ -194,7 +232,7 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
                         },
                         height: 20),
                   DefaultButtonSimple(
-                      text: "CONFIRMAR ALTERAÇÕES",
+                      text: "CONFIRMAR",
                       color: cPrimaryColor,
                       press: () {
                         submitButtonPressed(oldPwdController.text, newPwdController.text, confirmationController.text);

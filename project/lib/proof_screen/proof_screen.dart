@@ -93,7 +93,7 @@ class ProofScreen extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.all(10),
-                  width: size.width/3,
+                  width: size.width/2.75,
                   height: size.height/4,
                   decoration: BoxDecoration(
                       image: DecorationImage(
@@ -104,12 +104,12 @@ class ProofScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: size.width/2,
+                  width: size.width/2.25,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Bruno Miguel Matias David",
+                        "Nome Completo do Utilizador",
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: 17,
@@ -156,67 +156,6 @@ class ProofScreen extends StatelessWidget {
             Image.asset("assets/img.png", scale: 3,),
           ],
         ),
-
-        /*Container(
-                      height: 190,
-                      child: Column(
-                        children: [
-                          IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {Navigator.pop(context);},
-                              color: cDirtyWhiteColor),
-                        ],
-                      ),
-                    )
-                  ]
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top:5, left: 10, right: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.data.date!,
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: cHeavyGrey
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      "autoria de "+widget.data.author!,
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: cHeavyGrey
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
-                child: Text(
-                  widget.data.title!.toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      widget.data.text!,
-                      textAlign: TextAlign.justify,
-                    ),
-                    //SizedBox(height: 10,)
-                  ),
-                ),
-              ),
-            ],*/
       ),
     );
   }

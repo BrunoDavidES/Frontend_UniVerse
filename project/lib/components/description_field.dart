@@ -4,10 +4,12 @@ import '../consts/color_consts.dart';
 
 class DescriptionField extends StatelessWidget {
   final String label;
-  final int max;
+  final String hint;
+  final int maxLength;
+  final int maxLines;
   const DescriptionField({
     super.key,
-    required this.controller, required this.label, required this.max,
+    required this.controller, required this.label, required this.maxLength, required this.maxLines, required this.hint,
   });
 
   final TextEditingController controller;
@@ -17,8 +19,8 @@ class DescriptionField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 20, right:20, top: 10),
       child: TextFormField(
-        maxLength: max,
-        maxLines: 5,
+        maxLength: maxLength,
+        maxLines: maxLines,
         controller: controller,
         decoration: InputDecoration(
             labelText: label,
@@ -38,7 +40,7 @@ class DescriptionField extends StatelessWidget {
             ),
             fillColor: Colors.white60,
             filled: true,
-            hintText: "Descreve o problema",
+            hintText: hint,
             hintStyle: TextStyle(
                 color: Colors.grey
             )
