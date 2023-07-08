@@ -67,6 +67,7 @@ class PersonalPageWeb extends StatelessWidget {
                          CalendarScreenWeb(),
                         if(i==4)
                           PublishEventScreenWeb(),
+                        SizedBox(height: 40,),
                         BottomAbout(size: size,),
                       ],
                     ),

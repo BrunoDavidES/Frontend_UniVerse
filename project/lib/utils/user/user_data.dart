@@ -81,22 +81,23 @@ class UniverseUser {
 
   UniverseUser.fromJson(Map<String, dynamic> json ) {
     var properties = json['properties'];
+    username = properties['username'];
     department = properties['department']['value'];
-    //job
-    phone = properties['phone']['value'];
-    linkedin = properties['linkedin']['value'];
-    isPublic = properties['isPublic']['value'];
+    job = properties['department_job']['value'];
+    //phone = properties['phone']['value'];
+    //linkedin = properties['linkedin']['value'];
+    //isPublic = properties['isPublic']['value'];
     email = properties['email']['value'];
     license_plate = properties['license_plate']['value'];
     name = properties['name']['value'];
-    organization =properties['organization']['value'];
+    organization =properties['nucleus']['value'];
     office=properties['office']['value'];
     status =properties['status']['value'];
-    creation = properties['time_creation']['value'];
+    //creation = properties['time_creation']['value'];
   }
 
   //401, 400, 200
-  Future<UniverseUser?> get() async {
+  static Future<UniverseUser?> get() async {
     String token = await Authentication.getTokenID();
 
     if(token.isEmpty) {
@@ -109,15 +110,22 @@ class UniverseUser {
     final response = await http.get(
       Uri.parse(url),
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': token,
       },
     );
+
+    print("passou");
+
     if (response.statusCode == 200) {
+      print("encontrou");
       var decoded = json.decode(response.body);
-      UniverseUser.fromJson(decoded);
-      var toSplit = email;
-      username = toSplit!.split("@")[0];
+      var user = UniverseUser.fromJson(decoded);
+      print(user.email);
+      print(user.name);
+      print(user.role);
+      print(user.department);
+      print(user.username);
+      return user;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();

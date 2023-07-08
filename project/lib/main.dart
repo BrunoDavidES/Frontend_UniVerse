@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'components/web/not_found.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ import 'package:UniVerse/utils/route.dart';
 import 'news_screen/news_web_detail_screen.dart';
 
 Future main() async{
-  //setUrlStrategy(PathUrlStrategy());
+  setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   if(!kIsWeb) {
     var data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);

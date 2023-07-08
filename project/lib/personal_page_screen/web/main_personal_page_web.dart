@@ -45,21 +45,27 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
     return Row(
       children: [
         if(UniverseUser.isVerified() && UniverseUser.isActive())
-        WebMenu(width: size.width/9, height: size.height/2),
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset("assets/titles/area.png", scale: 4.5,)
-                ),
-              ),
-              SizedBox(height: 20,),
-              PersonalWebCard(size: size),
-              SizedBox(height: 30,)
-            ]
+        WebMenu(width: size.width/9.5, height: size.height/2),
+        Row(
+          children: [
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset("assets/titles/area.png", scale: 4.5,)
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  PersonalWebCard(size: size),
+                  SizedBox(height: 30,)
+                ]
+            ),
+            SizedBox(width: size.width/9,),
+            PersonalWebCard(size: size),
+          ],
         ),
         !UniverseUser.isVerified() || !UniverseUser.isActive()
         ?Info()
