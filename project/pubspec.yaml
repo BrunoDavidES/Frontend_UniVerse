@@ -66,6 +66,7 @@ dependencies:
   toggle_switch: ^2.1.0
   hash_password: 0.0.3
   crypto: ^3.0.1
+  cloud_functions: ^4.3.3
 
   #webview_flutter: ^4.2.2
 
