@@ -20,8 +20,8 @@ class Info extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Text(
               !UniverseUser.isVerified()
-                  ?"Para poderes fazer parte do Universo, precisamos que confirmes a tua conta. Enviámos um e-mail de confirmação para o endereço de e-mail que indicaste no registo!"
-                  :"A tua conta encontra-se suspensa e, por isso, não tens acesso àquilo que a UniVerse te oferece...",
+                  ?"Para poderes fazer parte do Universo, precias de confirmar a tua conta. Enviámos um e-mail de confirmação para o endereço de e-mail que indicaste no registo!"
+                  :"A tua conta encontra-se suspensa e, por isso, o teu acesso àquilo que a UniVerse te oferece está bloqueado.",
               textAlign: TextAlign.justify,
               style: TextStyle(
                   fontWeight: FontWeight.bold,

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:UniVerse/chat_screen/enter_forum_screen.dart';
 import 'package:UniVerse/chat_screen/members_screen.dart';
-import 'package:UniVerse/chat_screen/promote_depromote_screen.dart';
 import 'package:UniVerse/consts/list_consts.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,8 +17,8 @@ import '../login_screen/login_app.dart';
 import '../personal_page_screen/app/personal_page_app.dart';
 import '../utils/chat/chat_utils.dart';
 import '../utils/connectivity.dart';
-import 'chat_screen_app.dart';
-import 'create_forum_screen.dart';
+import '../chat_screen/chat_screen_app.dart';
+import '../chat_screen/create_forum_screen.dart';
 
 class ForunsScreenApp extends StatefulWidget {
 
@@ -43,16 +43,15 @@ class _MyChatPageState extends State<ForunsScreenApp> {
         _source = source;
       });
     });
-    String? userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID != null) {
+    String username = UniverseUser.getUsername();
+    if (username != "ERROR") {
       _forumStream = FirebaseDatabase.instance
           .ref()
-          .child('users/${userID.replaceAll(".", "-")}/forums/')
+          .child('users/${username.replaceAll(".", "-")}/forums/')
           .onValue
           .listen((event) {
         var snapshot = event.snapshot;
         var children = snapshot.value as Map<dynamic, dynamic>;
-
         _forumStreamController.add(children);
       });
     }
@@ -62,12 +61,13 @@ class _MyChatPageState extends State<ForunsScreenApp> {
   @override
   void deactivate() {
     _forumStream.cancel();
+    _forumStreamController.add(null);
     super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
-    String forumName = '';
+    String forumName = "";
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: cDirtyWhiteColor,
@@ -101,14 +101,12 @@ class _MyChatPageState extends State<ForunsScreenApp> {
                 if (!snapshot.hasData || snapshot.data == null) {
                   return Info();
                 }
-
                 var forums = snapshot.data as Map<dynamic, dynamic>;
                 return SingleChildScrollView(
                   child: Column(
                     children: [
                       Column(
                         children: forums.entries.map((entry) {
-                          var forumID = entry.key;
                           var forumData = entry.value;
                           forumName = forumData['name'];
                           return ForumCard(data: entry);

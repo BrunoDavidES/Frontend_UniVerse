@@ -184,7 +184,7 @@ class _ReportScreenState extends State<ReportScreenApp> {
                   ),
                   MyTextField(controller: titleController, hintText: 'Introduz um título', obscureText: false, label: 'Título', icon: Icons.title,),
                   MyTextField(controller: locationController, hintText: 'Onde ecnontraste o problema?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
-                  DescriptionField(label: "Descrição", max:300, controller: descriptionController),
+                  DescriptionField(label: "Descrição", hint: "Descreve o problema", maxLength:300, maxLines:5, controller: descriptionController),
                   InkWell(
                     onTap: () async {
                       await availableCameras().then((value) => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraScreen(cameras: value,))));

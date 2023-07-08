@@ -174,58 +174,13 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  /*
-  var response = await User.updatePwd(oldPwd, newPwd, confirmation);
-  //meter validacao internet
-        if (response == 200) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Sucesso!",
-                  descriptions: "Já alterámos a tua palavra-passe. Inicia sessão de novo, por favor",
-                  text: "OK",
-                );
-              }
-          );
-        } else if (response==401) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Parece que não tens sessão iniciada.",
-                  text: "OK",
-                );
-              }
-          );
-        } else if (response==400) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
-                  text: "OK",
-                );
-              }
-          );
-        }else {
-            context.go("/error");
-        }
-      }
-    setState(() {
-      isLoading = false;
-    });
-  }
-   */
-
   static Future<int> delete() async {
     String token = await Authentication.getTokenID();
-    const String url = '$baseUrl/modify/delete';
-
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
       return 401;
     }
-
+    const String url = '$baseUrl/modify/delete';
     final http.Response response = await http.delete(
       Uri.parse(url),
       headers: {

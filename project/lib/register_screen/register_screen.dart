@@ -51,29 +51,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
+    idController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
     super.dispose();
   }
 
   void registerButtonPressed(name, email, password, confirmation) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
-      setState(() {
-        isLoading = false;
-      });
       showDialog(context: context,
           builder: (BuildContext context){
             return CustomDialogBox(
               title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para te registares precisamos que te ligues a uma rede.",
+              descriptions: "Parece que não estás ligado à internet! Para te registares precisas de te ligar a uma rede.",
               text: "OK",
             );
           }
       );
-    } else {
-      bool areCompliant = Registration.areCompliant(email, name, password, confirmation);
-      if (!areCompliant) {
-        setState(() {
-          isLoading = false;
-        });
+      setState(() {
+        isLoading = false;
+      });
+    } else if (!Registration.areCompliant(email, name, password, confirmation)) {
         showDialog(context: context,
             builder: (BuildContext context){
               return CustomDialogBox(
@@ -83,25 +83,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
               );
             }
         );
-      }  else {
-        areCompliant = Registration.match(password, confirmation);
-        if (!areCompliant) {
-          showDialog(context: context,
-              builder: (BuildContext context) {
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "A confirmação da palavra-passe que introduziste está errada.",
-                  text: "OK",
-                );
-              }
-          );
-        } else {
+        setState(() {
+          isLoading = false;
+        });
+      }  else if (!Registration.match(password, confirmation)) {
+      showDialog(context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: "Ups!",
+              descriptions: "A confirmação da palavra-passe que introduziste está errada.",
+              text: "OK",
+            );
+          }
+      );
+      setState(() {
+        isLoading = false;
+      });
+    }else {
           var bytes = utf8.encode(password); // Convert text to bytes
           var digest = sha256.convert(bytes); // Perform SHA-256 hash
-          var bytes2 = utf8.encode(confirmation); // Convert text to bytes
-          var digest2 = sha256.convert(bytes2); // Perform SHA-256 hash
+          bytes = utf8.encode(confirmation); // Convert text to bytes
+          var digest2 = sha256.convert(bytes); // Perform SHA-256 hash
           var response = await Registration.regist(digest.toString(), digest2.toString(), name, email, password);
-          //var response = await Registration.regist(password, confirmation, name, email, password);
           if (response == 200) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -120,9 +123,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 }
             );
-            setState(() {
-              isLoading = false;
-            });
           } else if (response == 00) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -133,6 +133,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 }
             );
+            setState(() {
+              isLoading = false;
+            });
           } else if (response == 01) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -143,6 +146,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 }
             );
+            setState(() {
+              isLoading = false;
+            });
           } else if (response == 400) {
             showDialog(context: context,
                 builder: (BuildContext context) {
@@ -153,6 +159,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 }
             );
+            setState(() {
+              isLoading = false;
+            });
           }
           else if (response == 401) {
             showDialog(context: context,
@@ -164,6 +173,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 }
             );
+            setState(() {
+              isLoading = false;
+            });
           }
           else {
             if(kIsWeb) {
@@ -174,11 +186,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }
         }
       }
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +235,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
                         if(kIsWeb) {
                           showDialog(
                               context: context,
@@ -273,22 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       isLoading = true;
                     });
-                    if(nameController.text == "" || emailController == "" || passwordConfirmationController == "" || passwordController == "") {
-                      setState(() {
-                        isLoading = false;
-                        showDialog(context: context,
-                            builder: (BuildContext context){
-                              return CustomDialogBox(
-                                title: "Ups!",
-                                descriptions: "Existem campos vazios. Preenche-os, por favor.",
-                                text: "OK",
-                              );
-                            }
-                        );
-                      });
-                    } else {
-                        registerButtonPressed(nameController.text, emailController.text.trim(), passwordController.text, passwordConfirmationController.text);
-                      }
+                    registerButtonPressed(nameController.text, emailController.text.trim(), passwordController.text, passwordConfirmationController.text);
                   },
                   height: 20),
               if(!kIsWeb)

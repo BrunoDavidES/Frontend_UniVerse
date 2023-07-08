@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../consts/color_consts.dart';
-import '../../profile_screen/profile_page_app.dart';
 import '../../utils/user/user_data.dart';
 
 class PersonalCard extends StatelessWidget {
@@ -70,7 +68,7 @@ class PersonalCard extends StatelessWidget {
               ),
             ),
           )
-          : SizedBox(width: 1,),
+          : SizedBox(),
           Padding(
             padding: const EdgeInsets.only(left: 15, bottom:5),
             child: Text(

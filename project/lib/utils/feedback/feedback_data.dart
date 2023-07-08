@@ -1,13 +1,14 @@
-/*import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../consts/api_consts.dart';
 import '../authentication/auth.dart';
 
-class Feedback{
+class UniverseFeedback{
 
   static Future<int> post(message) async {
     String token = await Authentication.getTokenID();
@@ -16,33 +17,23 @@ class Feedback{
       return 401;
     }
     final http.Response response = await http.post(
-      Uri.parse(postEventUrl),
+      Uri.parse(feedbackUrl),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
       },
       body: jsonEncode({
-        'title': title,
-        'startDate': startDate,
-        'endDate': location,
-        'isPublic': isPublic,
-        'capacity': capacity,
-        'isItPaid': isItPaid,
+        'message': message,
       }),
     );
-
     if (response.statusCode == 200) {
       var id = response.body;
-      organizedEvents.addAll({id:Event("", title, location, "", capacity, "", startDate, endDate, "", "", "")});
-      var ref = FirebaseStorage.instance.ref().child("Events/$id");
-      ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
-      ref = FirebaseStorage.instance.ref().child("Events/$id.txt");
-      ref.putString(description, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
+      var ref = FirebaseStorage.instance.ref().child("Feedback/$id.txt");
+      ref.putString(message, metadata:SettableMetadata(contentType: 'text/plain;charset=UTF-8'));
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();
     }
-
     return response.statusCode;
   }
 
@@ -231,4 +222,4 @@ class Feedback{
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/05/destaque-fct_act_verao_3.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png"
   ];
-}*/
+}

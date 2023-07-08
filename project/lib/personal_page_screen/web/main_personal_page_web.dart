@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../../components/fct_today_card.dart';
 import '../../components/web/web_menu.dart';
 import '../../utils/user/user_data.dart';
 import '../components/info.dart';
@@ -46,26 +47,26 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
       children: [
         if(UniverseUser.isVerified() && UniverseUser.isActive())
         WebMenu(width: size.width/9.5, height: size.height/2),
-        Row(
-          children: [
-            Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset("assets/titles/area.png", scale: 4.5,)
+                ),
+              ),
+              SizedBox(height: 20,),
+              Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20),
-                    child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: Image.asset("assets/titles/area.png", scale: 4.5,)
-                    ),
-                  ),
-                  SizedBox(height: 20,),
                   PersonalWebCard(size: size),
-                  SizedBox(height: 30,)
-                ]
-            ),
-            SizedBox(width: size.width/9,),
-            PersonalWebCard(size: size),
-          ],
+                  SizedBox(width: size.width/9),
+                  FCTTodayWebCard(size: size),
+                ],
+              ),
+              SizedBox(height: 30,)
+            ]
         ),
         !UniverseUser.isVerified() || !UniverseUser.isActive()
         ?Info()

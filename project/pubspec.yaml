@@ -119,6 +119,7 @@ flutter:
     - assets/app/logo_no_reference_no_white.png
     - assets/app/logo_nova_horiz.png
     - assets/app/profile_title.png
+    - assets/titles/feedback.png
     - assets/titles/about_us.png
     - assets/titles/edit.png
     - assets/titles/modify_pwd.png

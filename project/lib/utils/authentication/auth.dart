@@ -17,7 +17,12 @@ class Authentication {
     return password == confirmation;
   }
 
-  static Future<int> login(String email, String password) async {
+  static bool match (newPwd) {
+    var validator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
+    return validator.hasMatch(newPwd);
+  }
+
+  static Future<int> login(email, password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -61,11 +66,6 @@ class Authentication {
     }
   }
 
-  static bool match (newPwd) {
-    var validator = RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,64}");
-    return newPwd.matches(validator);
-  }
-
   static Future<int> updatePwd(oldPwd, newPwd) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     final email = currentUser?.email;
@@ -74,9 +74,13 @@ class Authentication {
       final authResult = await currentUser.reauthenticateWithCredential(credential);
       if (authResult.user != null) {
         await currentUser.updatePassword(newPwd);
+        Authentication.userIsLoggedIn = false;
+        Authentication.revoke();
         return 200;
       } else return 400;
     } else {
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
       return 401;
     }
   }
