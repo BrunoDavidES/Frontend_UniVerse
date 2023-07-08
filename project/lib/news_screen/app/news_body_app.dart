@@ -26,7 +26,7 @@ class NewsFeed extends StatefulWidget {
     @override
     void initState() {
       offset = 0;
-      fetchDone = Article.fetchNews(3, offset, {});
+      fetchDone = Article.fetchNews(3, "EMPTY", {});
       controller = ScrollController()
         ..addListener(handleScrolling);
       super.initState();
@@ -45,7 +45,7 @@ class NewsFeed extends StatefulWidget {
           if (Article.news.length == Article.numNews)
             hasMore = false;
           else
-            Article.fetchNews(3, offset, {});
+            Article.fetchNews(3, "EMPTY", {});
         });
       }
     }
@@ -56,7 +56,7 @@ class NewsFeed extends StatefulWidget {
         offset = 0;
         Article.news.clear();
       });
-      Article.fetchNews(3, offset, {});
+      Article.fetchNews(3, "EMPTY", {});
     }
 
     @override
@@ -67,7 +67,7 @@ class NewsFeed extends StatefulWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: FutureBuilder(
-              future: Article.fetchNews(3, 0, {}),
+              future: Article.fetchNews(3, "EMPTY", {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {

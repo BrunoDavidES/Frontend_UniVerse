@@ -3,16 +3,18 @@ import 'dart:io';
 import 'dart:math';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Article {
-  //static List<Article> news = <Article>[];
+  static List<Article> news = <Article>[];
   static int numNews = 0;
   String? id;
   String? title;
   String? text;
-  String? urlToImage;
+  String urlToImage = "https://www.fct.unl.pt/sites/default/files/imagens/noticias/2018/11/campus.jpg";
   String? date;
   String? author;
 
@@ -31,63 +33,65 @@ class Article {
     id = properties['id']['value'];
     title = properties['title']['value'];
     author = properties['authorName']['value'];
-    date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
-    urlToImage = images[Random().nextInt(images.length)];
-    text="Olá";
-    print(id);
-    print(title);
-    print(author);
-    print("OLÁ");
+    var dateAux = properties['time_creation']['value']['seconds'];
+    var dateAux2 = properties['time_creation']['value']['nanos'];
+    date = formatTimestamp(dateAux, dateAux2);
+    urlToImage = "gs://universe-fct.appspot.com/News/$id";
+    text="gs://universe-fct.appspot.com/News/$id.txt";
   }
 
-  static Future<int> fetchNews(int limit, int offset, Map<String, String> filters) async {
-    /*String newsUrl = '/feed/numberOf/News';
+  static Future<int> fetchNews(int limit, String offset, Map<String, String> filters) async {
+    String newsUrl = '/feed/numberOf/News';
     var response;
+    var token;
     if(numNews == 0) {
+      if(Authentication.getTokenID() == ""){
+          token = "notLogged";
+      }
+      else {
+        token = await Authentication.getTokenID();
+      }
+
       response = await http.post(
         Uri.parse(baseUrl + newsUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
+          'Authorization': token,
         },
+        body: "{}"
       );
+
       if(response.statusCode==200) {
         numNews = json.decode(response.body);
         print(numNews);
       }
       else return 500;
-    }*/
-    /*newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
+    }
+    newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     response = await http.post(
       Uri.parse(baseUrl + newsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
+        'Authorization': token,
       },
-     // body: jsonEncode(
-        //filters
-      //),
+      body: "{}"
     );
     if(response.statusCode==200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('cursor', response.headers['X-Cursor'].toString());
       var decodedNews = json.decode(response.body);
-      print(decodedNews);
       for (var decoded in decodedNews) {
         news.add(Article.fromJson(decoded));
       }
-      print("DONE");
     }
-    print(response.statusCode);
-    print(news[0].id);
-    print(news[0].title);
-    print(news[0].author);
-    print(news[0].date);
-    print("OLÁ");
-    print(news.length);
-    return response.statusCode;*/
- return 200;
+    return response.statusCode;
   }
 
 
-  static List<Article> news = [
+
+
+  /*static List<Article> news = [
     Article("Carmona Rodrigues é o novo Presidente do Conselho Consultivo da ERSAR", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/05/crodrigues_1.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias1", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias2", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
@@ -99,7 +103,7 @@ class Article {
     Article("Teste de notícias8", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias9", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno"),
     Article("Teste de notícias10", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno")
-  ];
+  ];*/
 
 static List<String> images = [
   "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
@@ -107,4 +111,11 @@ static List<String> images = [
   "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
   "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png",
 ];
+
+  String formatTimestamp(int seconds, int nanos) {
+    final milliseconds = seconds * 1000 + (nanos / 1000000).round();
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+    final formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(dateTime);
+  }
 }

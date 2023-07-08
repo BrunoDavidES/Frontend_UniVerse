@@ -45,7 +45,7 @@ class NewsDetailScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                            image: NetworkImage(data.urlToImage!),
+                            image: NetworkImage(data.urlToImage),
                             fit: BoxFit.cover
                         )
                     ),

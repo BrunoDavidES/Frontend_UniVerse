@@ -142,10 +142,10 @@ class Menu extends StatelessWidget {
                   return MenuCard(text: 'Organizar evento', description: 'Organiza um evento na faculdade de forma fácil e rápida',icon: Icons.event_available_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppPublishPage()));
                   });
-                else if(index==7)
+                /*else if(index==7)
                   return MenuCard(text: 'Feedback', description: 'A tua opiião é importante para nós. Submete-a aqui',icon: Icons.bar_chart_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => FeedbackPageApp()));
-                  });
+                  });*/
                 else if(index==8)
                   return MenuCard(text: 'Mudar Palavra-passe',description: '', icon: Icons.password_outlined, press: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ModifyPwdPageApp()));
