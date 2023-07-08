@@ -26,7 +26,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(loadedArticlesCount, 0, {});
+    fetchDone = Article.fetchNews(5, Article.cursor, {});
     super.initState();
   }
 
@@ -243,8 +243,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                       loadedArticlesCount = totalArticlesCount;
                                     }
                                     fetchDone = Article.fetchNews(
-                                      loadedArticlesCount,
-                                      0,
+                                      5,
+                                      Article.cursor,
                                       {},
                                     );
                                   });

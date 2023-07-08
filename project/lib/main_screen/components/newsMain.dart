@@ -22,7 +22,7 @@ class MainNewsState extends State<MainNews> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(3, 0, {});
+    fetchDone = Article.fetchNews(3, Article.cursor, {});
     super.initState();
   }
 
@@ -39,60 +39,60 @@ class MainNewsState extends State<MainNews> {
                   padding: const EdgeInsets.only(top: 10, left: 20),
                   child:
                   Image.asset("assets/titles/highlights.png", scale: 4,)
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(
-                        color: cHeavyGrey,
-                        fontSize: 30,
-                      ),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(
+                      color: cHeavyGrey,
+                      fontSize: 30,
                     ),
-                    onPressed: () => context.go('/news'),
-                    child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                   ),
+                  onPressed: () => context.go('/news'),
+                  child: const Text("+", textAlign: TextAlign.right, style: TextStyle( color: cHeavyGrey, fontSize: 30)),
                 ),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(
+            child: Divider(
+              thickness: 2,
+              color: cDarkLightBlueColor,
             ),
-            const SizedBox(
-              child: Divider(
-                thickness: 2,
-                color: cDarkLightBlueColor,
-              ),
-              ),
+          ),
           Padding(
-              padding: EdgeInsets.only(top: 50),
-              child: FutureBuilder(
-                future: fetchDone,
-                builder: (context, snapshot) {
-                  if(snapshot.hasData) {
-                    return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children:
-                        [Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[0]),
-                          Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[1]),
-                          Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[2]),
-                          Spacer(),
-                        ],
-                      );
-                  }
-                  return Center(
-                    child: LinearProgressIndicator(),
+            padding: EdgeInsets.only(top: 50),
+            child: FutureBuilder(
+              future: fetchDone,
+              builder: (context, snapshot) {
+                if(snapshot.hasData) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:
+                    [Spacer(),
+                      NewsCardWeb(height: 700,
+                          width: widget.width,
+                          Article.news[0]),
+                      Spacer(),
+                      NewsCardWeb(height: 700,
+                          width: widget.width,
+                          Article.news[1]),
+                      Spacer(),
+                      NewsCardWeb(height: 700,
+                          width: widget.width,
+                          Article.news[2]),
+                      Spacer(),
+                    ],
                   );
-                },
-              ),
-              /*child: Row(
+                }
+                return Center(
+                  child: LinearProgressIndicator(),
+                );
+              },
+            ),
+            /*child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:
                 [Spacer(),
@@ -113,7 +113,7 @@ class MainNewsState extends State<MainNews> {
             //SizedBox(height: 10,)
           ),
         ],
-        ),
+      ),
     );
   }
 }
