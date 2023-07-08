@@ -13,6 +13,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'components/web/not_found.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,12 @@ Future main() async{
     ]);
     }
   }
+
+  await Hive.initFlutter();
+  if(!Hive.isBoxOpen('cache')) {
+    await Hive.openBox('cache');
+  }
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

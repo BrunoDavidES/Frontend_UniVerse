@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js_interop';
 import 'dart:math';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+
+import '../../cache/cache.dart';
 
 class Article {
   static List<Article> news = <Article>[];
@@ -41,6 +44,8 @@ class Article {
   }
 
   static Future<int> fetchNews(int limit, String offset, Map<String, String> filters) async {
+    final cache = Cache();
+
     String newsUrl = '/feed/numberOf/News';
     var response;
     var token;
@@ -52,6 +57,10 @@ class Article {
         token = await Authentication.getTokenID();
       }
 
+      response = cache.read(newsUrl);
+      if(response != "") {
+        numNews = jsonDecode(response);
+      }
       response = await http.post(
           Uri.parse(baseUrl + newsUrl),
           headers: <String, String>{
@@ -61,9 +70,10 @@ class Article {
           body: "{}"
       );
 
-      print(response.headers['X-Cursor'].toString());
+      //print(response.headers['X-Cursor'].toString());
 
       if(response.statusCode==200) {
+        cache.write(newsUrl, response.body);
         numNews = json.decode(response.body);
         print(numNews);
       }
@@ -71,6 +81,16 @@ class Article {
     }
     newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
+
+    response = cache.read(newsUrl);
+    if(response != "") {
+      Map<String, dynamic> decodedJson = jsonDecode(response);
+      var decodedNews = decodedJson['results'];
+      for (var decoded in decodedNews) {
+        news.add(Article.fromJson(decoded));
+      }
+      print("It works!");
+    }
     response = await http.post(
         Uri.parse(baseUrl + newsUrl),
         headers: <String, String>{
@@ -80,6 +100,7 @@ class Article {
         body: "{}"
     );
     if(response.statusCode==200) {
+      cache.write(newsUrl, response.body);
       Map<String, dynamic> decodedJson = json.decode(response.body);
       cursor = decodedJson['cursor'];
       print(cursor);
