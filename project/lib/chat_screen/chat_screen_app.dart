@@ -51,6 +51,7 @@ class _MyChatPageState extends State<ChatPageApp> {
       _chatStream = FirebaseDatabase.instance
           .ref()
           .child('forums/${widget.forumID}/feed/')
+          .orderByChild("posted")
           .onValue
           .listen((event) {
         var snapshot = event.snapshot;
