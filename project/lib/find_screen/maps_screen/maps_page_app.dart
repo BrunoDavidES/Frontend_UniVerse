@@ -1,4 +1,5 @@
 
+import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/utils/locations/locations.dart' as locations;
@@ -23,6 +24,7 @@ class _MapsPageState extends State<MapsPageApp> {
       _markers.clear();
       for (final place in fctplaces.places) {
         final marker = Marker(
+          icon: markerIcon,
           markerId: MarkerId(place.name),
           position: LatLng(place.lat, place.lng),
           infoWindow: InfoWindow(
@@ -34,7 +36,23 @@ class _MapsPageState extends State<MapsPageApp> {
       }
     });
   }
-
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  @override
+  void initState() {
+    addCustomIcon();
+    super.initState();
+  }
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(20, 30)), "assets/images/marker.png")
+        .then(
+          (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -47,7 +65,7 @@ class _MapsPageState extends State<MapsPageApp> {
         ),
         child: Stack(
           children: <Widget>[
-            MapApp(),
+            MapsPageWeb(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:1),

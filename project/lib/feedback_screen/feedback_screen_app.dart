@@ -146,50 +146,50 @@ class FeedbackScreenState extends State<FeedbackScreen> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top:15, bottom: 15),
-                child: const Text(
-                  "Acreditamos que o Universo é para todos. Por isso, estamos abertos a sugestões e opiniões. Deixa-nos a tua!",
-                  textAlign: TextAlign.justify,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
-                child: const Text(
-                  "(A tua submissão pode ser para a faculdade)",
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    color: cHeavyGrey
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10, top:15, bottom: 15),
+                    child: const Text(
+                      "Acreditamos que o Universo é para todos. Por isso, estamos abertos a sugestões e opiniões. Deixa-nos a tua!",
+                      textAlign: TextAlign.justify,
+                    ),
                   ),
-                ),
-              ),
-              DescriptionField(controller: textController, label: '', hint:"Diz-nos",maxLength: 500, maxLines: 10,),
-              const SizedBox(height: 20),
-      isLoading
-          ? Container(
-          padding: EdgeInsets.all(10),
-          width: 150,
-          child: const LinearProgressIndicator(
-            color: cPrimaryColor,
-            backgroundColor: cPrimaryOverLightColor,
-          )
-      )
-          : Column(
-        children: [
-          DefaultButtonSimple(
-              text: "SUBMETER",
-              color: cPrimaryColor,
-              press: () {
-                submitButtonPressed(textController.text);
-              },
-              height: 20),
-        ],
-      ),
-  ]
-        )
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+                    child: const Text(
+                      "(A tua submissão pode ser para a faculdade)",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          color: cHeavyGrey
+                      ),
+                    ),
+                  ),
+                  DescriptionField(controller: textController, label: '', hint:"Diz-nos",maxLength: 500, maxLines: 10,),
+                  const SizedBox(height: 20),
+                  isLoading
+                      ? Container(
+                      padding: EdgeInsets.all(10),
+                      width: 150,
+                      child: const LinearProgressIndicator(
+                        color: cPrimaryColor,
+                        backgroundColor: cPrimaryOverLightColor,
+                      )
+                  )
+                      : Column(
+                    children: [
+                      DefaultButtonSimple(
+                          text: "SUBMETER",
+                          color: cPrimaryColor,
+                          press: () {
+                            submitButtonPressed(textController.text);
+                          },
+                          height: 20),
+                    ],
+                  ),
+                ]
+            )
         )
     );
   }

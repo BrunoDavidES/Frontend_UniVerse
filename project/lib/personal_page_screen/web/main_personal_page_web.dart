@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../../components/fct_today_card.dart';
 import '../../components/web/web_menu.dart';
 import '../../utils/user/user_data.dart';
 import '../components/info.dart';
@@ -45,7 +46,7 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
     return Row(
       children: [
         if(UniverseUser.isVerified() && UniverseUser.isActive())
-        WebMenu(width: size.width/9, height: size.height/2),
+        WebMenu(width: size.width/9.5, height: size.height/2),
         Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -57,7 +58,13 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
                 ),
               ),
               SizedBox(height: 20,),
-              PersonalWebCard(size: size),
+              Row(
+                children: [
+                  PersonalWebCard(size: size),
+                  SizedBox(width: size.width/9),
+                  FCTTodayWebCard(size: size),
+                ],
+              ),
               SizedBox(height: 30,)
             ]
         ),

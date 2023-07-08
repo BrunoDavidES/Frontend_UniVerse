@@ -28,7 +28,7 @@ class CalendarEvent {
       this.date
       );
 
-   CalendarEvent.fromJson(Map<String, dynamic> json) {
+  CalendarEvent.fromJson(Map<String, dynamic> json) {
     var properties = json['properties'];
     id = properties['id']['value'];
     title = properties['title']['value'];
@@ -65,6 +65,8 @@ class CalendarEvent {
       Authentication.userIsLoggedIn=false;
       Authentication.revoke();
     }
+    print(response.body);
+    print(response.statusCode);
     return response.statusCode;
   }
 
@@ -93,20 +95,20 @@ class CalendarEvent {
         'username': 'gab.silva',
         'hours': hour,
         'location': location
-        }),
-      );
+      }),
+    );
 
-     if (response.statusCode == 200) {
-        if(events[date]!=null) {
-          events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
-        } else {
-          var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title, department, location, hour, date)}]};
-          events.addAll(toAdd);
-        }
+    if (response.statusCode == 200) {
+      if(events[date]!=null) {
+        events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
+      } else {
+        var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title, department, location, hour, date)}]};
+        events.addAll(toAdd);
+      }
     } else if(response.statusCode == 401) {
-       Authentication.userIsLoggedIn = false;
-       Authentication.revoke();
-     }
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
+    }
     return response.statusCode;
   }
 
@@ -135,19 +137,19 @@ class CalendarEvent {
       }),
     );
 
-      if (response.statusCode == 200) {
-        events[date]!.removeWhere((element) => element.containsKey(id.toString())==id.toString());
-        if(events[date]!=null) {
-          events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, "", location, hour, date)});
-        } else {
-          var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title,"", location, hour, date)}]};
-          events.addAll(toAdd);
+    if (response.statusCode == 200) {
+      events[date]!.removeWhere((element) => element.containsKey(id.toString())==id.toString());
+      if(events[date]!=null) {
+        events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, "", location, hour, date)});
+      } else {
+        var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title,"", location, hour, date)}]};
+        events.addAll(toAdd);
         //events[date]!.add({id.toString(): CalendarEvent(username,response.body, title, "", location, hour, date)});
       } } else if(response.statusCode == 401) {
-        Authentication.userIsLoggedIn = false;
-        Authentication.revoke();
-      }
-      return response.statusCode;
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
+    }
+    return response.statusCode;
   }
 
   static Future<int> delete(String id, String date) async {
@@ -159,20 +161,20 @@ class CalendarEvent {
 
     final String apiUrl = '$baseUrl/profile/personalEvent/delete/$id';
     final http.Response response = await http.delete(
-        Uri.parse(apiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token,
-        },
-      );
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
 
-      if (response.statusCode == 200) {
-        events[date]?.removeWhere((element) => element.keys.first==id.toString());
-     } else if(response.statusCode == 401) {
-        Authentication.userIsLoggedIn = false;
-        Authentication.revoke();
-      }
-      return response.statusCode;
+    if (response.statusCode == 200) {
+      events[date]?.removeWhere((element) => element.keys.first==id.toString());
+    } else if(response.statusCode == 401) {
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
+    }
+    return response.statusCode;
   }
 
 

@@ -23,6 +23,7 @@ class _MapsPageState extends State<MapsPageWeb> {
       _markers.clear();
       for (final place in fctplaces.places) {
         final marker = Marker(
+          icon: markerIcon,
           markerId: MarkerId(place.name),
           position: LatLng(place.lat, place.lng),
           infoWindow: InfoWindow(
@@ -42,6 +43,24 @@ class _MapsPageState extends State<MapsPageWeb> {
         CameraUpdate.newLatLng(LatLng(38.660992, -9.205782)),
       );
     }
+  }
+
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  @override
+  void initState() {
+    addCustomIcon();
+    super.initState();
+  }
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(20, 30)), "assets/images/marker.png")
+        .then(
+          (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
   }
 
   @override

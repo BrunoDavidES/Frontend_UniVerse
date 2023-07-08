@@ -83,6 +83,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
               descriptions: "Tens a certeza que queres atualizar o teu perfil na UniVerse?",
               press: () async {
                 Navigator.pop(context);
+                setState(() {
+                  isLoading = false;
+                });
                 var response = await UniverseUser.update(name, phone, linkedin, office, licensePlate, isPublic, imageUint8);
                 if (response == 200) {
                   showDialog(context: context,
@@ -100,6 +103,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                         );
                       }
                   );
+                  setState(() {
+                    isLoading = false;
+                  });
                 } else if (response==401) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
@@ -116,6 +122,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                         );
                       }
                   );
+                  setState(() {
+                    isLoading = false;
+                  });
                 } else if (response == 403) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
@@ -132,6 +141,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                         );
                       }
                   );
+                  setState(() {
+                    isLoading = false;
+                  });
                 } else if (response==400) {
                   showDialog(context: context,
                       builder: (BuildContext context){
@@ -142,6 +154,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                         );
                       }
                   );
+                  setState(() {
+                    isLoading = false;
+                  });
                 } else {
                   if(kIsWeb)
                     context.go("/error");
@@ -362,9 +377,6 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       color: cPrimaryColor,
                       press: () {
                         submitButtonPressed(nameController.text, phoneController.text, linkedinController.text, officeController.text, license_plateController.text, isPublic);
-                        setState(() {
-                          isLoading = true;
-                        });
                       },
                       height: 20),
                 ],

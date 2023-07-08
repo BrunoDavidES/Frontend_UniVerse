@@ -27,7 +27,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(loadedArticlesCount, 0, {});
+    fetchDone = Article.fetchNews(loadedArticlesCount, "EMPTY", {});
     super.initState();
   }
 
@@ -114,7 +114,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                   image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: NetworkImage(
-                                                      item.urlToImage!,
+                                                      item.urlToImage,
                                                     ),
                                                   ),
                                                   border: Border.all(
@@ -248,7 +248,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                     }
                                     fetchDone = Article.fetchNews(
                                       loadedArticlesCount,
-                                      0,
+                                      "EMPTY",
                                       {},
                                     );
                                   });

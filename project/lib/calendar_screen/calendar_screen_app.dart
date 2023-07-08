@@ -37,6 +37,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
     initializeDateFormatting('pt_PT', null);
     selectedDayString = selectedDay.day.toString();
     selectedMonthString = monthsInText[selectedDay.month-1];
+    CalendarEvent.fetchEvents("07", "2023");
     super.initState();
   }
 

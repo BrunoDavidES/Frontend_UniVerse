@@ -43,7 +43,7 @@ class ProfilePageApp extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-        future: user.get(),
+        future: UniverseUser.get(),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
           return Stack(
