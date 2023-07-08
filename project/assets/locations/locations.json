@@ -6,6 +6,132 @@
       "lat": 38.660992,
       "lng": -9.205782,
       "name": "FCT NOVA"
+    },
+    {
+      "address": "Campus da Faculdade de Ciências e Tecnologia, 2829-516 Caparica",
+      "id": "via-copia",
+      "lat": 38.661671,
+      "lng": -9.204574,
+      "name": "Via Cópia"
+    },
+    {
+      "address": "Campus da Faculdade de Ciências e Tecnologia, 2825-149 Caparica",
+      "id": "mininova",
+      "lat": 38.661386,
+      "lng": -9.205384,
+      "name": "Mininova"
+    },
+    {
+      "id":"esp-solucao",
+      "address":"Campus da Faculdade Ciências e Tecnologia, Edifício da Cantina, 2829-516 Caparica",
+      "lat":38.661422,
+      "lng":-9.205096,
+      "name":"Espaço Solução"
+    },
+    {
+      "id":"pap-solucao",
+      "address":"Campus da Faculdade Ciências e Tecnologia, Edifício da Cantina, 2829-516 Caparica",
+      "lat": 38.661413,
+      "lng": -9.205157,
+      "name":"Papelaria Solução"
+    },
+    {
+      "id":"div-academica",
+      "address":"Campus da Faculdade Ciências e Tecnologia, Edifício da Cantina, 2829-516 Caparica",
+      "lat": 38.661135,
+      "lng": -9.205263,
+      "name":"Divisão Académica"
+    },
+    {
+      "id":"div-parcerias",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.662292,
+      "lng": -9.206031,
+      "name":"Divisão de Acompanhamento de Parcerias"
+    },
+    {
+      "id":"div-formacao",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.661147,
+      "lng": -9.205373,
+      "name":"Divisão de Apoio à Formação Avançada"
+    },
+    {
+      "id":"div-geral",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.663195,
+      "lng": -9.207188,
+      "name": "Divisão de Apoio Geral"
+    },
+    {
+      "id":"div-tecnico",
+      "address": "Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.662292,
+      "lng": -9.206031,
+      "name": "Divisão de Apoio Técnico"
+    },
+    {
+      "id":"div-comunicacao",
+      "address": "Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.662292,
+      "lng": -9.206031,
+      "name": "Divisão de Comunicação e Relações Exteriores"
+    },
+    {
+      "id":"div-documentacao",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.662565,
+      "lng": -9.205361,
+      "name": "Divisão de Documentação e Cultura"
+    },
+    {
+      "id":"div-eventos",
+      "address": "Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.662292,
+      "lng": -9.206031,
+      "name": "Divisão de Eventos e Apoio ao Estudante Diplomado"
+    },
+    {
+      "id":"div-informatica",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.663213,
+      "lng": -9.207048,
+      "name": "Divisão de Infraestruturas Informáticas"
+    },
+    {
+      "id":"div-qualidade",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.663200,
+      "lng": -9.263200,
+      "name": "Divisão de Planeamento e Gestão da Qualidade"
+    },
+    {
+      "id":"div-financeiros",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.661135,
+      "lng": -9.205263,
+      "name": "Divisão de Recursos Financeiros"
+    },
+    {
+      "id":"div-humanos",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.661135,
+      "lng": -9.205263,
+      "name": "Divisão de Recursos Humanos"
+    },
+    {
+      "id":"div-internacionais",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.661135,
+      "lng": -9.205263,
+      "name":"Divisão de Relações Internacionais"
+    },
+    {
+      "id":"div-direcao",
+      "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
+      "lat": 38.661135,
+      "lng": -9.205263,
+      "name": "Divisão de Apoio à Direção"
     }
   ]
 }
