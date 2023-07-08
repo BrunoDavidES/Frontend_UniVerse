@@ -65,6 +65,8 @@ class CalendarEvent {
       Authentication.userIsLoggedIn=false;
       Authentication.revoke();
     }
+    print(response.body);
+    print(response.statusCode);
     return response.statusCode;
   }
 

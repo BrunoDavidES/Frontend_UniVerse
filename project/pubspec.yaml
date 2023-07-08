@@ -108,6 +108,7 @@ flutter:
 
   assets:
     - assets/images/welcome_photo.jpg
+    - assets/images/marker.png
     - assets/images/photo_1.jpg
     - assets/images/ufo.png
     - assets/images/icon_no_white.png
