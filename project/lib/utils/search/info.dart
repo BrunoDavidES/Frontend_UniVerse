@@ -1,3 +1,4 @@
+//PUT INFO TXT
 List<Map<String, String>> services = [
   {"via-copia":"Via Cópia"},
   {"mininova":"Mininova"},
@@ -21,6 +22,7 @@ List<Map<String, String>> services = [
 
 //contacts
 
+//DONE
 List<Map<String, String>> links = [
   {"Clip": "https://clip.fct.unl.pt/"},
   {"Moodle": "https://moodle.fct.unl.pt/"},
@@ -29,6 +31,7 @@ List<Map<String, String>> links = [
   {"Website UNL": "https://www.unl.pt/"},
 ];
 
+//DONE
 List<Map<String, String>>  courses= [
   {"Biologia Celular e Molecular": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-biologia-celular-e-molecular"},
   {"LBioquímica": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-bioquimica"},
@@ -55,22 +58,24 @@ List<Map<String, String>>  courses= [
 ];
 
 
+//DONE
 List<Map<String, List<String>>> departments = [
-  {"dep-ambiente":["Departamento de Ciências e Engenharia do Ambiente"]},
-  {"dep-materiais":["Departamento de Ciência dos Materiais"]},
-  {"dep-restauro":"Departamento de Conservação e Restauro"},
-  {"dep-sociais":"Departamento de Ciências Sociais Aplicadas"},
-  {"dep-terra":"Departamento de Ciências da Terra"},
-  {"dep-vida":"Departamento de Ciências da Vida"},
-  {"dep-civil":"Departamento de Engenharia Civil"},
-  {"dep-eletrotecnia":"Departamento de Engenharia Eletrotécnica e de Computadores"},
-  {"dep-industrial":"Departamento de Engenharia Mecânica e Industrial"},
-  {"dep-fisica":"Departamento de Física"},
-  {"dep-informatica":"Departamento de Informática"},
-  {"dep-matematica":"Departamento de Matemática"},
-  {"div-quimica":"Divisão de Química"},
+  {"dep-ambiente":["Departamento de Ciências e Engenharia do Ambiente", "https://www.dcea.fct.unl.pt/"]},
+  {"dep-materiais":["Departamento de Ciência dos Materiais", "http://www.dcm.fct.unl.pt/"]},
+  {"dep-restauro":["Departamento de Conservação e Restauro", "http://www.dcr.fct.unl.pt/"]},
+  {"dep-sociais":["Departamento de Ciências Sociais Aplicadas", "http://www.dcsa.fct.unl.pt/"]},
+  {"dep-terra":["Departamento de Ciências da Terra", "http://www.dct.fct.unl.pt/"]},
+  {"dep-vida":["Departamento de Ciências da Vida", "http://www.dcv.fct.unl.pt/"]},
+  {"dep-civil":["Departamento de Engenharia Civil", "http://www.dec.fct.unl.pt/"]},
+  {"dep-eletrotecnia":["Departamento de Engenharia Eletrotécnica e de Computadores", "http://www.dee.fct.unl.pt/"]},
+  {"dep-industrial":["Departamento de Engenharia Mecânica e Industrial", "http://www.demi.fct.unl.pt/"]},
+  {"dep-fisica":["Departamento de Física", "http://www.df.fct.unl.pt/"]},
+  {"dep-informatica":["Departamento de Informática", "http://www.di.fct.unl.pt/"]},
+  {"dep-matematica":["Departamento de Matemática", "http://www.dm.fct.unl.pt/"]},
+  {"div-quimica":["Divisão de Química", "http://www.dq.fct.unl.pt/"]},
 ];
 
+//PUT LINKS
 List<Map<String, String>> buildings = [
   {"ed-1":"Edifício I"},
   {"ed-2":"Edifício II"},
@@ -93,6 +98,28 @@ List<Map<String, String>> buildings = [
   {"biblioteca":"Biblioteca"},
 ];
 
+//CHECK
+List<Map<String, List<String>>> buildingsWithDivisions = [
+  {"ed-1":["Direção", "Administração", "Conselho Científico", "Conselho Pedagógico", "Divisão Académica", "Divisão de Recursos Financeiros", "Divisão de Recursos Humanos", "Divisão de Apoio à Formação Avançada", "Divisão de Planeamento e Gestão da Qualidade", "Gabinete de Apoio à Direção / Unidade de Alumni e Fundraising", "Gabinete de Apoio à Direção / Assessoria Jurídica", "Gabinete de Apoio à Direção / Unidade de Contratos", "Departamento de Física", "Minimercado MiniNova", "Bar da Casa do Pessoal", "METROVAC - Laboratório de Tecnologia e Metrologia de vácuo"]},
+  {"ed-2":["Departamento de Ciência dos Materiais", "Departamento de Informática", "NOVA LINCS - NOVA Laboratory for Computer Science and Informatics"]},
+  {"ed-3":["Divisão de Infraestruturas e Informática", "Gabinete de Apoio à Direção / Unidade de Apoio à Execução Pedagógica e Formação Contínua", "Gabinete de Apoio ao Estudante e ao Diplomado/Aconselhamento Vocacional e Psicológico", "Divisão de Apoio Geral"]},
+  {"ed-4":["FabLab", "Sala de Actos"]},
+  {"ed-5":["Auditório Caixa Geral de Depósitos"]},
+  {"ed-dep":["Departamento de Química", "Departamento de Ciências e Engenharia do Ambiente", "Departamento de Conservação e Restauro", "Departamento de Ciências da Vida", "Restaurante Alquímia"]},
+  {"ed-7":["Complexo Pedagógico", "Departamento de Matemática", "Departamento de Ciências Sociais Aplicadas", "Unidade de Investigação e Desenvolvimento", "UT Austin / Portugal"]},
+  {"ed-8":["Departamento de Engenharia Mecânica e Industrial", "NOVA NDT Lab"]},
+  {"ed-9":["Departamento de Engenharia Civil", "Departamento de Ciências da Terra", "DECLabs"]},
+  {"ed-10":["Departamento de Engenharia Eletrotécnica e de Computadores", "RICS Laboratory"]},
+  {"cenimat":["CENIMAT|i3N"]},
+  {"hangar":["Associação de Estudantes", "Tanto Faz Bar Académico", "Secção de Economato", "TunaMaria", "anTunia", "Vicarte - Centro do Vidro e Cerâmica para as Artes"]},
+  {"can":["Cantina", "Papelaria Solução", "Restaurante c@mpus.come", "Bar A Tia", "Reprografia Via Cópia"]},
+  {"uninova": ["RICS Group", "Uninet - Informárica, Lda", "Neobiz Consulting", "CEMOP - UNINOVA"]},
+  {"cea":["Divisão de Acompanhamento de Parcerias", "Divisão de Apoio Técnico/ Secção de Manutenção e Serviços Gerais", "Divisão de Apoio Técnico/ Secção de Planeamento Físico e Ambiental", "Divisão de Apoio Técnico/ Secção de Segurança e Saúde no Trabalho", "Divisão de Comunicação e Relações Exteriores", "Divisão de Eventos e Apoio ao Estudante e ao Diplomado", "NOVA.ID.FCT"]},
+  {"ed-11":["Laboratório de e-Learning"]},
+  {"biblioteca":["Divisão de Documentação e Cultura", "Gabinete de Apoio à Direção/ Unidade de Apoio a Projetos e Relações Exteriores", "Gabinete de Apoio à Direção / Unidade de Promoção de Investigação e Inovação", "Sala Ágora", "Bar c@mpus"]}
+];
+
+//JUST UPDATE INFO IN TXT
 List<Map<String, String>> restaurants = [
   {"tia":"A tia"},
   {"ed-biblioteca":"C@ampus - Ed.Biblioteca"},
@@ -104,6 +131,7 @@ List<Map<String, String>> restaurants = [
   {"tanto-faz":"Tanto Faz"},
 ];
 
+//MAKE SURE IT'S RIGHT
 List<Map<String, List<String>>> organizations = [
   {"nc":["Núcleo de Cinema", "gs://universe-fct.appspot.com/News/9223372035166008207d936afa6-96db-440f-b612-095e8ae23a98", "https://ae.fct.unl.pt/nc/"]},
   {"nea":["Núcleo de Estudantes Africanos", "https://ae.fct.unl.pt/wp-content/uploads/2020/04/Logo-NEA.png", "https://www.facebook.com/NEA.FCT.UNL/?locale=pt_PT"]},

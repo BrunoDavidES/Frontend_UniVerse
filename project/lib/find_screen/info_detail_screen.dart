@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
 class InfoDetailScreen extends StatelessWidget {
-  final Map<String, String> data;
+  final Map<String, List<String>> data;
   InfoDetailScreen( {super.key, required this.data});
 
   @override
@@ -50,7 +50,7 @@ class InfoDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, bottom: 5),
               child: Text(
-                data.values.first,
+                data.values.first[0],
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,

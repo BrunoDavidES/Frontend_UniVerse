@@ -60,7 +60,7 @@ class Routing {
                   final found = departments.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               GoRoute(

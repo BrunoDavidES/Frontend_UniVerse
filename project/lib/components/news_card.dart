@@ -71,7 +71,7 @@ class NewsCardState extends State<NewsCard> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                              image: NetworkImage(widget.data.urlToImage!),
+                              image: NetworkImage(widget.data.urlToImage),
                               fit: BoxFit.cover
                           )
                       ),
