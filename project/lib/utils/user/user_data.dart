@@ -9,7 +9,20 @@ import '../authentication/auth.dart';
 
 class UniverseUser {
 
-  String? name, username, role, job, email, phone, linkedin, office, license_plate, department, organization, status, creation, isPublic;
+  String name = '',
+      username = '',
+      role = '',
+      job = '',
+      email = '',
+      phone = '',
+      linkedin = '',
+      office = '',
+      license_plate = '',
+      department = '',
+      organization = '',
+      status = '',
+      creation = '',
+      isPublic = '';
 
   UniverseUser(
       this.name,
@@ -80,29 +93,45 @@ class UniverseUser {
   }
 
   UniverseUser.fromJson(Map<String, dynamic> json ) {
-    var properties = json['properties'];
-    username = properties['username'];
-    department = properties['department']['value'];
-    job = properties['department_job']['value'];
+    print(json);
+    username = json['username'];
+    department = json['department'];
+    job = json['department_job'];
     //phone = properties['phone']['value'];
     //linkedin = properties['linkedin']['value'];
     //isPublic = properties['isPublic']['value'];
-    email = properties['email']['value'];
-    license_plate = properties['license_plate']['value'];
-    name = properties['name']['value'];
-    organization =properties['nucleus']['value'];
-    office=properties['office']['value'];
-    status =properties['status']['value'];
+    email = json['email'];
+    license_plate = json['license_plate'];
+    name = json['name'];
+    organization = json['nucleus'];
+    office = json['office'];
+    status = json['status'];
+    //creation = properties['time_creation']['value'];
+  }
+  UniverseUser.emptyUser() {
+    username = '';
+    department = '';
+    job = '';
+    //phone = properties['phone']['value'];
+    //linkedin = properties['linkedin']['value'];
+    //isPublic = properties['isPublic']['value'];
+    email = '';
+    license_plate = '';
+    name = '';
+    organization = '';
+    office = '';
+    status = '';
     //creation = properties['time_creation']['value'];
   }
 
   //401, 400, 200
-  static Future<UniverseUser?> get() async {
+  static Future<UniverseUser> get() async {
     String token = await Authentication.getTokenID();
 
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
-      return null;
+      var user = UniverseUser.emptyUser();
+      return user;
     }
 
     String username = getUsername();
@@ -129,10 +158,12 @@ class UniverseUser {
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();
-      return null;
+      var user = UniverseUser.emptyUser();
+      return user;
     }
     print(response.statusCode);
-    return null;
+    var user = UniverseUser.emptyUser();
+    return user;
   }
 
   static Future<int> update(name, phone, linkedin, office, license_plate, isPublic, Uint8List? image) async {
