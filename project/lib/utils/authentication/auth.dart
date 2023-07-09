@@ -30,7 +30,7 @@ class Authentication {
       );
       if(!kIsWeb) {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-      }
+      } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
       return 200;
     } on FirebaseAuthException catch (e) {

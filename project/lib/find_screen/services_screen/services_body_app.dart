@@ -54,7 +54,7 @@ class ServicesBodyApp extends StatelessWidget {
                 return ListButtonSimple(tobeBold: true,
                     text: item.values.first,
                     press: () {
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,)));
                     });
               }
           ),

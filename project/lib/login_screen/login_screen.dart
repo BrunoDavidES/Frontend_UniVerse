@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
+                    /*InkWell(
                       onTap: () {
                         if(kIsWeb) {
                           Navigator.of(context).pop();
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.black
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
