@@ -107,12 +107,12 @@ class Article {
     Article("Teste de notícias10", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno")
   ];*/
 
-  static List<String> images = [
+  /*static List<String> images = [
     "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png",
-  ];
+  ];*/
 
   String formatTimestamp(int seconds, int nanos) {
     final milliseconds = seconds * 1000 + (nanos / 1000000).round();

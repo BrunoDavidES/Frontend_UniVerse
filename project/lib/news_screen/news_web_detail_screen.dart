@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,7 @@ import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
 import '../utils/news/article_data.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class NewsDetailScreenWeb extends StatelessWidget {
   final String id;
@@ -17,6 +19,29 @@ class NewsDetailScreenWeb extends StatelessWidget {
 
   ScrollController yourScrollController = ScrollController();
   Widget build(BuildContext context) {
+
+    Future<Uint8List> fetchImageFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+
+    Future<String> fetchTextFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
+        final response = await ref.getData();
+        return String.fromCharCodes(response as Iterable<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
@@ -62,23 +87,23 @@ class NewsDetailScreenWeb extends StatelessWidget {
                             margin: EdgeInsets.only(left: 50, right: 20),
                               width: size.width/3.5,
                               height: size.height/2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage("https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png"),
-                                ),
-                                border: Border.all(
-                                  color: cHeavyGrey,
-                                ),
-                                boxShadow: [ BoxShadow(
-                                  color: Colors.grey.withOpacity(0.75),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: const Offset(0,0),
-                                ),
-                                ],
-                              )
+                              child: FutureBuilder<Uint8List>(
+                                future: fetchImageFile(data.id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error fetching image: ${snapshot.error}');
+                                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                    return Image.memory(
+                                      snapshot.data!,
+                                      fit: BoxFit.contain,
+                                    );
+                                  } else {
+                                    return Text('Image not found');
+                                  }
+                                },
+                              ),
                           ),
                           Container(
                             width: size.width-size.width/2.75,
@@ -102,12 +127,27 @@ class NewsDetailScreenWeb extends StatelessWidget {
                                 Container(
                                   width: size.width-size.width/2.75,
                                   margin: EdgeInsets.only(bottom: 10),
-                                  child: Text(
-                                    "${data.text}",
-                                    style: TextStyle(
-                                      fontSize: 15
-                                    ),
-                                    textAlign: TextAlign.justify,
+                                  child: FutureBuilder<String>(
+                                    future: fetchTextFile(data.id),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error fetching file');
+                                      } else {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
+                                          child: Text(
+                                            snapshot.data ?? '',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                                 Row(

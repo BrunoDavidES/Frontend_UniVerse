@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,7 @@ import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class NewsWebPage extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
   late Future<int> fetchDone;
 
   int loadedArticlesCount = 5;
-  int totalArticlesCount = Article.news.length;
+  int totalArticlesCount = Article.numNews;
 
   @override
   void initState() {
@@ -32,6 +34,29 @@ class _NewsWebPageState extends State<NewsWebPage> {
   }
 
   Widget build(BuildContext context) {
+
+    Future<Uint8List> fetchImageFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+
+    Future<String> fetchTextFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
+        final response = await ref.getData();
+        return String.fromCharCodes(response as Iterable<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
@@ -107,29 +132,22 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                               Container(
                                                 width: size.width /3.5,
                                                 height: 250,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      15.0),
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(
-                                                      item.urlToImage,
-                                                    ),
-                                                  ),
-                                                  border: Border.all(
-                                                    color: cHeavyGrey,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.75),
-                                                      spreadRadius: 3,
-                                                      blurRadius: 7,
-                                                      offset:
-                                                      const Offset(0, 0),
-                                                    ),
-                                                  ],
+                                                child: FutureBuilder<Uint8List>(
+                                                  future: fetchImageFile(Article.news[index].id),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                                      return CircularProgressIndicator();
+                                                    } else if (snapshot.hasError) {
+                                                      return Text('Error fetching image: ${snapshot.error}');
+                                                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                                      return Image.memory(
+                                                        snapshot.data!,
+                                                        fit: BoxFit.contain,
+                                                      );
+                                                    } else {
+                                                      return Text('Image not found');
+                                                    }
+                                                  },
                                                 ),
                                               ),
                                               SizedBox(
@@ -160,11 +178,27 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                     SizedBox(
                                                       height: 15,
                                                     ),
-                                                    Text(
-                                                      "${item.text}",
-                                                      maxLines: 10,
-                                                      overflow:
-                                                      TextOverflow.ellipsis,
+                                                    FutureBuilder<String>(
+                                                      future: fetchTextFile(Article.news[index].id),
+                                                      builder: (context, snapshot) {
+                                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                                          return CircularProgressIndicator();
+                                                        } else if (snapshot.hasError) {
+                                                          return Text('Error fetching file');
+                                                        } else {
+                                                          return Padding(
+                                                            padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
+                                                            child: Text(
+                                                              snapshot.data ?? '',
+                                                              textAlign: TextAlign.start,
+                                                              style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontSize: 20,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
                                                     ),
                                                     Spacer(),
                                                     Row(
@@ -248,7 +282,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                     }
                                     fetchDone = Article.fetchNews(
                                       loadedArticlesCount,
-                                      "EMPTY",
+                                      Article.cursor,
                                       {},
                                     );
                                   });

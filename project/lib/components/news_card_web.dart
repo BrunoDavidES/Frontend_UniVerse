@@ -36,7 +36,7 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
 
   Future<String> fetchTextFile(news) async {
     try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
+      final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
       final response = await ref.getData();
       return String.fromCharCodes(response as Iterable<int>);
     } catch (e) {
@@ -137,7 +137,7 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                         snapshot.data ?? '',
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          color: cDirtyWhite.withOpacity(0.75),
+                          color: Colors.black,
                           fontSize: 20,
                         ),
                       ),
