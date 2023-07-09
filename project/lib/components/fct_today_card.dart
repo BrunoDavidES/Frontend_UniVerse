@@ -32,7 +32,7 @@ class FCTTodayWebCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: cPrimaryLightColor.withOpacity(0.6),
+          color: cHeavyGrey.withOpacity(0.4),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -80,20 +80,6 @@ class FCTTodayWebCard extends StatelessWidget {
                   );
                 }
               },
-            ),
-            Spacer(),
-            Row(
-              children: [
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Image.asset(
-                    "assets/images/dot.png",
-                    scale: 2,
-                    alignment: Alignment.bottomRight,
-                  ),
-                ),
-              ],
             ),
           ],
         ),

@@ -74,7 +74,18 @@ class WebMenu extends StatelessWidget {
                     );
                   },),
                   WebMenuCard(text: 'Calendário',icon: Icons.calendar_month_outlined, press: () {
-                    context.go("/personal/calendar");
+                    showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          child: QRPopUp(text: "Acede ao calendário na nossa aplicação!",),
+                        )
+                    );
                   },),
                   WebMenuCard(text: 'Fóruns',icon: Icons.message_outlined, press: () {
                     showDialog(
@@ -96,7 +107,9 @@ class WebMenu extends StatelessWidget {
                   WebMenuCard(text: 'Organizar Evento',icon: Icons.event_available_outlined, press: () {
                     context.go("/events/submit");
                   },),
-                  WebMenuCard(text: 'Feedback',icon: Icons.bar_chart_outlined),
+                  WebMenuCard(text: 'Feedback',icon: Icons.bar_chart_outlined, press: () {
+                    context.go('/feedback');
+                  },),
                   WebMenuCard(text: 'Mudar Palavra-passe',icon: Icons.password_outlined, press: () {
                     showDialog(
                         context: context,

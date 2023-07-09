@@ -30,7 +30,7 @@ class UniverseInfoWeb extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: size.height/7),
                 child: Container(                //Zona da Info
-                  height: size.height/1.5+size.height/3,
+                  height: size.height/1.35+size.height/3,
                   width: size.width,
                   color: cDirtyWhite,
                   child: const UniverseInfoBodyWeb(),

@@ -65,7 +65,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 30),
-                        height: 315 * loadedArticlesCount as double,
+                        height: 300 * loadedArticlesCount as double,
                         width: size.width / 1.20,
                         color: cDirtyWhite,
                         child: FutureBuilder<int>(
@@ -93,7 +93,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                           ),
                                         ),
                                         Container(
-                                          height: 280,
+                                          height: 250,
                                           decoration: BoxDecoration(
                                             color: cDirtyWhiteColor,
                                             borderRadius:
@@ -105,8 +105,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                           child: Row(
                                             children: [
                                               Container(
-                                                width: size.width / 4,
-                                                height: 260,
+                                                width: size.width /3.5,
+                                                height: 250,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                   BorderRadius.circular(
@@ -182,7 +182,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                         ),
                                                         Row(
                                                           children: [
-                                                            IconButton(
+                                                            /*IconButton(
                                                               onPressed: () {
                                                                 final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${item.id.toString()}";
                                                                 Share.share("${item.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Uma notícia FCT | UniVerse ּ FCT NOVA");
@@ -192,7 +192,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                                 color:
                                                                 cHeavyGrey,
                                                               ),
-                                                            ),
+                                                            ),*/
                                                             IconButton(
                                                               onPressed: () =>
                                                                   context.go(

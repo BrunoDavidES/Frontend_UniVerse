@@ -26,7 +26,7 @@ import 'package:UniVerse/utils/route.dart';
 import 'news_screen/news_web_detail_screen.dart';
 
 Future main() async{
-  setPathUrlStrategy();
+  //setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   if(!kIsWeb) {
     var data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);

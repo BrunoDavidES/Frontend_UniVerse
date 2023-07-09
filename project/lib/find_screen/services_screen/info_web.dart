@@ -81,7 +81,7 @@ class InfoWeb extends StatelessWidget {
                             text: "Sabe a localização de $name ",
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'aqui.',
+                                text: 'aqui.\n',
                                 style: TextStyle(decoration: TextDecoration.underline),
                               ),
                             ],

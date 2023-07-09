@@ -53,7 +53,7 @@ class _MapsPageState extends State<MapsPageWeb> {
   }
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(20, 30)), "assets/images/marker.png")
+        const ImageConfiguration(size: Size(20, 30)), "/images/marker.png")
         .then(
           (icon) {
         setState(() {

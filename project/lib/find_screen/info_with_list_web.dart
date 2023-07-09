@@ -1,20 +1,22 @@
+import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
+import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/color_consts.dart';
 
-import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
-
-class OrganizationsInfoWeb extends StatelessWidget {
+class InfoWithListWeb extends StatelessWidget {
+  final String name;
   final String id;
-  final List<String> info;
+  final List<String> divisions;
+  final AssetImage image;
 
-  const OrganizationsInfoWeb({super.key, required this.id, required this.info});
+  const InfoWithListWeb({super.key, required this.name, required this.image, required this.id, required this.divisions});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var containerHeight = size.height/2.25;
+    var containerHeight = size.height/1.5;
     var containerWidth = size.width/1.5;
     return Container(
       height: containerHeight,
@@ -44,7 +46,7 @@ class OrganizationsInfoWeb extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left:15, top: 15, bottom:5),
                       child: Text(
-                        info[0],
+                        name,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
@@ -64,11 +66,21 @@ class OrganizationsInfoWeb extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () {
-                                launchUrl(Uri.parse(info[2]));
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0),
+                                      ),
+                                    ),
+                                    content: MapsPageWeb(),
+                                  ),
+                                );
                               },
                               child: Text.rich(
                                 TextSpan(
-                                  text: "Sabe mais sobre ${info[0]} ",
+                                  text: "Sabe a localização de $name ",
                                   children: <TextSpan>[
                                     TextSpan(
                                       text: 'aqui.\n',
@@ -78,6 +90,14 @@ class OrganizationsInfoWeb extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            if(divisions.isNotEmpty)
+                            Text(
+                              "Neste edifício:"
+                            ),
+                            ...divisions.map((e) => Text(
+                                "- $e",
+                            ))
+
                           ],
                         ),
                       ),

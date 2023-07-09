@@ -236,6 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     InkWell(
                       onTap: () {
                         if(kIsWeb) {
+                          Navigator.pop(context);
                           showDialog(
                               context: context,
                               builder: (_) => const AlertDialog(

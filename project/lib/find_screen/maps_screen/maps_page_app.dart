@@ -65,7 +65,7 @@ class _MapsPageState extends State<MapsPageApp> {
         ),
         child: Stack(
           children: <Widget>[
-            MapsPageWeb(),
+            MapsPageApp(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:1),
