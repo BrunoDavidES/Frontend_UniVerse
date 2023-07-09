@@ -43,6 +43,10 @@ class _RegisterScreenState extends State<FAQWebPageAux2> {
   }
   @override
   Widget build(BuildContext context) {
+    titleController = TextEditingController();
+    messageController = TextEditingController();
+    emailController = TextEditingController();
+
     Size size = MediaQuery
         .of(context)
         .size;
@@ -260,6 +264,7 @@ class _RegisterScreenState extends State<FAQWebPageAux2> {
                       color: cDarkBlueColor,
                       press: () {
                         Faq.requestHelp(titleController.text, emailController.text, messageController.text);
+
                       },
                       height: 20,
                     ),

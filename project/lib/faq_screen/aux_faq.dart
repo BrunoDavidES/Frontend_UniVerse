@@ -12,14 +12,20 @@ import '../main_screen/components/about_bottom_body.dart';
 import '../utils/faq/faq_utils.dart';
 
 class FAQWebPageAux extends StatelessWidget {
-  TextEditingController? controller;
-
   FAQWebPageAux({super.key});
+
+  late TextEditingController emailController;
+  late TextEditingController titleController;
+  late TextEditingController messageController;
 
   ScrollController yourScrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    titleController = TextEditingController();
+    messageController = TextEditingController();
+    emailController = TextEditingController();
+
     Size size = MediaQuery
         .of(context)
         .size;
@@ -123,7 +129,7 @@ class FAQWebPageAux extends StatelessWidget {
                             SizedBox(width: 10,),
                             Expanded(
                               child: TextFormField(
-                                controller: controller,
+                                controller: emailController,
                                 decoration: InputDecoration(
                                     labelStyle: TextStyle(
                                         color: cDarkLightBlueColor
@@ -163,7 +169,7 @@ class FAQWebPageAux extends StatelessWidget {
                             SizedBox(width: 10,),
                             Expanded(
                               child: TextFormField(
-                                controller: controller,
+                                controller: titleController,
                                 decoration: InputDecoration(
                                     labelStyle: TextStyle(
                                         color: cDarkLightBlueColor
@@ -206,7 +212,7 @@ class FAQWebPageAux extends StatelessWidget {
                             child: TextFormField(
                               maxLines: 7,
                               maxLength: 300,
-                              controller: controller,
+                              controller: messageController,
                               decoration: InputDecoration(
                                   labelStyle: TextStyle(
                                       color: cDarkLightBlueColor

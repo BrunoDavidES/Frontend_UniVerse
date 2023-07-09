@@ -176,8 +176,6 @@ List<Map<String, List<String>>> organizations = [
   {"innova":["In-Nova", "https://ae.fct.unl.pt/wp-content/uploads/2022/10/Design-sem-nome.png", "https://ae.fct.unl.pt/in-nova/"]},
 ];
 
-//transports
-
 
 List<String> searchResults = [
   "Via Cópia",

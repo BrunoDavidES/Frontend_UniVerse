@@ -7,9 +7,16 @@ import 'list_faqs.dart';
 import '../utils/faq/faq_utils.dart';
 
 class FaqApp extends StatelessWidget {
-  TextEditingController? controller;
+  late TextEditingController emailController;
+  late TextEditingController titleController;
+  late TextEditingController messageController;
+
   @override
   Widget build(BuildContext context) {
+    titleController = TextEditingController();
+    messageController = TextEditingController();
+    emailController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -75,7 +82,7 @@ class FaqApp extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
-                    controller: controller,
+                    controller: emailController,
                     decoration: InputDecoration(
                         labelStyle: TextStyle(
                             color: cDarkLightBlueColor
@@ -112,7 +119,7 @@ class FaqApp extends StatelessWidget {
                   ),
                   SizedBox(width: 10,),
                   TextFormField(
-                    controller: controller,
+                    controller: titleController,
                     decoration: InputDecoration(
                         labelStyle: TextStyle(
                             color: cDarkLightBlueColor
@@ -151,7 +158,7 @@ class FaqApp extends StatelessWidget {
                   TextFormField(
                     maxLines: 7,
                     maxLength: 300,
-                    controller: controller,
+                    controller: messageController,
                     decoration: InputDecoration(
                         labelStyle: TextStyle(
                             color: cDarkLightBlueColor

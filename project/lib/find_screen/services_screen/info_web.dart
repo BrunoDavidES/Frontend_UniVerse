@@ -1,12 +1,15 @@
+import 'package:UniVerse/find_screen/maps_screen/maps_for_web.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/color_consts.dart';
 
 class InfoWeb extends StatelessWidget {
   final String name;
   final AssetImage image;
+  final String? link;
 
-  const InfoWeb({super.key, required this.name, required this.image});
+  const InfoWeb({super.key, required this.name, required this.image, this.link});
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +59,54 @@ class InfoWeb extends StatelessWidget {
                 width: double.infinity,
                 height: containerHeight/1.5,
                 child:SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                      "OLÁ",
-                      textAlign: TextAlign.justify,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              content: MapsPageWeb(),
+                            ),
+                          );
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                            text: "Sabe a localização de $name ",
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'aqui.',
+                                style: TextStyle(decoration: TextDecoration.underline),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      //texto da info
+                      if(link!=null)
+                        InkWell(
+                          onTap: () {
+                            launchUrl(Uri.parse(link!));
+                          },
+                          child: Text.rich(
+                            TextSpan(
+                              text: "Sabe mais sobre o $name ",
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'aqui.',
+                                  style: TextStyle(decoration: TextDecoration.underline),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
