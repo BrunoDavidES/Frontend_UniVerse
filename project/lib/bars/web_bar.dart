@@ -12,7 +12,7 @@ class CustomWebBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSmallScreen = MediaQuery.of(context).size.width < 900;
+    final bool isSmallScreen = MediaQuery.of(context).size.width < 950;
     final bool isSmallScreen2 = MediaQuery.of(context).size.width < 700;
 
     return Container(
@@ -62,8 +62,44 @@ class CustomWebBar extends StatelessWidget {
                   _buildNavButton(context, "Ajuda", "/help"),
                 ],
               ),
+          if( Authentication.userIsLoggedIn && isSmallScreen)
+            Row(
+              children: [
+                PopupMenuButton<String>(
+                  itemBuilder: (_) => [
+                    PopupMenuItem<String>(
+                      child: Text("Início"),
+                      value: "/home",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Procurar"),
+                      value: "/find",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Notícias"),
+                      value: "/news",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Eventos"),
+                      value: "/events",
+                    ),
+                    PopupMenuItem<String>(
+                      child: Text("Ajuda"),
+                      value: "/help",
+                    ),
+                  ],
+                  onSelected: (route) {
+                    context.go(route);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: const Icon(Icons.more_vert),
+                  ),
+                ),
+              ],
+            ),
           if (Authentication.userIsLoggedIn)
-            const PopUpMenu()
+            PopUpMenu()
           else if (isSmallScreen)
             Row(
               children: [

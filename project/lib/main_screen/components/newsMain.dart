@@ -22,7 +22,9 @@ class MainNewsState extends State<MainNews> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(3, Article.cursor, {});
+    if(Article.news.length < 3){
+      fetchDone = Article.fetchNews(3, Article.cursor, {});
+    }
     super.initState();
   }
 
