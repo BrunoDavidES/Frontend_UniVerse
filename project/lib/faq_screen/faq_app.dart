@@ -181,7 +181,7 @@ class FaqApp extends StatelessWidget {
                         text: "Enviar",
                         color: cDarkBlueColor,
                         press: () {
-                          Faq.requestHelp(title, email, message);
+                         // Faq.requestHelp(title, email, message);
                         },
                         height: 20,
                       ),

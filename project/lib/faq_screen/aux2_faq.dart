@@ -1,6 +1,7 @@
 import 'package:UniVerse/components/faq_item.dart';
 import 'package:UniVerse/faq_screen/list_faqs.dart';
 import 'package:UniVerse/main_screen/components/about_bottom.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
@@ -9,15 +10,37 @@ import '../components/text_field.dart';
 import '../consts/color_consts.dart';
 import '../find_screen/findTest/right_side.dart';
 import '../main_screen/components/about_bottom_body.dart';
+import '../utils/connectivity.dart';
 import '../utils/faq/faq_utils.dart';
 
-class FAQWebPageAux2 extends StatelessWidget {
-  TextEditingController? controller;
+class FAQWebPageAux2 extends StatefulWidget {
+  const FAQWebPageAux2({super.key});
 
-  FAQWebPageAux2({super.key});
+  @override
+  State<FAQWebPageAux2> createState() => _RegisterScreenState();
+}
 
-  ScrollController yourScrollController = ScrollController();
+class _RegisterScreenState extends State<FAQWebPageAux2> {
+  Map _source = {ConnectivityResult.none: false};
+  final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
+  late TextEditingController emailController;
+  late TextEditingController titleController;
+  late TextEditingController messageController;
+  bool isLoading = false;
 
+  @override
+  void initState() {
+    titleController = TextEditingController();
+    emailController = TextEditingController();
+    messageController = TextEditingController();
+    _connectivity.initialize();
+    _connectivity.myStream.listen((source) {
+      setState(() {
+        _source = source;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery
@@ -123,7 +146,7 @@ class FAQWebPageAux2 extends StatelessWidget {
                           SizedBox(width: 10,),
                           Expanded(
                             child: TextFormField(
-                              controller: controller,
+                              controller: emailController,
                               decoration: InputDecoration(
                                   labelStyle: TextStyle(
                                       color: cDarkLightBlueColor
@@ -163,7 +186,7 @@ class FAQWebPageAux2 extends StatelessWidget {
                           SizedBox(width: 10,),
                           Expanded(
                             child: TextFormField(
-                              controller: controller,
+                              controller: titleController,
                               decoration: InputDecoration(
                                   labelStyle: TextStyle(
                                       color: cDarkLightBlueColor
@@ -206,7 +229,7 @@ class FAQWebPageAux2 extends StatelessWidget {
                           child: TextFormField(
                             maxLines: 7,
                             maxLength: 300,
-                            controller: controller,
+                            controller: messageController,
                             decoration: InputDecoration(
                                 labelStyle: TextStyle(
                                     color: cDarkLightBlueColor
@@ -236,7 +259,7 @@ class FAQWebPageAux2 extends StatelessWidget {
                       text: "Enviar",
                       color: cDarkBlueColor,
                       press: () {
-                        Faq.requestHelp(title, email, message);
+                        Faq.requestHelp(titleController.text, emailController.text, messageController.text);
                       },
                       height: 20,
                     ),
