@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:UniVerse/utils/route.dart';
 import 'package:UniVerse/services/notification_service.dart';
@@ -59,21 +61,28 @@ class FirebaseMessagingService {
     }
   }
 
-  static Future<void> registerDevice(String token) async {
-    const String apiUrl = '$notificationUrl/register';
-
+  static Future<int> registerDevice() async {
     String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
+    final fcmToken = await FirebaseMessaging.instance.getToken();
 
-    await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
+    final url = Uri.parse('$notificationUrl/register');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: json.encode({
+        'fcmToken': fcmToken,
+      }),
     );
 
+    return response.statusCode;
   }
 
 }
