@@ -3,7 +3,6 @@ const logger = require("firebase-functions/logger");
 
 const functions = require("firebase-functions");
 const cors = require("cors");
-const { logger } = require("firebase-functions");
 const { OpenAI } = require("langchain/llms/openai");
 const { ConversationalRetrievalQAChain } = require("langchain/chains");
 const { HNSWLib } = require("langchain/vectorstores/hnswlib");
