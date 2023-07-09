@@ -1,6 +1,7 @@
 import 'package:UniVerse/find_screen/findTest/right_side.dart';
 import 'package:UniVerse/find_screen/find_test.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
+import 'package:UniVerse/find_screen/info_with_list_web.dart';
 import 'package:UniVerse/find_screen/organizations_screen/organizations_info_web.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/tester/tester.dart';
@@ -60,7 +61,7 @@ class Routing {
                   final found = departments.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link: found.first.values.first[1], image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link:found.first.values.first[1], image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               GoRoute(
@@ -70,7 +71,8 @@ class Routing {
                   final found = buildings.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  final divisions = buildingsWithDivisions.where((element) => element.keys.first==id).first.values.first;
+                  return FindWebPage(rightSide: InfoWithListWeb(name: found.first.values.first, id:found.first.keys.first, divisions: divisions, image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               GoRoute(
@@ -90,7 +92,7 @@ class Routing {
                   final found = organizations.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: OrganizationsInfoWeb(id: found.first.keys.first, data: found.first.values.first));
+                  else return FindWebPage(rightSide: OrganizationsInfoWeb(id: found.first.keys.first, info:found.first.values.first,));
                 },
               ),
               /* redirect: (BuildContext context, GoRouterState state) {
@@ -202,7 +204,7 @@ class Routing {
                     ),
                   ]
               ),
-              GoRoute(
+              /*GoRoute(
                 path: 'calendar',
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 3,),
@@ -211,13 +213,23 @@ class Routing {
                       return '/home';
                     }
                   }*/
-              ),
+              ),*/
             ]
         ),
         GoRoute(
           path: '/report',
           builder: (BuildContext context, GoRouterState state) =>
               PersonalPageWeb(i: 2,),
+          /*redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn) {
+                      return '/home';
+                    }
+                  }*/
+        ),
+        GoRoute(
+          path: '/feedback',
+          builder: (BuildContext context, GoRouterState state) =>
+              PersonalPageWeb(i: 5,),
           /*redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';

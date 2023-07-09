@@ -169,7 +169,7 @@ class _ModifyPasswordState extends State<ModifyPasswordScreen> {
         backgroundColor: cDirtyWhiteColor,
         appBar: kIsWeb
             ?AppBar(
-          title: Image.asset("assets/titles/modify_pwd.png", scale:6),
+          title: Image.asset("assets/titles/modify_pwd.png", scale:5),
           backgroundColor: cDirtyWhiteColor,
           automaticallyImplyLeading: false,
           titleSpacing: 15,

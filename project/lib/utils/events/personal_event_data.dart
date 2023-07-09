@@ -92,7 +92,7 @@ class CalendarEvent {
         'username': username,
         "department": "Departamento de Teste",
         'beginningDate': date,
-        'username': 'gab.silva',
+        //'username': UniverseUser.getUsername(),
         'hours': hour,
         'location': location
       }),

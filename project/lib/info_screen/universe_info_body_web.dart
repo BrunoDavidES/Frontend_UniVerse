@@ -20,25 +20,10 @@ class UniverseInfoBodyWeb extends StatelessWidget {
               padding: const EdgeInsets.only(left:50, top: 20),
               child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Image.asset("assets/web/sobre.png", scale: 4,)
+                  child: Image.asset("assets/titles/about_us.png", scale: 4.5,)
               ),
             ),
-           /* Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: Text(
-                    "UniVerse ּ FCT NOVA",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
-                    ),
-                  ),
-                ),
-              ],
-            ),*/
+
             Row(
               children: [
                 Padding(
@@ -50,7 +35,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                       children: [
                         Container(
                           alignment: Alignment.center,
-                          child: Image.asset("assets/icon_no_white.png", scale: 3),
+                          child: Image.asset("assets/images/icon_no_white.png", scale: 3),
                         ),
                         SizedBox(height: 15),
                         Container(
@@ -93,6 +78,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                           ),
                           alignment: Alignment.center,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left:10),
@@ -134,7 +120,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(top:5, left: 15, right: 15, bottom: 30),
                               child: Text(
-                                "Desenvolvida por 5 estudantes de Engenharia Informática da FCT NOVA, no âmbito de Atividade de Desenvolvimento Curricular, a UniVerse permite que todos presentes na faculdade possam agora encontrar informações úteis, saber mais sobre notícias e eventos, organizar a sua agenda e muito mais na sua área pessoal.\nAlém disso, para quem tem interesse em conhecer mais sobre a FCT, continua a ser possível explorar o universo da nossa faculdade, limitadamente.\nJunta-te ao Universo!",
+                                "Desenvolvida por 5 estudantes de Engenharia Informática da FCT NOVA, no âmbito de Atividade de Desenvolvimento Curricular, a UniVerse permite que todos presentes na faculdade possam agora encontrar informações úteis, saber mais sobre notícias e eventos, organizar a sua agenda e muito mais na sua área pessoal.\nAlém disso, para quem tem interesse em conhecer mais sobre a FCT, continua a ser possível explorar o universo da nossa faculdade, de forma limitada.\nJunta-te ao Universo!",
                                 textAlign: TextAlign.justify,
                               ),
                             ),
@@ -155,7 +141,7 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                                     )
                                 ),
                               ),
-                              Image.asset("assets/capi_logo.png",scale:6,),
+                              Image.asset("assets/images/capi_logo.png",scale:5.5,),
                             ],
                           )
                         ],

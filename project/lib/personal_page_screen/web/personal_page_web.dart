@@ -1,3 +1,4 @@
+import 'package:UniVerse/feedback_screen/feedback_screen_web.dart';
 import 'package:UniVerse/find_screen/find_test.dart';
 import 'package:UniVerse/personal_page_screen/web/main_personal_page_web.dart';
 import 'package:UniVerse/profile_screen/profile_screen_web.dart';
@@ -67,6 +68,8 @@ class PersonalPageWeb extends StatelessWidget {
                          CalendarScreenWeb(),
                         if(i==4)
                           PublishEventScreenWeb(),
+                        if(i==5)
+                          FeedbackScreenWeb(),
                         SizedBox(height: 40,),
                         BottomAbout(size: size,),
                       ],

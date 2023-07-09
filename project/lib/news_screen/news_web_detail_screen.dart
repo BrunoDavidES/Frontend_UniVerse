@@ -53,7 +53,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                         padding: const EdgeInsets.only(left:50, top: 20, bottom: 30),
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Image.asset("assets/web/noticias.png", scale: 4,)
+                            child: Image.asset("assets/titles/news.png", scale: 4,)
                         ),
                       ),
                       Row(

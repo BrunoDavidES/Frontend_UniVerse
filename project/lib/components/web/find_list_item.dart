@@ -64,7 +64,7 @@ class FindListItem extends StatelessWidget {
                     text: e.values.first[0], tobeBold: false, press: () => context.go('/find/departments/${e.keys.first}'))).toList(),
               if(name=='Edifícios')
                 ...buildings.map((e) => ListButtonSimple(
-                    text: e.values.first[0], tobeBold: false, press: () => context.go('/find/buildings/${e.keys.first}'))).toList(),
+                    text: e.values.first, tobeBold: false, press: () => context.go('/find/buildings/${e.keys.first}'))).toList(),
               if(name=='Restaurantes')
                 ...restaurants.map((e) => ListButtonSimple(
                     text: e.values.first, tobeBold: false, press: () => context.go('/find/restaurants/${e.keys.first}'))).toList(),
@@ -73,6 +73,23 @@ class FindListItem extends StatelessWidget {
                     text: e.values.first[0], tobeBold: false, press: () => context.go('/find/organizations/${e.keys.first}'))).toList(),
               if(name=='Galeria')
                   InfoPopUp(text: "brevemente disponível na universe",),
+              if(name=='Transportes')
+                InkWell(
+                  onTap: () {
+                    launchUrl(Uri.parse("https://moovitapp.com/index/pt/transportes_p%C3%BAblicos-FCT_UNL_Faculdade_de_Ci%C3%AAncias_e_Tecnologia_da_Universidade_Nova_de_Lisboa-Lisboa-site_20129427-2460"));
+                  },
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Conhece todos os transportes disponíveis ",
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'aqui.\n',
+                          style: TextStyle(decoration: TextDecoration.underline),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
             ]
         ),
       ),

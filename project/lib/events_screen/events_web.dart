@@ -84,7 +84,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 30),
-                        height: totalArticlesCount > 5? 315 * loadedArticlesCount as double: 315 * totalArticlesCount as double,
+                        height: totalArticlesCount > 5? 300 * loadedArticlesCount as double: 300 * totalArticlesCount as double,
                         width: size.width / 1.20,
                         color: cDirtyWhite,
                         child: FutureBuilder(
@@ -112,7 +112,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                             ),
                                           ),
                                           Container(
-                                            height: 280,
+                                            height: 250,
                                             decoration: BoxDecoration(
                                               color: cDirtyWhiteColor,
                                               borderRadius: BorderRadius.circular(15),
@@ -122,8 +122,8 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  width: size.width / 4,
-                                                  height: 260,
+                                                  width: size.width / 3.5,
+                                                  height: 250,
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(15.0),
                                                     image: DecorationImage(
@@ -146,7 +146,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                 SizedBox(width: 15),
                                                 Container(
                                                   width: size.width / 1.95,
-                                                  height: 260,
+                                                  height: 250,
                                                   margin: EdgeInsets.only(top: 5, bottom: 5),
                                                   padding: EdgeInsets.all(10),
                                                   child: Column(
@@ -221,13 +221,13 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                               },
                                                               icon: Icon(Icons.bookmark, color: cHeavyGrey),
                                                             ),
-                                                          IconButton(
+                                                          /*IconButton(
                                                             onPressed: () {
                                                               final urlPreview = "https://universe-fct.oa.r.appspot.com/#/events/full/${event.id.toString()}";
                                                               Share.share("${event.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Um evento na FCT | UniVerse ּ  FCT NOVA");
                                                             },
                                                             icon: Icon(Icons.share, color: cHeavyGrey),
-                                                          ),
+                                                          ),*/
                                                           IconButton(
                                                             onPressed: () => context.go(
                                                               "/events/full/${event.id}",
