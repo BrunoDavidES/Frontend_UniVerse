@@ -27,7 +27,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Article.fetchNews(loadedArticlesCount, "EMPTY", {});
+    fetchDone = Article.fetchNews(loadedArticlesCount, Article.cursor, {});
     super.initState();
   }
 

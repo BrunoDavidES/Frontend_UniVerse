@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../components/default_button_simple.dart';
 import '../components/faq_item.dart';
 import 'list_faqs.dart';
+import '../utils/faq/faq_utils.dart';
 
 class FaqApp extends StatelessWidget {
   TextEditingController? controller;
@@ -180,6 +181,7 @@ class FaqApp extends StatelessWidget {
                         text: "Enviar",
                         color: cDarkBlueColor,
                         press: () {
+                          Faq.requestHelp(title, email, message);
                         },
                         height: 20,
                       ),

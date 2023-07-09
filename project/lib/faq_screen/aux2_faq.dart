@@ -9,6 +9,7 @@ import '../components/text_field.dart';
 import '../consts/color_consts.dart';
 import '../find_screen/findTest/right_side.dart';
 import '../main_screen/components/about_bottom_body.dart';
+import '../utils/faq/faq_utils.dart';
 
 class FAQWebPageAux2 extends StatelessWidget {
   TextEditingController? controller;
@@ -235,6 +236,7 @@ class FAQWebPageAux2 extends StatelessWidget {
                       text: "Enviar",
                       color: cDarkBlueColor,
                       press: () {
+                        Faq.requestHelp(title, email, message);
                       },
                       height: 20,
                     ),
