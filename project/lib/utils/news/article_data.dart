@@ -19,10 +19,8 @@ class Article {
   String? author;
 
   Article(
-      //this.id,
+      this.id,
       this.title,
-      this.text,
-      this.urlToImage,
       this.date,
       this.author,
       );
@@ -36,14 +34,17 @@ class Article {
     var dateAux = properties['time_creation']['value']['seconds'];
     var dateAux2 = properties['time_creation']['value']['nanos'];
     date = formatTimestamp(dateAux, dateAux2);
-    urlToImage = "gs://universe-fct.appspot.com/News/$id";
-    text="gs://universe-fct.appspot.com/News/$id.txt";
   }
 
   static Future<int> fetchNews(int limit, String offset, Map<String, String> filters) async {
     String newsUrl = '/feed/numberOf/News';
     var response;
     var token;
+
+    if(offset == ''){
+      return 200;
+    }
+
     if(numNews == 0) {
       if(Authentication.getTokenID() == ""){
         token = "notLogged";
@@ -60,8 +61,6 @@ class Article {
           },
           body: "{}"
       );
-
-      print(response.headers['X-Cursor'].toString());
 
       if(response.statusCode==200) {
         numNews = json.decode(response.body);
@@ -108,12 +107,12 @@ class Article {
     Article("Teste de notícias10", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno")
   ];*/
 
-  static List<String> images = [
+  /*static List<String> images = [
     "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png",
-  ];
+  ];*/
 
   String formatTimestamp(int seconds, int nanos) {
     final milliseconds = seconds * 1000 + (nanos / 1000000).round();

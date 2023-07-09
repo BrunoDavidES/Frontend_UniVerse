@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/news_screen/app/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../consts/list_consts.dart';
 
@@ -20,6 +22,29 @@ class NewsCardWeb extends StatefulWidget {
 
 class NewsCardStateWeb extends State<NewsCardWeb> {
   @override
+
+  Future<Uint8List> fetchImageFile(news) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
+      final byteData = await ref.getData();
+      return byteData!.buffer.asUint8List();
+    } catch (e) {
+      print('Error fetching file: $e');
+      return Uint8List(0);
+    }
+  }
+
+  Future<String> fetchTextFile(news) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
+      final response = await ref.getData();
+      return String.fromCharCodes(response as Iterable<int>);
+    } catch (e) {
+      print('Error fetching text file: $e');
+      return '';
+    }
+  }
+
   Widget build(BuildContext context) {
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
@@ -57,12 +82,22 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
               Container(
                 width: double.infinity,
                 height: widget.height/3,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                        image: NetworkImage(widget.data.urlToImage),
-                        fit: BoxFit.cover
-                    )
+                child: FutureBuilder<Uint8List>(
+                  future: fetchImageFile(widget.data.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error fetching image: ${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Image.memory(
+                        snapshot.data!,
+                        fit: BoxFit.contain,
+                      );
+                    } else {
+                      return Text('Image not found');
+                    }
+                  },
                 ),
               ),
               Padding(
@@ -87,6 +122,28 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                   ),
                   maxLines: 4,
                 ),
+              ),
+              FutureBuilder<String>(
+                future: fetchTextFile(widget.data.id),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error fetching file');
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
+                      child: Text(
+                        snapshot.data ?? '',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    );
+                  }
+                },
               ),
               Spacer(),
               Row(

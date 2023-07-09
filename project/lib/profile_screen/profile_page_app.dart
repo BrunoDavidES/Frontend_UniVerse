@@ -10,12 +10,35 @@ import '../components/custom_shape.dart';
 import '../profile_edit_screen/profile_edit_screen.dart';
 import '../utils/user/user_data.dart';
 
-class ProfilePageApp extends StatelessWidget {
+class ProfilePageApp extends StatefulWidget {
   const ProfilePageApp({super.key});
 
   @override
+  _ProfilePageAppState createState() => _ProfilePageAppState();
+}
+
+class _ProfilePageAppState extends State<ProfilePageApp> {
+  UniverseUser user = UniverseUser.emptyUser();
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUser();
+  }
+
+  Future<void> retrieveUser() async {
+    try {
+      var retrievedUser = await UniverseUser.get();
+      setState(() {
+        user = retrievedUser;
+      });
+    } catch (e) {
+      print('Error retrieving user: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    UniverseUser user = UniverseUser("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
     //Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
