@@ -6,12 +6,36 @@ import 'package:UniVerse/profile_screen/read_only_field.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreenWeb extends StatelessWidget {
+class ProfileScreenWeb extends StatefulWidget {
   const ProfileScreenWeb({super.key});
 
   @override
+  _ProfileScreenWebState createState() => _ProfileScreenWebState();
+}
+
+class _ProfileScreenWebState extends State<ProfileScreenWeb> {
+  UniverseUser user = UniverseUser.emptyUser();
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUser();
+  }
+
+  Future<void> retrieveUser() async {
+    try {
+      var retrievedUser = await UniverseUser.get();
+      setState(() {
+        user = retrievedUser;
+      });
+    } catch (e) {
+      print('Error retrieving user: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    UniverseUser user = UniverseUser.get() as UniverseUser; //("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
+    //("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
     Size size = MediaQuery.of(context).size;
     return Row(
       children: [
