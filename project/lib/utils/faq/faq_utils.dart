@@ -8,22 +8,24 @@ import 'package:UniVerse/consts/api_consts.dart';
 
 class Faq {
 
-  static Future<void> sendEmail() async {
-    final HttpsCallable sendEmailCallable = FirebaseFunctions.instance.httpsCallable('sendEmail');
+  static Future<int> requestHelp(String title, String email, String message) async {
+    final url = Uri.parse('$helpUrl/request');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'title': title,
+        'email': email,
+        'message': message
+      }),
+    );
+    if(response.statusCode == 200)
 
-    try {
-      final result = await sendEmailCallable.call(<String, dynamic>{
-      });
+    print(response.statusCode);
 
-      final data = result.data as Map<String, dynamic>;
-      if (data['success'] == true) {
-        print('Email sent successfully');
-      } else {
-        print('Error sending email: ${data['error']}');
-      }
-    } catch (e) {
-      print('Error calling Cloud Function: $e');
-    }
+    return response.statusCode;
   }
 
 }

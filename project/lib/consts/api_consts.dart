@@ -8,3 +8,4 @@ const postEventUrl = '$baseUrl/feed/post/Event';
 const messageUrl = '$baseUrl/message';
 const forumUrl = '$baseUrl/forum';
 const feedbackUrl = '$baseUrl/feedback/submit';
+const helpUrl = '$baseUrl/help';

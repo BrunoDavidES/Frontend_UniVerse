@@ -236,7 +236,7 @@ class FAQWebPageAux extends StatelessWidget {
                         text: "Enviar",
                         color: cDarkBlueColor,
                         press: () {
-                          Faq.sendEmail();
+                          Faq.requestHelp(title, email, message);
                         },
                         height: 20,
                       ),
