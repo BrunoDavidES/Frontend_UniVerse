@@ -106,6 +106,7 @@ class Event {
       },
       body: jsonEncode({
         'title': title,
+        'location':location,
         'startDate': startDate,
         'endDate': location,
         'isPublic': isPublic,

@@ -54,7 +54,7 @@ class UniverseUser {
     if (user != null) {
       return user.displayName!;
     }
-    return "UNKNOWN ERROR";
+    return "ERROR";
   }
 
   static String getRole() {
@@ -63,7 +63,7 @@ class UniverseUser {
       return token.;
     }
     return "UNKNOWN ERROR";*/
-    return "T";
+    return "S";
   }
 
   static String getJob() {
@@ -97,34 +97,34 @@ class UniverseUser {
     username = json['username'];
     department = json['department'];
     job = json['department_job'];
-    //phone = properties['phone']['value'];
-    //linkedin = properties['linkedin']['value'];
-    //isPublic = properties['isPublic']['value'];
+   phone = json['phone'];
+    linkedin = json['linkedin'];
+    //isPublic = json['privacy'];
     email = json['email'];
     license_plate = json['license_plate'];
     name = json['name'];
     organization = json['nucleus'];
     office = json['office'];
     status = json['status'];
-    //creation = properties['time_creation']['value'];
+    //creation = json['time_creation'];
   }
+
   UniverseUser.emptyUser() {
     username = '';
     department = '';
     job = '';
-    //phone = properties['phone']['value'];
-    //linkedin = properties['linkedin']['value'];
-    //isPublic = properties['isPublic']['value'];
+    phone = '';
+    linkedin = '';
+    isPublic = '';
     email = '';
     license_plate = '';
     name = '';
     organization = '';
     office = '';
     status = '';
-    //creation = properties['time_creation']['value'];
+    creation = '';
   }
 
-  //401, 400, 200
   static Future<UniverseUser> get() async {
     String token = await Authentication.getTokenID();
 
@@ -143,17 +143,9 @@ class UniverseUser {
       },
     );
 
-    print("passou");
-
     if (response.statusCode == 200) {
-      print("encontrou");
       var decoded = json.decode(response.body);
       var user = UniverseUser.fromJson(decoded);
-      print(user.email);
-      print(user.name);
-      print(user.role);
-      print(user.department);
-      print(user.username);
       return user;
     } else if (response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
@@ -161,7 +153,6 @@ class UniverseUser {
       var user = UniverseUser.emptyUser();
       return user;
     }
-    print(response.statusCode);
     var user = UniverseUser.emptyUser();
     return user;
   }

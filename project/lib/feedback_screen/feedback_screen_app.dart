@@ -159,7 +159,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
                     child: const Text(
-                      "(A tua submissão pode ser para a faculdade)",
+                      "(A tua submissão pode incluir feedback para a faculdade ou para a UniVerse)",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           color: cHeavyGrey

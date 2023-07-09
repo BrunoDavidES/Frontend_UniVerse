@@ -43,11 +43,11 @@ class _ProfileEditState extends State<ProfileEditScreen> {
 
   @override
   void initState() {
-    nameController.text = widget.data.name!;
-    phoneController.text = widget.data.phone!;
-    linkedinController.text = widget.data.linkedin!;
-    officeController.text = widget.data.office!;
-    license_plateController.text = widget.data.license_plate!;
+    nameController.text = widget.data.name;
+    phoneController.text = widget.data.phone;
+    linkedinController.text = widget.data.linkedin;
+    officeController.text = widget.data.office;
+    license_plateController.text = widget.data.license_plate;
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
@@ -212,7 +212,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
               MyTextField(controller: nameController, hintText: '', obscureText: false, label: 'Nome', icon: Icons.person_outline,),
               MyTextField(controller: phoneController, hintText: '', obscureText: false, label: 'Telémovel', icon: Icons.phone_outlined,),
               MyTextField(controller: linkedinController, hintText: '', obscureText: false, label: 'Perfil LinkedIn', icon: Icons.link_outlined,),
-              MyTextField(controller: officeController, hintText: '', obscureText: false, label: 'Gabinete', icon: Icons.work_outline,),
+              UniverseUser.getRole() != 'S'
+              ?MyTextField(controller: officeController, hintText: '', obscureText: false, label: 'Gabinete', icon: Icons.work_outline,) :SizedBox(),
               MyTextField(controller: license_plateController, hintText: '', obscureText: false, label: 'Matrícula', icon: Icons.directions_car_filled,),
               Container(
                 margin: const EdgeInsets.only(left: 20, right:20, top: 10),
