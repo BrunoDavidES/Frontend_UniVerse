@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 const cors = require("cors")({ origin: true });
 
 // Gmail configuration
-const gmailEmail = "capi.crew@gmail.com";
+const gmailEmail = "uni.capi.crew@gmail.com";
 const gmailPassword = "pe2doManelExplodiu";
 
 // Create a transporter
