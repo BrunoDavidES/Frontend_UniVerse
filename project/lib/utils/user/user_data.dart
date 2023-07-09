@@ -6,8 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import '../authentication/auth.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class UniverseUser {
+
+  static String tokenRole = "Teste";
 
   String name = '',
       username = '',
@@ -57,12 +60,15 @@ class UniverseUser {
     return "ERROR";
   }
 
-  static String getRole() {
-    /*String token = Authentication.getTokenID() as String;
+  static Future<String> getRole() async {
+    String token = await Authentication.getTokenID();
     if (token.isNotEmpty) {
-      return token.;
+      /*var decoded = JwtDecoder.decode(token.);
+      tokenRole = decoded['role'];
+      print(decoded['role']);*/
+      return "role";
     }
-    return "UNKNOWN ERROR";*/
+    return "UNKNOWN ERROR";
     return "S";
   }
 

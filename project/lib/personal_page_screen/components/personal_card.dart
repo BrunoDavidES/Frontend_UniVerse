@@ -13,7 +13,7 @@ class PersonalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =  UniverseUser.getName();
-    String role = UniverseUser.getRole();
+    var role = UniverseUser.tokenRole;
     String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {

@@ -15,7 +15,7 @@ class PersonalWebCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     String name =  UniverseUser.getName();
-    String role = UniverseUser.getRole();
+    var role = UniverseUser.getRole();
     String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {

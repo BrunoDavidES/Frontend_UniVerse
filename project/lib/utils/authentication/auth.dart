@@ -1,5 +1,7 @@
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class Authentication {
 
@@ -32,6 +34,7 @@ class Authentication {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
       } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
+     UniverseUser.getRole();
       return 200;
     } on FirebaseAuthException catch (e) {
       if(e=='internal-error') {
@@ -57,6 +60,7 @@ class Authentication {
     if (user != null) {
       try {
         String idToken = await user.getIdToken();
+        UniverseUser.tokenRole = JwtDecoder.decode(idToken) as String;
         return idToken;
       } catch (e) {
         return "ERROR";

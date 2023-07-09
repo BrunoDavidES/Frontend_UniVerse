@@ -104,6 +104,7 @@ class Menu extends StatelessWidget {
               },
               itemBuilder: (context, index) {
                 if(index == 0)
+                  //if(UniverseUser.getRole()=="BO")
                   return MenuCard(text: 'Gestão de Backoffice', description: '',icon: Icons.manage_accounts_outlined, press: () {
                     showDialog(
                         context: context,
