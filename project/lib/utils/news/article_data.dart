@@ -6,11 +6,11 @@ import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Article {
   static List<Article> news = <Article>[];
   static int numNews = 0;
+  static String cursor = "EMPTY";
   String? id;
   String? title;
   String? text;
@@ -46,20 +46,22 @@ class Article {
     var token;
     if(numNews == 0) {
       if(Authentication.getTokenID() == ""){
-          token = "notLogged";
+        token = "notLogged";
       }
       else {
         token = await Authentication.getTokenID();
       }
 
       response = await http.post(
-        Uri.parse(baseUrl + newsUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': token,
-        },
-        body: "{}"
+          Uri.parse(baseUrl + newsUrl),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+          body: "{}"
       );
+
+      print(response.headers['X-Cursor'].toString());
 
       if(response.statusCode==200) {
         numNews = json.decode(response.body);
@@ -70,17 +72,18 @@ class Article {
     newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
     print(newsUrl);
     response = await http.post(
-      Uri.parse(baseUrl + newsUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      },
-      body: "{}"
+        Uri.parse(baseUrl + newsUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+        body: "{}"
     );
     if(response.statusCode==200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('cursor', response.headers['X-Cursor'].toString());
-      var decodedNews = json.decode(response.body);
+      Map<String, dynamic> decodedJson = json.decode(response.body);
+      cursor = decodedJson['cursor'];
+      print(cursor);
+      var decodedNews = decodedJson['results'];
       for (var decoded in decodedNews) {
         news.add(Article.fromJson(decoded));
       }
@@ -105,12 +108,12 @@ class Article {
     Article("Teste de notícias10", "Este é apenas um teste, you see?", "https://www.fct.unl.pt/sites/default/files/imagens/pagina_inicial/banner/banner_15mai_6578_4.png", "31 de maio 2023", "Bruno")
   ];*/
 
-static List<String> images = [
-  "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
-  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
-  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
-  "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png",
-];
+  static List<String> images = [
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l740/imagens/noticias/2023/06/santanderexpresso.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/samsung_madeira_website.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/laqv_equipa.png",
+    "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png",
+  ];
 
   String formatTimestamp(int seconds, int nanos) {
     final milliseconds = seconds * 1000 + (nanos / 1000000).round();
