@@ -188,7 +188,7 @@ class UniverseUser {
         'office': office,
         'phone': phone,
         'linkedin': linkedin,
-        'isPublic': isPublic,
+        'privacy': isPublic,
       }),
     );
     if (response.statusCode == 200) {
