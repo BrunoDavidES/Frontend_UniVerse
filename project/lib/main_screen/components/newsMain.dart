@@ -25,6 +25,9 @@ class MainNewsState extends State<MainNews> {
     if(Article.news.length < 3){
       fetchDone = Article.fetchNews(3, Article.cursor, {});
     }
+    else{
+      fetchDone = Article.fetchNews(0, '', {});
+    }
     super.initState();
   }
 
@@ -64,36 +67,36 @@ class MainNewsState extends State<MainNews> {
                 color: cDarkLightBlueColor,
               ),
               ),
-          Padding(
-              padding: EdgeInsets.only(top: 50),
-              child: FutureBuilder(
-                future: fetchDone,
-                builder: (context, snapshot) {
-                  if(snapshot.hasData) {
-                    return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children:
-                        [Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[0]),
-                          Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[1]),
-                          Spacer(),
-                          NewsCardWeb(height: 700,
-                              width: widget.width,
-                              Article.news[2]),
-                          Spacer(),
-                        ],
-                      );
-                  }
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
-                },
-              ),
+            Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: FutureBuilder(
+                  future: fetchDone,
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData) {
+                      return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:
+                          [Spacer(),
+                            NewsCardWeb(height: 700,
+                                width: widget.width,
+                                Article.news[0]),
+                            Spacer(),
+                            NewsCardWeb(height: 700,
+                                width: widget.width,
+                                Article.news[1]),
+                            Spacer(),
+                            NewsCardWeb(height: 700,
+                                width: widget.width,
+                                Article.news[2]),
+                            Spacer(),
+                          ],
+                        );
+                    }
+                    return Center(
+                      child: LinearProgressIndicator(),
+                    );
+                  },
+                ),
               /*child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:
@@ -113,7 +116,7 @@ class MainNewsState extends State<MainNews> {
                 ],
               )*/
             //SizedBox(height: 10,)
-          ),
+            ),
         ],
         ),
     );
