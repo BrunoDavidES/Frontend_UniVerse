@@ -3,7 +3,7 @@ const logger = require("firebase-functions/logger");
 
 const functions = require("firebase-functions");
 const nodemailer = require("nodemailer");
-const cors = requre("cors")({ origin: true });
+const cors = require("cors")({ origin: true });
 
 // Gmail configuration
 const gmailEmail = "capi.crew@gmail.com";
