@@ -13,9 +13,6 @@ class Faq {
 
     try {
       final result = await sendEmailCallable.call(<String, dynamic>{
-        'recipientEmail': 'capi.crew@gmail.com',
-        'subject': 'Sup',
-        'text': 'This is a test email sent from Flutter.',
       });
 
       final data = result.data as Map<String, dynamic>;
