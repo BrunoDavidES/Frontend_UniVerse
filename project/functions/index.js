@@ -4,31 +4,43 @@ const logger = require("firebase-functions/logger");
 const functions = require("firebase-functions");
 const nodemailer = require("nodemailer");
 
-exports.sendEmail = functions.https.onCall(async (data, context) => {
-  const { recipient, subject, body } = data;
+// Gmail configuration
+const gmailEmail = "capi.crew@gmail.com";
+const gmailPassword = "pe2doManelExplodiu";
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "capi.crew@gmail.com", // Replace with your Gmail email address
-      pass: "pe2doManelExplodiu", // Replace with your Gmail password or an app-specific password
-    },
-  });
+// Create a transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: gmailEmail,
+    pass: gmailPassword,
+  },
+});
 
+// Function to send an email
+exports.sendEmail = functions.https.onRequest((request, response) => {
+  // Email details (subject, recipient, message)
+  const subject = "Test Email";
+  const recipient = "g.cerveira@campus.fct.unl.pt";
+  const message = "This is a test email sent from Firebase Cloud Functions.";
+
+  // Email options
   const mailOptions = {
-    from: "capi.crew@gmail.com", // Replace with your Gmail email address
+    from: gmailEmail,
     to: recipient,
     subject: subject,
-    text: body,
+    text: message,
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
-    return { success: true };
-  } catch (error) {
-    console.error("Error sending email:", error);
-    throw new functions.https.HttpsError("internal", "Email sending failed");
-  }
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      response.status(500).send("Error sending email");
+    } else {
+      console.log("Email sent successfully:", info.response);
+      response.send("Email sent successfully");
+    }
+  });
 });
 
