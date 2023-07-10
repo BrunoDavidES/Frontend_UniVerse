@@ -31,7 +31,8 @@ class _EventsWebPageState extends State<EventsWebPage> {
 
   @override
   void initState() {
-    fetchDone = Event.fetchEvents(loadedArticlesCount, Event.cursor, {});
+    Event.events.clear();
+    fetchDone = Event.fetchEvents(loadedArticlesCount, "EMPTY", {});
     super.initState();
   }
 

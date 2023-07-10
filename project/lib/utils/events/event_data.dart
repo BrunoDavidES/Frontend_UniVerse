@@ -78,7 +78,6 @@ class Event {
       }
       else return 500;
     }
-    print("ola1");
     eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     response = await http.post(
       Uri.parse(baseUrl + eventsUrl),
