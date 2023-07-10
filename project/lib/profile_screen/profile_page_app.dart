@@ -3,6 +3,7 @@
 import 'package:UniVerse/profile_edit_screen/profile_edit_app.dart';
 import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import '../components/500.dart';
@@ -78,26 +79,27 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
             ],
           );
         }
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            LinearProgressIndicator(color: cPrimaryOverLightColor,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          BlueCurve(),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: LinearProgressIndicator(color: cPrimaryOverLightColor,
               minHeight: 10,
               backgroundColor: cPrimaryLightColor,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "A CARREGAR NOTÍCIAS",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: cPrimaryLightColor
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              "A ENCONTRAR AS TUAS INFORMAÇÕES",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: cPrimaryLightColor
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       );
     }
       ),
@@ -128,11 +130,12 @@ class FullInfo extends StatelessWidget {
             ),
             child: Column(
               children: [
-                MyReadOnlyVerticalField(icon: Icons.alternate_email, text: "Email: ", content: user.email!,),
-                MyReadOnlyVerticalField(icon: Icons.phone, text: "Telemóvel:", content: user.phone!,),
-                MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email!,),
-                MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office!,),
-                MyReadOnlyVerticalField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate!,),
+                MyReadOnlyVerticalField(icon: Icons.alternate_email, text: "Email: ", content: user.email,),
+                MyReadOnlyVerticalField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
+                MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email,),
+                Authentication.role != 'S'
+                ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office,) :SizedBox(),
+                MyReadOnlyVerticalField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
                 SizedBox(height: 70,)
               ],
             ),
@@ -168,13 +171,13 @@ class PhotoRole extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(user.role!,
+                Text(user.role,
                     style: TextStyle(
                         fontSize: 18,
                         color: cDirtyWhite
                     )),
                 SizedBox(height: 5),
-                Text(user.job!,
+                Text(user.job,
                     style: TextStyle(
                         fontSize: 15,
                         color: cDirtyWhite.withOpacity(0.8)
@@ -205,13 +208,13 @@ class BasicInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 145,),
-                Text(user.name!,
+                Text(user.name,
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.black
                   ),
                 ),
-                Text(user.username!,
+                Text(user.username,
                   style: TextStyle(
                       fontSize: 15,
                       color: cHeavyGrey

@@ -1,3 +1,4 @@
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
@@ -15,7 +16,7 @@ class PersonalWebCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     String name =  UniverseUser.getName();
-    String role = UniverseUser.getRole();
+    String role = Authentication.role;
     String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {
@@ -66,7 +67,7 @@ class PersonalWebCard extends StatelessWidget {
           ?Padding(
               padding: const EdgeInsets.only(left: 18, bottom:5),
               child: Text(
-                "Aluno",
+                "Aluno " + role,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: cDirtyWhiteColor,

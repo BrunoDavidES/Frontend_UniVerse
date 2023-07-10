@@ -4,15 +4,16 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
-import 'package:UniVerse/utils/search/info.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
+import '../../utils/search/info.dart';
 
-class RestaurantsScreen extends StatelessWidget {
+class CoursesScreenApp extends StatelessWidget {
 
-  const RestaurantsScreen({super.key});
+  const CoursesScreenApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class RestaurantsScreen extends StatelessWidget {
           slivers: [
             SliverAppBar(
               backgroundColor: cDirtyWhiteColor,
-              title: Image.asset("assets/titles/restaurants.png", scale: 6),
+              title: Image.asset("assets/app/services.png", scale: 6),
               leading: Builder(
                   builder: (context) {
                     return IconButton(
@@ -48,13 +49,13 @@ class RestaurantsScreen extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                  childCount: 8,
+                  childCount: 22,
                       (BuildContext context, int index) {
-                    final item = restaurants[index];
+                    final item = courses[index];
                     return ListButtonSimple(tobeBold: true,
-                        text: item.values.first,
+                        text: item.keys.first,
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,)));
+                          launchUrl(Uri.parse(item.values.first));
                         });
                   }
               ),

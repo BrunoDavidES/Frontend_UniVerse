@@ -44,6 +44,10 @@ class FAQlist extends StatelessWidget {
                answer: 'Não queremos que o Universo esteja distante, por isso, podes acompanhar-nos no Instagram @universe.fct',
              ),
              FAQbox(
+               question: 'Onde posso saber mais sobre a UniVerse?',
+               answer: 'Não queremos que o Universo esteja distante, por isso, podes acompanhar-nos no Instagram @universe.fct',
+             ),
+             FAQbox(
                question: 'Quer saber alguma informação específica sobre a faculdade FCT NOVA?',
                answer: 'Vai ao site de ajuda da FCT, onde encontra a FAQ da faculdade com várias questões frequentemente perguntadas. Link: https://www.fct.unl.pt/faq#t136n17231',
              ),

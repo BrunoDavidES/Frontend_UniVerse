@@ -1,9 +1,13 @@
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class Authentication {
 
   static bool userIsLoggedIn = false;
+
+  static String role = '';
 
   static bool areCompliantToLogin(email, password) {
     return email.isNotEmpty && password.isNotEmpty;
@@ -30,8 +34,9 @@ class Authentication {
       );
       if(!kIsWeb) {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-      }
+      } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
+      print(getTokenID());
       return 200;
     } on FirebaseAuthException catch (e) {
       if(e=='internal-error') {
@@ -53,10 +58,11 @@ class Authentication {
   }
 
   static Future<String> getTokenID() async {
-    var user = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         String idToken = await user.getIdToken();
+        role = JwtDecoder.decode(idToken)['role'];
         return idToken;
       } catch (e) {
         return "ERROR";

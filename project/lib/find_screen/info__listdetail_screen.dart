@@ -3,10 +3,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../consts/color_consts.dart';
 
-class InfoDetailScreen extends StatelessWidget {
+class InfoDetailScreenWithList extends StatelessWidget {
 final String text;
-final String? link;
-  InfoDetailScreen( {super.key,required this.text, this.link});
+final List<String> divisions;
+InfoDetailScreenWithList( {super.key,required this.text, required this.divisions});
 
   @override
   Widget build(BuildContext context) {
@@ -90,23 +90,13 @@ final String? link;
                         ),
                       ),
                     ),
-                    if(link!=null)
-                      InkWell(
-                        onTap: () {
-                          launchUrl(Uri.parse(link!));
-                        },
-                        child: Text.rich(
-                          TextSpan(
-                            text: "Sabe mais sobre o $text ",
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'aqui.',
-                                style: TextStyle(decoration: TextDecoration.underline),
-                              ),
-                            ],
-                          ),
-                        ),
+                    if(divisions.isNotEmpty)
+                      Text(
+                          "Neste edifício:"
                       ),
+                    ...divisions.map((e) => Text(
+                      "- $e",
+                    ))
                   ],
                 )
               ),

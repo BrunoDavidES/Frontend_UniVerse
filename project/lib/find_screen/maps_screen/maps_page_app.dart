@@ -8,72 +8,20 @@ import '../../bars/app_bar.dart';
 import '../../consts/color_consts.dart';
 import 'maps_body_app.dart';
 
-class MapsPageApp extends StatefulWidget {
+class MapsPageApp extends StatelessWidget {
 
-  const MapsPageApp({super.key});
-
-  @override
-  State<MapsPageApp> createState() => _MapsPageState();
-}
-
-class _MapsPageState extends State<MapsPageApp> {
-  final Map<String, Marker> _markers = {};
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final fctplaces = await locations.getFCTplaces();
-    setState(() {
-      _markers.clear();
-      for (final place in fctplaces.places) {
-        final marker = Marker(
-          icon: markerIcon,
-          markerId: MarkerId(place.name),
-          position: LatLng(place.lat, place.lng),
-          infoWindow: InfoWindow(
-            title: place.name,
-            snippet: place.address,
-          ),
-        );
-        _markers[place.name] = marker;
-      }
-    });
-  }
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  @override
-  void initState() {
-    addCustomIcon();
-    super.initState();
-  }
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(20, 30)), "assets/images/marker.png")
-        .then(
-          (icon) {
-        setState(() {
-          markerIcon = icon;
-        });
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        height: size.height,
-        width: size.width,
-        decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-        ),
-        child: Stack(
+    return Stack(
           children: <Widget>[
-            MapsPageApp(),
+            MapApp(),
             Container(
               alignment: Alignment.bottomCenter,
               child:CustomAppBar(i:1),
             )
           ],
-        ),
-      ),
-    );
+        );
   }
 
   /*@override

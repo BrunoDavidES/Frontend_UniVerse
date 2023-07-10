@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
@@ -57,7 +58,23 @@ class FindPageBodyApp extends StatelessWidget {
             return InkWell(
                 child: GridBox(text: item.text!, icon: item.icon!),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChosenPageApp(page:item.page!)));
+                  if(item.text=="Galeria") {
+                    showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(
+                                  Radius.circular(10.0)
+                              )
+                          ),
+                          child: InfoPopUp(text: "brevemente disponível na Universe",),
+                        )
+                    );
+                  }
+                  else if(item.text=="Transportes")
+                    launchUrl(Uri.parse("https://moovitapp.com/index/pt/transportes_p%C3%BAblicos-FCT_UNL_Faculdade_de_Ci%C3%AAncias_e_Tecnologia_da_Universidade_Nova_de_Lisboa-Lisboa-site_20129427-2460"));
+                   else Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChosenPageApp(page:item.page!)));
                 },
               );
           },

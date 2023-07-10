@@ -51,7 +51,7 @@ class DepartmentsBodyApp extends StatelessWidget {
                 return ListButtonSimple(tobeBold: true,
                     text: item.values.first[0],
                     press: () {
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item.,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], link: item.values.first[1],)));
                     });
               }
           ),

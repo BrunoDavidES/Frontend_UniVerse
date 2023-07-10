@@ -12,6 +12,7 @@ import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -47,9 +48,9 @@ class _PublishScreenState extends State<PublishScreenApp> {
   late TextEditingController startDateController;
   late TextEditingController endDateController;
   late TextEditingController descriptionController;
-  late String isItPaid;
-  late String isItPublic;
-  late File thumbnail;
+  String? isItPaid;
+ String? isItPublic;
+  File? thumbnail;
   Uint8List imageUint8 = Uint8List(8);
 
   @override
@@ -74,7 +75,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
     super.dispose();
   }
 
-  void submitEventButtonPressed(title, startDate, endDate, isPublic, isItPaid, location, capacity, description, File thumbnail) async {
+  void submitEventButtonPressed(title, startDate, endDate, isPublic, isItPaid, location, capacity, description, Uint8List thumbnail) async {
     if(_source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -286,16 +287,41 @@ class _PublishScreenState extends State<PublishScreenApp> {
             ),
             InkWell(
               onTap: () async {
-                final ImagePicker picker = ImagePicker();
-                XFile? image = await picker.pickImage(source: ImageSource.gallery);
-                if(image!=null) {
-                  var f = await image.readAsBytes();
-                  imageUint8= f;
-                  setState(() {
-                    pickedImage = File("a");
-                  });
-                }
-              },
+                try {
+                  final ImagePicker picker = ImagePicker();
+                  XFile? image = await picker.pickImage(
+                      source: ImageSource.gallery);
+                  if (image != null) {
+                    File img = File(image.path);
+                    var f = await image.readAsBytes();
+                    if(f.lengthInBytes > 8000000) {
+                      showDialog(context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "A imagem excede o tamanho máximo permitido de 3 MB.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                      return;
+                    }
+                    imageUint8 = f;
+                    setState(() {
+                      pickedImage = img;
+                    });
+                  }
+                } on PlatformException catch (e) {
+                  showDialog(context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialogBox(
+                          title: "Ups!",
+                          descriptions: "Não conseguimos obter a imagem que escolheste. Tenta novamente, por favor.",
+                          text: "OK",
+                        );
+                      }
+                  );
+        }},
               child: Container(
                 padding: const EdgeInsets.only(left: 25, top: 10),
                 child: Row(
@@ -315,7 +341,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
                         ),
                       )
                           : Text(
-                        "Adciona a thumnail do evento aqui",
+                        "Adciona a thumnail do evento aqui (max 8 MB)",
                         style: TextStyle(
                             color: cDarkBlueColor
                         ),
@@ -385,7 +411,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
                                   locationController.text,
                                   capacityController.text,
                                   descriptionController.text,
-                                  thumbnail);
+                                  imageUint8);
                             })
                 );
               }, height: 10,),

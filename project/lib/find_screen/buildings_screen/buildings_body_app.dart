@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
 import '../../utils/search/info.dart';
+import '../info__listdetail_screen.dart';
 import '../info_detail_screen.dart';
 
 class BuildingsBodyApp extends StatelessWidget {
@@ -49,10 +50,11 @@ class BuildingsBodyApp extends StatelessWidget {
               childCount: 19,
                   (BuildContext context, int index) {
                 final item = buildings[index];
+                final divisions = buildingsWithDivisions[index].values.first;
                 return ListButtonSimple(tobeBold: true,
                     text: item.values.first,
                     press: () {
-                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(data: item.,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreenWithList(text: item.values.first, divisions: divisions,)));
                     });
               }
           ),

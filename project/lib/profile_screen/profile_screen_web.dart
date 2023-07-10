@@ -69,13 +69,13 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                               padding: const EdgeInsets.only(top:30),
                               child: Column(
                                 children: [
-                                    Text(user.name!,
+                                    Text(user.name,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
                                     ),
                                   SizedBox(height: 5,),
-                                  Text(user.username!,
+                                  Text(user.username,
                                       style: TextStyle(
                                           fontSize: 15,
                                           color: cHeavyGrey
@@ -88,7 +88,7 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
 
                              Padding(
                                padding: const EdgeInsets.only(top: 40),
-                               child: Text(user.role!,
+                               child: Text(user.role,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -97,7 +97,7 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                                 SizedBox(width:10,),
                               Padding(
                                 padding: const EdgeInsets.only(top: 45),
-                                child: Text(user.job!,
+                                child: Text(user.job,
                                       style: TextStyle(
                                           fontSize: 15,
                                           color: cHeavyGrey
@@ -147,11 +147,11 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height:size.height/10),
-                          MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: user.email!,),
-                          MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: user.phone!,),
-                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email!,),
-                          MyReadOnlyField(icon: Icons.work, text: "Gabinete:", content: user.office!,),
-                          MyReadOnlyField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate!,),
+                          MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: user.email,),
+                          MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
+                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email,),
+                          MyReadOnlyField(icon: Icons.work, text: "Gabinete:", content: user.office,),
+                          MyReadOnlyField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
                         ],
                       ),
                     ),
@@ -177,18 +177,18 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:10),
-                          child: Text(user.isPublic!,
+                          child: Text(user.isPublic,
                             style: TextStyle(
                               fontSize: 15,
                             ),
                           ),
                         ),
-                        Text(user.department!,
+                        Text(user.department,
                           style: TextStyle(
                             fontSize: 15,
                           ),
                         ),
-                        Text(user.organization!,
+                        Text(user.organization,
                           style: TextStyle(
                             fontSize: 15,
                           ),

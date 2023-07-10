@@ -29,7 +29,7 @@ class FaqApp extends StatelessWidget {
                 color: cDarkBlueColor);
           }
         ),
-        title: Image.asset('assets/app/ajuda.png', scale: 6),
+        title: Image.asset('assets/titles/help.png', scale: 6),
         backgroundColor: cDirtyWhiteColor,
 
       ),
