@@ -57,7 +57,7 @@ class NewsFeed extends StatefulWidget {
         offset = 0;
         Article.news.clear();
       });
-      Article.fetchNews(3, Article.cursor, {});
+      Article.fetchNews(3, "EMPTY", {});
     }
 
     @override
