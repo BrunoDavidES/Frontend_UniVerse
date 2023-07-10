@@ -89,8 +89,8 @@ class UniverseUser {
     username = json['username'];
     department = json['department'];
     job = json['department_job'];
-   phone = json['phone'];
-    linkedin = json['linkedin'];
+    phone = json['phone'];
+    linkedin = json['linkedIn'];
     //isPublic = json['privacy'];
     email = json['email'];
     license_plate = json['license_plate'];
