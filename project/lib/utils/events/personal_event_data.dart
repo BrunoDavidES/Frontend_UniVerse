@@ -7,16 +7,14 @@ import '../authentication/auth.dart';
 import 'package:http/http.dart' as http;
 
 class CalendarEvent {
-  static Map<String, List<Map<String, CalendarEvent>>> events = {
-    "05-07-2023": [{"10":CalendarEvent("UNKNOWN ERROR", "10", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")},{"11":CalendarEvent("bm", "11", "Teste", "Ninf", "loacti", "9:00", "23-07-2023")}]
-  };
-  String? authorUsername;
-  String? id;
-  String? title;
-  String? department;
-  String? location;
-  String? hour;
-  String? date;
+  static Map<String, List<CalendarEvent>> events = {};
+  String authorUsername = '';
+  String id = '';
+  String title = '';
+  String department = '';
+  String location = '';
+  String hour = '';
+  String date = '';
 
   CalendarEvent(
       this.authorUsername,
@@ -29,14 +27,13 @@ class CalendarEvent {
       );
 
   CalendarEvent.fromJson(Map<String, dynamic> json) {
-    var properties = json['properties'];
-    id = properties['id']['value'];
-    title = properties['title']['value'];
-    authorUsername = properties['username']['value'];
-    location = properties['location']['value'];
-    department = properties['department']['value'];
-    hour = properties['hours']['value'];
-    date = properties['beginningDate']['value'];
+    id = json['id'];
+    title = json['title'];
+    authorUsername = json['username'];
+    location = json['location'];
+    //department = json['department'];
+    hour = json['hours'];
+    date = json['beginningDate'];
   }
 
   static Future<int> fetchEvents(month, year) async {
@@ -58,8 +55,13 @@ class CalendarEvent {
     if(response.statusCode==200) {
       var decodedEvents = json.decode(response.body);
       for (var decoded in decodedEvents) {
-        var event = CalendarEvent.fromJson(decoded);
-        events[event.date]?.add({event.id.toString():event});
+        final event = CalendarEvent.fromJson(decoded);
+
+        if (!events.containsKey(event.date)) {
+          events[event.date] = [];
+        }
+
+        events[event.date]!.add(event);
       }
     } else if(response.statusCode == 401) {
       Authentication.userIsLoggedIn=false;
@@ -90,7 +92,7 @@ class CalendarEvent {
       body: jsonEncode({
         'title': title,
         'username': username,
-        "department": "Departamento de Teste",
+        "department": "dep-informatica",
         'beginningDate': date,
         //'username': UniverseUser.getUsername(),
         'hours': hour,
@@ -100,10 +102,10 @@ class CalendarEvent {
 
     if (response.statusCode == 200) {
       if(events[date]!=null) {
-        events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
+        //events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, department, location, hour, date)});
       } else {
-        var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title, department, location, hour, date)}]};
-        events.addAll(toAdd);
+        //var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title, department, location, hour, date)}]};
+        //events.addAll(toAdd);
       }
     } else if(response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
@@ -131,19 +133,25 @@ class CalendarEvent {
         'title': title,
         'username': UniverseUser.getUsername(),
         'beginningDate': date,
-        'department': 'Departamento de Teste',
+        'department': 'dep-informatica',
         'hours': hour,
         'location': location
       }),
     );
 
     if (response.statusCode == 200) {
-      events[date]!.removeWhere((element) => element.containsKey(id.toString())==id.toString());
+      //events[date]!.removeWhere((element) => element.containsKey(id.toString())==id.toString());
       if(events[date]!=null) {
-        events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, "", location, hour, date)});
+        var decoded = json.decode(response.body);
+        final event = CalendarEvent.fromJson(decoded);
+        int index = events[date]!.indexWhere((element) => element.id == event.id);
+        if (index != -1) {
+          events[date]![index] = event;
+        }
+        //events[date]!.add({response.body.toString():CalendarEvent(username,response.body, title, "", location, hour, date)});
       } else {
         var toAdd = {date.toString():[{response.body.toString():CalendarEvent(username, response.body, title,"", location, hour, date)}]};
-        events.addAll(toAdd);
+        //events.addAll(toAdd);
         //events[date]!.add({id.toString(): CalendarEvent(username,response.body, title, "", location, hour, date)});
       } } else if(response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
@@ -169,7 +177,8 @@ class CalendarEvent {
     );
 
     if (response.statusCode == 200) {
-      events[date]?.removeWhere((element) => element.keys.first==id.toString());
+      events[date]!.removeWhere((element) => element.id == id);
+      //events[date]?.removeWhere((element) => element.keys.first==id.toString());
     } else if(response.statusCode == 401) {
       Authentication.userIsLoggedIn = false;
       Authentication.revoke();

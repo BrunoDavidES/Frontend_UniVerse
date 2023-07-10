@@ -207,17 +207,17 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
                           Container(
                             width: size.width/2,
                             child: Column(
-                              children: CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element.values.first, color: color)).toList(),
-    ),
-    )
+                              children: CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element, color: color)).toList(),
+                            ),
+                          )
                         ],
-                      ),
+                    ),
                   ],
                 )
               ],
             ),
-          ],
-    )
+              ],
+            )
           ]
     );
   }

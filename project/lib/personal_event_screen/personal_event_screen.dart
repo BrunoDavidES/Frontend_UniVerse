@@ -42,70 +42,88 @@ class _EventScreenState extends State<PersonalEventScreen> {
   }
 
   void buttonPressed(id, date) async {
-    if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
-      showDialog(context: context,
-          builder: (BuildContext context){
-            return CustomDialogBox(
-              title: "Sem internet",
-              descriptions: "Parece que não estás ligado à internet! Para excluires este evento da tua agenda, precisamos que te ligues a uma rede.",
-              text: "OK",
-            );
-          }
+    if (!kIsWeb && _source.keys.toList()[0] == ConnectivityResult.none) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomDialogBox(
+            title: "Sem internet",
+            descriptions:
+            "Parece que não estás ligado à internet! Para excluires este evento da tua agenda, precisamos que te ligues a uma rede.",
+            text: "OK",
+          );
+        },
       );
       setState(() {
         isLoading = false;
       });
     } else {
-      ConfirmDialogBox(descriptions: "Tens a certeza que pretendes eliminar este evento?", press: () {
-        final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
-        if (response == 200) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Sucesso!",
-                  descriptions: "O evento foi eliminado",
-                  text: "OK",
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmDialogBox(
+            descriptions: "Tens a certeza que pretendes eliminar este evento?",
+            press: () {
+              final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
+              if (response == 200) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialogBox(
+                      title: "Sucesso!",
+                      descriptions: "O evento foi eliminado",
+                      text: "OK",
+                    );
+                  },
                 );
-              }
-          );
-        } if (response == 401) {
-          showDialog(context: context,
-              builder: (BuildContext context) {
-                return CustomDialogBox(
-                    title: "Ups!",
-                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
-                    text: "OK",
-                    press: () {
-                      if (kIsWeb) {
-                        context.go("/home");
-                      } else
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => const LoginPageApp()));
-                    });
-              }
-          );
-        } else if (response==400) {
-          showDialog(context: context,
-              builder: (BuildContext context){
-                return CustomDialogBox(
-                  title: "Ups!",
-                  descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
-                  text: "OK",
+              } else if (response == 401) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialogBox(
+                      title: "Ups!",
+                      descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
+                      text: "OK",
+                      press: () {
+                        if (kIsWeb) {
+                          context.go("/home");
+                        } else {
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) => const LoginPageApp(),
+                          ));
+                        }
+                      },
+                    );
+                  },
                 );
+              } else if (response == 400) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialogBox(
+                      title: "Ups!",
+                      descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                      text: "OK",
+                    );
+                  },
+                );
+              } else {
+                if (kIsWeb) {
+                  context.go("/error");
+                } else {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
+                }
               }
+            },
           );
-        } else {
-          if(kIsWeb)
-            context.go("/error");
-          else
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-        }
-      });
+        },
+      );
     }
     setState(() {
       isLoading = false;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

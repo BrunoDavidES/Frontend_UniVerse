@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -50,7 +51,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
       try {
         final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
         final response = await ref.getData();
-        return String.fromCharCodes(response as Iterable<int>);
+        return utf8.decode(response as List<int>);
       } catch (e) {
         print('Error fetching text file: $e');
         return '';

@@ -1,3 +1,4 @@
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import '../../consts/color_consts.dart';
 import '../../utils/user/user_data.dart';
@@ -13,7 +14,7 @@ class PersonalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =  UniverseUser.getName();
-    var role = UniverseUser.tokenRole;
+    String role = Authentication.role;
     String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {

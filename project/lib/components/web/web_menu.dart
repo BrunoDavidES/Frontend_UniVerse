@@ -74,7 +74,8 @@ class WebMenu extends StatelessWidget {
                     );
                   },),
                   WebMenuCard(text: 'Calendário',icon: Icons.calendar_month_outlined, press: () {
-                    showDialog(
+                    context.go('/personal/calendar');
+                    /*showDialog(
                         context: context,
                         builder: (_) => Dialog(
                           shape: RoundedRectangleBorder(
@@ -85,7 +86,7 @@ class WebMenu extends StatelessWidget {
                           ),
                           child: QRPopUp(text: "Acede ao calendário na nossa aplicação!",),
                         )
-                    );
+                    );*/
                   },),
                   WebMenuCard(text: 'Fóruns',icon: Icons.message_outlined, press: () {
                     showDialog(

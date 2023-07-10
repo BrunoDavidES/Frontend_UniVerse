@@ -41,6 +41,7 @@ Future main() async{
   );
   if(FirebaseAuth.instance.currentUser!=null)
     Authentication.userIsLoggedIn=true;
+  Authentication.getTokenID();
   runApp(const MyApp());
 }
 

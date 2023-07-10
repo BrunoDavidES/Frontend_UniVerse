@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:http/http.dart' as http;
@@ -17,7 +19,7 @@ class FCTTodayWebCard extends StatelessWidget {
     try {
       final ref = firebase_storage.FirebaseStorage.instance.ref('hojenafct.txt');
       final response = await ref.getData();
-      return String.fromCharCodes(response as Iterable<int>);
+      return utf8.decode(response as List<int>);
     } catch (e) {
       print('Error fetching text file: $e');
       return '';

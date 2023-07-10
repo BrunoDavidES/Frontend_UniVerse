@@ -10,8 +10,6 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class UniverseUser {
 
-  static String tokenRole = "Teste";
-
   String name = '',
       username = '',
       role = '',
@@ -58,18 +56,6 @@ class UniverseUser {
       return user.displayName!;
     }
     return "ERROR";
-  }
-
-  static Future<String> getRole() async {
-    String token = await Authentication.getTokenID();
-    if (token.isNotEmpty) {
-      /*var decoded = JwtDecoder.decode(token.);
-      tokenRole = decoded['role'];
-      print(decoded['role']);*/
-      return "role";
-    }
-    return "UNKNOWN ERROR";
-    return "S";
   }
 
   static String getJob() {
