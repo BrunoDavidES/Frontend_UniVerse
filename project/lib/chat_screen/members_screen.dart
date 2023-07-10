@@ -138,7 +138,7 @@ class _MembersPageState extends State<MembersPageApp> {
                       } else if(!snapshot.hasData || snapshot.data == null) {
                         return Center(
                           child: Text(
-                            "AINDA NÃO EXISTEM MEmbros NESTE FÓRUM",
+                            "AINDA NÃO EXISTEM MEMBROS NESTE FÓRUM",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -168,7 +168,7 @@ class _MembersPageState extends State<MembersPageApp> {
                             var memberName = memberData['name'];
                             var memberRole = memberData['role'];
 
-                            return MemberCard(data: memberData, username: memberID);
+                            return MemberCard(id: widget.forumID, data: memberData, username: memberID);
                           }).toList(),
                         ),
                       );
@@ -185,10 +185,11 @@ class _MembersPageState extends State<MembersPageApp> {
 
 class MemberCard extends StatelessWidget {
   const MemberCard({
-    super.key, required this.data, required this.username,
+    super.key, required this.data, required this.username, required this.id,
   });
 
   final data;
+  final String id;
   final String username;
 
   @override
@@ -212,42 +213,63 @@ class MemberCard extends StatelessWidget {
       case "MEMBER": role = "MEMBRO";
     }
     return Container(
-      height: 50,
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(35),
           border: Border.all(
               color: toRandom2[cindex],
               width: 2
           )
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         children: [
-          Text(
-            memberName,
-            style: TextStyle(
-                fontSize: 17,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      memberName,
+                      style: TextStyle(
+                          fontSize: 17,
+                      ),
+                    ),
+                    SizedBox(height:5),
+                    Text(
+                      username.replaceAll("-", "."),
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: cHeavyGrey
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Text(
+                role,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: toBold ?FontWeight.bold :FontWeight.normal,
+                    color: color
+                ),
+              ),
+            ],
           ),
-          SizedBox(width:10),
-          Text(
-            username.replaceAll("-", "."),
-            style: TextStyle(
-                fontSize: 15,
-                color: cHeavyGrey
-            ),
-          ),
-          Spacer(),
-          Text(
-            role,
-            style: TextStyle(
-                fontSize: 17,
-                fontWeight: toBold ?FontWeight.bold :FontWeight.normal,
-                color: color
-            ),
-          ),
+          if(memberRole!='A')
+          Row(
+            children: [
+              Spacer(),
+              if(memberRole != 'A')
+              Button(screen: PromoteDepromoteScreen(toPromote: true, forumID: id, username:  username.replaceAll("-", "."),), text: 'PROMOVER', shadow: false,),
+              if(memberRole != "MEMBER")
+              Button(screen: PromoteDepromoteScreen(toPromote: false, forumID: id, username:  username.replaceAll("-", "."),), text: 'DESPROMOVER', shadow: false,),
+            ],
+          )
         ],
       ),
     );

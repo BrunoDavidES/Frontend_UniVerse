@@ -33,12 +33,6 @@ class FindPageBodyApp extends StatelessWidget {
               backgroundColor: cDirtyWhiteColor,
               titleSpacing: 15,
               actions: <Widget>[
-                IconButton(onPressed: () {
-                  /*ShowSearch(
-                      context: context,
-                      delegate: MySearchDelegate()
-                  );*/
-                }, icon: Icon(Icons.search_outlined, color: cPrimaryColor,))
               ],
             ),
           ];

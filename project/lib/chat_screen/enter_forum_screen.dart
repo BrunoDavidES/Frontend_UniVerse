@@ -87,11 +87,10 @@ class _MyChatPageState extends State<EnterForumScreen> {
                       if (response == 200) {
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ChatPageApp(
+                              builder: (context) => ChatPageApp(role: "MEMBER",
                                 forumID: id, forumName: widget.forumName,),
                             ));
-                      }
-                      if (response == 401) {
+                      } else if (response == 401) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(

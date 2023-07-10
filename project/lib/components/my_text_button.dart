@@ -5,9 +5,10 @@ import '../consts/color_consts.dart';
 class Button extends StatelessWidget {
   final Widget screen;
   final String text;
+  final bool shadow;
 
   const Button({
-    super.key, required this.screen, required this.text,
+    super.key, required this.screen, required this.text, required this.shadow,
   });
 
   @override
@@ -17,7 +18,8 @@ class Button extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerRight,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: shadow
+            ?BoxDecoration(
               color: cDarkBlueColorTransparent,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [ BoxShadow(
@@ -27,6 +29,10 @@ class Button extends StatelessWidget {
                 offset: const Offset(0,0),
               ),
               ]
+          )
+          :BoxDecoration(
+              color: cDarkBlueColorTransparent,
+              borderRadius: BorderRadius.circular(15),
           ),
           child: TextButton(
               onPressed: () {

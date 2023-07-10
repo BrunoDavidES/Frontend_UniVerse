@@ -16,7 +16,8 @@ import '../utils/connectivity.dart';
 class PromoteDepromoteScreen extends StatefulWidget {
   final bool toPromote;
   final String forumID;
-  PromoteDepromoteScreen({super.key, required this.toPromote, required this.forumID});
+  final String username;
+  PromoteDepromoteScreen({super.key, required this.toPromote, required this.forumID, required this.username});
 
   @override
   State<PromoteDepromoteScreen> createState() => _MyChatPageState();
@@ -25,12 +26,12 @@ class PromoteDepromoteScreen extends StatefulWidget {
 class _MyChatPageState extends State<PromoteDepromoteScreen> {
   Map _source = {ConnectivityResult.none: false};
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
-  late TextEditingController usernameController;
+  late TextEditingController usernameController = TextEditingController();
   bool isLoading = false;
 
   @override
   void initState() {
-    usernameController = TextEditingController();
+    usernameController.text = widget.username;
     _connectivity.initialize();
     _connectivity.myStream.listen((source) {
       setState(() {
