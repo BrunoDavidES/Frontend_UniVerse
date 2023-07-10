@@ -139,7 +139,7 @@ final String? link;
                         },
                         child: Text.rich(
                           TextSpan(
-                            text: "Sabe mais sobre ",
+                            text: "\nSabe mais sobre ",
                             children: <TextSpan>[
                               TextSpan(
                                 text: 'aqui.',

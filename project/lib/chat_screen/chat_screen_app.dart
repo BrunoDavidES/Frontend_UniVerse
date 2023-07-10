@@ -15,8 +15,9 @@ import'package:UniVerse/utils/chat/chat_utils.dart';
 class ChatPageApp extends StatefulWidget {
   final String forumID;
   final String forumName;
+  final String role;
 
-  ChatPageApp({super.key, required this.forumID, required this.forumName,});
+  ChatPageApp({super.key, required this.forumID, required this.forumName, required this.role,});
 
   @override
   State<ChatPageApp> createState() => _MyChatPageState();
@@ -179,6 +180,7 @@ class _MyChatPageState extends State<ChatPageApp> {
                     },
                   ),
                 ),
+                if(widget.role != 'MEMBER')
                 buildInput(),
               ],
             )

@@ -124,8 +124,8 @@ class _MyChatPageState extends State<ForunsScreenApp> {
               children: [
                 Spacer(),
                 if(Authentication.role == 'T' || Authentication.role == 'A')
-                Button(text: "CRIAR FÓRUM", screen: CreateForumScreen(),),
-                Button(text: "ACEDER A UM FÓRUM", screen: EnterForumScreen(forumName: forumName,),),
+                Button(text: "CRIAR FÓRUM", screen: CreateForumScreen(), shadow: true,),
+                Button(text: "ACEDER A UM FÓRUM", screen: EnterForumScreen(forumName: forumName,), shadow: true,),
                 SizedBox(
                     height:70
                 )
@@ -166,7 +166,7 @@ class ForumCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(forumID: forumID!, forumName: forumName!,)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPageApp(forumID: forumID!, role: role, forumName: forumName!,)));
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

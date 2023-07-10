@@ -90,70 +90,73 @@ width: width,
                 fontWeight: FontWeight.bold,
                 fontSize: 20
             ),),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: FutureBuilder(
-                future: Event.fetchEvents(5, Event.cursor, {}),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data == 500) {
-                      return Error500();
-                    } else {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: Event.events.map((element) => InkWell(
-                          onTap: () =>
-                            showDialog(
-                                context: context,
-                                builder: (_) =>  AlertDialog(
-                                  backgroundColor: cDirtyWhiteColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.all(
-                                            Radius.circular(10.0)
-                                        )
-                                    ),
-                                    content: OrganizedEventInfo(data: element)
-                                )
-                                ),
-                          child: DefaultButton2(
-                            width: size.width,
-                            text: element.title!,
-                            press: () {},
-                          )
-                        )).toList(),
-                      );
+          Container(
+            height: size.height/2.75,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: FutureBuilder(
+                  future: Event.fetchEvents(5, Event.cursor, {}),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data == 500) {
+                        return Error500();
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: Event.events.map((element) => InkWell(
+                            onTap: () =>
+                              showDialog(
+                                  context: context,
+                                  builder: (_) =>  AlertDialog(
+                                    backgroundColor: cDirtyWhiteColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.all(
+                                              Radius.circular(10.0)
+                                          )
+                                      ),
+                                      content: OrganizedEventInfo(data: element)
+                                  )
+                                  ),
+                            child: DefaultButton2(
+                              width: size.width,
+                              text: element.title!,
+                              press: () {},
+                            )
+                          )).toList(),
+                        );
+                      }
                     }
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        LinearProgressIndicator(color: cPrimaryOverLightColor,
-                          minHeight: 10,
-                          backgroundColor: cPrimaryLightColor,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "A CARREGAR EVENTOS",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: cPrimaryLightColor
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LinearProgressIndicator(color: cPrimaryOverLightColor,
+                            minHeight: 10,
+                            backgroundColor: cPrimaryLightColor,),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              "A CARREGAR EVENTOS",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: cPrimaryLightColor
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                /*Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: Article.news.map((e) => NewsCard(e)).toList(),*/
+                //SizedBox(height: 10,)
               ),
-              /*Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: Article.news.map((e) => NewsCard(e)).toList(),*/
-              //SizedBox(height: 10,)
             ),
           ),
           Spacer(),
