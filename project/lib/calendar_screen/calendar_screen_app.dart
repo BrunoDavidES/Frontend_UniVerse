@@ -191,7 +191,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                 ),
               ),
               if(CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!=null)
-              ...CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!.map((element) => CalendarEventCard(element.values.first, color: color)),
+              //...CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!.map((element) => CalendarEventCard(element.values.first, color: color)),
               SizedBox(height: 70,)
             ],
           ),

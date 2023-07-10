@@ -204,16 +204,16 @@ class Routing {
                     ),
                   ]
               ),
-              /*GoRoute(
+              GoRoute(
                 path: 'calendar',
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 3,),
-                /*redirect: (BuildContext context, GoRouterState state) {
+                redirect: (BuildContext context, GoRouterState state) {
                     if (!Authentication.userIsLoggedIn) {
                       return '/home';
                     }
-                  }*/
-              ),*/
+                  }
+              ),
             ]
         ),
         GoRoute(
