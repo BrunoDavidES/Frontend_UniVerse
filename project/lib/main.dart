@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:url_strategy/url_strategy.dart';
 import 'components/web/not_found.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';

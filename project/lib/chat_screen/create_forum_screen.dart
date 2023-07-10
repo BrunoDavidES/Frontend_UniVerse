@@ -73,6 +73,9 @@ class _MyChatPageState extends State<CreateForumScreen> {
               );
             }
         );
+        setState(() {
+          isLoading = false;
+        });
       } else {
         showDialog(
             context: context,
@@ -80,6 +83,10 @@ class _MyChatPageState extends State<CreateForumScreen> {
                 ConfirmDialogBox(
                     descriptions: "O fórum com o nome $name e código de acesso $pwd será criado.",
                     press: () async {
+                      Navigator.pop(context);
+                      setState(() {
+                        isLoading = true;
+                      });
                       var response = await Chat.create(name, pwd);
                       if (response == 200) {
                         showDialog(context: context,
@@ -90,7 +97,10 @@ class _MyChatPageState extends State<CreateForumScreen> {
                                 text: "OK",
                               );
                             }
-                        );
+                        ); setState(() {
+                          isLoading = false;
+                        });
+
                       } else if (response == 401) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -106,6 +116,9 @@ class _MyChatPageState extends State<CreateForumScreen> {
                                   });
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response == 400) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -122,6 +135,9 @@ class _MyChatPageState extends State<CreateForumScreen> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response == 403) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -132,6 +148,9 @@ class _MyChatPageState extends State<CreateForumScreen> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
                       }

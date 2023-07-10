@@ -53,7 +53,7 @@ class _MyDateFieldState extends State<MyDateField> {
             //locale: Locale('pt', 'PT'),
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(2023),
+              firstDate: DateTime(2023, 7, DateTime.now().day),
               //DateTime.now() - not to allow to choose before today.
               lastDate: DateTime(2030));
           if (pickedDate != null) {

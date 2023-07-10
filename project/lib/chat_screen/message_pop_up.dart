@@ -70,6 +70,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                 ConfirmDialogBox(
                     descriptions: "Tens a certeza que pretendes excluir esta mensagem?",
                     press: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
                       var response = await Chat.deletePost(forumID, postID);
                       if (response == 200) {
                         showDialog(context: context,
@@ -81,6 +84,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response == 401) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -96,6 +102,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                                   });
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response == 404) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -112,6 +121,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
                       }
@@ -141,6 +153,10 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
               ConfirmDialogBox(
                   descriptions: "Tens a certeza que pretendes editar esta mensagem?",
                   press: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    Navigator.pop(context);
                     var response = await Chat.editPost(forumID, postID, message);
                     if (response == 200) {
                       showDialog(context: context,
@@ -152,6 +168,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                             );
                           }
                       );
+                      setState(() {
+                        isLoading = false;
+                      });
                     } else if (response == 401) {
                       showDialog(context: context,
                           builder: (BuildContext context) {
@@ -167,6 +186,9 @@ class _MyMessagePopUpState extends State<MessagePopUp> {
                                 });
                           }
                       );
+                      setState(() {
+                        isLoading = false;
+                      });
                     } else {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
                     }

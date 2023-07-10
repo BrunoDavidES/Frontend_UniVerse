@@ -82,17 +82,21 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
                 ConfirmDialogBox(
                     descriptions: "Tens a certeza que queres atualizar este evento?",
                     press: () async {
+                      Navigator.pop(context);
                       var response = await CalendarEvent.edit(id, title, location, date, hour);
                       if (response == 200) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return CustomDialogBox(
                                 title: "Sucesso!",
-                                descriptions: "O evento editado!",
+                                descriptions: "O evento editado! Muito brevemente verás as alterações feitas ao evento.",
                                 text: "OK",
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response == 401) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -111,6 +115,9 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else if (response==400) {
                         showDialog(context: context,
                             builder: (BuildContext context){
@@ -121,6 +128,9 @@ class _EventCreationScreenState extends State<PersonalEventEditScreen> {
                               );
                             }
                         );
+                        setState(() {
+                          isLoading = false;
+                        });
                       } else {
                         if (kIsWeb)
                           context.go("/error");

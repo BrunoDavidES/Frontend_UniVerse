@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
+import 'package:UniVerse/profile_screen/profile_app.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -85,7 +86,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
               press: () async {
                 Navigator.pop(context);
                 setState(() {
-                  isLoading = false;
+                  isLoading = true;
                 });
                 var response = await UniverseUser.update(name, phone, linkedin, office, licensePlate, privacy, imageUint8);
                 if (response == 200) {
@@ -93,13 +94,16 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       builder: (BuildContext context) {
                         return CustomDialogBox(
                           title: "Sucesso",
-                          descriptions: "Já atualizámos o teu perfil! Espera uns minutos para visualizares as tuas informações de novo.",
+                          descriptions: "Já atualizámos o teu perfil! Muito brevemente verás as alterações no teu perfil.",
                           text: "OK",
                           press: () {
                             if(kIsWeb) {
                               Navigator.pop(context);
                               context.go("/personal");
-                            } else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PersonalPageBodyApp()));
+                            } else {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            }
                           }
                         );
                       }
@@ -150,7 +154,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       builder: (BuildContext context){
                         return CustomDialogBox(
                           title: "Ups!",
-                          descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                          descriptions: "Aconteceu algo inesperado... Tenta novamente, por favor.",
                           text: "OK",
                         );
                       }
@@ -279,7 +283,9 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                   "Ao tornares a tua conta pública, só pessoas que estejam registada na UniVerse poderão visualizá-la.",
                   style: TextStyle(
                     color: cDarkBlueColor,
+                    fontSize: 13
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               InkWell(
@@ -384,7 +390,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                 ],
               ),
               !kIsWeb
-              ? SizedBox(height: 70)
+              ? SizedBox(height: 80)
                   :SizedBox()
             ],
           ),

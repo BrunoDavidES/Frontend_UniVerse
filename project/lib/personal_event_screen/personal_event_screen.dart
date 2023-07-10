@@ -64,6 +64,7 @@ class _EventScreenState extends State<PersonalEventScreen> {
           return ConfirmDialogBox(
             descriptions: "Tens a certeza que pretendes eliminar este evento?",
             press: () {
+              Navigator.pop(context);
               final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
               if (response == 200) {
                 showDialog(

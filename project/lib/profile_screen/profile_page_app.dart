@@ -9,9 +9,7 @@ import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
-import '../components/500.dart';
 import '../components/custom_shape.dart';
-import '../profile_edit_screen/profile_edit_screen.dart';
 import '../utils/user/user_data.dart';
 
 class ProfilePageApp extends StatefulWidget {
@@ -22,10 +20,23 @@ class ProfilePageApp extends StatefulWidget {
 }
 
 class _ProfilePageAppState extends State<ProfilePageApp> {
+  UniverseUser? user;
 
   @override
   void initState() {
+    retrieveUser();
     super.initState();
+  }
+
+  Future<int> retrieveUser() async {
+   try {
+      var retrievedUser = await UniverseUser.get();
+        user = retrievedUser;
+      return 200;
+    } catch (e) {
+    user = null;
+      return 400;
+   }
   }
 
   @override
@@ -49,50 +60,80 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
         actions: [
           IconButton(
             onPressed: () {
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileEditApp(user: user,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileEditApp(user: user!,)));
             },
             icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor,),
           )
         ],
       ),
       body: FutureBuilder(
-          future: UniverseUser.get(),
+          future: retrieveUser(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if(snapshot.data != null)
-              return Stack(
-                children: [
-                  BasicInfo(user: snapshot.data!),
-                  FullInfo(user: snapshot.data!),
-                  BlueCurve(),
-                  PhotoRole(user: snapshot.data!),
-                ],
-              );
+              if(snapshot.data==400) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    BlueCurve(),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "ACONTECEU ALGO INESPERADO.\nTENTA NOVAMENTE, POR FAVOR.",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cPrimaryLightColor
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              }
+              else {
+                return Stack(
+                  children: [
+                    BasicInfo(user: user!),
+                    FullInfo(user: user!),
+                    BlueCurve(),
+                    PhotoRole(user: user!),
+                  ],
+                );
+              }
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                BlueCurve(),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: LinearProgressIndicator(color: cPrimaryOverLightColor,
-                    minHeight: 10,
-                    backgroundColor: cPrimaryLightColor,),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "A ENCONTRAR AS TUAS INFORMAÇÕES",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: cPrimaryLightColor
-                    ),
-                  ),
-                )
-              ],
-            );
+            return Loading();
           }
       ),
+    );
+  }
+}
+
+class Loading extends StatelessWidget {
+  const Loading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        BlueCurve(),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: LinearProgressIndicator(color: cPrimaryOverLightColor,
+            minHeight: 10,
+            backgroundColor: cPrimaryLightColor,),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            "A ENCONTRAR AS TUAS INFORMAÇÕES",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: cPrimaryLightColor
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -12,6 +12,7 @@ class ProfilePhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(left:20),
       height: 140,
       width: 140,
       decoration: BoxDecoration(

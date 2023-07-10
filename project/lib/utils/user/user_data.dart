@@ -130,7 +130,7 @@ class UniverseUser {
       organization = properties['nucleus']['value'];
       office = properties['office']['value'];
       status = properties['status']['value'];
-      //creation = properties['time_creation']['value']['seconds'] as String;
+      creation = properties['time_creation']['value']['seconds'] as String;
   }
 
   UniverseUser.emptyUser() {
@@ -150,14 +150,14 @@ class UniverseUser {
   }
 
   static Future<UniverseUser> get() async {
-    final cache = Cache();
+    /*final cache = Cache();
     var response = cache.read("user");
     if (response != "") {
       var decoded = json.decode(response);
       var user = UniverseUser.fromJson(decoded);
       return user;
     }
-    else {
+    else {*/
       String token = await Authentication.getTokenID();
       if (token.isEmpty) {
         Authentication.userIsLoggedIn = false;
@@ -173,7 +173,7 @@ class UniverseUser {
         },
       );
       if (response.statusCode == 200) {
-        cache.write("user", response.body);
+       // cache.write("user", response.body);
         var decoded = json.decode(response.body);
         var user = UniverseUser.fromJson(decoded);
         return user;
@@ -182,7 +182,7 @@ class UniverseUser {
         Authentication.revoke();
       }
       return UniverseUser.emptyUser();
-    }
+   // }
   }
 
   static Future<int> update(name, phone, linkedin, office, license_plate, privacy, Uint8List? image) async {

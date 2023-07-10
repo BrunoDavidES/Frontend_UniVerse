@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:UniVerse/chat_screen/enter_forum_screen.dart';
 import 'package:UniVerse/chat_screen/members_screen.dart';
 import 'package:UniVerse/consts/list_consts.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -122,6 +123,7 @@ class _MyChatPageState extends State<ForunsScreenApp> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Spacer(),
+                if(Authentication.role == 'T' || Authentication.role == 'A')
                 Button(text: "CRIAR FÓRUM", screen: CreateForumScreen(),),
                 Button(text: "ACEDER A UM FÓRUM", screen: EnterForumScreen(forumName: forumName,),),
                 SizedBox(
@@ -233,7 +235,7 @@ class ForumCard extends StatelessWidget {
                 },
               ),*/
             SizedBox(width: 3,),
-            if(role == "MEMBER")
+            if(role == "MEMBER" || role == "ASS")
               InkWell(
                 child: Icon(
                   Icons.logout_outlined,
@@ -297,6 +299,7 @@ class ForumCard extends StatelessWidget {
                           ConfirmDialogBox(
                               descriptions: "Tens a certeza que pretendes eliminar o fórum $forumName?",
                               press: () async {
+
                                 var response = await Chat.delete(forumID);
                                 if (response == 200) {
                                   Navigator.pop(context);
@@ -304,13 +307,12 @@ class ForumCard extends StatelessWidget {
                                       builder: (BuildContext context) {
                                         return CustomDialogBox(
                                           title: "Sucesso!",
-                                          descriptions: "O fórum foi eliminado. Qualquer participante já terá acesso a este fórum.",
+                                          descriptions: "O fórum foi eliminado. Qualquer participante já não terá acesso a este fórum.",
                                           text: "OK",
                                         );
                                       }
                                   );
-                                }
-                                if (response == 401) {
+                                } else if (response == 401) {
                                   showDialog(context: context,
                                       builder: (BuildContext context) {
                                         return CustomDialogBox(

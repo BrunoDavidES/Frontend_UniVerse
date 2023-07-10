@@ -80,7 +80,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
               builder: (BuildContext context){
                 return CustomDialogBox(
                   title: "Sucesso!",
-                  descriptions: "O evento criado foi adicionado ao teu calendário.",
+                  descriptions: "O evento criado foi adicionado ao teu calendário. Muito brevemente, constará na agenda do dia em que foi criado.",
                   text: "OK",
                 );
               }
@@ -177,7 +177,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                       //locale: Locale('pt', 'PT'),
                       context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(2023),
+                      firstDate: DateTime(2023, 7, DateTime.now().day),
                       //DateTime.now() - not to allow to choose before today.
                       lastDate: DateTime(2030));
                   if (pickedDate != null) {
