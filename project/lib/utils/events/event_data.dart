@@ -13,7 +13,6 @@ class Event {
   String? id;
   String? title;
   String? location;
-  //authorName no Datastore
   String? planner;
   String? capacity;
   String? department;
