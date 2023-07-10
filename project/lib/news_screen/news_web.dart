@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:go_router/go_router.dart';
 import 'package:UniVerse/bars/web_bar.dart';
 import 'package:UniVerse/news_screen/news_web_detail_screen.dart';
@@ -31,6 +32,7 @@ class _NewsWebPageState extends State<NewsWebPage> {
   @override
   void initState() {
     fetchDone = Article.fetchNews(loadedArticlesCount, Article.cursor, {});
+    print(Article.numNews);
     super.initState();
   }
 

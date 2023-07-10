@@ -54,7 +54,7 @@ class EventsCardState extends State<EventsCard> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                            image: NetworkImage(widget.data.urlToImage!),
+                            image: NetworkImage("https://www.fct.unl.pt/sites/default/files/imagens/noticias/2018/11/campus.jpg"),
                             fit: BoxFit.cover
                         )
                     ),

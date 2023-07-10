@@ -51,7 +51,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                            image: NetworkImage(widget.data.urlToImage!),
+                            image: NetworkImage("https://www.fct.unl.pt/sites/default/files/imagens/noticias/2018/11/campus.jpg"),
                             fit: BoxFit.cover
                         )
                     ),
@@ -136,7 +136,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        widget.data.description!,
+                        "Ola",
                         textAlign: TextAlign.justify,
                       ),
                       //SizedBox(height: 10,)

@@ -108,6 +108,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                           ),
                           Container(
                             width: size.width-size.width/2.75,
+                            height: size.height-size.height/2,
                             decoration: BoxDecoration(
                               color: cDirtyWhiteColor,
                               borderRadius: BorderRadius.circular(10)
@@ -151,6 +152,7 @@ class NewsDetailScreenWeb extends StatelessWidget {
                                     },
                                   ),
                                 ),
+                                Spacer(),
                                 Row(
                                   children: [
                                     Padding(

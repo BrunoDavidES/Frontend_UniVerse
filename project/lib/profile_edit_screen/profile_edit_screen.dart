@@ -37,7 +37,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
   late TextEditingController linkedinController= TextEditingController();
   late TextEditingController officeController= TextEditingController();
   late TextEditingController license_plateController= TextEditingController();
-  String? isPublic;
+  String? privacy;
   bool isLoading = false;
   Uint8List imageUint8 = Uint8List(8);
   File? pickedImage;
@@ -63,7 +63,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
     super.dispose();
   }
 
-  void submitButtonPressed(name, phone, linkedin, office, licensePlate, isPublic) async {
+  void submitButtonPressed(name, phone, linkedin, office, licensePlate, privacy) async {
     if(!kIsWeb && _source.keys.toList()[0]==ConnectivityResult.none) {
       showDialog(context: context,
           builder: (BuildContext context){
@@ -87,7 +87,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                 setState(() {
                   isLoading = false;
                 });
-                var response = await UniverseUser.update(name, phone, linkedin, office, licensePlate, isPublic, imageUint8);
+                var response = await UniverseUser.update(name, phone, linkedin, office, licensePlate, privacy, imageUint8);
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {
@@ -239,8 +239,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       labels: ['Pública', 'Privada'],
                       onToggle: (index) {
                         if(index==0)
-                          isPublic = 'yes';
-                        else isPublic = 'no';
+                          privacy = 'PUBLIC';
+                        else privacy = 'PRIVATE';
                       },
                     ),
                   ],
@@ -266,8 +266,8 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       labels: ['Pública', 'Privada'],
                       onToggle: (index) {
                         if(index==0)
-                          isPublic = 'yes';
-                        else isPublic = 'no';
+                          privacy = 'PUBLIC';
+                        else privacy = 'PRIVATE';
                       },
                     ),
                   ],
@@ -378,7 +378,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                       text: "CONFIRMAR ALTERAÇÕES",
                       color: cPrimaryColor,
                       press: () {
-                        submitButtonPressed(nameController.text, phoneController.text, linkedinController.text, officeController.text, license_plateController.text, isPublic);
+                        submitButtonPressed(nameController.text, phoneController.text, linkedinController.text, officeController.text, license_plateController.text, privacy);
                       },
                       height: 20),
                 ],
