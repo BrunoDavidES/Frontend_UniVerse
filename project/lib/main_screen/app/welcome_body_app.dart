@@ -1,3 +1,4 @@
+import 'package:UniVerse/components/fct_today_card.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/info_fct_screen/info_app.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
@@ -29,7 +30,7 @@ class WelcomeBodyApp extends StatelessWidget {
           Image.asset("assets/app/logo_nova_horiz.png", scale: 12),
        const Spacer(),
        Authentication.userIsLoggedIn
-       ?TodayWidget(size: size, monthString: monthString)
+       ?FCTTodayWebCard(size: size,)//TodayWidget(size: size, monthString: monthString)
        :WelcomeTextWidget(),
        const Spacer(),
        Padding(
