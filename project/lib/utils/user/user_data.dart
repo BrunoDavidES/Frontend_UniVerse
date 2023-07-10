@@ -25,6 +25,8 @@ class UniverseUser {
       creation = '',
       isPublic = '';
 
+  static String friendlyRole = '';
+
   UniverseUser(
       this.name,
       this.username,
@@ -177,7 +179,7 @@ class UniverseUser {
     if (response.statusCode == 200) {
       if(image!=null) {
         var username = UniverseUser.getUsername();
-        var ref = FirebaseStorage.instance.ref().child("Reports/$username");
+        var ref = FirebaseStorage.instance.ref().child("Users/$username");
         ref.putData(image, SettableMetadata(contentType: 'image/jpeg'));
       }
       return 200;

@@ -90,7 +90,7 @@ class _MapsAppState extends State<MapApp> {
           onMapCreated: _onMapCreated,
           initialCameraPosition: const CameraPosition(
             target: LatLng(38.660992, -9.205782),
-            zoom: 16,
+            zoom: 16.5,
           ),
           markers: _markers.values.toSet(),
           onCameraMove: (CameraPosition position) {

@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:UniVerse/find_screen/maps_screen/map_id_location_screen_app.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../components/500.dart';
 import '../consts/color_consts.dart';
 
 class InfoDetailScreen extends StatelessWidget {
@@ -12,6 +16,17 @@ final String? link;
 
   @override
   Widget build(BuildContext context) {
+
+    Future<String> fetchTextFile() async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('Info/$id.txt');
+        final response = await ref.getData();
+        return utf8.decode(response as List<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
@@ -103,6 +118,20 @@ final String? link;
                         ),
                       ),
                     ),
+    FutureBuilder(
+    future: fetchTextFile(),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        if (snapshot.data == 500) {
+          return Error500();
+        } else {
+          return Text(
+            snapshot.data!,
+          );
+        }
+      }
+      return SizedBox();
+    }),
                     if(link!=null && link!.isNotEmpty)
                       InkWell(
                         onTap: () {

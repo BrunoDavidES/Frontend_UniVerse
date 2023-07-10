@@ -36,6 +36,8 @@ class Authentication {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
       } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
+      getTokenID();
+      assignUserFriendlyText();
       print(getTokenID());
       return 200;
     } on FirebaseAuthException catch (e) {
@@ -96,6 +98,21 @@ class Authentication {
     if(response == 'user-not-found')
       return 404;
     else return 200;
+  }
+
+  static void assignUserFriendlyText() {
+    switch(role) {
+      case 'A': UniverseUser.friendlyRole = 'Administrador';
+      break;
+      case 'BO': UniverseUser.friendlyRole = 'Gestor de Backoffice';
+      break;
+      case 'S': UniverseUser.friendlyRole = 'Aluno';
+      break;
+      case 'W': UniverseUser.friendlyRole = 'Funcionário';
+      break;
+      case 'T': UniverseUser.friendlyRole = 'Docente / Investigador(a)';
+      break;
+    }
   }
 
 }

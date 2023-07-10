@@ -100,7 +100,7 @@ class _FeedbackScreenWebState extends State<FeedbackScreenWeb> {
         children: [
           Icon(
             Icons.star,
-            color: Colors.blue,
+            color: cPrimaryLightColor,
           ),
           Positioned.fill(
             child: Icon(

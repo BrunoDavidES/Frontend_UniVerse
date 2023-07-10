@@ -14,7 +14,6 @@ class PersonalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =  UniverseUser.getName();
-    String role = Authentication.role;
     String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {
@@ -62,7 +61,7 @@ class PersonalCard extends StatelessWidget {
           ?Padding(
             padding: const EdgeInsets.only(left: 15, bottom:5),
             child: Text(
-              role,
+              UniverseUser.friendlyRole,
               style: TextStyle(
                 color: cDirtyWhiteColor,
                 fontSize: 20,

@@ -68,18 +68,15 @@ class _MapsAppState extends State<MapIdLocationApp> {
   }*/
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10)
-      ),
-      child: Scaffold(
+    return Stack(
+      children: [
+        Scaffold(
         extendBodyBehindAppBar: true,
         body:GoogleMap(
-          myLocationEnabled: true,
           onMapCreated: _onMapCreated,
           initialCameraPosition: const CameraPosition(
             target: LatLng(38.660992, -9.205782),
-            zoom: 16,
+            zoom: 17,
           ),
           markers: _markers.values.toSet(),
           onCameraMove: (CameraPosition position) {
@@ -88,6 +85,11 @@ class _MapsAppState extends State<MapIdLocationApp> {
           minMaxZoomPreference: const MinMaxZoomPreference(12, 18),
         ),
       ),
+      IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {Navigator.pop(context);},
+          color: cDarkBlueColor)
+      ]
     );
   }
 }

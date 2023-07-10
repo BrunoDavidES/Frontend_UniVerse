@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import '../consts/color_consts.dart';
 
 class ProfilePhoto extends StatelessWidget {
+  final Uint8List? image;
   const ProfilePhoto({
-    super.key,
+    super.key, this.image,
   });
 
   @override
@@ -16,9 +17,14 @@ class ProfilePhoto extends StatelessWidget {
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: kIsWeb ?cDirtyWhite :cDirtyWhiteColor, width: 5),
-          image: DecorationImage(
+          image: image!=null
+          ?DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage("assets/man.png")
+              image: MemoryImage(image!)
+          )
+              :DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage("assets/man.png")
           )
       ),
     );

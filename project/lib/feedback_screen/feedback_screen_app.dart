@@ -34,6 +34,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
   final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
   late TextEditingController textController;
   bool isLoading=false;
+  double rating = 0;
 
   @override
   void initState() {
@@ -118,6 +119,47 @@ class FeedbackScreenState extends State<FeedbackScreen> {
     }
   }
 
+  Widget buildStarIcon(int index) {
+    if (index < rating) {
+      return Stack(
+        children: [
+          Icon(
+            Icons.star,
+            color: cPrimaryLightColor,
+          ),
+          Positioned.fill(
+            child: Icon(
+              Icons.star_border,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Icon(
+        Icons.star_border,
+        color: Colors.black,
+      );
+    }
+  }
+
+  Widget buildStarRating() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        5,
+            (index) => GestureDetector(
+          onTap: () {
+            setState(() {
+              rating = index + 1.toDouble();
+            });
+          },
+          child: buildStarIcon(index),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +199,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 25),
                     child: const Text(
                       "(A tua submissão pode incluir feedback para a faculdade ou para a UniVerse)",
                       textAlign: TextAlign.justify,
@@ -166,6 +208,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
                       ),
                     ),
                   ),
+                  buildStarRating(),
                   DescriptionField(controller: textController, label: '', hint:"Diz-nos",maxLength: 500, maxLines: 10,),
                   const SizedBox(height: 20),
                   isLoading

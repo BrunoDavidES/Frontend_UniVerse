@@ -14,6 +14,16 @@ class UniverseInfoBodyApp extends StatelessWidget {
       width: size.width,
       decoration: BoxDecoration(
         color: cDirtyWhiteColor,
+        gradient: RadialGradient(
+          focal: Alignment.bottomCenter,
+          focalRadius: 0.1,
+          center: Alignment.bottomCenter,
+          radius: 0.65,
+          colors: [
+            cPrimaryOverLightColor,
+            cDirtyWhiteColor,
+          ],
+        ),
       ),
       child: Column(
         children: <Widget>[

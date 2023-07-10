@@ -85,7 +85,7 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                 );
               }
           );
-        } if (response == 401) {
+        } else if (response == 401) {
           showDialog(context: context,
               builder: (BuildContext context) {
                 return CustomDialogBox(

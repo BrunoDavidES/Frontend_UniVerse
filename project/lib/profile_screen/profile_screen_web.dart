@@ -64,7 +64,7 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Spacer(),
-                            ProfilePhoto(),
+                            //ProfilePhoto(),
                             Padding(
                               padding: const EdgeInsets.only(top:30),
                               child: Column(

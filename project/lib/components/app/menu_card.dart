@@ -20,7 +20,8 @@ class MenuCard extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.all(5),
-          width: size.width - 150,
+          width: size.width,
+          height: size.height/5.5,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
@@ -53,6 +54,7 @@ class MenuCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if(description.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -63,7 +65,7 @@ class MenuCard extends StatelessWidget {
                       color: cHeavyGrey,
                   ),
                 ),
-              ),
+              )
             ],
           )
       ),

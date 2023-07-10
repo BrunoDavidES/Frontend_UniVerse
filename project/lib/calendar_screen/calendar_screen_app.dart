@@ -28,6 +28,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
   late String selectedMonthString;
   late Map<DateTime, List<CalendarEvent>> selectedEvents;
   late Color color;
+  late String dateString;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
     selectedDayString = selectedDay.day.toString();
     selectedMonthString = monthsInText[selectedDay.month-1];
     CalendarEvent.fetchEvents("07", "2023");
+    dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
     super.initState();
   }
 
@@ -101,6 +103,7 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                           focusedDay = focusDay;
                           selectedDayString = selectDay.day.toString();
                           selectedMonthString = monthsInText[selectedDay.month-1];
+                          dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
                         });
                       },
                       calendarFormat: format,
@@ -190,8 +193,8 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                   ),
                 ),
               ),
-              if(CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!=null)
-              //...CalendarEvent.events[DateFormat('dd-MM-yyyy').format(focusedDay)]!.map((element) => CalendarEventCard(element.values.first, color: color)),
+              if(CalendarEvent.events[dateString]!=null)
+              ...CalendarEvent.events[dateString]!.map((element) => CalendarEventCard(element, color: color)),
               SizedBox(height: 70,)
             ],
           ),

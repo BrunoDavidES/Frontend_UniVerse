@@ -1,5 +1,8 @@
 
 
+import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 import 'package:UniVerse/profile_edit_screen/profile_edit_app.dart';
 import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
@@ -132,9 +135,9 @@ class FullInfo extends StatelessWidget {
               children: [
                 MyReadOnlyVerticalField(icon: Icons.alternate_email, text: "Email: ", content: user.email,),
                 MyReadOnlyVerticalField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
-                MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email,),
+                MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.linkedin,),
                 Authentication.role != 'S'
-                ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office,) :SizedBox(),
+                ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office) :SizedBox(),
                 MyReadOnlyVerticalField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
                 SizedBox(height: 70,)
               ],
@@ -154,39 +157,59 @@ class PhotoRole extends StatelessWidget {
 
   final UniverseUser user;
 
+  Future<Uint8List> fetchImageFile(username) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance.ref('Users/$username');
+      final byteData = await ref.getData();
+      return byteData!.buffer.asUint8List();
+    } catch (e) {
+      print('Error fetching file: $e');
+      return Uint8List(0);
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          Column(
+    return FutureBuilder(
+      future: fetchImageFile(UniverseUser.getUsername()),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Expanded(
+          child: Row(
             children: [
-              ProfilePhoto(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ProfilePhoto(image: snapshot.data),
+                ],
+              ),
+              SizedBox(width: 5,),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(user.role,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: cDirtyWhite
+                        )),
+                    SizedBox(height: 5),
+                    Text(user.job,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: cDirtyWhite.withOpacity(0.8)
+                        )),
+                  ],
+                ),
+              )
             ],
           ),
-          SizedBox(width: 5,),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(user.role,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: cDirtyWhite
-                    )),
-                SizedBox(height: 5),
-                Text(user.job,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: cDirtyWhite.withOpacity(0.8)
-                    )),
-              ],
-            ),
-          )
-        ],
-      ),
+        );
+      }
+      return SizedBox();
+    }
     );
   }
 }
