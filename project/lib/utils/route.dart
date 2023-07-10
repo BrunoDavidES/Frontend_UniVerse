@@ -51,7 +51,7 @@ class Routing {
                 final found = services.where((element) => element.keys.first==id);
                 if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link: found.first.values.first[1], toShowMap: true, image: AssetImage("assets/images/welcome_photo.jpg"),));
               },
             ),
               GoRoute(
@@ -61,7 +61,7 @@ class Routing {
                   final found = departments.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link:found.first.values.first[1], image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link:found.first.values.first[1], toShowMap: true, image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               GoRoute(
@@ -82,7 +82,7 @@ class Routing {
                   final found = restaurants.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, toShowMap:true, image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               GoRoute(
@@ -93,6 +93,16 @@ class Routing {
                   if(found.isEmpty)
                     return PageNotFound();
                   else return FindWebPage(rightSide: OrganizationsInfoWeb(id: found.first.keys.first, info:found.first.values.first,));
+                },
+              ),
+              GoRoute(
+                path: 'agencies/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  var id = state.pathParameters['id'];
+                  final found = fctAgencies.where((element) => element.keys.first==id);
+                  if(found.isEmpty)
+                    return PageNotFound();
+                  else return FindWebPage(rightSide:InfoWeb(name: found.first.values.first[0], toShowMap:false, link: found.first.values.first[1], image: AssetImage("assets/images/welcome_photo.jpg"),));
                 },
               ),
               /* redirect: (BuildContext context, GoRouterState state) {

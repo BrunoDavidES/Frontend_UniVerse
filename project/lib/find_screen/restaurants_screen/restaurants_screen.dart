@@ -54,7 +54,7 @@ class RestaurantsScreen extends StatelessWidget {
                     return ListButtonSimple(tobeBold: true,
                         text: item.values.first,
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,id: item.keys.first,)));
                         });
                   }
               ),

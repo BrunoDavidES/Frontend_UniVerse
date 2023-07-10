@@ -21,7 +21,7 @@ class LinksBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/app/links.png", scale: 6),
+          title: Image.asset("assets/titles/links.png", scale: 6),
           leading: Builder(
               builder: (context) {
                 return IconButton(

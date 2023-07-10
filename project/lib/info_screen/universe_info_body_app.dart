@@ -1,4 +1,5 @@
 import 'package:UniVerse/components/url_launchable_icon_item.dart';
+import 'package:UniVerse/components/url_launchable_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/material.dart';
 
@@ -50,20 +51,17 @@ class UniverseInfoBodyApp extends StatelessWidget {
               Text(
                   "Encontra e segue-nos:"
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left:135),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.facebook), text: "Website", url: "https://universe-fct.oa.r.appspot.com", color: Colors.black),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:135, bottom: 20),
-                child: UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.black,)),
+              UrlLaunchableItem(text: "Website", url: "https://www.universe-fct.oa.r.appspot.com", color: Colors.black,),
+              UrlLaunchableItem(text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.black,),
+                //UrlLaunchableIconItem(icon: const Icon(Icons.account_circle_outlined), text: "Instagram", url: "https://www.instagram.com/universe.fct", color: Colors.black,)),
+             SizedBox(height: 10,),
               Text(
                   "Brevemente disponível em iOS"
                 ),
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top:10),
+                    padding: const EdgeInsets.only(top:20),
                     child: Text(
                       "Powered by:",
                           style: TextStyle(
@@ -71,7 +69,7 @@ class UniverseInfoBodyApp extends StatelessWidget {
                     )
                     ),
                   ),
-                  Image.asset("assets/capi_logo.png",scale:6,),
+                  Image.asset("assets/images/capi_logo.png",scale:6,),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
@@ -83,8 +81,8 @@ class UniverseInfoBodyApp extends StatelessWidget {
               )
             ],
           ),
-        ],
-      ),
-    );
+  ]
+      )
+      );
   }
 }

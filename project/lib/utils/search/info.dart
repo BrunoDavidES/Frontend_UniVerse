@@ -1,28 +1,30 @@
-//PUT INFO TXT
-List<Map<String, String>> services = [
-  {"via-copia":"Via Cópia"},
-  {"mininova":"Mininova"},
-  {"esp-solucao":"Espaço Solução"},
-  {"pap-solucao":"Papelaria Solução"},
-  {"div-academica":"Divisão Académica"},
-  {"div-parcerias":"Divisão de Acompanhamento de Parcerias"},
-  {"div-formacao":"Divisão de Apoio à Formação Avançada"},
-  {"div-geral":"Divisão de Apoio Geral"},
-  {"div-tecnico":"Divisão de Apoio Técnico"},
-  {"div-comunicacao":"Divisão de Comunicação e Relações Exteriores"},
-  {"div-documentacao":"Divisão de Documentação e Cultura"},
-  {"div-eventos":"Divisão de Eventos e Apoio ao Estudante Diplomado"},
-  {"div-informatica":"Divisão de Infraestruturas Informáticas"},
-  {"div-qualidade":"Divisão de Planeamento e Gestão de Qualidade"},
-  {"div-financeiros":"Divisão de Recursos Financeiros"},
-  {"div-humanos":"Divisão de Recursos Humanos"},
-  {"div-internacionais":"Divisão de Relações Internacionais"},
-  {"div-direcao":"Divisão de Apoio à Direção"},
+List<Map<String, List<String>>> services = [
+  {"via-copia":["Via Cópia", ""]},
+  {"mininova":["Mininova", ""]},
+  {"esp-solucao":["Espaço Solução", ""]},
+  {"pap-solucao":["Papelaria Solução", ""]},
+  {"div-academica":["Divisão Académica", "https://www.fct.unl.pt/faculdade/servicos/divisao-academica"]},
+  {"div-parcerias":["Divisão de Acompanhamento de Parcerias", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-acompanhamento-de-parcerias"]},
+  {"div-formacao":["Divisão de Apoio à Formação Avançada", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-apoio-formacao-avancada"]},
+  {"div-geral":["Divisão de Apoio Geral", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-apoio-geral",]},
+  {"div-tecnico":["Divisão de Apoio Técnico", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-apoio-tecnico"]},
+  {"div-comunicacao":["Divisão de Comunicação e Relações Exteriores", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-comunicacao-e-relacoes-exteriores"]},
+  {"div-documentacao":["Divisão de Documentação e Cultura", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-documentacao-e-cultura"]},
+  {"div-eventos":["Divisão de Eventos e Apoio ao Estudante Diplomado", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-eventos-e-apoio-ao-estudante-e-ao-diplomado"]},
+  {"div-informatica":["Divisão de Infraestruturas Informáticas", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-infraestruturas-informaticas"]},
+  {"div-qualidade":["Divisão de Planeamento e Gestão de Qualidade", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-planeamento-e-gestao-da-qualidade"]},
+  {"div-financeiros":["Divisão de Recursos Financeiros", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-recursos-financeiros"]},
+  {"div-humanos":["Divisão de Recursos Humanos", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-recursos-humanos"]},
+  {"div-internacionais":["Divisão de Relações Internacionais", "https://www.fct.unl.pt/faculdade/servicos/divisao-de-relacoes-internacionais"]},
+  {"div-direcao":["Divisão de Apoio à Direção", "https://www.fct.unl.pt/faculdade/servicos/gabinete-de-apoio-direccao"]},
 ];
 
-//contacts
+List<Map<String, List<String>>> fctAgencies = [
+  {'council': ["Conselho da Faculdade", "https://www.fct.unl.pt/faculdade/orgaos-da-fct/conselho-de-faculdade"]},
+  {'management':["Conselho de Gestão", "https://www.fct.unl.pt/faculdade/orgaos-da-fct/conselho-de-gestao"]},
+  {'pedagogic': ["Conselho Pedagógico", "https://www.fct.unl.pt/faculdade/orgaos-da-fct/conselho-pedagogico"]}
+];
 
-//DONE
 List<Map<String, String>> links = [
   {"Clip": "https://clip.fct.unl.pt/"},
   {"Moodle": "https://moodle.fct.unl.pt/"},
@@ -31,7 +33,6 @@ List<Map<String, String>> links = [
   {"Website UNL": "https://www.unl.pt/"},
 ];
 
-//DONE
 List<Map<String, String>>  courses= [
   {"Biologia Celular e Molecular": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-biologia-celular-e-molecular"},
   {"LBioquímica": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-bioquimica"},
@@ -57,8 +58,6 @@ List<Map<String, String>>  courses= [
   {"Pós-Graduações": "https://www.fct.unl.pt/ensino/pos-graduacoes"},
 ];
 
-
-//DONE
 List<Map<String, List<String>>> departments = [
   {"dep-ambiente":["Departamento de Ciências e Engenharia do Ambiente", "https://www.dcea.fct.unl.pt/"]},
   {"dep-materiais":["Departamento de Ciência dos Materiais", "http://www.dcm.fct.unl.pt/"]},
@@ -75,7 +74,6 @@ List<Map<String, List<String>>> departments = [
   {"div-quimica":["Divisão de Química", "http://www.dq.fct.unl.pt/"]},
 ];
 
-//PUT LINKS
 List<Map<String, String>> buildings = [
   {"ed-1":"Edifício I"},
   {"ed-2":"Edifício II"},
@@ -121,7 +119,6 @@ List<Map<String, List<String>>> buildingsWithDivisions = [
   {"biblioteca":["Divisão de Documentação e Cultura", "Gabinete de Apoio à Direção/ Unidade de Apoio a Projetos e Relações Exteriores", "Gabinete de Apoio à Direção / Unidade de Promoção de Investigação e Inovação", "Sala Ágora", "Bar c@mpus"]}
 ];
 
-//JUST UPDATE INFO IN TXT
 List<Map<String, String>> restaurants = [
   {"tia":"A tia"},
   {"ed-biblioteca":"C@ampus - Ed.Biblioteca"},

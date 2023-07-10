@@ -49,10 +49,10 @@ class FindListItem extends StatelessWidget {
             children: [
               if(name=='Serviços')
                 ...services.map((e) => ListButtonSimple(
-                    text: e.values.first, tobeBold: false, press: () => context.go('/find/services/${e.keys.first}'))).toList(),
-              if(name=='Contactos')
-                ...services.map((e) => ListButtonSimple(
-                    text: e.values.first, tobeBold: false, press: () => context.go('/find/services/${e.keys.first}'))).toList(),
+                    text: e.values.first[0], tobeBold: false, press: () => context.go('/find/services/${e.keys.first}'))).toList(),
+              if(name=='Orgãos da FCT')
+                ...fctAgencies.map((e) => ListButtonSimple(
+                    text: e.values.first[0], tobeBold: false, press: () => context.go('/find/agencies/${e.keys.first}'))).toList(),
               if(name=='Links')
                 ...links.map((e) => ListButtonSimple(
                     text: e.keys.first, tobeBold: false, press: () => launchUrl(Uri.parse(e.values.first)))).toList(),

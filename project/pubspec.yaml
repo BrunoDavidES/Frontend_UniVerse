@@ -121,10 +121,13 @@ flutter:
     - assets/app/logo_nova_horiz.png
     - assets/app/profile_title.png
     - assets/titles/feedback.png
+    - assets/titles/agencies.png
+    - assets/titles/courses.png
     - assets/titles/about_us.png
     - assets/titles/edit.png
     - assets/titles/modify_pwd.png
     - assets/titles/area.png
+    - assets/titles/organizations.png
     - assets/titles/buildings.png
     - assets/titles/calendar.png
     - assets/titles/departments.png

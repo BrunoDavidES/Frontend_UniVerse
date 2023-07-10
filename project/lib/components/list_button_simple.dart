@@ -29,7 +29,7 @@ class ListButtonSimple extends StatelessWidget {
             child:
                 Text(
                     text,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     style: TextStyle(
                         fontWeight: tobeBold ? FontWeight.bold :FontWeight.normal,
                         color: cHeavyGrey,

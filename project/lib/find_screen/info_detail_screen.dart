@@ -1,3 +1,4 @@
+import 'package:UniVerse/find_screen/maps_screen/map_id_location_screen_app.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -5,8 +6,9 @@ import '../consts/color_consts.dart';
 
 class InfoDetailScreen extends StatelessWidget {
 final String text;
+final String id;
 final String? link;
-  InfoDetailScreen( {super.key,required this.text, this.link});
+  InfoDetailScreen( {super.key,required this.text, this.link, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ final String? link;
           image: DecorationImage(
               image: AssetImage("assets/images/welcome_photo.jpg"),
               fit: BoxFit.cover),
+          color: cDirtyWhiteColor
         ),
 
         child: Column(
@@ -76,7 +79,17 @@ final String? link;
                   children: [
                     InkWell(
                       onTap: () {
-                        //Navigator.push
+                        showDialog(
+                          context: context,
+                          builder: (_) => Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            child: MapIdLocationApp(id: id),
+                          ),
+                        );
                       },
                       child: Text.rich(
                         TextSpan(
@@ -90,14 +103,14 @@ final String? link;
                         ),
                       ),
                     ),
-                    if(link!=null)
+                    if(link!=null && link!.isNotEmpty)
                       InkWell(
                         onTap: () {
                           launchUrl(Uri.parse(link!));
                         },
                         child: Text.rich(
                           TextSpan(
-                            text: "Sabe mais sobre o $text ",
+                            text: "Sabe mais sobre ",
                             children: <TextSpan>[
                               TextSpan(
                                 text: 'aqui.',

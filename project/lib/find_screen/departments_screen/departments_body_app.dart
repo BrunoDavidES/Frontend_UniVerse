@@ -19,7 +19,7 @@ class DepartmentsBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/app/departments.png", scale: 5),
+          title: Image.asset("assets/titles/departments.png", scale: 5),
           leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -51,7 +51,7 @@ class DepartmentsBodyApp extends StatelessWidget {
                 return ListButtonSimple(tobeBold: true,
                     text: item.values.first[0],
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], link: item.values.first[1],)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0],id: item.keys.first, link: item.values.first[1],)));
                     });
               }
           ),

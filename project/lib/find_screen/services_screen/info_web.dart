@@ -8,8 +8,9 @@ class InfoWeb extends StatelessWidget {
   final String name;
   final AssetImage image;
   final String? link;
+  final bool? toShowMap;
 
-  const InfoWeb({super.key, required this.name, required this.image, this.link});
+  const InfoWeb({super.key, required this.name, required this.image, this.link, this.toShowMap});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,7 @@ class InfoWeb extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if(toShowMap!)
                       InkWell(
                         onTap: () {
                           showDialog(
@@ -89,14 +91,14 @@ class InfoWeb extends StatelessWidget {
                         ),
                       ),
                       //texto da info
-                      if(link!=null)
+                      if(link!=null && link!.isNotEmpty)
                         InkWell(
                           onTap: () {
                             launchUrl(Uri.parse(link!));
                           },
                           child: Text.rich(
                             TextSpan(
-                              text: "Sabe mais sobre o $name ",
+                              text: "Sabe mais ",
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'aqui.',

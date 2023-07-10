@@ -21,7 +21,7 @@ class UniverseInfoApp extends StatelessWidget {
                   color: cDarkBlueColorTransparent);
             }
         ),
-        title: Image.asset("assets/app/about_us.png", scale: 6),
+        title: Image.asset("assets/titles/about_us.png", scale: 6),
         backgroundColor: cDirtyWhiteColor,
 
       ),

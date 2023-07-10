@@ -5,15 +5,14 @@ import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/default_button_simple.dart';
 import '../../components/list_button_simple.dart';
 import '../../utils/search/info.dart';
 
-class CoursesScreenApp extends StatelessWidget {
+class AgenciesBodyApp extends StatelessWidget {
 
-  const CoursesScreenApp({super.key});
+  const AgenciesBodyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class CoursesScreenApp extends StatelessWidget {
           slivers: [
             SliverAppBar(
               backgroundColor: cDirtyWhiteColor,
-              title: Image.asset("assets/titles/courses.png", scale: 6),
+              title: Image.asset("assets/titles/agencies.png", scale: 6),
               leading: Builder(
                   builder: (context) {
                     return IconButton(
@@ -49,22 +48,14 @@ class CoursesScreenApp extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                  childCount: 22,
+                  childCount: 3,
                       (BuildContext context, int index) {
-                    final item = courses[index];
+                    final item = fctAgencies[index];
                     return ListButtonSimple(tobeBold: true,
-                        text: item.keys.first,
+                        text: item.values.first[0],
                         press: () {
-                          launchUrl(Uri.parse(item.values.first));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], id: item.keys.first,link: item.values.first[1],)));
                         });
-                  }
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  childCount: 1,
-                      (BuildContext context, int index) {
-                    return SizedBox(height: 70);
                   }
               ),
             ),

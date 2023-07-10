@@ -1,5 +1,6 @@
 import 'package:UniVerse/components/url_launchable_icon_item.dart';
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/info_screen/universe_info_app.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -90,6 +91,26 @@ class FCTinfoBodyApp extends StatelessWidget {
             UrlLaunchableItem(text: "Whatsapp", url: "https://wa.me/+351924008005", color: Colors.black),
             ],
           ),
+      Spacer(),
+      InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UniverseInfoApp()));
+        },
+        child: Text.rich(
+          TextSpan(
+            text: "Sabe mais sobre a UniVerse ",
+            style: TextStyle(
+              color: cHeavyGrey,
+            ),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'aqui.\n',
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
+            ],
+          ),
+        ),
+      ),
 ],
     ),
     );

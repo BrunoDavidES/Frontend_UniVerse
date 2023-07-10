@@ -21,7 +21,7 @@ class BuildingsBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/app/departments.png", scale: 5),
+          title: Image.asset("assets/titles/buildings.png", scale: 6),
           leading: Builder(
               builder: (context) {
                 return IconButton(
