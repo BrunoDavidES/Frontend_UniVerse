@@ -22,7 +22,7 @@ class Info extends StatelessWidget {
               !UniverseUser.isVerified()
                   ?"Para poderes fazer parte do Universo, precias de confirmar a tua conta. Enviámos um e-mail de confirmação para o endereço de e-mail que indicaste no registo!"
                   :"A tua conta encontra-se suspensa e, por isso, o teu acesso àquilo que a UniVerse te oferece está bloqueado.",
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,

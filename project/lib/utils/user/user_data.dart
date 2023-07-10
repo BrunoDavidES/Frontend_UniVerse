@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:UniVerse/consts/api_consts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import '../authentication/auth.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+
+import '../cache.dart';
 
 class UniverseUser {
 
@@ -59,6 +60,15 @@ class UniverseUser {
     }
     return "ERROR";
   }
+
+  /*static Future<String> getRole() async {
+    var token = await Authentication.getTokenID();
+    if (token.isEmpty) {
+      Authentication.revoke();
+      return "ERROR";
+    }
+    return JwtDecoder.decode(token)['role'];
+  }*/
 
   static String getJob() {
     /*String token = Authentication.getTokenID() as String;
@@ -120,35 +130,39 @@ class UniverseUser {
   }
 
   static Future<UniverseUser> get() async {
-    String token = await Authentication.getTokenID();
-
-    if(token.isEmpty) {
-      Authentication.userIsLoggedIn = false;
-      var user = UniverseUser.emptyUser();
-      return user;
-    }
-
-    String username = getUsername();
-    String url = '$baseUrl/profile/$username';
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Authorization': token,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      var decoded = json.decode(response.body);
+    final cache = Cache();
+    var response = cache.read("user");
+    if (response != "") {
+      var decoded = json.decode(response);
       var user = UniverseUser.fromJson(decoded);
       return user;
-    } else if (response.statusCode == 401) {
-      Authentication.userIsLoggedIn = false;
-      Authentication.revoke();
-      var user = UniverseUser.emptyUser();
-      return user;
     }
-    var user = UniverseUser.emptyUser();
-    return user;
+    else {
+      String token = await Authentication.getTokenID();
+      if (token.isEmpty) {
+        Authentication.userIsLoggedIn = false;
+        var user = UniverseUser.emptyUser();
+        return user;
+      }
+      String username = getUsername();
+      String url = '$baseUrl/profile/$username';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': token,
+        },
+      );
+      if (response.statusCode == 200) {
+        cache.write("user", response.body);
+        var decoded = json.decode(response.body);
+        var user = UniverseUser.fromJson(decoded);
+        return user;
+      } else if (response.statusCode == 401) {
+        Authentication.userIsLoggedIn = false;
+        Authentication.revoke();
+      }
+      return UniverseUser.emptyUser();
+    }
   }
 
   static Future<int> update(name, phone, linkedin, office, license_plate, isPublic, Uint8List? image) async {

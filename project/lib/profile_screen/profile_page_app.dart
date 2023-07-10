@@ -22,28 +22,14 @@ class ProfilePageApp extends StatefulWidget {
 }
 
 class _ProfilePageAppState extends State<ProfilePageApp> {
-  UniverseUser user = UniverseUser.emptyUser();
 
   @override
   void initState() {
     super.initState();
-    retrieveUser();
-  }
-
-  Future<void> retrieveUser() async {
-    try {
-      var retrievedUser = await UniverseUser.get();
-      setState(() {
-        user = retrievedUser;
-      });
-    } catch (e) {
-      print('Error retrieving user: $e');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
@@ -63,50 +49,51 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileEditApp(user: user,)));
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileEditApp(user: user,)));
             },
             icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor,),
           )
         ],
       ),
       body: FutureBuilder(
-        future: UniverseUser.get(),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-          return Stack(
-            children: [
-              BasicInfo(user: snapshot.data!),
-              FullInfo(user: snapshot.data!),
-              BlueCurve(),
-              PhotoRole(user: snapshot.data!),
-            ],
-          );
-        }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          BlueCurve(),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: LinearProgressIndicator(color: cPrimaryOverLightColor,
-              minHeight: 10,
-              backgroundColor: cPrimaryLightColor,),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "A ENCONTRAR AS TUAS INFORMAÇÕES",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: cPrimaryLightColor
-              ),
-            ),
-          )
-        ],
-      );
-    }
+          future: UniverseUser.get(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if(snapshot.data != null)
+              return Stack(
+                children: [
+                  BasicInfo(user: snapshot.data!),
+                  FullInfo(user: snapshot.data!),
+                  BlueCurve(),
+                  PhotoRole(user: snapshot.data!),
+                ],
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                BlueCurve(),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: LinearProgressIndicator(color: cPrimaryOverLightColor,
+                    minHeight: 10,
+                    backgroundColor: cPrimaryLightColor,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "A ENCONTRAR AS TUAS INFORMAÇÕES",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: cPrimaryLightColor
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
       ),
-      );
+    );
   }
 }
 
@@ -137,7 +124,7 @@ class FullInfo extends StatelessWidget {
                 MyReadOnlyVerticalField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
                 MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.linkedin,),
                 Authentication.role != 'S'
-                ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office) :SizedBox(),
+                    ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office) :SizedBox(),
                 MyReadOnlyVerticalField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
                 SizedBox(height: 70,)
               ],
@@ -167,49 +154,49 @@ class PhotoRole extends StatelessWidget {
       return Uint8List(0);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchImageFile(UniverseUser.getUsername()),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return Expanded(
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        future: fetchImageFile(UniverseUser.getUsername()),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Expanded(
+              child: Row(
                 children: [
-                  ProfilePhoto(image: snapshot.data),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ProfilePhoto(image: snapshot.data),
+                    ],
+                  ),
+                  SizedBox(width: 5,),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(user.role,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: cDirtyWhite
+                            )),
+                        SizedBox(height: 5),
+                        Text(user.job,
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: cDirtyWhite.withOpacity(0.8)
+                            )),
+                      ],
+                    ),
+                  )
                 ],
               ),
-              SizedBox(width: 5,),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(user.role,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: cDirtyWhite
-                        )),
-                    SizedBox(height: 5),
-                    Text(user.job,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: cDirtyWhite.withOpacity(0.8)
-                        )),
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      }
-      return SizedBox();
-    }
+            );
+          }
+          return SizedBox();
+        }
     );
   }
 }

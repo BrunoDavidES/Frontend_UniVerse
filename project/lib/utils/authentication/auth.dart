@@ -38,7 +38,6 @@ class Authentication {
       userIsLoggedIn = true;
       getTokenID();
       assignUserFriendlyText();
-      print(getTokenID());
       return 200;
     } on FirebaseAuthException catch (e) {
       if(e=='internal-error') {

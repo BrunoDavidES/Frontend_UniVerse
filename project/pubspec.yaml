@@ -70,6 +70,7 @@ dependencies:
   url_strategy:
   cloud_functions: ^4.3.3
   jwt_decoder: 2.0.1
+  hive_flutter: ^1.1.0
 
   #webview_flutter: ^4.2.2
 

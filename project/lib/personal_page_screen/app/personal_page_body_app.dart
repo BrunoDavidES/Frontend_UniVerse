@@ -42,7 +42,7 @@ class PersonalPageBodyApp extends StatelessWidget {
               var response = Authentication.revoke();
               if(response==500)
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-              else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AppHomePage()));
+              else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPageApp()));
             },
             child:Center(
               child: Padding(
