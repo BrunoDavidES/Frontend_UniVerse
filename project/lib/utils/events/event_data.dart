@@ -8,8 +8,10 @@ import '../../consts/api_consts.dart';
 import '../authentication/auth.dart';
 
 class Event {
+  static List<Event> events = <Event>[];
   static Map<String, Event> organizedEvents = Map<String, Event>();
   static int numEvents = 0;
+  static String cursor = "EMPTY";
   String? id;
   String? title;
   String? location;
@@ -19,9 +21,6 @@ class Event {
   String? startDate;
   String? endDate;
   String? isPaid;
-
-  String? description;
-  String? urlToImage;
 
   Event(
       this.id,
@@ -33,8 +32,6 @@ class Event {
       this.startDate,
       this.endDate,
       this.isPaid,
-      this.description,
-      this.urlToImage,
       );
 
   Event.fromJson(Map<String, dynamic> json ) {
@@ -48,19 +45,32 @@ class Event {
     location=properties['location']['value'];
     startDate =properties['startDate']['value'];
     isPaid = properties['isItPaid']['value'];
-    urlToImage = "";
-    description= "";
   }
 
-  static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {
-    /*String eventsUrl = '/feed/numberOf/Event';
+  static Future<int> fetchEvents(int limit, String offset, Map<String, String> filters) async {
+    String eventsUrl = '/feed/numberOf/Event';
     var response;
+    var token;
+
+    if(offset == ''){
+      return 200;
+    }
+
+    if(Authentication.getTokenID() == ""){
+      token = "notLogged";
+    }
+    else {
+      token = await Authentication.getTokenID();
+    }
+
     if(numEvents == 0) {
       response = await http.post(
         Uri.parse(baseUrl + eventsUrl),
         headers: <String, String>{
           'Content-Type': 'application/json',
+          'Authorization': token,
         },
+          body: "{}"
       );
       if(response.statusCode==200) {
         numEvents = json.decode(response.body);
@@ -68,23 +78,25 @@ class Event {
       }
       else return 500;
     }
+    print("ola1");
     eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
     response = await http.post(
       Uri.parse(baseUrl + eventsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
+        'Authorization': token,
       },
-      body: jsonEncode(filters),
+      body: "{}",
     );
     if(response.statusCode==200) {
-      var decodedEvents = json.decode(response.body);
-      print(decodedEvents);
+      Map<String, dynamic> decodedJson = json.decode(response.body);
+      cursor = decodedJson['cursor'];
+      var decodedEvents = decodedJson['results'];
       for (var decoded in decodedEvents) {
         events.add(Event.fromJson(decoded));
       }
     }
-    return response.statusCode;*/
-    return 200;
+    return response.statusCode;
   }
 
   static bool areCompliant(title, startDate, location, capacity, description) {
@@ -116,7 +128,7 @@ class Event {
 
     if (response.statusCode == 200) {
       var id = response.body;
-      organizedEvents.addAll({id:Event("", title, location, "", capacity, "", startDate, endDate, "", "", "")});
+      organizedEvents.addAll({id:Event("", title, location, "", capacity, "", startDate, endDate, "")});
       var ref = FirebaseStorage.instance.ref().child("Events/$id");
       ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
       ref = FirebaseStorage.instance.ref().child("Events/$id.txt");
@@ -155,7 +167,7 @@ class Event {
 
     if (response.statusCode == 200) {
       String id = response.body;
-      organizedEvents[id] = Event("", title, location, "", capacity, "", startDate, endDate, "", "", "");
+      organizedEvents[id] = Event("", title, location, "", capacity, "", startDate, endDate, "");
       if(thumbnail !=null) {
         var ref = FirebaseStorage.instance.ref().child("Events/$id");
         ref.putData(thumbnail, SettableMetadata(contentType: 'image/jpeg'));
@@ -302,8 +314,8 @@ class Event {
 
    */
 
-  static List<Event> events = [
-    Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "yes", "4", "", "", "", "",),
+  /*static List<Event> events = [
+    Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "yes", "4", "", "",),
     Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "31 de maio 2023", "Edifício 7", "ninf", "10", "", "",),
     Event("Evento", "Este é apenas um teste, you see?", "Sala 127 Ed2", "31 de maio 2023", "Edifício 7", "31 de maio 2023", "Edifício 7", "ninf", "11",  "", "",)
   ];
@@ -313,5 +325,5 @@ class Event {
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/profnova23.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/05/destaque-fct_act_verao_3.png",
     "https://www.fct.unl.pt/sites/default/files/imagecache/l440/imagens/noticias/2023/06/esports.png"
-  ];
+  ];*/
 }

@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/events/personal_event_data.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,8 @@ import '../components/500.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
-import '../utils/events/event_data_aux.dart';
+import '../utils/events/event_data.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class EventsWebPage extends StatefulWidget {
   EventsWebPage({Key? key}) : super(key: key);
@@ -23,16 +26,39 @@ class _EventsWebPageState extends State<EventsWebPage> {
   ScrollController yourScrollController = ScrollController();
   late Future<int> fetchDone;
 
-  int totalArticlesCount = Event.events.length;
+  int totalArticlesCount = Event.numEvents;
   int loadedArticlesCount = 5;
 
   @override
   void initState() {
-    fetchDone = Event.fetchEvents(loadedArticlesCount, 0, {});
+    fetchDone = Event.fetchEvents(loadedArticlesCount, Event.cursor, {});
     super.initState();
   }
 
   Widget build(BuildContext context) {
+
+    Future<Uint8List> fetchImageFile(events) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/Events/' + events);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+
+    Future<String> fetchTextFile(events) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/Events/' + events + '.txt');
+        final response = await ref.getData();
+        return utf8.decode(response as List<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
@@ -124,24 +150,23 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                 Container(
                                                   width: size.width / 3.5,
                                                   height: 250,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: NetworkImage(event.urlToImage!),
+                                                  child: FutureBuilder<Uint8List>(
+                                                      future: fetchImageFile(Event.events[index].id),
+                                                      builder: (context, snapshot) {
+                                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                                          return CircularProgressIndicator();
+                                                        } else if (snapshot.hasError) {
+                                                          return Text('Error fetching image: ${snapshot.error}');
+                                                        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                                          return Image.memory(
+                                                            snapshot.data!,
+                                                            fit: BoxFit.contain,
+                                                          );
+                                                        } else {
+                                                          return Text('Image not found');
+                                                        }
+                                                      },
                                                     ),
-                                                    border: Border.all(
-                                                      color: cHeavyGrey,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.grey.withOpacity(0.75),
-                                                        spreadRadius: 3,
-                                                        blurRadius: 7,
-                                                        offset: const Offset(0, 0),
-                                                      ),
-                                                    ],
-                                                  ),
                                                 ),
                                                 SizedBox(width: 15),
                                                 Container(
@@ -201,10 +226,27 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                         ],
                                                       ),
                                                       SizedBox(height: 15),
-                                                      Text(
-                                                        "${event.description}",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
+                                                      FutureBuilder<String>(
+                                                        future: fetchTextFile(Event.events[index].id),
+                                                        builder: (context, snapshot) {
+                                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                                            return CircularProgressIndicator();
+                                                          } else if (snapshot.hasError) {
+                                                            return Text('Error fetching file');
+                                                          } else {
+                                                            return Padding(
+                                                              padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
+                                                              child: Text(
+                                                                snapshot.data ?? '',
+                                                                textAlign: TextAlign.start,
+                                                                style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontSize: 20,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
                                                       ),
                                                       Spacer(),
                                                       Row(
@@ -270,16 +312,20 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                   totalArticlesCount) {
                                 loadedArticlesCount = totalArticlesCount;
                               }
-                              fetchDone = Event.fetchEvents(loadedArticlesCount, 0, {});
+                              fetchDone = Event.fetchEvents(
+                                  loadedArticlesCount,
+                                  Event.cursor,
+                                  {});
                             });
                           },
                         ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 20,
-                          bottom: 60.0,
+                      if (!(loadedArticlesCount < totalArticlesCount))
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 60.0,
+                          ),
                         ),
-                      ),
                       BottomAbout(size: size),
                     ],
                   ),

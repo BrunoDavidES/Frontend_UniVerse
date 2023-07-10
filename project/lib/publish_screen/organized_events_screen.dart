@@ -35,7 +35,7 @@ class EventsState extends State<OrganizedEventsFeed> {
   @override
   void initState() {
     offset = 0;
-    fetchDone = Event.fetchEvents(5, offset, {});
+    fetchDone = Event.fetchEvents(5, Event.cursor, {});
     controller = ScrollController()
       ..addListener(handleScrolling);
     super.initState();
@@ -54,7 +54,7 @@ class EventsState extends State<OrganizedEventsFeed> {
         if (Article.news.length == Event.numEvents)
           hasMore = false;
         else
-          Event.fetchEvents(5, offset, {});
+          Event.fetchEvents(5, Event.cursor, {});
       });
     }
   }
@@ -65,7 +65,7 @@ class EventsState extends State<OrganizedEventsFeed> {
       offset = 0;
       Event.events.clear();
     });
-    Event.fetchEvents(5, offset, {});
+    Event.fetchEvents(5, Event.cursor, {});
   }
 
   @override
@@ -94,7 +94,7 @@ width: width,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: FutureBuilder(
-                future: Event.fetchEvents(5, 0, {}),
+                future: Event.fetchEvents(5, Event.cursor, {}),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data == 500) {

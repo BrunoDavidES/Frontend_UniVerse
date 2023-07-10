@@ -140,7 +140,7 @@ class Routing {
                   var id = state.pathParameters['id'];
                   Event? data = state.extra as Event?;
                   if(data==null) {
-                    Event.fetchEvents(1, 0, {'id': id!});
+                    Event.fetchEvents(1, "EMPTY", {'id': id!});
                     if(Event.events.isEmpty)
                       return PageNotFound();
                     else data = Event.events[0];

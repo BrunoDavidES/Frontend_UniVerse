@@ -45,14 +45,14 @@ class Article {
       return 200;
     }
 
-    if(numNews == 0) {
-      if(Authentication.getTokenID() == ""){
-        token = "notLogged";
-      }
-      else {
-        token = await Authentication.getTokenID();
-      }
+    if(Authentication.getTokenID() == ""){
+      token = "notLogged";
+    }
+    else {
+      token = await Authentication.getTokenID();
+    }
 
+    if(numNews == 0) {
       response = await http.post(
           Uri.parse(baseUrl + newsUrl),
           headers: <String, String>{
@@ -81,7 +81,6 @@ class Article {
     if(response.statusCode==200) {
       Map<String, dynamic> decodedJson = json.decode(response.body);
       cursor = decodedJson['cursor'];
-      print(cursor);
       var decodedNews = decodedJson['results'];
       for (var decoded in decodedNews) {
         news.add(Article.fromJson(decoded));

@@ -1,4 +1,5 @@
 import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,12 +23,7 @@ class MainNewsState extends State<MainNews> {
 
   @override
   void initState() {
-    if(Article.news.length < 3){
-      fetchDone = Article.fetchNews(3, "EMPTY", {});
-    }
-    else{
-      fetchDone = Article.fetchNews(0, '', {});
-    }
+    fetchDone = Article.fetchNews(3, "EMPTY", {});
     super.initState();
   }
 
@@ -97,25 +93,6 @@ class MainNewsState extends State<MainNews> {
                     );
                   },
                 ),
-              /*child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:
-                [Spacer(),
-                  NewsCardWeb(height: widget.height,
-                      width: widget.width,
-                      Article.news[0]),
-                  Spacer(),
-                  NewsCardWeb(height: widget.height,
-                      width: widget.width,
-                      Article.news[1]),
-                  Spacer(),
-                  NewsCardWeb(height: widget.height,
-                      width: widget.width,
-                      Article.news[2]),
-                  Spacer(),
-                ],
-              )*/
-            //SizedBox(height: 10,)
             ),
         ],
         ),
