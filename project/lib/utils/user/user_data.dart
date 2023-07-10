@@ -215,4 +215,35 @@ class UniverseUser {
     return response.statusCode;
   }
 
+  static Future<List<dynamic>> queryPublicUsers(String token, String limit, String cursor) async {
+    final String apiUrl = '$baseUrl/profile/query/public';
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    };
+
+    final Map<String, String> queryParams = {
+      'limit': limit,
+      'offset': cursor,
+    };
+
+    final Uri uri = Uri.parse(apiUrl).replace(queryParameters: queryParams);
+
+    try {
+      final http.Response response = await http.post(uri, headers: headers);
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = json.decode(response.body)['results'];
+        return responseData;
+      } else {
+        print('Failed to retrieve public users: ${response.statusCode}');
+        return [];
+      }
+    } catch (exception) {
+      print('Exception occurred: $exception');
+      return [];
+    }
+  }
+
 }

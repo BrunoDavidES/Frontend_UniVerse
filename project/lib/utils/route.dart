@@ -22,6 +22,7 @@ import '../main_screen/homepage_web.dart';
 import '../news_screen/news_web.dart';
 import '../news_screen/news_web_detail_screen.dart';
 import '../personal_page_screen/web/personal_page_web.dart';
+import '../profile_screen/user_list.dart';
 import 'events/event_data.dart';
 
 class Routing {
@@ -30,6 +31,11 @@ class Routing {
           PageNotFound(),
       initialLocation: '/home',
       routes: [
+        // TODO ONLY FOR TESTING
+        GoRoute(
+          path: '/userlist',
+          builder: (BuildContext context, GoRouterState state) => UserListPage(),
+        ),
         GoRoute(
           path: '/error',
           builder: (BuildContext context, GoRouterState state) => Error500Web(),
