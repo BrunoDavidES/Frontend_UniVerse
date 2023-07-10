@@ -11,7 +11,7 @@ class UserListPage extends StatefulWidget {
 }
 
 class _UserListPageState extends State<UserListPage> {
-  List<dynamic> publicUsers = [];
+  List<UniverseUser> publicUsers = [];
   String cursor = "EMPTY";
 
   @override
@@ -41,7 +41,7 @@ class _UserListPageState extends State<UserListPage> {
         itemBuilder: (context, index) {
           if (index < publicUsers.length) {
             return ListTile(
-              title: Text(publicUsers[index]),
+              title: Text(publicUsers[index].email),
             );
           } else {
             return Center(

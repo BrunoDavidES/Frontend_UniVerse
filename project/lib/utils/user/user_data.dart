@@ -86,19 +86,39 @@ class UniverseUser {
 
   UniverseUser.fromJson(Map<String, dynamic> json ) {
     print(json);
-    username = json['username'];
-    department = json['department'];
-    job = json['department_job'];
-    phone = json['phone'];
-    linkedin = json['linkedIn'];
-    //isPublic = json['privacy'];
-    email = json['email'];
-    license_plate = json['license_plate'];
-    name = json['name'];
-    organization = json['nucleus'];
-    office = json['office'];
-    status = json['status'];
+    username = json['username'] ?? '';
+    department = json['department'] ?? '';
+    job = json['department_job'] ?? '';
+    phone = json['phone'] ?? '';
+    linkedin = json['linkedIn'] ?? '';
+    //isPublic = json['privacy'] ?? '';
+    email = json['email'] ?? '';
+    license_plate = json['license_plate'] ?? '';
+    name = json['name'] ?? '';
+    organization = json['nucleus'] ?? '';
+    office = json['office'] ?? '';
+    status = json['status'] ?? '';
     //creation = json['time_creation'];
+  }
+
+  UniverseUser.fromEntityJson(Map<String, dynamic> json ) {
+      // Extract the properties
+      var properties = json['properties'];
+
+      // Assign values to the properties
+      username = '';
+      department = properties['department']['value'];
+      job = properties['department_job']['value'];
+      phone = properties['phone']['value'];
+      linkedin = properties['linkedin']['value'];
+      isPublic = properties['privacy']['value'];
+      email = properties['email']['value'];
+      license_plate = properties['license_plate']['value'];
+      name = properties['name']['value'];
+      organization = properties['nucleus']['value'];
+      office = properties['office']['value'];
+      status = properties['status']['value'];
+      //creation = properties['time_creation']['value']['seconds'] as String;
   }
 
   UniverseUser.emptyUser() {
@@ -149,7 +169,7 @@ class UniverseUser {
     return user;
   }
 
-  static Future<int> update(name, phone, linkedin, office, license_plate, isPublic, Uint8List? image) async {
+  static Future<int> update(name, phone, linkedin, office, license_plate, privacy, Uint8List? image) async {
     String token = await Authentication.getTokenID();
 
     if(token.isEmpty) {
@@ -166,12 +186,12 @@ class UniverseUser {
       },
       body: json.encode({
         'name': name,
-        'status': isPublic,
+        'status': privacy,
         'license_plate': license_plate,
         'office': office,
         'phone': phone,
         'linkedin': linkedin,
-        'privacy': isPublic,
+        'privacy': privacy,
       }),
     );
     if (response.statusCode == 200) {
@@ -213,7 +233,7 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  static Future<List<dynamic>> queryPublicUsers(String token, String limit, String cursor) async {
+  static Future<List<UniverseUser>> queryPublicUsers(String token, String limit, String cursor) async {
     final String apiUrl = '$baseUrl/profile/query/public';
 
     final Map<String, String> headers = {
@@ -233,7 +253,12 @@ class UniverseUser {
 
       if (response.statusCode == 200) {
         List<dynamic> responseData = json.decode(response.body)['results'];
-        return responseData;
+        List<UniverseUser> userList = [];
+        for (var user in responseData) {
+          userList.add(UniverseUser.fromEntityJson(user));
+        }
+        print(userList[0].email);
+        return userList;
       } else {
         print('Failed to retrieve public users: ${response.statusCode}');
         return [];
