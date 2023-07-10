@@ -26,7 +26,8 @@ class NewsFeed extends StatefulWidget {
     @override
     void initState() {
       offset = 0;
-      fetchDone = Article.fetchNews(3, Article.cursor, {});
+      Article.news.clear();
+      fetchDone = Article.fetchNews(3, "Empty", {});
       controller = ScrollController()
         ..addListener(handleScrolling);
       super.initState();
