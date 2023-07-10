@@ -37,10 +37,10 @@ Future main() async{
     ]);
     }
   }
-  await Hive.initFlutter();
+  /*await Hive.initFlutter();
   if(!Hive.isBoxOpen('cache')) {
     await Hive.openBox('cache');
-  }
+  }*/
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
