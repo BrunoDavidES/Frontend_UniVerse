@@ -118,7 +118,7 @@ class Event {
         'title': title,
         'location':location,
         'startDate': startDate,
-        'endDate': location,
+        'endDate': endDate,
         'isPublic': isPublic,
         'capacity': capacity,
         'isItPaid': isItPaid,
