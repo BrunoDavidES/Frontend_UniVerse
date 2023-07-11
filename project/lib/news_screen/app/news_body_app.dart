@@ -10,7 +10,6 @@ import '../../utils/news/article_data.dart';
 
 class NewsFeed extends StatefulWidget {
 
-
   const NewsFeed({super.key});
 
   @override
@@ -18,99 +17,78 @@ class NewsFeed extends StatefulWidget {
   }
 
   class NewsState extends State<NewsFeed> {
-    late Future<int> fetchDone;
-    late ScrollController controller;
-    late int offset;
-    late bool hasMore = true;
+  final scrollController = ScrollController();
+  bool isLoadingMore = false;
+  bool hasMore = true;
 
     @override
     void initState() {
-      offset = 0;
-      fetchDone = Article.fetchNews(3, "EMPTY", {});
-      controller = ScrollController()
-        ..addListener(handleScrolling);
+      scrollController.addListener(scrollListener);
+      Article.fetchNews(3, Article.cursor, {});
       super.initState();
     }
 
-    @override
-    void dispose() {
-      controller.removeListener(handleScrolling);
-      super.dispose();
-    }
-
-    void handleScrolling() {
-      if (controller.offset == controller.position.maxScrollExtent) {
+    Future<void> scrollListener() async {
+      if(isLoadingMore) return;
+      if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
         setState(() {
-          offset = offset + 3;
-          if (Article.news.length == Article.numNews)
+          isLoadingMore = true;
+        });
+        await Article.fetchNews(3, Article.cursor, {});
+        setState(() {
+          isLoadingMore = false;
+          if(Article.news.length == Article.numNews)
             hasMore = false;
-          else
-            Article.fetchNews(3, Article.cursor, {});
         });
       }
     }
 
-    Future refresh() async {
-      setState(() {
-        hasMore = true;
-        offset = 0;
-        Article.news.clear();
-      });
-      Article.fetchNews(3, "EMPTY", {});
+    @override
+    void dispose() {
+      scrollController.removeListener(scrollListener);
+      super.dispose();
     }
 
     @override
     Widget build(BuildContext context) {
-      return Container(
-        color: cDirtyWhiteColor,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: FutureBuilder(
-              future: Article.fetchNews(3, "EMPTY", {}),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == 500) {
-                    return Error500();
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: Article.news.map((e) => NewsCard(e)).toList(),
-                    );
-                  }
-                }
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      LinearProgressIndicator(color: cPrimaryOverLightColor,
+      return ListView.builder(
+          controller: scrollController,
+          itemCount: Article.news.length+1,
+          itemBuilder: (context, index) {
+            if(index<Article.news.length) {
+              return NewsCard(Article.news[index]);
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 10, left: 10, right: 10, bottom: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if(isLoadingMore)
+                      LinearProgressIndicator(
+                        color: cPrimaryOverLightColor,
                         minHeight: 10,
                         backgroundColor: cPrimaryLightColor,),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "A CARREGAR NOTÍCIAS",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: cPrimaryLightColor
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        hasMore
+                            ? "A CARREGAR NOTÍCIAS"
+                            : "VISTE TODAS AS NOTÍCIAS!",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cPrimaryLightColor
                         ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-            /*Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: Article.news.map((e) => NewsCard(e)).toList(),*/
-            //SizedBox(height: 10,)
-          ),
-        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+          }
       );
+        //),
+     // );
     }/*FutureBuilder(
           future: fetchDone,
           builder: (context, snapshot) {
