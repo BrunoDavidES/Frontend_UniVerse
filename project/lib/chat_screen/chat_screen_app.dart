@@ -57,17 +57,7 @@ class _MyChatPageState extends State<ChatPageApp> {
         var snapshot = event.snapshot;
         var children = snapshot.value as Map<dynamic, dynamic>;
 
-        List<MapEntry<dynamic, dynamic>> entries = children.entries.toList();
-
-        entries.sort((a, b) {
-          int postedA = a.value['posted'];
-          int postedB = b.value['posted'];
-          return postedA.compareTo(postedB);
-        });
-
-        Map<dynamic, dynamic> sortedMap = Map.fromEntries(entries);
-
-        _chatStreamController.add(sortedMap);
+        _chatStreamController.add(children);
         setState(() {
           isSending = false;
         });
