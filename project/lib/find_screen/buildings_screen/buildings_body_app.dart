@@ -40,7 +40,7 @@ class BuildingsBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
-                image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                image: AssetImage("assets/images/photo_4.jpg"),
                 fit: BoxFit.fill
             ),
           ),

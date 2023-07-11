@@ -91,7 +91,7 @@ class WebHomePage extends StatelessWidget {
                     ),
                   FAQbox(
                     question: 'É necessário criar uma conta?',
-                    answer: 'Sim. Estamos a trabalhar no sentido de tornar a UniVerse mais acessível para ti e, por isso, por enquanto, é necessário registares-te. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
+                    answer: 'Não. Podes explorar a plataforma, de forma limitada, sem registo e/ou sessão iniciada. No entanto, aconselhamos-te a fazê-lo para que usufruas de todas as vantagens que te trazemos. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
                   ),
                     FAQbox(
                       question: 'Onde posso saber mais sobre a UniVerse?',

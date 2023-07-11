@@ -41,7 +41,8 @@ class ServicesBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
-                image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                image: AssetImage("assets/images/photo_3.jpg",),
+                colorBlendMode: BlendMode.lighten,
                 fit: BoxFit.fill
             ),
           ),

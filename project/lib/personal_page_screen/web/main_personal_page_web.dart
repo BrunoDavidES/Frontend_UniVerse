@@ -62,7 +62,9 @@ class _PublishEventScreenState extends State<MainPersonalPageWeb> {
                 children: [
                   PersonalWebCard(size: size),
                   SizedBox(width: size.width/9),
-                  FCTTodayWebCard(size: size),
+                  UniverseUser.isVerified() && UniverseUser.isActive()
+                  ?FCTTodayWebCard(size: size)
+                      :SizedBox()
                 ],
               ),
               SizedBox(height: 30,)

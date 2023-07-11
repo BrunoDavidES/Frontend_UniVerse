@@ -40,7 +40,7 @@ class LinksBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
-                image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                image: AssetImage("assets/images/photo_2.jpg"),
                 fit: BoxFit.fill
             ),
           ),

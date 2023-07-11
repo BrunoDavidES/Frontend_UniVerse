@@ -111,12 +111,20 @@ flutter:
   assets:
     - assets/images/welcome_photo.jpg
     - assets/images/photo_1.jpg
+    - assets/images/photo_2.jpg
+    - assets/images/photo_3.jpg
+    - assets/images/photo_4.jpg
+    - assets/images/photo_5.jpg
+    - assets/images/photo_6.jpg
+    - assets/images/photo_7.jpg
+    - assets/images/photo_8.jpg
     - assets/images/ufo.png
     - assets/images/icon_no_white.png
     - assets/images/dot.png
     - assets/images/capi_logo.png
     - assets/images/bigger_dot.png
     - assets/images/404.png
+    - assets/images/photo_1.jpg
     - assets/app/logo_full_background.png
     - assets/app/logo_no_reference_no_white.png
     - assets/app/logo_nova_horiz.png
