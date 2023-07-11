@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:UniVerse/components/web/web_menu.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/profile_edit_screen/profile_edit_page_web.dart';
@@ -5,6 +7,7 @@ import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_field.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ProfileScreenWeb extends StatefulWidget {
   const ProfileScreenWeb({super.key});
@@ -36,6 +39,18 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
 
   @override
   Widget build(BuildContext context) {
+
+    Future<Uint8List> fetchImageFile(id) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/' + id);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     return Row(
       children: [
@@ -64,7 +79,30 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Spacer(),
-                            //ProfilePhoto(),
+                            Container(
+                              width: 140,
+                              height: 140,
+                              child: FutureBuilder<Uint8List>(
+                                future: fetchImageFile(user.username),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error fetching image: ${snapshot.error}');
+                                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                    return ClipOval(
+                                      child: Image.memory(
+                                        snapshot.data!,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    );
+                                  } else {
+                                    return Text('Image not found');
+                                  }
+                                },
+                              ),
+                            ),
+
                             Padding(
                               padding: const EdgeInsets.only(top:30),
                               child: Column(
