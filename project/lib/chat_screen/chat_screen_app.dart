@@ -148,19 +148,20 @@ class _MyChatPageState extends State<ChatPageApp> {
 
                       var children = snapshot.data as Map<dynamic, dynamic>;
 
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        scrollController.animateTo(
-                          scrollController.position.maxScrollExtent,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      });
+                      // Sort the messages by timestamp
+                      var sortedMessages = children.entries.toList()
+                        ..sort((a, b) {
+                          var timestampA = a.value['posted'];
+                          var timestampB = b.value['posted'];
+                          return timestampA.compareTo(timestampB);
+                        });
 
+                      // Render the sorted messages
                       return SingleChildScrollView(
                         controller: scrollController,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: children.entries.map((entry) {
+                          children: sortedMessages.map((entry) {
                             var postID = entry.key;
                             var value = entry.value;
                             var author = value['author'];
@@ -169,22 +170,33 @@ class _MyChatPageState extends State<ChatPageApp> {
                             var message = value['message'];
                             var posted = value['posted'];
 
-                            if(username==UniverseUser.getUsername())
-                            return SenderContainer(size: size, posted: posted, message: message, postID: postID, forumID: widget.forumID);
-                            else return ReceiverContainer(size: size, author: name, posted: posted, message: message, postID: postID);
-
-                            //return ReceiverContainer(size: size, author: author, posted: posted, message: message, messageController: messageController, widget: widget, postID: postID);
+                            if (username == UniverseUser.getUsername()) {
+                              return SenderContainer(
+                                size: size,
+                                posted: posted,
+                                message: message,
+                                postID: postID,
+                                forumID: widget.forumID,
+                              );
+                            } else {
+                              return ReceiverContainer(
+                                size: size,
+                                author: name,
+                                posted: posted,
+                                message: message,
+                                postID: postID,
+                              );
+                            }
                           }).toList(),
                         ),
                       );
                     },
                   ),
                 ),
-                if(widget.role != 'MEMBER')
-                buildInput(),
+                if (widget.role != 'MEMBER') buildInput(),
               ],
-            )
-        )
+            ),
+        ),
     );
   }
 
