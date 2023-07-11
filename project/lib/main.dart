@@ -4,6 +4,8 @@ import 'package:UniVerse/components/web/500_web.dart';
 import 'package:UniVerse/events_screen/events_web.dart';
 import 'package:UniVerse/find_screen/services_screen/info_web.dart';
 import 'package:UniVerse/info_screen//universe_info_web.dart';
+import 'package:UniVerse/services/firebase_messaging_service.dart';
+import 'package:UniVerse/services/notification_service.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,11 +48,45 @@ Future main() async{
   if(FirebaseAuth.instance.currentUser!=null)
     Authentication.userIsLoggedIn=true;
   Authentication.getTokenID();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<NotificationService>(
+          create: (context) => NotificationService(),
+        ),
+        Provider<FirebaseMessagingService>(
+          create: (context) => FirebaseMessagingService(context.read<NotificationService>()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    initializeFirebaseMessaging();
+    checkNotifications();
+  }
+
+  initializeFirebaseMessaging() async {
+    await Provider.of<FirebaseMessagingService>(context, listen: false)
+        .initialize();
+  }
+
+  checkNotifications() async {
+    await Provider.of<NotificationService>(context, listen: false)
+        .checkForNotificaitons();
+  }
 
   // This widget is the root of your application.
   @override
