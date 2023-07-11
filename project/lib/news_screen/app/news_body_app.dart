@@ -26,7 +26,7 @@ class NewsFeed extends StatefulWidget {
     @override
     void initState() {
       offset = 0;
-      fetchDone = Article.fetchNews(3, "Empty", {});
+      fetchDone = Article.fetchNews(3, "EMPTY", {});
       controller = ScrollController()
         ..addListener(handleScrolling);
       super.initState();
@@ -67,7 +67,7 @@ class NewsFeed extends StatefulWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: FutureBuilder(
-              future: fetchDone,
+              future: Article.fetchNews(3, "EMPTY", {}),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 500) {
