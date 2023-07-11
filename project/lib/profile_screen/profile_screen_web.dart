@@ -15,6 +15,7 @@ class ProfileScreenWeb extends StatefulWidget {
 
 class _ProfileScreenWebState extends State<ProfileScreenWeb> {
   UniverseUser user = UniverseUser.emptyUser();
+  var userCreation;
 
   @override
   void initState() {
@@ -149,7 +150,7 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                           SizedBox(height:size.height/10),
                           MyReadOnlyField(icon: Icons.alternate_email, text: "Email: ", content: user.email,),
                           MyReadOnlyField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
-                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: user.email,),
+                          MyReadOnlyField(icon: Icons.insert_link, text: "LinkedIn:", content: user.linkedin,),
                           MyReadOnlyField(icon: Icons.work, text: "Gabinete:", content: user.office,),
                           MyReadOnlyField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
                         ],
