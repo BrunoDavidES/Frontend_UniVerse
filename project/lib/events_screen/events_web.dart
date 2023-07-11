@@ -32,15 +32,16 @@ class _EventsWebPageState extends State<EventsWebPage> {
   @override
   void initState() {
     Event.events.clear();
-    fetchDone = Event.fetchEvents(loadedArticlesCount, "EMPTY", {});
-    updateNumEvents();
+    fetchEvents();
     super.initState();
   }
 
-  Future<void> updateNumEvents() async {
+  Future<void> fetchEvents() async {
+    fetchDone = Event.fetchEvents(loadedArticlesCount, "EMPTY", {});
     await fetchDone;
     setState(() {
       totalArticlesCount = Event.numEvents;
+      loadedArticlesCount = min(loadedArticlesCount, totalArticlesCount);
     });
   }
 
