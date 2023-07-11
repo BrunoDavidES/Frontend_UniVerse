@@ -1,15 +1,15 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:UniVerse/consts/color_consts.dart';
+
+import 'package:UniVerse/profile_edit_screen/profile_edit_app.dart';
 import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
-import 'package:UniVerse/utils/user/user_data.dart';
-
+import 'package:flutter/material.dart';
+import 'package:UniVerse/consts/color_consts.dart';
 import '../components/custom_shape.dart';
-import '../profile_edit_screen/profile_edit_app.dart';
+import '../utils/user/user_data.dart';
 
 class ProfilePageApp extends StatefulWidget {
   const ProfilePageApp({Key? key}) : super(key: key);
@@ -19,46 +19,22 @@ class ProfilePageApp extends StatefulWidget {
 }
 
 class _ProfilePageAppState extends State<ProfilePageApp> {
-  late UniverseUser user;
-  bool isLoading = true;
-  String? errorMessage;
+  UniverseUser? user;
 
   @override
   void initState() {
-    super.initState();
     retrieveUser();
+    super.initState();
   }
 
-  Future<void> retrieveUser() async {
+  Future<int> retrieveUser() async {
     try {
       var retrievedUser = await UniverseUser.get();
-      setState(() {
-        user = retrievedUser;
-        isLoading = false;
-        errorMessage = null;
-      });
+      user = retrievedUser;
+      return 200;
     } catch (e) {
-      setState(() {
-        user = UniverseUser("","","","","","","","","","","","","","");
-        isLoading = false;
-        errorMessage = 'Failed to retrieve user data.';
-      });
-    }
-  }
-
-  Future<Uint8List> fetchImageFile(String id) async {
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/$id');
-      final downloadUrl = await ref.getDownloadURL();
-      final response = await http.get(Uri.parse(downloadUrl));
-      if (response.statusCode == 200) {
-        return response.bodyBytes;
-      } else {
-        throw Exception('Failed to fetch image file.');
-      }
-    } catch (e) {
-      print('Error fetching file: $e');
-      throw Exception('Failed to fetch image file.');
+      user = null;
+      return 400;
     }
   }
 
@@ -86,25 +62,51 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ProfileEditApp(user: user)),
-              );
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ProfileEditApp(user: user!),
+              ));
             },
-            icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor),
+            icon: Icon(
+              Icons.edit_outlined,
+              color: cDirtyWhiteColor,
+            ),
           )
         ],
       ),
-      body: isLoading
-          ? Loading()
-          : errorMessage != null
-          ? ErrorScreen(errorMessage: errorMessage!)
-          : Stack(
-        children: [
-          BasicInfo(user: user),
-          FullInfo(user: user),
-          BlueCurve(),
-          PhotoRole(user: user),
-        ],
+      body: FutureBuilder(
+        future: retrieveUser(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data == 400) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BlueCurve(),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "ACONTECEU ALGO INESPERADO.\nTENTA NOVAMENTE, POR FAVOR.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: cPrimaryLightColor,
+                      ),
+                    ),
+                  )
+                ],
+              );
+            } else {
+              return Stack(
+                children: [
+                  BasicInfo(user: user!),
+                  FullInfo(user: user!),
+                  BlueCurve(),
+                  PhotoRole(user: user!),
+                ],
+              );
+            }
+          }
+          return Loading();
+        },
       ),
     );
   }
@@ -130,7 +132,7 @@ class Loading extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text(
-            "Retrieving user information...",
+            "A ENCONTRAR AS TUAS INFORMAÇÕES",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: cPrimaryLightColor,
@@ -142,46 +144,13 @@ class Loading extends StatelessWidget {
   }
 }
 
-class ErrorScreen extends StatelessWidget {
-  final String errorMessage;
-
-  const ErrorScreen({Key? key, required this.errorMessage}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        BlueCurve(),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            "An unexpected error occurred.\nPlease try again.",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: cPrimaryLightColor,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            errorMessage,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: cPrimaryLightColor,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class FullInfo extends StatelessWidget {
-  final UniverseUser user;
+  const FullInfo({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
-  const FullInfo({Key? key, required this.user}) : super(key: key);
+  final UniverseUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -213,18 +182,19 @@ class FullInfo extends StatelessWidget {
                   text: "LinkedIn:",
                   content: user.linkedin,
                 ),
-                if (Authentication.role != 'S')
-                  MyReadOnlyVerticalField(
-                    icon: Icons.work,
-                    text: "Gabinete:",
-                    content: user.office,
-                  ),
+                Authentication.role != 'S'
+                    ? MyReadOnlyVerticalField(
+                  icon: Icons.work,
+                  text: "Gabinete:",
+                  content: user.office,
+                )
+                    : SizedBox(),
                 MyReadOnlyVerticalField(
                   icon: Icons.directions_car_filled,
                   text: "Matrícula:",
                   content: user.license_plate,
                 ),
-                SizedBox(height: 70),
+                SizedBox(height: 70)
               ],
             ),
           ),
@@ -235,87 +205,97 @@ class FullInfo extends StatelessWidget {
 }
 
 class PhotoRole extends StatelessWidget {
+  const PhotoRole({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
   final UniverseUser user;
 
-  const PhotoRole({Key? key, required this.user}) : super(key: key);
+  Future<Uint8List?> fetchImageFile(String imagePath) async {
+    try {
+      final ref =
+      firebase_storage.FirebaseStorage.instance.ref().child('Users').child(imagePath);
+      final imageUrl = await ref.getDownloadURL();
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      print('Error fetching image: $e');
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return FutureBuilder<Uint8List?>(
+      future: fetchImageFile(user.username),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SizedBox(); // Display nothing while loading
+        }
+        if (snapshot.hasError || snapshot.data == null) {
+          // Display a placeholder image or an error message
+          return Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Icon(
+              Icons.person,
+              size: 50,
+              color: Colors.white,
+            ),
+          );
+        }
+        final image = MemoryImage(snapshot.data!);
+        return Expanded(
+          child: Row(
             children: [
               Container(
-                width: 140,
-                height: 140,
-                child: FutureBuilder<Uint8List>(
-                  future: fetchImageFile(user.username),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error fetching image: ${snapshot.error}');
-                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      return ClipOval(
-                        child: Image.memory(
-                          snapshot.data!,
-                          fit: BoxFit.contain,
-                        ),
-                      );
-                    } else {
-                      return Text('Image not found');
-                    }
-                  },
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+              SizedBox(width: 5),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.role,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      user.job,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-          SizedBox(width: 5),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  user.role,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: cDirtyWhite,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  user.job,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: cDirtyWhite.withOpacity(0.8),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+        );
+      },
     );
-  }
-}
-
-Future<Uint8List> fetchImageFile(String id) async {
-  try {
-    final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/$id');
-    final downloadUrl = await ref.getDownloadURL();
-    final response = await http.get(Uri.parse(downloadUrl));
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    } else {
-      throw Exception('Failed to fetch image file.');
-    }
-  } catch (e) {
-    print('Error fetching file: $e');
-    throw Exception('Failed to fetch image file.');
   }
 }
 
