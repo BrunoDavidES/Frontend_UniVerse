@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../consts/color_consts.dart';
 import '../../utils/news/article_data.dart';
+import 'package:http/http.dart' as http;
 
 class NewsDetailScreen extends StatelessWidget {
   NewsDetailScreen(this.data, this.color, {super.key});
@@ -15,6 +17,22 @@ class NewsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<Uint8List> fetchImageFile(String id) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/$id');
+        final downloadUrl = await ref.getDownloadURL();
+        final response = await http.get(Uri.parse(downloadUrl));
+        if (response.statusCode == 200) {
+          return response.bodyBytes;
+        } else {
+          throw Exception('Failed to fetch image file.');
+        }
+      } catch (e) {
+        print('Error fetching file: $e');
+        throw Exception('Failed to fetch image file.');
+      }
+    }
+
     Future<String> fetchTextFile() async {
       try {
         final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + data.id! + '.txt');
@@ -56,12 +74,24 @@ class NewsDetailScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 190,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                            image: NetworkImage(data.urlToImage),
-                            fit: BoxFit.cover
-                        )
+                    child: FutureBuilder<Uint8List>(
+                      future: fetchImageFile(data.id.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error fetching image: ${snapshot.error}');
+                        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return ClipOval(
+                            child: Image.memory(
+                              snapshot.data!,
+                              fit: BoxFit.contain,
+                            ),
+                          );
+                        } else {
+                          return Text('Image not found');
+                        }
+                      },
                     ),
                   ),
                   Container(

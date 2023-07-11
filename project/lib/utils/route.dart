@@ -21,6 +21,7 @@ import '../main_screen/homepage_web.dart';
 import '../news_screen/news_web.dart';
 import '../news_screen/news_web_detail_screen.dart';
 import '../personal_page_screen/web/personal_page_web.dart';
+import '../profile_screen/profile_page_app.dart';
 import '../profile_screen/user_list.dart';
 import 'events/event_data.dart';
 

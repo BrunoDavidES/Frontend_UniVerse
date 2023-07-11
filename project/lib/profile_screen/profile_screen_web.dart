@@ -102,7 +102,6 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                                 },
                               ),
                             ),
-
                             Padding(
                               padding: const EdgeInsets.only(top:30),
                               child: Column(
