@@ -1,6 +1,9 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../consts/color_consts.dart';
 import '../../utils/news/article_data.dart';
@@ -12,6 +15,17 @@ class NewsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> fetchTextFile() async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + data.id! + '.txt');
+        final response = await ref.getData();
+        return utf8.decode(response as List<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
+
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       body: Container(
@@ -84,9 +98,9 @@ class NewsDetailScreen extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  InkWell(child: Icon(Icons.share_outlined), onTap: () {
-                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${data.id.toString()}";
-                    Share.share("${data.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Uma notícia FCT | UniVerse ּ FCT NOVA");
+                  InkWell(child: Icon(Icons.share_outlined, color: cHeavyGrey,), onTap: () {
+                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${data.id!.toString()}";
+                    Share.share("${data.title!.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Uma notícia FCT | UniVerse ּ FCT NOVA");
                   },),
                 ],
               ),
@@ -98,7 +112,7 @@ class NewsDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
+                      padding: const EdgeInsets.only(top: 15, left:10, right: 10, bottom: 5),
                       child: Text(
                         data.title!.toUpperCase(),
                         style: TextStyle(
@@ -107,13 +121,26 @@ class NewsDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        data.text!,
-                        textAlign: TextAlign.justify,
-                      ),
-                      //SizedBox(height: 10,)
+                    FutureBuilder(
+                      future: fetchTextFile(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error fetching file');
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.only(left:10, top: 10, right: 10),
+                            child: Text(
+                              snapshot.data ?? '',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 15
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

@@ -181,7 +181,7 @@ class _MyChatPageState extends State<EnterForumScreen> {
                     text: "ACEDER",
                     color: cPrimaryColor,
                     press: () {
-                      joinButtonPressed(nameController.text, pwdController.text);
+                      joinButtonPressed(nameController.text.trim(), pwdController.text);
                     },
                     height: 10),
               ],

@@ -36,7 +36,8 @@ class Authentication {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
       } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
-      getTokenID();
+      String token = await getTokenID();
+      role = JwtDecoder.decode(token)['role'];
       assignUserFriendlyText();
       return 200;
     } on FirebaseAuthException catch (e) {
@@ -52,6 +53,7 @@ class Authentication {
     try {
       await FirebaseAuth.instance.signOut();
       userIsLoggedIn = false;
+      role = '';
       return 200;
     } on FirebaseAuthException catch (e) {
       return 500;
@@ -63,7 +65,6 @@ class Authentication {
     if (user != null) {
       try {
         String idToken = await user.getIdToken();
-        role = JwtDecoder.decode(idToken)['role'];
         return idToken;
       } catch (e) {
         return "ERROR";

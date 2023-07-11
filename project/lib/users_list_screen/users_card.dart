@@ -73,6 +73,7 @@ class UserCard extends StatelessWidget {
           ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,28 +94,34 @@ class UserCard extends StatelessWidget {
               ),
               if(data.linkedin.isNotEmpty)
               Text(
-                data.linkedin,
+                "Linkedin: ${data.linkedin}",
                 style: TextStyle(
                   fontStyle: FontStyle.italic,
                   color: cHeavyGrey,
                 ),
               ),
+              if(data.linkedin.isNotEmpty)
+                Text(
+                  "Gabinete: ${data.office}",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: cHeavyGrey,
+                  ),
+                ),
             ],
           ),
           Spacer(),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                data.role,
+                data.department,
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
                   color: cHeavyGrey,
                 ),
               ),
             ],
           ),
-
         ],
       ),
     );

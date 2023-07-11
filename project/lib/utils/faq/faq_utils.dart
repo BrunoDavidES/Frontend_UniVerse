@@ -8,7 +8,11 @@ import 'package:UniVerse/consts/api_consts.dart';
 
 class Faq {
 
-  static Future<int> requestHelp(String title, String email, String message) async {
+  static bool areCompliant(email, title, message) {
+    return email.isNotEmpty && title.isNotEmpty && message.isNotEmpty;
+  }
+
+  static Future<int> request(title, email, message) async {
     final url = Uri.parse('$helpUrl/request');
     final response = await http.post(
       url,
@@ -21,10 +25,6 @@ class Faq {
         'message': message
       }),
     );
-    if(response.statusCode == 200)
-
-    print(response.statusCode);
-
     return response.statusCode;
   }
 

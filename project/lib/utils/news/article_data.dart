@@ -33,7 +33,10 @@ class Article {
     author = properties['authorName']['value'];
     var dateAux = properties['time_creation']['value']['seconds'];
     var dateAux2 = properties['time_creation']['value']['nanos'];
-    date = formatTimestamp(dateAux, dateAux2);
+    var dateAux3 = formatTimestamp(dateAux, dateAux2);
+    DateTime originalDate = DateTime.parse(dateAux3);
+    final newDateFormat = DateFormat('dd-MM-yyyy');
+    date = newDateFormat.format(originalDate);
   }
 
   static Future<int> fetchNews(int limit, String offset, Map<String, String> filters) async {

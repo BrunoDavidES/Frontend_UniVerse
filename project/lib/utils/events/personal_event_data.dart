@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 class CalendarEvent {
   static Map<String, List<CalendarEvent>> events = {};
+  static List<String> fetchedMonths= [];
   String authorUsername = '';
   String id = '';
   String title = '';
@@ -63,6 +64,7 @@ class CalendarEvent {
 
         events[event.date]!.add(event);
       }
+      fetchedMonths.add(month);
     } else if(response.statusCode == 401) {
       Authentication.userIsLoggedIn=false;
       Authentication.revoke();

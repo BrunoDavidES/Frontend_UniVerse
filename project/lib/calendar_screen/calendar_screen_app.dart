@@ -38,7 +38,13 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
     initializeDateFormatting('pt_PT', null);
     selectedDayString = selectedDay.day.toString();
     selectedMonthString = monthsInText[selectedDay.month-1];
-    CalendarEvent.fetchEvents("07", "2023");
+    if(CalendarEvent.events.isEmpty) {
+      String month = DateTime.now().month.toString();
+      if(month.length==1)
+        month = "0$month";
+      String year = DateTime.now().year.toString();
+      CalendarEvent.fetchEvents(month, year);
+      }
     dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
     super.initState();
   }
@@ -104,6 +110,13 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                           selectedDayString = selectDay.day.toString();
                           selectedMonthString = monthsInText[selectedDay.month-1];
                           dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
+                          String month = DateTime.now().month.toString();
+                          if(month.length==1)
+                            month = "0$month";
+                          if(CalendarEvent.fetchedMonths.contains(month)){
+                          String year = DateTime.now().year.toString();
+                          CalendarEvent.fetchEvents(month, year);
+                          }
                         });
                       },
                       calendarFormat: format,

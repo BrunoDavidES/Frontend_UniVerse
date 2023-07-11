@@ -187,31 +187,21 @@ class Chat {
       return response.statusCode;
   }
 
-  static Future<void> demote(forumID, String memberID) async {
+  static Future<int> demote(forumID, String memberID) async {
     final String apiUrl = '$forumUrl/$forumID/$memberID/demote';
-
     String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      return 401;
+    }
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
-
-    try {
       final http.Response response = await http.post(
         Uri.parse(apiUrl),
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
       );
-
-      if (response.statusCode == 200) {
-        final String id = response.body;
-        print('User demoted: $id');
-      } else {
-        print('User demotion failed: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error occurred while demoting user: $e');
-    }
+      return response.statusCode;
   }
 
 

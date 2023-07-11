@@ -263,7 +263,7 @@ class _RegisterScreenState extends State<FAQWebPageAux2> {
                       text: "Enviar",
                       color: cDarkBlueColor,
                       press: () {
-                        Faq.requestHelp(titleController.text, emailController.text, messageController.text);
+                        Faq.request(titleController.text, emailController.text, messageController.text);
 
                       },
                       height: 20,
