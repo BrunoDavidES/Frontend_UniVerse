@@ -136,6 +136,7 @@ flutter:
     - assets/app/logo_nova_horiz.png
     - assets/app/profile_title.png
     - assets/titles/feedback.png
+    - assets/titles/people.png
     - assets/titles/agencies.png
     - assets/titles/courses.png
     - assets/titles/about_us.png

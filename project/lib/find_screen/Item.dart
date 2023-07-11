@@ -7,6 +7,7 @@ import 'package:UniVerse/find_screen/restaurants_screen/restaurants_screen.dart'
 import 'package:UniVerse/find_screen/services_screen/services_body_app.dart';
 import 'package:flutter/material.dart';
 
+import '../users_list_screen/users_list_app.dart';
 import 'agencies_screen/agencies_screen_app.dart';
 import 'departments_screen/departments_body_app.dart';
 import 'links_screen/links_body_app.dart';
@@ -35,7 +36,7 @@ class Item {
     Item("Núcleos", Icons.local_activity_outlined, OrganizationsScreenApp()),
     Item("Galeria", Icons.camera_alt_outlined, null), //showDialog
     Item("Transportes", Icons.directions_bus, MapsPageApp()),
-    Item("Pessoas", Icons.person_search_outlined, ServicesBodyApp()),
+    Item("Pessoas", Icons.person_search_outlined, UsersListApp()),
   ];
 
 }

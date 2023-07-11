@@ -11,6 +11,10 @@ import '../cache.dart';
 
 class UniverseUser {
 
+  static List<UniverseUser> usersList = <UniverseUser>[];
+  static int numUsers = 0;
+  static String cursor = "EMPTY";
+
   String name = '',
       username = '',
       role = '',
@@ -130,7 +134,7 @@ class UniverseUser {
       organization = properties['nucleus']['value'];
       office = properties['office']['value'];
       status = properties['status']['value'];
-      creation = properties['time_creation']['value']['seconds'] as String;
+      //creation = properties['time_creation']['value']['seconds'] as String;
   }
 
   UniverseUser.emptyUser() {
@@ -249,40 +253,36 @@ class UniverseUser {
     return response.statusCode;
   }
 
-  static Future<List<UniverseUser>> queryPublicUsers(String token, String limit, String cursor) async {
+  static Future<int> queryPublicUsers(String limit, String cursor) async {
+    String token = await Authentication.getTokenID();
+    if(token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      return 401;
+    }
     final String apiUrl = '$baseUrl/profile/query/public';
-
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': token,
-    };
-
     final Map<String, String> queryParams = {
       'limit': limit,
       'offset': cursor,
     };
-
     final Uri uri = Uri.parse(apiUrl).replace(queryParameters: queryParams);
-
-    try {
-      final http.Response response = await http.post(uri, headers: headers);
-
+    final http.Response response = await http.post(
+          uri,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          }
+      );
       if (response.statusCode == 200) {
+        var decoded = json.decode(response.body);
+        print(response.body);
         List<dynamic> responseData = json.decode(response.body)['results'];
-        List<UniverseUser> userList = [];
+        //cursor = decoded
         for (var user in responseData) {
-          userList.add(UniverseUser.fromEntityJson(user));
+          usersList.add(UniverseUser.fromEntityJson(user));
         }
-        print(userList[0].email);
-        return userList;
-      } else {
-        print('Failed to retrieve public users: ${response.statusCode}');
-        return [];
+        return 200;
       }
-    } catch (exception) {
-      print('Exception occurred: $exception');
-      return [];
-    }
+      return response.statusCode;
   }
 
 }

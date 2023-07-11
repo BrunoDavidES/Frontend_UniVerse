@@ -40,7 +40,7 @@ class _ProfileEditState extends State<ProfileEditScreen> {
   late TextEditingController license_plateController= TextEditingController();
   String? privacy;
   bool isLoading = false;
-  Uint8List imageUint8 = Uint8List(8);
+  Uint8List? imageUint8;
   File? pickedImage;
 
   @override

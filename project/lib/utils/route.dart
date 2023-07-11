@@ -30,10 +30,10 @@ class Routing {
       initialLocation: '/home',
       routes: [
         // TODO ONLY FOR TESTING
-        GoRoute(
+        /*GoRoute(
           path: '/userlist',
           builder: (BuildContext context, GoRouterState state) => UserListPage(),
-        ),
+        ),*/
         GoRoute(
           path: '/error',
           builder: (BuildContext context, GoRouterState state) => Error500Web(),

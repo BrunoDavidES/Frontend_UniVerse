@@ -31,14 +31,13 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    Article.news.clear();
     print(Article.numNews);
     fetchNews();
     super.initState();
   }
 
   Future<void> fetchNews() async {
-    fetchDone = Article.fetchNews(loadedArticlesCount, "EMPTY", {});
+    fetchDone = Article.fetchNews(loadedArticlesCount, Article.cursor, {});
     await fetchDone;
     setState(() {
       totalArticlesCount = Article.numNews;
