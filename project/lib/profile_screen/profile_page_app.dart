@@ -1,42 +1,65 @@
-
-
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
-import 'package:UniVerse/profile_edit_screen/profile_edit_app.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_vertical_field.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
-import 'package:flutter/material.dart';
-import 'package:UniVerse/consts/color_consts.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
+
 import '../components/custom_shape.dart';
-import '../utils/user/user_data.dart';
+import '../profile_edit_screen/profile_edit_app.dart';
 
 class ProfilePageApp extends StatefulWidget {
-  const ProfilePageApp({super.key});
+  const ProfilePageApp({Key? key}) : super(key: key);
 
   @override
   _ProfilePageAppState createState() => _ProfilePageAppState();
 }
 
 class _ProfilePageAppState extends State<ProfilePageApp> {
-  UniverseUser? user;
+  late UniverseUser user;
+  bool isLoading = true;
+  String? errorMessage;
 
   @override
   void initState() {
-    retrieveUser();
     super.initState();
+    retrieveUser();
   }
 
-  Future<int> retrieveUser() async {
-   try {
+  Future<void> retrieveUser() async {
+    try {
       var retrievedUser = await UniverseUser.get();
+      setState(() {
         user = retrievedUser;
-      return 200;
+        isLoading = false;
+        errorMessage = null;
+      });
     } catch (e) {
-    user = null;
-      return 400;
-   }
+      setState(() {
+        user = UniverseUser("","","","","","","","","","","","","","");
+        isLoading = false;
+        errorMessage = 'Failed to retrieve user data.';
+      });
+    }
+  }
+
+  Future<Uint8List> fetchImageFile(String id) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/$id');
+      final downloadUrl = await ref.getDownloadURL();
+      final response = await http.get(Uri.parse(downloadUrl));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to fetch image file.');
+      }
+    } catch (e) {
+      print('Error fetching file: $e');
+      throw Exception('Failed to fetch image file.');
+    }
   }
 
   @override
@@ -44,15 +67,18 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
       appBar: AppBar(
-        title: Image.asset("assets/app/profile_title.png", scale:6),
+        title: Image.asset("assets/app/profile_title.png", scale: 6),
         leadingWidth: 20,
         leading: Builder(
-            builder: (context) {
-              return IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {Navigator.pop(context);},
-                  color: cDirtyWhiteColor);
-            }
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: cDirtyWhiteColor,
+            );
+          },
         ),
         backgroundColor: cPrimaryLightColor,
         titleSpacing: 15,
@@ -60,56 +86,32 @@ class _ProfilePageAppState extends State<ProfilePageApp> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileEditApp(user: user!,)));
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProfileEditApp(user: user)),
+              );
             },
-            icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor,),
+            icon: Icon(Icons.edit_outlined, color: cDirtyWhiteColor),
           )
         ],
       ),
-      body: FutureBuilder(
-          future: retrieveUser(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              if(snapshot.data==400) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    BlueCurve(),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "ACONTECEU ALGO INESPERADO.\nTENTA NOVAMENTE, POR FAVOR.",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: cPrimaryLightColor
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              }
-              else {
-                return Stack(
-                  children: [
-                    BasicInfo(user: user!),
-                    FullInfo(user: user!),
-                    BlueCurve(),
-                    PhotoRole(user: user!),
-                  ],
-                );
-              }
-            }
-            return Loading();
-          }
+      body: isLoading
+          ? Loading()
+          : errorMessage != null
+          ? ErrorScreen(errorMessage: errorMessage!)
+          : Stack(
+        children: [
+          BasicInfo(user: user),
+          FullInfo(user: user),
+          BlueCurve(),
+          PhotoRole(user: user),
+        ],
       ),
     );
   }
 }
 
 class Loading extends StatelessWidget {
-  const Loading({
-    super.key,
-  });
+  const Loading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,17 +121,19 @@ class Loading extends StatelessWidget {
         BlueCurve(),
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: LinearProgressIndicator(color: cPrimaryOverLightColor,
+          child: LinearProgressIndicator(
+            color: cPrimaryOverLightColor,
             minHeight: 10,
-            backgroundColor: cPrimaryLightColor,),
+            backgroundColor: cPrimaryLightColor,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text(
-            "A ENCONTRAR AS TUAS INFORMAÇÕES",
+            "Retrieving user information...",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: cPrimaryLightColor
+              fontWeight: FontWeight.bold,
+              color: cPrimaryLightColor,
             ),
           ),
         )
@@ -138,20 +142,53 @@ class Loading extends StatelessWidget {
   }
 }
 
-class FullInfo extends StatelessWidget {
-  const FullInfo({
-    super.key,
-    required this.user,
-  });
+class ErrorScreen extends StatelessWidget {
+  final String errorMessage;
 
+  const ErrorScreen({Key? key, required this.errorMessage}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        BlueCurve(),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            "An unexpected error occurred.\nPlease try again.",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: cPrimaryLightColor,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            errorMessage,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: cPrimaryLightColor,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class FullInfo extends StatelessWidget {
   final UniverseUser user;
+
+  const FullInfo({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 200,),
+          SizedBox(height: 200),
           Container(
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(5),
@@ -161,13 +198,33 @@ class FullInfo extends StatelessWidget {
             ),
             child: Column(
               children: [
-                MyReadOnlyVerticalField(icon: Icons.alternate_email, text: "Email: ", content: user.email,),
-                MyReadOnlyVerticalField(icon: Icons.phone, text: "Telemóvel:", content: user.phone,),
-                MyReadOnlyVerticalField(icon: Icons.insert_link, text: "LinkedIn:", content: user.linkedin,),
-                Authentication.role != 'S'
-                    ?MyReadOnlyVerticalField(icon: Icons.work, text: "Gabinete:", content: user.office) :SizedBox(),
-                MyReadOnlyVerticalField(icon: Icons.directions_car_filled, text: "Matrícula:", content: user.license_plate,),
-                SizedBox(height: 70,)
+                MyReadOnlyVerticalField(
+                  icon: Icons.alternate_email,
+                  text: "Email: ",
+                  content: user.email,
+                ),
+                MyReadOnlyVerticalField(
+                  icon: Icons.phone,
+                  text: "Telemóvel:",
+                  content: user.phone,
+                ),
+                MyReadOnlyVerticalField(
+                  icon: Icons.insert_link,
+                  text: "LinkedIn:",
+                  content: user.linkedin,
+                ),
+                if (Authentication.role != 'S')
+                  MyReadOnlyVerticalField(
+                    icon: Icons.work,
+                    text: "Gabinete:",
+                    content: user.office,
+                  ),
+                MyReadOnlyVerticalField(
+                  icon: Icons.directions_car_filled,
+                  text: "Matrícula:",
+                  content: user.license_plate,
+                ),
+                SizedBox(height: 70),
               ],
             ),
           ),
@@ -178,78 +235,94 @@ class FullInfo extends StatelessWidget {
 }
 
 class PhotoRole extends StatelessWidget {
-  const PhotoRole({
-    super.key,
-    required this.user,
-  });
-
   final UniverseUser user;
 
-  ImageProvider getImage(String imagePath) {
-    return NetworkImage(imagePath);
-  }
-
-  Future<Widget> fetchImageFile(username) async {
-    final String imagePath = 'your-image-path-in-firebase-storage';
-    final ref = firebase_storage.FirebaseStorage.instance.ref().child(imagePath);
-
-    final imageUrl = await ref.getDownloadURL();
-    final image = getImage(imageUrl);
-
-    return Image(image: image);
-  }
+  const PhotoRole({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: fetchImageFile(UniverseUser.getUsername()),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Expanded(
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ProfilePhoto(),
-                    ],
-                  ),
-                  SizedBox(width: 5,),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(user.role,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: cDirtyWhite
-                            )),
-                        SizedBox(height: 5),
-                        Text(user.job,
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: cDirtyWhite.withOpacity(0.8)
-                            )),
-                      ],
-                    ),
-                  )
-                ],
+    return Expanded(
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 140,
+                height: 140,
+                child: FutureBuilder<Uint8List>(
+                  future: fetchImageFile(user.username),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error fetching image: ${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return ClipOval(
+                        child: Image.memory(
+                          snapshot.data!,
+                          fit: BoxFit.contain,
+                        ),
+                      );
+                    } else {
+                      return Text('Image not found');
+                    }
+                  },
+                ),
               ),
-            );
-          }
-          return SizedBox();
-        }
+            ],
+          ),
+          SizedBox(width: 5),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  user.role,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: cDirtyWhite,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  user.job,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: cDirtyWhite.withOpacity(0.8),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
 
-class BasicInfo extends StatelessWidget {
+Future<Uint8List> fetchImageFile(String id) async {
+  try {
+    final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/$id');
+    final downloadUrl = await ref.getDownloadURL();
+    final response = await http.get(Uri.parse(downloadUrl));
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      throw Exception('Failed to fetch image file.');
+    }
+  } catch (e) {
+    print('Error fetching file: $e');
+    throw Exception('Failed to fetch image file.');
+  }
+}
 
+class BasicInfo extends StatelessWidget {
   final UniverseUser user;
 
-  const BasicInfo({super.key, required this.user});
+  const BasicInfo({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -261,23 +334,25 @@ class BasicInfo extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 145,),
-                Text(user.name,
+                SizedBox(height: 145),
+                Text(
+                  user.name,
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black
+                    fontSize: 18,
+                    color: Colors.black,
                   ),
                 ),
-                Text(user.username,
+                Text(
+                  user.username,
                   style: TextStyle(
-                      fontSize: 15,
-                      color: cHeavyGrey
+                    fontSize: 15,
+                    color: cHeavyGrey,
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 25,),
+          SizedBox(width: 25),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -287,18 +362,20 @@ class BasicInfo extends StatelessWidget {
                 SizedBox(height: 80),
                 Padding(
                   padding: EdgeInsets.only(bottom: 5),
-                  child: Text("Conta Ativa".toUpperCase(),
+                  child: Text(
+                    "Conta Ativa".toUpperCase(),
                     style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold
+                      fontSize: 18,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                Text("Na UniVerse desde ${user.creation}",
+                Text(
+                  "Na UniVerse desde ${user.creation}",
                   style: TextStyle(
-                      fontSize: 13,
-                      color: cHeavyGrey.withOpacity(0.5)
+                    fontSize: 13,
+                    color: cHeavyGrey.withOpacity(0.5),
                   ),
                 ),
               ],
@@ -311,9 +388,7 @@ class BasicInfo extends StatelessWidget {
 }
 
 class BlueCurve extends StatelessWidget {
-  const BlueCurve({
-    super.key,
-  });
+  const BlueCurve({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -325,8 +400,7 @@ class BlueCurve extends StatelessWidget {
         ),
         ClipPath(
           clipper: CustomShape(),
-          child:
-          Container(
+          child: Container(
             height: 75,
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -334,7 +408,7 @@ class BlueCurve extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   cPrimaryLightColor,
-                  cPrimaryOverLightColor
+                  cPrimaryOverLightColor,
                 ],
               ),
             ),
@@ -344,7 +418,3 @@ class BlueCurve extends StatelessWidget {
     );
   }
 }
-
-
-
-

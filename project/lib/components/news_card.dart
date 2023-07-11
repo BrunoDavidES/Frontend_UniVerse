@@ -7,6 +7,7 @@ import 'package:UniVerse/news_screen/app/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:http/http.dart' as http;
 
 import '../consts/list_consts.dart';
 
@@ -22,14 +23,19 @@ class NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
 
-    Future<Uint8List> fetchImageFile(news) async {
+    Future<Uint8List> fetchImageFile(String id) async {
       try {
-        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
-        final byteData = await ref.getData();
-        return byteData!.buffer.asUint8List();
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/$id');
+        final downloadUrl = await ref.getDownloadURL();
+        final response = await http.get(Uri.parse(downloadUrl));
+        if (response.statusCode == 200) {
+          return response.bodyBytes;
+        } else {
+          throw Exception('Failed to fetch image file.');
+        }
       } catch (e) {
         print('Error fetching file: $e');
-        return Uint8List(0);
+        throw Exception('Failed to fetch image file.');
       }
     }
 
@@ -82,18 +88,20 @@ class NewsCardState extends State<NewsCard> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: sizeHeight-40,
+                      height: 190,
                       child: FutureBuilder<Uint8List>(
-                        future: fetchImageFile(widget.data.id),
+                        future: fetchImageFile(widget.data.id.toString()),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return CircularProgressIndicator();
                           } else if (snapshot.hasError) {
                             return Text('Error fetching image: ${snapshot.error}');
                           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return Image.memory(
-                              snapshot.data!,
-                              fit: BoxFit.contain,
+                            return ClipOval(
+                              child: Image.memory(
+                                snapshot.data!,
+                                fit: BoxFit.contain,
+                              ),
                             );
                           } else {
                             return Text('Image not found');
