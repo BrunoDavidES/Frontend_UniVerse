@@ -185,15 +185,18 @@ class PhotoRole extends StatelessWidget {
 
   final UniverseUser user;
 
-  Future<Uint8List> fetchImageFile(username) async {
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref('Users/$username');
-      final byteData = await ref.getData();
-      return byteData!.buffer.asUint8List();
-    } catch (e) {
-      print('Error fetching file: $e');
-      return Uint8List(0);
-    }
+  ImageProvider getImage(String imagePath) {
+    return NetworkImage(imagePath);
+  }
+
+  Future<Widget> fetchImageFile(username) async {
+    final String imagePath = 'your-image-path-in-firebase-storage';
+    final ref = firebase_storage.FirebaseStorage.instance.ref().child(imagePath);
+
+    final imageUrl = await ref.getDownloadURL();
+    final image = getImage(imageUrl);
+
+    return Image(image: image);
   }
 
   @override
@@ -208,7 +211,7 @@ class PhotoRole extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ProfilePhoto(image: snapshot.data),
+                      Container(),
                     ],
                   ),
                   SizedBox(width: 5,),
