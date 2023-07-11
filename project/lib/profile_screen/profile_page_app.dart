@@ -212,20 +212,22 @@ class PhotoRole extends StatelessWidget {
 
   final UniverseUser user;
 
-  Future<Uint8List?> fetchImageFile(String imagePath) async {
+  Future<Uint8List> fetchImageFile(String id) async {
     try {
-      final ref =
-      firebase_storage.FirebaseStorage.instance.ref().child('Users').child(imagePath);
-      final imageUrl = await ref.getDownloadURL();
-      final response = await http.get(Uri.parse(imageUrl));
+      final ref = firebase_storage.FirebaseStorage.instance.ref('/Users/$id');
+      final downloadUrl = await ref.getDownloadURL();
+      final response = await http.get(Uri.parse(downloadUrl));
       if (response.statusCode == 200) {
         return response.bodyBytes;
+      } else {
+        throw Exception('Failed to fetch image file.');
       }
     } catch (e) {
-      print('Error fetching image: $e');
+      print('Error fetching file: $e');
+      throw Exception('Failed to fetch image file.');
     }
-    return null;
   }
+
 
   @override
   Widget build(BuildContext context) {

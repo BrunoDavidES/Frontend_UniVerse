@@ -58,7 +58,7 @@ class _FindWebPageState extends State<FindWebPage> {
                                     height: size.height-size.height/7,
                                     width: size.width/4.5,
                                     child: ListView.builder(
-                                        itemCount: 11,
+                                        itemCount: 10,
                                         itemBuilder: (BuildContext context, int index) {
                                           final item = Item.findItems[index+1];
                                           return Padding(

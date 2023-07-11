@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/utils/locations/locations.dart' as locations;
@@ -37,7 +38,7 @@ class _MapsState extends State<MapIdLocation> {
           position: LatLng(place.lat, place.lng),
           infoWindow: InfoWindow(
             title: place.name,
-            snippet: "${place.address}\nInstala a aplicação obteres direções a partir do local em que te encontras!",
+            snippet: kIsWeb ?"${place.address}\nInstala a aplicação para obteres direções a partir do local em que te encontras!" :place.address,
             onTap: () {
               showDialog(context: context,
                   builder: (BuildContext context){
