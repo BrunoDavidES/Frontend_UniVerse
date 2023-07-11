@@ -32,8 +32,17 @@ class _EventsWebPageState extends State<EventsWebPage> {
   @override
   void initState() {
     Event.events.clear();
-    fetchDone = Event.fetchEvents(loadedArticlesCount, "EMPTY", {});
+    fetchEvents();
     super.initState();
+  }
+
+  Future<void> fetchEvents() async {
+    fetchDone = Event.fetchEvents(loadedArticlesCount, "EMPTY", {});
+    await fetchDone;
+    setState(() {
+      totalArticlesCount = Event.numEvents;
+      loadedArticlesCount = min(loadedArticlesCount, totalArticlesCount);
+    });
   }
 
   Widget build(BuildContext context) {

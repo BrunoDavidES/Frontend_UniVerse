@@ -26,15 +26,24 @@ class _NewsWebPageState extends State<NewsWebPage> {
   ScrollController yourScrollController = ScrollController();
   late Future<int> fetchDone;
 
-  int loadedArticlesCount = 5;
   int totalArticlesCount = Article.numNews;
+  int loadedArticlesCount = 5;
 
   @override
   void initState() {
     Article.news.clear();
-    fetchDone = Article.fetchNews(loadedArticlesCount, "EMPTY", {});
     print(Article.numNews);
+    fetchNews();
     super.initState();
+  }
+
+  Future<void> fetchNews() async {
+    fetchDone = Article.fetchNews(loadedArticlesCount, "EMPTY", {});
+    await fetchDone;
+    setState(() {
+      totalArticlesCount = Article.numNews;
+      loadedArticlesCount = min(loadedArticlesCount, totalArticlesCount);
+    });
   }
 
   Widget build(BuildContext context) {
