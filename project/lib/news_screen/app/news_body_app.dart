@@ -14,82 +14,82 @@ class NewsFeed extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => NewsState();
-  }
+}
 
-  class NewsState extends State<NewsFeed> {
+class NewsState extends State<NewsFeed> {
   final scrollController = ScrollController();
   bool isLoadingMore = false;
   bool hasMore = true;
 
-    @override
-    void initState() {
-      scrollController.addListener(scrollListener);
-      Article.fetchNews(3, Article.cursor, {});
-      super.initState();
-    }
+  @override
+  void initState() {
+    scrollController.addListener(scrollListener);
+    Article.fetchNews(3, Article.cursor, {});
+    super.initState();
+  }
 
-    Future<void> scrollListener() async {
-      if(isLoadingMore) return;
-      if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
-        setState(() {
-          isLoadingMore = true;
-        });
-        await Article.fetchNews(3, Article.cursor, {});
-        setState(() {
-          isLoadingMore = false;
-          if(Article.news.length == Article.numNews)
-            hasMore = false;
-        });
-      }
+  Future<void> scrollListener() async {
+    if(isLoadingMore) return;
+    if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      await Article.fetchNews(3, Article.cursor, {});
+      setState(() {
+        isLoadingMore = false;
+        if(Article.news.length == Article.numNews)
+          hasMore = false;
+      });
     }
+  }
 
-    @override
-    void dispose() {
-      scrollController.removeListener(scrollListener);
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    scrollController.removeListener(scrollListener);
+    super.dispose();
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return ListView.builder(
-          controller: scrollController,
-          itemCount: Article.news.length+1,
-          itemBuilder: (context, index) {
-            if(index<Article.news.length) {
-              return NewsCard(Article.news[index]);
-            } else {
-              return Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, left: 10, right: 10, bottom: 80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if(isLoadingMore)
-                      LinearProgressIndicator(
-                        color: cPrimaryOverLightColor,
-                        minHeight: 10,
-                        backgroundColor: cPrimaryLightColor,),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        hasMore
-                            ? "A CARREGAR NOTÍCIAS"
-                            : "VISTE TODAS AS NOTÍCIAS!",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: cPrimaryLightColor
-                        ),
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        controller: scrollController,
+        itemCount: Article.news.length+1,
+        itemBuilder: (context, index) {
+          if(index<Article.news.length) {
+            return NewsCard(Article.news[index]);
+          } else {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  top: 10, left: 10, right: 10, bottom: 80),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if(isLoadingMore)
+                    LinearProgressIndicator(
+                      color: cPrimaryOverLightColor,
+                      minHeight: 10,
+                      backgroundColor: cPrimaryLightColor,),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      hasMore
+                          ? "A CARREGAR NOTÍCIAS"
+                          : "VISTE TODAS AS NOTÍCIAS!",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: cPrimaryLightColor
                       ),
-                    )
-                  ],
-                ),
-              );
-            }
+                    ),
+                  )
+                ],
+              ),
+            );
           }
-      );
-        //),
-     // );
-    }/*FutureBuilder(
+        }
+    );
+    //),
+    // );
+  }/*FutureBuilder(
           future: fetchDone,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -174,4 +174,4 @@ class NewsFeed extends StatefulWidget {
           );
     }
 }*/*/
-  }
+}

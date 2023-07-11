@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import '../authentication/auth.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:intl/intl.dart';
 
 import '../cache.dart';
 
@@ -114,7 +115,11 @@ class UniverseUser {
     organization = json['nucleus'] ?? '';
     office = json['office'] ?? '';
     status = json['status'] ?? '';
-    //creation = json['time_creation'];
+    var dateAux = json['timeCreation'];
+    dateAux = dateAux.toString().split('T');
+    DateTime originalDate = DateTime.parse(dateAux[0]);
+    final newDateFormat = DateFormat('dd-MM-yyyy');
+    creation = newDateFormat.format(originalDate);
   }
 
   UniverseUser.fromEntityJson(Map<String, dynamic> json ) {
@@ -284,5 +289,4 @@ class UniverseUser {
       }
       return response.statusCode;
   }
-
 }
