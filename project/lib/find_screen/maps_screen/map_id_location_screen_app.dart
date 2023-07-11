@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/utils/locations/locations.dart' as locations;
 
+import '../../components/simple_dialog_box.dart';
 import '../../consts/color_consts.dart';
 
-class MapIdLocationApp extends StatefulWidget {
+class MapIdLocation extends StatefulWidget {
   final String? id;
 
-  const MapIdLocationApp({super.key, this.id});
+  const MapIdLocation({super.key, this.id});
 
   @override
-  State<MapIdLocationApp> createState() => _MapsAppState();
+  State<MapIdLocation> createState() => _MapsState();
 }
 
-class _MapsAppState extends State<MapIdLocationApp> {
+class _MapsState extends State<MapIdLocation> {
+  double lat = 0;
+  double lng = 0;
   final Map<String, Marker> _markers = {};
   GoogleMapController? controller;
   LatLngBounds mapBounds = LatLngBounds(
@@ -26,13 +29,26 @@ class _MapsAppState extends State<MapIdLocationApp> {
     setState(() {
       _markers.clear();
         var place = fctplaces.places.where((element) => element.id == widget.id!).first;
+        lat = place.lat;
+        lng = place.lng;
         var marker = Marker(
           //icon: markerIcon,
           markerId: MarkerId(place.name),
           position: LatLng(place.lat, place.lng),
           infoWindow: InfoWindow(
             title: place.name,
-            snippet: place.address,
+            snippet: "${place.address}\nInstala a aplicação obteres direções a partir do local em que te encontras!",
+            onTap: () {
+              showDialog(context: context,
+                  builder: (BuildContext context){
+                    return const CustomDialogBox(
+                      title: "Ups!",
+                      descriptions: "O email e/ou password estão incorretos. Tenta novamente.",
+                      text: "OK",
+                    );
+                  }
+              );
+            }
           ),
         );
         _markers[place.name] = marker;

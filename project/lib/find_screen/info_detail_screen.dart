@@ -102,7 +102,7 @@ final String? link;
                                 Radius.circular(10.0),
                               ),
                             ),
-                            child: MapIdLocationApp(id: id),
+                            child: MapIdLocation(id: id),
                           ),
                         );
                       },

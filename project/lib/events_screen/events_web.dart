@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import '../Components/default_button.dart';
 import '../components/500.dart';
+import '../components/simple_dialog_box.dart';
 import '../consts/color_consts.dart';
 import '../consts/list_consts.dart';
 import '../main_screen/components/about_bottom.dart';
@@ -268,8 +269,31 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                           Spacer(),
                                                           if (Authentication.userIsLoggedIn)
                                                             IconButton(
-                                                              onPressed: () {
-                                                                CalendarEvent.add(event.planner, event.title, event.department, event.location, event.startDate, "");
+                                                              onPressed: () async {
+                                                                var response = await CalendarEvent.add(event.planner, event.title, event.department, event.location, event.startDate, "");
+                                                                if(response == 200) {
+                                                                  showDialog(context: context,
+                                                                      builder: (BuildContext context){
+                                                                        return const CustomDialogBox(
+                                                                          title: "Sucesso",
+                                                                          descriptions: "Já guardámos este evento no teu calendário! Podes aceder ao calendário e à tua agenda na nossa aplicação.",
+                                                                          text: "OK",
+                                                                        );
+                                                                      }
+                                                                  );
+                                                                } else if(response == 500)
+                                                                  context.go("/error");
+                                                                else {
+                                                                  showDialog(context: context,
+                                                                      builder: (BuildContext context){
+                                                                        return const CustomDialogBox(
+                                                                          title: "Ups!",
+                                                                          descriptions: "Não conseguimos guardar este evento no teu calendário. Tenta novamente, por favor.",
+                                                                          text: "OK",
+                                                                        );
+                                                                      }
+                                                                  );
+                                                                }
                                                               },
                                                               icon: Icon(Icons.bookmark, color: cHeavyGrey),
                                                             ),

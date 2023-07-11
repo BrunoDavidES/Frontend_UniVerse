@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../components/500.dart';
 import '../../consts/color_consts.dart';
+import '../maps_screen/map_id_location_screen_app.dart';
 
 class InfoWeb extends StatelessWidget {
   final String name;
@@ -89,7 +90,11 @@ class InfoWeb extends StatelessWidget {
                                   Radius.circular(10.0),
                                 ),
                               ),
-                              content: MapsPageWeb(),
+                              content: Container(
+                                width: size.width/2,
+                                height: size.height/1.5,
+                                child: MapIdLocation(id: id),
+                              ),
                             ),
                           );
                         },

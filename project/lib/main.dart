@@ -47,11 +47,11 @@ Future main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  /*if(FirebaseAuth.instance.currentUser!=null)
+  if(FirebaseAuth.instance.currentUser!=null)
     Authentication.userIsLoggedIn=true;
-  Authentication.getTokenID();
-  String token = await Authentication.getTokenID();
-  Authentication.role = JwtDecoder.decode(token)['role'];*/
+  //Authentication.getTokenID();
+  //String token = await Authentication.getTokenID();
+  //Authentication.role = JwtDecoder.decode(token)['role'];*/
   runApp(
     MultiProvider(
       providers: [
