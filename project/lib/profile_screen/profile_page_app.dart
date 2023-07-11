@@ -211,7 +211,7 @@ class PhotoRole extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(),
+                      ProfilePhoto(),
                     ],
                   ),
                   SizedBox(width: 5,),

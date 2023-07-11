@@ -168,9 +168,14 @@ class Routing {
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 4,),
                 redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn || Authentication.role!='T' || Authentication.role!='W' || Authentication.role!='A') {
+                  if(!Authentication.userIsLoggedIn){
+                    print("ola");
+                    print(Authentication.role);
+                    if (Authentication.role!='T' || Authentication.role!='W' || Authentication.role != 'A') {
                       return '/home';
                     }
+                    return '/home';
+                  }
                   }
               ),
             ]
