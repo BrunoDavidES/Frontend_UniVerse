@@ -30,6 +30,7 @@ class FirebaseMessagingService {
     print('=============================================');
     print('TOKEN: $token');
     print('=============================================');
+    registerDevice(token);
   }
 
   _onMessage() {
@@ -61,14 +62,12 @@ class FirebaseMessagingService {
     }
   }
 
-  static Future<int> registerDevice() async {
+  static Future<int> registerDevice(fcmToken) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
       return 401;
     }
-
-    final fcmToken = await FirebaseMessaging.instance.getToken();
 
     final url = Uri.parse('$notificationUrl/register');
     final response = await http.post(
