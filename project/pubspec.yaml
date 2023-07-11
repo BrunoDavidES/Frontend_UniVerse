@@ -71,6 +71,12 @@ dependencies:
   cloud_functions: ^4.3.3
   jwt_decoder: 2.0.1
   hive_flutter: ^1.1.0
+  firebase_messaging: ^14.6.4
+  timezone: ^0.8.0
+  flutter_native_timezone: ^2.0.0
+  flutter_local_notifications: ^9.4.0
+  provider:
+
 
   #webview_flutter: ^4.2.2
 

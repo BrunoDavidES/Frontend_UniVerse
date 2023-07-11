@@ -7,7 +7,7 @@ import '../authentication/auth.dart';
 
 class UniverseFeedback{
 
-  static Future<int> post(message) async {
+  static Future<int> post(rating, message) async {
     String token = await Authentication.getTokenID();
     if(token.isEmpty) {
       Authentication.userIsLoggedIn = false;
@@ -20,7 +20,7 @@ class UniverseFeedback{
         'Authorization': token,
       },
       body: jsonEncode({
-        'message': message,
+        'rating': rating,
       }),
     );
     if (response.statusCode == 200) {

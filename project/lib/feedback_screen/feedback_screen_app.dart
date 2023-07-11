@@ -74,7 +74,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
               descriptions: "A submissão é validada. Qualquer submissão inválida ou que desrespeite as nossas regras, resultará na suspensão da conta e no subsequente aviso aos serviços da faculdade.",
               press: () async {
                 Navigator.pop(context);
-                var response = await UniverseFeedback.post(text);
+                var response = await UniverseFeedback.post(rating, text);
                 if (response == 200) {
                   showDialog(context: context,
                       builder: (BuildContext context) {

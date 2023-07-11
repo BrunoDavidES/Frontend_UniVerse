@@ -9,3 +9,4 @@ const messageUrl = '$baseUrl/message';
 const forumUrl = '$baseUrl/forum';
 const feedbackUrl = '$baseUrl/feedback/submit';
 const helpUrl = '$baseUrl/help';
+const notificationUrl = '$baseUrl/notification';
