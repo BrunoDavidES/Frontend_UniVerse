@@ -1,22 +1,30 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../consts/color_consts.dart';
 import '../utils/events/event_data.dart';
 import '../utils/news/article_data.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-class EventsDetailScreen extends StatefulWidget {
+class EventsDetailScreen extends StatelessWidget {
   EventsDetailScreen(this.data, this.color, {super.key});
   Event data;
   Color color;
 
   @override
-  State<StatefulWidget> createState() => EventsDetailState();
-}
-
-class EventsDetailState extends State<EventsDetailScreen> {
-  @override
   Widget build(BuildContext context) {
+    Future<String> fetchTextFile() async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/Events/' + data.id! + '.txt');
+        final response = await ref.getData();
+        return utf8.decode(response as List<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: cDirtyWhiteColor,
@@ -29,7 +37,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
             color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-                color: widget.color,
+                color: color,
                 width: 2
             ),
             boxShadow: [ BoxShadow(
@@ -72,7 +80,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 15, left:10, bottom: 5),
               child: Text(
-                widget.data.title!.toUpperCase(),
+                data.title!.toUpperCase(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -90,7 +98,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top:15, left: 10, right: 10),
-                          child: Text("${widget.data.startDate} · ${widget.data.endDate}",
+                          child: Text("${data.startDate} · ${data.endDate}",
                             style: TextStyle(
                                 color: cHeavyGrey
                             ),
@@ -102,7 +110,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                             children: [
                               Icon(Icons.location_on_outlined, color: cHeavyGrey),
                               Text(
-                                widget.data.location!,
+                                data.location!,
                                 style: TextStyle(
                                     color: cHeavyGrey
                                 ),
@@ -117,7 +125,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                             children: [
                               Icon(Icons.people, color: cHeavyGrey),
                               Text(
-                                widget.data.capacity!,
+                                data.capacity!,
                                 style: TextStyle(
                                     color: cHeavyGrey
                                 ),
@@ -125,7 +133,7 @@ class EventsDetailState extends State<EventsDetailScreen> {
                             ],
                           ),
                         ),
-                        if(widget.data.isPaid=="yes")
+                        if(data.isPaid=="yes")
                           Padding(
                             padding:  EdgeInsets.only(top:15, left: 10, right: 10),
                             child: Icon(Icons.euro_outlined, color: cHeavyGrey),
@@ -133,13 +141,26 @@ class EventsDetailState extends State<EventsDetailScreen> {
 
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "Ola",
-                        textAlign: TextAlign.justify,
-                      ),
-                      //SizedBox(height: 10,)
+                    FutureBuilder(
+                      future: fetchTextFile(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error fetching file');
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.only(left:10, top: 10, right: 10),
+                            child: Text(
+                              snapshot.data ?? '',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

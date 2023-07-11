@@ -1,3 +1,5 @@
+import 'package:UniVerse/login_screen/login_app.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../components/app/grid_item.dart';
 import '../components/list_button_simple.dart';
+import '../components/simple_dialog_box.dart';
 import '../components/web/web_menu.dart';
 import '../main_screen/app/homepage_app.dart';
 import '../utils/search/info_search.dart';
@@ -68,7 +71,21 @@ class FindPageBodyApp extends StatelessWidget {
                   }
                   else if(item.text=="Transportes")
                     launchUrl(Uri.parse("https://moovitapp.com/index/pt/transportes_p%C3%BAblicos-FCT_UNL_Faculdade_de_Ci%C3%AAncias_e_Tecnologia_da_Universidade_Nova_de_Lisboa-Lisboa-site_20129427-2460"));
-                   else Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChosenPageApp(page:item.page!)));
+                   else if(item.text=="Pessoas" && !Authentication.userIsLoggedIn) {
+                    showDialog(context: context,
+                        builder: (BuildContext context){
+                          return CustomDialogBox(
+                            title: "Ups!",
+                            descriptions: "Para poderes ver os utilizadores públicos na UniVerse, precisas de iniciar sessão.",
+                            text: "OK",
+                            press: () {
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPageApp()));
+                            },
+                          );
+                        }
+                    );
+                  }
+                     else Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChosenPageApp(page:item.page!)));
                 },
               );
           },

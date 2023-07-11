@@ -26,6 +26,7 @@ class EventsState extends State<EventsFeed> {
   @override
   void initState() {
     scrollController.addListener(scrollListener);
+    if(Event.events.isEmpty)
     Event.fetchEvents(3, Event.cursor, {});
     super.initState();
   }
@@ -33,15 +34,22 @@ class EventsState extends State<EventsFeed> {
   Future<void> scrollListener() async {
     if(isLoadingMore) return;
     if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
-      setState(() {
-        isLoadingMore = true;
-      });
-      await Event.fetchEvents(3, Event.cursor, {});
-      setState(() {
-        isLoadingMore = false;
-        if(Event.events.length == Event.numEvents)
+      if (Event.events.length == Event.numEvents)
+        setState(() {
           hasMore = false;
-      });
+          isLoadingMore = false;
+        });
+      else {
+        setState(() {
+          isLoadingMore = true;
+        });
+        await Event.fetchEvents(3, Event.cursor, {});
+        setState(() {
+          isLoadingMore = false;
+          if (Event.events.length == Event.numEvents)
+            hasMore = false;
+        });
+      }
     }
   }
 

@@ -36,7 +36,6 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
 
   @override
   Widget build(BuildContext context) {
-    //("Rebeca", "rebe.a.gostosa", "Funcionário", "Divisão Erótica", "rebeca@sabes.pt", "+351 696969696", "O que é isso?", "Cave de Eletrotécnica", "UNREGISTERED", "Elah", "Núcleo 69", "CONTA ATIVA", "11/07/2023", "yes");
     Size size = MediaQuery.of(context).size;
     return Row(
       children: [

@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/events/event_data.dart';
@@ -8,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../consts/list_consts.dart';
 import '../../events_screen/events_app_detail_screen.dart';
 import '../../utils/events/personal_event_data.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class EventsCard extends StatefulWidget {
   EventsCard(this.data, {super.key});
@@ -20,6 +22,33 @@ class EventsCard extends StatefulWidget {
 class EventsCardState extends State<EventsCard> {
   @override
   Widget build(BuildContext context) {
+    Future<Uint8List> fetchImageFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/Events/' + news);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+    var sizeWidth;
+    var sizeHeight;
+    Size size = MediaQuery.of(context).size;
+    if(size.width>600) {
+      if(MediaQuery.of(context).orientation==Orientation.portrait) {
+        sizeWidth = size.width-200;
+        sizeHeight= size.height/4;
+      }
+      else {
+        sizeWidth = size.width/2;
+        sizeHeight= size.height/2;
+      }
+    }
+    else {
+      sizeWidth=double.infinity;
+      sizeHeight=size.height/3;
+    }
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
     return InkWell(
@@ -28,9 +57,9 @@ class EventsCardState extends State<EventsCard> {
       },
       child: Container(
         width: double.infinity,
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(2),
-        height: 250,
+        margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 20),
+        padding: EdgeInsets.all(2),
+        height: 235,
         decoration: BoxDecoration(
             color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
@@ -48,17 +77,27 @@ class EventsCardState extends State<EventsCard> {
         ),
         child: Column(
           children: [
-                  Container(
-                    width: double.infinity,
-                    height: 190,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                            image: NetworkImage("https://www.fct.unl.pt/sites/default/files/imagens/noticias/2018/11/campus.jpg"),
-                            fit: BoxFit.cover
-                        )
-                    ),
-                  ),
+            Container(
+              width: double.infinity,
+              height: sizeHeight-40,
+              child: FutureBuilder<Uint8List>(
+                future: fetchImageFile(widget.data.id),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error fetching image: ${snapshot.error}');
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    return Image.memory(
+                      snapshot.data!,
+                      fit: BoxFit.contain,
+                    );
+                  } else {
+                    return Text('Image not found');
+                  }
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top:5, left: 10, right: 10),
               child: Row(

@@ -4,6 +4,7 @@ import 'package:UniVerse/find_screen/organizations_screen/organizations_info_web
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/tester/tester.dart';
 import 'package:UniVerse/utils/search/info.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
@@ -166,11 +167,11 @@ class Routing {
                 path: 'submit',
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 4,),
-                /* redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
+                redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn || Authentication.role!='T' || Authentication.role!='W' || Authentication.role!='A') {
                       return '/home';
                     }
-                  }*/
+                  }
               ),
             ]
         ),
@@ -186,69 +187,69 @@ class Routing {
               UniverseInfoWeb(),
         ),
         GoRoute(
-          path: '/map',
-          builder: (BuildContext context, GoRouterState state) =>
-              MapPage(),
-        ),
-        GoRoute(
             name: 'Área Pessoal',
             path: '/personal',
             builder: (BuildContext context, GoRouterState state) =>
                 PersonalPageWeb(i: 0,),
+            redirect: (BuildContext context, GoRouterState state) {
+              if (!Authentication.userIsLoggedIn) {
+                return '/home';
+              }
+            },
             routes: [
               GoRoute(
                   path: 'profile',
                   builder: (BuildContext context, GoRouterState state) =>
                       PersonalPageWeb(i: 1,),
-                  /* redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
+                  redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn || !UniverseUser.isVerified()) {
                       return '/home';
                     }
-                  },*/
+                  },
                   routes: [
                     GoRoute(
                       path: 'edit',
                       builder: (BuildContext context, GoRouterState state) =>
                           PersonalPageWeb(i: 1,),
-                      /*redirect: (BuildContext context, GoRouterState state) {
-                        if (!Authentication.userIsLoggedIn) {
+                      redirect: (BuildContext context, GoRouterState state) {
+                        if (!Authentication.userIsLoggedIn || !UniverseUser.isVerified()) {
                           return '/home';
                         }
-                      },*/
+                      },
                     ),
                   ]
               ),
-              GoRoute(
+              /*GoRoute(
                 path: 'calendar',
                 builder: (BuildContext context, GoRouterState state) =>
                     PersonalPageWeb(i: 3,),
                 redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
+                    if (!Authentication.userIsLoggedIn || !UniverseUser.isVerified()) {
                       return '/home';
                     }
                   }
-              ),
+              ),*/
             ]
         ),
         GoRoute(
           path: '/report',
           builder: (BuildContext context, GoRouterState state) =>
               PersonalPageWeb(i: 2,),
-          /*redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
+          redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn || !UniverseUser.isVerified()) {
                       return '/home';
                     }
-                  }*/
+                  }
         ),
         GoRoute(
           path: '/feedback',
           builder: (BuildContext context, GoRouterState state) =>
               PersonalPageWeb(i: 5,),
-          /*redirect: (BuildContext context, GoRouterState state) {
-                    if (!Authentication.userIsLoggedIn) {
+          redirect: (BuildContext context, GoRouterState state) {
+                    if (!Authentication.userIsLoggedIn || !UniverseUser.isVerified()) {
                       return '/home';
                     }
-                  }*/
+                  }
         ),
       ]
   );

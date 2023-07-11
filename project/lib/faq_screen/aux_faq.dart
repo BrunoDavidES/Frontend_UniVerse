@@ -5,7 +5,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:UniVerse/bars/web_bar.dart';
+import 'package:go_router/go_router.dart';
 import '../components/default_button_simple.dart';
+import '../components/simple_dialog_box.dart';
 import '../components/text_field.dart';
 import '../consts/color_consts.dart';
 import '../find_screen/findTest/right_side.dart';
@@ -21,8 +23,6 @@ class FAQWebPageAux extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<FAQWebPageAux> {
-  Map _source = {ConnectivityResult.none: false};
-  final ConnectivityChecker _connectivity = ConnectivityChecker.instance;
   late TextEditingController emailController;
   late TextEditingController titleController;
   late TextEditingController messageController;
@@ -33,19 +33,46 @@ class _RegisterScreenState extends State<FAQWebPageAux> {
     titleController = TextEditingController();
     emailController = TextEditingController();
     messageController = TextEditingController();
-    _connectivity.initialize();
-    _connectivity.myStream.listen((source) {
-      setState(() {
-        _source = source;
-      });
-    });
     super.initState();
   }
+
+  void submitButtonPressed(email, title, message) {
+   if(!Faq.areCompliant(email, title, message)) {
+      showDialog(context: context,
+          builder: (BuildContext context){
+            return const CustomDialogBox(
+              title: "Ups!",
+              descriptions: "Existem campos vazios. Preenche-os, por favor.",
+              text: "OK",
+            );
+          }
+      );
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      var response = Faq.request(title, email, message);
+      if(response == 200) {
+        showDialog(context: context,
+            builder: (BuildContext context){
+              return const CustomDialogBox(
+                title: "Sucesso",
+                descriptions: "Recebemos a tua pergunta. Vamos responder-te, brevemente.",
+                text: "OK",
+              );
+            }
+        );
+        setState(() {
+          isLoading = false;
+        });
+      }  else {
+        context.go("/error");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    titleController = TextEditingController();
-    messageController = TextEditingController();
-    emailController = TextEditingController();
 
     Size size = MediaQuery
         .of(context)
@@ -264,8 +291,10 @@ class _RegisterScreenState extends State<FAQWebPageAux> {
                       text: "Enviar",
                       color: cDarkBlueColor,
                       press: () {
-                        Faq.request(titleController.text, emailController.text, messageController.text);
-
+                        submitButtonPressed(emailController.text.trim(), titleController.text, messageController.text);
+                        setState(() {
+                          isLoading = true;
+                        });
                       },
                       height: 20,
                     ),

@@ -1,11 +1,10 @@
 import 'package:UniVerse/components/confirm_dialog_box.dart';
 import 'package:UniVerse/modify_password_screen/modify_password_page_web.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../personal_event_screen/personal_event_web.dart';
 import '../../consts/color_consts.dart';
 import '../simple_dialog_box.dart';
 import '../web_menu_card.dart';
@@ -53,6 +52,7 @@ class WebMenu extends StatelessWidget {
             children:  [
               Column(
                 children: <Widget>[
+                  if(Authentication.role=='BO' || Authentication.role=='A')
                   WebMenuCard(text: 'Gestão de Backoffice', icon: Icons.manage_accounts_outlined, press: () {
                     launchUrl(Uri.parse("https://universe-fct.oa.r.appspot.com/backoffice/index.html"));
                   },),
@@ -74,8 +74,7 @@ class WebMenu extends StatelessWidget {
                     );
                   },),
                   WebMenuCard(text: 'Calendário',icon: Icons.calendar_month_outlined, press: () {
-                    context.go('/personal/calendar');
-                    /*showDialog(
+                    showDialog(
                         context: context,
                         builder: (_) => Dialog(
                           shape: RoundedRectangleBorder(
@@ -84,9 +83,9 @@ class WebMenu extends StatelessWidget {
                                   Radius.circular(10.0)
                               )
                           ),
-                          child: QRPopUp(text: "Acede ao calendário na nossa aplicação!",),
+                          child: QRPopUp(text: "Acede ao calendário e à tua agenda pessoal na aplicação!",),
                         )
-                    );*/
+                    );
                   },),
                   WebMenuCard(text: 'Fóruns',icon: Icons.message_outlined, press: () {
                     showDialog(
@@ -105,6 +104,7 @@ class WebMenu extends StatelessWidget {
                   WebMenuCard(text: 'Reportar',icon: Icons.report_outlined, press: () {
                     context.go("/report");
                   },),
+                  if(Authentication.role=='T' || Authentication.role=='W' || Authentication.role=='A')
                   WebMenuCard(text: 'Organizar Evento',icon: Icons.event_available_outlined, press: () {
                     context.go("/events/submit");
                   },),

@@ -16,7 +16,7 @@ class PersonalWebCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     String name = UniverseUser.getName();
-    String role = Authentication.role;
+    String role = UniverseUser.friendlyRole;
     String job = UniverseUser.getJob();
     Color color;
     if (UniverseUser.isVerified()) {
@@ -26,24 +26,6 @@ class PersonalWebCard extends StatelessWidget {
         color = Colors.orange;
     } else
       color = Colors.red;
-
-    String displayRole;
-    switch (role) {
-      case 'A':
-        displayRole = 'Admin';
-        break;
-      case 'BO':
-        displayRole = 'BackOffice';
-        break;
-      case 'T':
-        displayRole = 'Teacher';
-        break;
-      case 'S':
-        displayRole = 'Student';
-        break;
-      default:
-        displayRole = 'Unknown';
-    }
 
     return Padding(
       padding: const EdgeInsets.only(left: 30),
@@ -88,7 +70,7 @@ class PersonalWebCard extends StatelessWidget {
                 ? Padding(
               padding: const EdgeInsets.only(left: 18, bottom: 5),
               child: Text(
-                displayRole,
+                role,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: cDirtyWhiteColor,

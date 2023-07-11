@@ -34,7 +34,7 @@ class Authentication {
       );
       if(!kIsWeb) {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-      } else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
+      } //else FirebaseAuth.instance.setPersistence(Persistence.SESSION);
       userIsLoggedIn = true;
       String token = await getTokenID();
       role = JwtDecoder.decode(token)['role'];
