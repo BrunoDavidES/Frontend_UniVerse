@@ -41,7 +41,7 @@ class PersonalCard extends StatelessWidget {
           ),
           ]
       ),
-      height: 175,
+      height: 170,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

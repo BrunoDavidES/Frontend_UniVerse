@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'components/web/not_found.dart';
 import 'firebase_options.dart';
@@ -49,6 +50,8 @@ Future main() async{
   if(FirebaseAuth.instance.currentUser!=null)
     Authentication.userIsLoggedIn=true;
   Authentication.getTokenID();
+  String token = await Authentication.getTokenID();
+  Authentication.role = JwtDecoder.decode(token)['role'];
   runApp(
     MultiProvider(
       providers: [

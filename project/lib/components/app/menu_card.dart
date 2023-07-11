@@ -21,7 +21,7 @@ class MenuCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(5),
           width: size.width,
-          height: size.height/5.5,
+          height: size.height/5,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(

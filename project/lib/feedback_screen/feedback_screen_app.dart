@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/components/description_field.dart';
+import 'package:UniVerse/personal_page_screen/app/personal_page_app.dart';
 import 'package:UniVerse/personal_page_screen/app/personal_page_body_app.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -86,7 +87,7 @@ class FeedbackScreenState extends State<FeedbackScreen> {
                               if(kIsWeb) {
                                 Navigator.pop(context);
                                 context.go("/personal");
-                              } else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PersonalPageBodyApp()));
+                              } else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AppPersonalPage()));
                             }
                         );
                       }

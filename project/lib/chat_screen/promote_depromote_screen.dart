@@ -79,7 +79,11 @@ class _MyChatPageState extends State<PromoteDepromoteScreen> {
                 ConfirmDialogBox(
                     descriptions: widget.toPromote ?"O utilizador com o identificador $username, terá permissões de edição sobre este fórum. Confirmas?" :"O utilizador com o identificador $username deixará de ter permissões sobre este fórum. Confirmas?",
                     press: () async {
-                      var response =await Chat.promote(widget.forumID, username); //:await Chat.
+                      var response;
+                      if(widget.toPromote)
+                      response = await Chat.promote(widget.forumID, username);
+                      else response = await Chat.demote(widget.forumID, username);
+                     // var response = widget.toPromote ?await Chat.promote(widget.forumID, username) :await Chat.demote(widget.forumID, username); //:await Chat.
                       if (response == 200) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
@@ -187,8 +191,16 @@ class _MyChatPageState extends State<PromoteDepromoteScreen> {
                       Navigator.pop(context);
                     },
                     height: 10),
-                DefaultButtonSimple(
+                widget.toPromote
+                ? DefaultButtonSimple(
                     text: "PROMOVER",
+                    color: cPrimaryColor,
+                    press: () {
+                      actionButtonPressed(usernameController.text);
+                    },
+                    height: 10)
+                    :DefaultButtonSimple(
+                    text: "DESPROMOVER",
                     color: cPrimaryColor,
                     press: () {
                       actionButtonPressed(usernameController.text);

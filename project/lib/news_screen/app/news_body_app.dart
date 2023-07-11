@@ -24,6 +24,7 @@ class NewsState extends State<NewsFeed> {
   @override
   void initState() {
     scrollController.addListener(scrollListener);
+    if(Article.news.isEmpty)
     Article.fetchNews(3, Article.cursor, {});
     super.initState();
   }
@@ -31,15 +32,22 @@ class NewsState extends State<NewsFeed> {
   Future<void> scrollListener() async {
     if(isLoadingMore) return;
     if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
-      setState(() {
-        isLoadingMore = true;
-      });
-      await Article.fetchNews(3, Article.cursor, {});
-      setState(() {
-        isLoadingMore = false;
-        if(Article.news.length == Article.numNews)
+      if (Article.news.length == Article.numNews)
+        setState(() {
           hasMore = false;
-      });
+          isLoadingMore = false;
+        });
+      else {
+        setState(() {
+          isLoadingMore = true;
+        });
+        await Article.fetchNews(3, Article.cursor, {});
+        setState(() {
+          isLoadingMore = false;
+          if (Article.news.length == Article.numNews)
+            hasMore = false;
+        });
+      }
     }
   }
 

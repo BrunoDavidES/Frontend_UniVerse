@@ -33,17 +33,6 @@ class NewsCardState extends State<NewsCard> {
       }
     }
 
-    Future<String> fetchTextFile(news) async {
-      try {
-        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
-        final response = await ref.getData();
-        return utf8.decode(response as List<int>);
-      } catch (e) {
-        print('Error fetching text file: $e');
-        return '';
-      }
-    }
-
     var sizeWidth;
     var sizeHeight;
     Size size = MediaQuery.of(context).size;

@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<FAQWebPageAux> {
               ),
               FAQbox(
                 question: 'É necessário criar uma conta?',
-                answer: 'Não. Estamos a trabalhar no sentido de tornar a UniVerse mais acessível para ti e, por isso, por enquanto, se fazes parte da FCT NOVA é aconselhável registares-te para não perderes os benefícios que isso traz. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
+                answer: 'Não. Podes explorar a plataforma, de forma limitada, sem registo e/ou sessão iniciada. No entanto, aconselhamos-te a fazê-lo para que possas usufruir de todas as vantagens que te trazemos. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
               ),
               FAQbox(
                 question: 'Não sou da faculdade, posso visitar a UniVerse?',
@@ -100,6 +100,10 @@ class _RegisterScreenState extends State<FAQWebPageAux> {
               FAQbox(
                 question: 'Onde posso receber ajuda sobre a FCT?',
                 answer: 'Visita a página de Ajuda do website da NOVA FCT ou recolhe informação na nossa página de Procurar.',
+              ),
+              FAQbox(
+                question: 'A minha pergunta não foi respondida..',
+                answer: 'Se tiveres alguma dúvida, utiliza o nosso formulário de contacto para respondermos o mais brevemente possível.',
               ),
             ],
           ),
@@ -260,7 +264,7 @@ class _RegisterScreenState extends State<FAQWebPageAux> {
                       text: "Enviar",
                       color: cDarkBlueColor,
                       press: () {
-                        Faq.requestHelp(titleController.text, emailController.text, messageController.text);
+                        Faq.request(titleController.text, emailController.text, messageController.text);
 
                       },
                       height: 20,
