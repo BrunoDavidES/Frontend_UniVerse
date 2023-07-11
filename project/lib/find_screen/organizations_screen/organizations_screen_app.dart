@@ -41,7 +41,7 @@ class OrganizationsScreenApp extends StatelessWidget {
                   StretchMode.zoomBackground,
                 ],
                 background: Image(
-                    image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                    image: AssetImage("assets/images/photo_1.jpg"),
                     fit: BoxFit.fill
                 ),
               ),

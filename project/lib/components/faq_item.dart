@@ -53,7 +53,8 @@ class FAQbox extends StatelessWidget {
                   answer,
                   style: const TextStyle(
                     color: Colors.white,
-                  )
+                  ),
+                textAlign: TextAlign.start,
               ),
             ],
           ),

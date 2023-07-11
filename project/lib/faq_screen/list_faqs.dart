@@ -18,38 +18,31 @@ class FAQlist extends StatelessWidget {
              ),
              FAQbox(
                question: 'É necessário criar uma conta?',
-               answer: 'Não. Estamos a trabalhar no sentido de tornar a UniVerse mais acessível para ti e, por isso, por enquanto, se fazes parte da FCT NOVA é aconselhável registares-te para não perderes os benefícios que isso traz. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
+               answer: 'Não. Podes explorar a plataforma, de forma limitada, sem registo e/ou sessão iniciada. No entanto, aconselhamos-te a fazê-lo para que usufruas de todas as vantagens que te trazemos. Insere o teu e-mail institucional, nome e uma palavra-passe e está feito. Fazes agora parte da UniVerse!',
              ),
             FAQbox(
-              question: 'A UniVerse e só para pessoas da faculdade?',
-              answer: 'Não! Se não fazes parte da NOVA FCT, podes fazer parte do universo. Podes ver o que é que se passa e ver os próximos eventos que irão decorrer na faculdade. Podes também procurar por informação da FCT.',
-            ),
-            FAQbox(
-              question: 'Quem é a CAPICREW?',
-              answer: 'A CAPICREW são os criadores da UniVerse. São 5 estudantes do curso de informática (MIEI) da NOVA FCT.',
-            ),
-            FAQbox(
-              question: 'Porque é que não me consigo registar?',
-              answer: 'Se não pertences á NOVA FCT não vais conseguir registar, esta aplicação tem como objetivo a facilitação de acesso de informação aos estudantes e de facilitação de informação para os que estão a oassar por cá.',
-            ),FAQbox(
-              question: 'Que linguagens foram utilizadas para a criação da UniVerse?',
-              answer: 'Para a criação da Universe foram utilizadas uma variedade de linguagens, desde JavaScript, Java, Html, CSS a Dart.',
-            ),
-            FAQbox(
-              question: 'Dentro da UniVerse existe algum segredo que o utilizador consiga descobrir?',
-              answer: 'Pergunta interessante! Dentro da UniVerse, há uma aura de mistério que cativa a curiosidade dos utilizadores. Embora não possa confirmar nem negar explicitamente a existência de segredos, posso dizer que a plataforma foi desenvolvida com detalhes minuciosos e uma atenção cuidadosa aos pormenores.',
+              question: 'Não sou da faculdade, posso visitar a UniVerse?',
+              answer: 'Claro! Queremos que o Universo chegue a todos. Por isso, podes ver as mais recentes notícias e próximos eventos abertos a visitantes. Podes também encontrar informaçóes básicas para que não tenhas qualquer dúvida, estando o registo na plataforma aberto apenas a pessoas com vínculo à FCT.',
             ),
              FAQbox(
-               question: 'Onde posso saber mais sobre a UniVerse?',
-               answer: 'Não queremos que o Universo esteja distante, por isso, podes acompanhar-nos no Instagram @universe.fct',
+               question: 'Quem é a CAPI CREW?',
+               answer: 'A CAPI CREW são os criadores da UniVerse. São 5 estudantes do curso de Engenharia Informática da NOVA FCT.',
+             ),
+            FAQbox(
+              question: 'Por que não me consigo registar?',
+              answer: 'Se não pertences a esta faculdade, não te poderás registar nesta plataforma. Contudo, e se estiveres vinculado à faculdade, o registo pode falhar por não te estares a inscrever com o teu e-mail institucional, a palavra-passe que escolheste não seguir as restrições de, no mínimo, 6 caracteres, 1 número e 1 letra maiúscula ou porque algém se já registou com o teu e-mail (neste caso, por favor contacta-nos).',
+            ),
+             FAQbox(
+               question: 'Que linguagens de programação foram utilizadas para a criação da UniVerse?',
+               answer: 'Alcançámos o Universo, usando Java, JavaScript, HTML, CSS e Dart.',
              ),
              FAQbox(
                question: 'Onde posso saber mais sobre a UniVerse?',
-               answer: 'Não queremos que o Universo esteja distante, por isso, podes acompanhar-nos no Instagram @universe.fct',
+               answer: 'Não queremos que o Universo esteja distante, por isso, podes acompanhar-nos no Instagram em @universe.fct',
              ),
              FAQbox(
-               question: 'Quer saber alguma informação específica sobre a faculdade FCT NOVA?',
-               answer: 'Vai ao site de ajuda da FCT, onde encontra a FAQ da faculdade com várias questões frequentemente perguntadas. Link: https://www.fct.unl.pt/faq#t136n17231',
+               question: 'Onde posso receber ajuda sobre a FCT?',
+               answer: 'Visita a página de Ajuda do website da NOVA FCT ou recolhe informação na nossa página de Procurar.',
              ),
       ]
         ),

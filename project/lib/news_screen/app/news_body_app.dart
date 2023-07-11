@@ -7,118 +7,171 @@ import '../../components/simple_dialog_box.dart';
 import '../../consts/color_consts.dart';
 import '../../utils/connectivity.dart';
 import '../../utils/news/article_data.dart';
-import '../../utils/news/article_data_aux.dart';
 
 class NewsFeed extends StatefulWidget {
-
 
   const NewsFeed({super.key});
 
   @override
   State<StatefulWidget> createState() => NewsState();
-  }
+}
 
 class NewsState extends State<NewsFeed> {
-  late Future<int> fetchDone;
-  late ScrollController controller;
-  late int offset;
-  late bool hasMore;
+  final scrollController = ScrollController();
+  bool isLoadingMore = false;
+  bool hasMore = true;
 
   @override
   void initState() {
+    scrollController.addListener(scrollListener);
+    Article.fetchNews(3, Article.cursor, {});
     super.initState();
-    offset = 0;
-    hasMore = true;
-    fetchDone = fetchNews();
-    controller = ScrollController()..addListener(handleScrolling);
+  }
+
+  Future<void> scrollListener() async {
+    if(isLoadingMore) return;
+    if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      await Article.fetchNews(3, Article.cursor, {});
+      setState(() {
+        isLoadingMore = false;
+        if(Article.news.length == Article.numNews)
+          hasMore = false;
+      });
+    }
   }
 
   @override
   void dispose() {
-    controller.removeListener(handleScrolling);
+    scrollController.removeListener(scrollListener);
     super.dispose();
-  }
-
-  Future<int> fetchNews() async {
-    final limit = 3;
-
-    try {
-      final statusCode = await ArticleAux.fetchNews(limit, offset.toString(), {});
-
-      if (statusCode == 200) {
-        setState(() {
-          hasMore = ArticleAux.news.length < ArticleAux.numNews;
-        });
-      }
-
-      return statusCode;
-    } catch (e) {
-      print('Error fetching news: $e');
-      return 500;
-    }
-  }
-
-  void handleScrolling() {
-    if (controller.offset == controller.position.maxScrollExtent && hasMore) {
-      setState(() {
-        offset += 3;
-      });
-      fetchNews();
-    }
-  }
-
-  Future<void> refresh() async {
-    setState(() {
-      hasMore = true;
-      offset = 0;
-      ArticleAux.news.clear();
-    });
-    await fetchNews();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: cDirtyWhiteColor,
-      child: RefreshIndicator(
-        onRefresh: refresh,
-        child: SingleChildScrollView(
-          controller: controller,
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: FutureBuilder<int>(
-              future: fetchDone,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(cPrimaryOverLightColor),
-                    backgroundColor: cPrimaryLightColor,
-                  );
-                } else if (snapshot.hasData) {
-                  if (snapshot.data == 500) {
-                    return Error500();
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: ArticleAux.news.map((e) => NewsCard(e as Article)).toList(),
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return Text(
-                    'Error: ${snapshot.error}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: cPrimaryLightColor,
+    return ListView.builder(
+        controller: scrollController,
+        itemCount: Article.news.length+1,
+        itemBuilder: (context, index) {
+          if(index<Article.news.length) {
+            return NewsCard(Article.news[index]);
+          } else {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  top: 10, left: 10, right: 10, bottom: 80),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if(isLoadingMore)
+                    LinearProgressIndicator(
+                      color: cPrimaryOverLightColor,
+                      minHeight: 10,
+                      backgroundColor: cPrimaryLightColor,),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      hasMore
+                          ? "A CARREGAR NOTÍCIAS"
+                          : "VISTE TODAS AS NOTÍCIAS!",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: cPrimaryLightColor
+                      ),
                     ),
-                  );
-                }
-                return Container(); // Empty container if none of the above conditions are met
+                  )
+                ],
+              ),
+            );
+          }
+        }
+    );
+    //),
+    // );
+  }/*FutureBuilder(
+          future: fetchDone,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data == 500) {
+                return Error500();
+              } else {
+                return ListView.builder(
+                    padding: EdgeInsets.all(10),
+                    controller: controller,
+                    itemCount: Article.news.length + 1,
+                    itemBuilder: (context, int index) {
+                      if (index < Article.news.length)
+                        return NewsCard(Article.news[index]);
+                      else
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10, bottom: 80),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if(hasMore)
+                                LinearProgressIndicator(
+                                  color: cPrimaryOverLightColor,
+                                  minHeight: 10,
+                                  backgroundColor: cPrimaryLightColor,),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  hasMore
+                                      ? "A CARREGAR NOTÍCIAS"
+                                      : "VISTE TODAS AS NOTÍCIAS!",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: cPrimaryLightColor
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                    }
+                );
+              }
+            }
+            else Text(
+              "A CARREGAR NOTÍCIAS",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: cPrimaryLightColor
+              ),
+            );
+          }
+      );
+    }
+
+  /*return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LinearProgressIndicator(color: cPrimaryOverLightColor, minHeight: 10, backgroundColor: cPrimaryLightColor,),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "A CARREGAR NOTÍCIAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: cPrimaryLightColor
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
               },
             ),
-          ),
-        ),
-      ),
-    );
-  }
+            /*Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: Article.news.map((e) => NewsCard(e)).toList(),*/
+            //SizedBox(height: 10,)
+          );
+    }
+}*/*/
 }

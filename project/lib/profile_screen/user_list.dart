@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class UserListPage extends StatefulWidget {
+/*class UserListPage extends StatefulWidget {
 
   @override
   _UserListPageState createState() => _UserListPageState();
@@ -52,4 +52,4 @@ class _UserListPageState extends State<UserListPage> {
       ),
     );
   }
-}
+}*/

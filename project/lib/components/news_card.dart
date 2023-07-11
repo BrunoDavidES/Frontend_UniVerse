@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/news_screen/app/news_app_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../consts/list_consts.dart';
 
@@ -18,6 +21,29 @@ class NewsCard extends StatefulWidget {
 class NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
+
+    Future<Uint8List> fetchImageFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news);
+        final byteData = await ref.getData();
+        return byteData!.buffer.asUint8List();
+      } catch (e) {
+        print('Error fetching file: $e');
+        return Uint8List(0);
+      }
+    }
+
+    Future<String> fetchTextFile(news) async {
+      try {
+        final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
+        final response = await ref.getData();
+        return utf8.decode(response as List<int>);
+      } catch (e) {
+        print('Error fetching text file: $e');
+        return '';
+      }
+    }
+
     var sizeWidth;
     var sizeHeight;
     Size size = MediaQuery.of(context).size;
@@ -43,7 +69,7 @@ class NewsCardState extends State<NewsCard> {
       },
       child: Container(
         width: sizeWidth,
-        margin: EdgeInsets.only(bottom: 20),
+        margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 20),
         padding: EdgeInsets.all(2),
         height: sizeHeight,
         decoration: BoxDecoration(
@@ -68,12 +94,22 @@ class NewsCardState extends State<NewsCard> {
                     Container(
                       width: double.infinity,
                       height: sizeHeight-40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                              image: NetworkImage(widget.data.urlToImage),
-                              fit: BoxFit.cover
-                          )
+                      child: FutureBuilder<Uint8List>(
+                        future: fetchImageFile(widget.data.id),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error fetching image: ${snapshot.error}');
+                          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return Image.memory(
+                              snapshot.data!,
+                              fit: BoxFit.contain,
+                            );
+                          } else {
+                            return Text('Image not found');
+                          }
+                        },
                       ),
                     ),
                     Container(

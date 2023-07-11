@@ -38,7 +38,7 @@ class DepartmentsBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
-                image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                image: AssetImage("assets/images/photo_7.jpg"),
                 fit: BoxFit.fill
             ),
           ),
