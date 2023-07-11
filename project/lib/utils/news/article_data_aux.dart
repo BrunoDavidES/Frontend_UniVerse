@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 class ArticleAux {
   static List<ArticleAux> news = <ArticleAux>[];
+  static Map<String?, ArticleAux> newsAux = Map<String?, ArticleAux>();
   static int numNews = 0;
   static String cursor = "EMPTY";
   String? id;
@@ -83,9 +84,10 @@ class ArticleAux {
       cursor = decodedJson['cursor'];
       var decodedNews = decodedJson['results'];
       for (var decoded in decodedNews) {
-        if(!news.contains(ArticleAux.fromJson(decoded))){
+        newsAux.putIfAbsent(ArticleAux.fromJson(decoded).id, () => ArticleAux.fromJson(decoded));
+        /*if(!news.contains(ArticleAux.fromJson(decoded))){
           news.add(ArticleAux.fromJson(decoded));
-        }
+        }*/
       }
     }
     return response.statusCode;
