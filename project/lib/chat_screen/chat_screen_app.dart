@@ -52,13 +52,22 @@ class _MyChatPageState extends State<ChatPageApp> {
       _chatStream = FirebaseDatabase.instance
           .ref()
           .child('forums/${widget.forumID}/feed/')
-          .orderByChild("posted")
           .onValue
           .listen((event) {
         var snapshot = event.snapshot;
         var children = snapshot.value as Map<dynamic, dynamic>;
 
-        _chatStreamController.add(children);
+        List<MapEntry<dynamic, dynamic>> entries = children.entries.toList();
+
+        entries.sort((a, b) {
+          int postedA = a.value['posted'];
+          int postedB = b.value['posted'];
+          return postedA.compareTo(postedB);
+        });
+
+        Map<dynamic, dynamic> sortedMap = Map.fromEntries(entries);
+
+        _chatStreamController.add(sortedMap);
         setState(() {
           isSending = false;
         });
