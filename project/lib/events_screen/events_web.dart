@@ -250,10 +250,8 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                               child: Text(
                                                                 snapshot.data ?? '',
                                                                 textAlign: TextAlign.start,
-                                                                style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 20,
-                                                                ),
+                                                                maxLines: 3,
+                                                                overflow: TextOverflow.ellipsis,
                                                               ),
                                                             );
                                                           }

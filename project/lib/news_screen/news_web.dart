@@ -203,10 +203,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                             child: Text(
                                                               snapshot.data ?? '',
                                                               textAlign: TextAlign.start,
-                                                              style: TextStyle(
-                                                                color: Colors.black,
-                                                                fontSize: 20,
-                                                              ),
+                                                              maxLines: 3,
+                                                              overflow: TextOverflow.ellipsis,
                                                             ),
                                                           );
                                                         }

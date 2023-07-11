@@ -97,11 +97,9 @@ class NewsCardState extends State<NewsCard> {
                           } else if (snapshot.hasError) {
                             return Text('Error fetching image: ${snapshot.error}');
                           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return ClipOval(
-                              child: Image.memory(
-                                snapshot.data!,
-                                fit: BoxFit.contain,
-                              ),
+                            return Image.memory(
+                              snapshot.data!,
+                              fit: BoxFit.contain,
                             );
                           } else {
                             return Text('Image not found');

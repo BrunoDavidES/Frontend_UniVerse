@@ -137,10 +137,8 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                       child: Text(
                         snapshot.data ?? '',
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     );
                   }
