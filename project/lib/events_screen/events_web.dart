@@ -309,7 +309,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                       Padding(
                         padding: const EdgeInsets.only(
                           top: 0,
-                          bottom: 60.0,
+                          bottom: 40.0,
                         ),
                       ),
                       if (loadedArticlesCount < totalArticlesCount)
@@ -336,6 +336,7 @@ class _EventsWebPageState extends State<EventsWebPage> {
                             bottom: 60.0,
                           ),
                         ),
+                      SizedBox(height: 40),
                       BottomAbout(size: size),
                     ],
                   ),
