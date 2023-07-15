@@ -70,7 +70,7 @@ class Event {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-          body: "{}"
+          body: filters
       );
       if(response.statusCode==200) {
         numEvents = json.decode(response.body);
@@ -85,7 +85,7 @@ class Event {
         'Content-Type': 'application/json',
         'Authorization': token,
       },
-      body: "{}",
+      body: filters,
     );
     if(response.statusCode==200) {
       Map<String, dynamic> decodedJson = json.decode(response.body);

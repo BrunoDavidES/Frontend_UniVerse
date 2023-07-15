@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:UniVerse/Components/default_button.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +37,10 @@ class EventsState extends State<OrganizedEventsFeed> {
   @override
   void initState() {
     offset = 0;
-    fetchDone = Event.fetchEvents(5, Event.cursor, {});
+    String? author = FirebaseAuth.instance.currentUser?.uid;
+    if(author != null) {
+      fetchDone = Event.fetchEvents(5, Event.cursor, {'authorName': author});
+    }
     controller = ScrollController()
       ..addListener(handleScrolling);
     super.initState();
@@ -53,10 +58,23 @@ class EventsState extends State<OrganizedEventsFeed> {
         offset = offset + 3;
         if (Article.news.length == Event.numEvents)
           hasMore = false;
-        else
-          Event.fetchEvents(5, Event.cursor, {});
+        else {
+          String? author = FirebaseAuth.instance.currentUser?.uid;
+          if (author != null) {
+            fetchDone =
+                Event.fetchEvents(5, Event.cursor, {'authorName': author});
+          }
+        }
       });
     }
+  }
+
+  Future<int> fetchOrganizedEvents() {
+    String? author = FirebaseAuth.instance.currentUser?.uid;
+    if(author != null) {
+      fetchDone = Event.fetchEvents(5, Event.cursor, {'authorName': author});
+    }
+    return fetchDone;
   }
 
   Future refresh() async {
@@ -65,7 +83,10 @@ class EventsState extends State<OrganizedEventsFeed> {
       offset = 0;
       Event.events.clear();
     });
-    Event.fetchEvents(5, Event.cursor, {});
+    String? author = FirebaseAuth.instance.currentUser?.uid;
+    if(author != null) {
+      fetchDone = Event.fetchEvents(5, Event.cursor, {'authorName': author});
+    }
   }
 
   @override
@@ -96,7 +117,7 @@ width: width,
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: FutureBuilder(
-                  future: Event.fetchEvents(5, Event.cursor, {}),
+                  future: fetchOrganizedEvents(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data == 500) {
