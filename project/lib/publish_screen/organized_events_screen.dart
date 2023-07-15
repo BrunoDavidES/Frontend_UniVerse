@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:UniVerse/Components/default_button.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -40,8 +43,9 @@ class EventsState extends State<OrganizedEventsFeed> {
   }
 
   Future<int> initialize() async {
-    if(Event.events.isEmpty)
-      return Event.fetchEvents(3, Event.cursor, {});
+    if(Event.events.isEmpty) {
+        return Event.fetchEvents(5, Event.userCursor, {'authorName':UniverseUser.getUsername()});
+      }
     else return 200;
   }
 
@@ -57,7 +61,7 @@ class EventsState extends State<OrganizedEventsFeed> {
         setState(() {
           isLoadingMore = true;
         });
-        await Event.fetchEvents(3, Event.cursor, {});
+        await Event.fetchEvents(5, Event.userCursor, {'authorName':UniverseUser.getUsername()});
         setState(() {
           isLoadingMore = false;
           if (Event.events.length == Event.numEvents)

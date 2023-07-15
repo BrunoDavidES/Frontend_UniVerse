@@ -12,6 +12,7 @@ class Event {
   static Map<String, Event> organizedEvents = Map<String, Event>();
   static int numEvents = 0;
   static String cursor = "EMPTY";
+  static String userCursor = "EMPTY";
   String? id;
   String? title;
   String? location;
@@ -70,7 +71,7 @@ class Event {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-          body: "{}"
+          body: filters
       );
       if(response.statusCode==200) {
         numEvents = json.decode(response.body);
@@ -85,11 +86,13 @@ class Event {
         'Content-Type': 'application/json',
         'Authorization': token,
       },
-      body: "{}",
+      body: filters,
     );
     if(response.statusCode==200) {
       Map<String, dynamic> decodedJson = json.decode(response.body);
-      cursor = decodedJson['cursor'];
+      if(filters.isNotEmpty)
+        userCursor = decodedJson['cursor'];
+      else cursor = decodedJson['cursor'];
       var decodedEvents = decodedJson['results'];
       for (var decoded in decodedEvents) {
         events.add(Event.fromJson(decoded));
