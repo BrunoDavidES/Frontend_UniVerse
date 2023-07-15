@@ -14,7 +14,6 @@ class PersonalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =  UniverseUser.getName();
-    String job = UniverseUser.getJob();
     Color color;
     if(UniverseUser.isVerified()) {
       if (UniverseUser.isActive())
@@ -73,7 +72,7 @@ class PersonalCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 15, bottom:5),
             child: Text(
               UniverseUser.isVerified()
-                  ? job
+                  ? ""
               : "CONTA NÃO VERIFICADA",
               textAlign: TextAlign.start,
               style: TextStyle(

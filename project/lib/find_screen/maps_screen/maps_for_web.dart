@@ -18,7 +18,7 @@ class _MapsPageState extends State<MapsPageWeb> {
   );
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final fctplaces = await locations.getFCTplaces();
+    final fctplaces = await locations.getFCTplaces(true);
     setState(() {
       _markers.clear();
       for (final place in fctplaces.places) {

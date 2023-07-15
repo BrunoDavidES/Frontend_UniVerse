@@ -21,7 +21,7 @@ class LinksBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/titles/links.png", scale: 6),
+          title: Image.asset("assets/titles/links.png", scale: 6, ),
           leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -40,6 +40,7 @@ class LinksBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
+                opacity: AlwaysStoppedAnimation(0.5),
                 image: AssetImage("assets/images/photo_2.jpg"),
                 fit: BoxFit.fill
             ),

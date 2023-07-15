@@ -166,7 +166,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                 Padding(
                   padding: const EdgeInsets.only(left:30, top:15, bottom: 15),
                   child: Text(
-                    "Por seres $job, podes publicar o evento que estás a organizar no feed de Eventos da Universe!",
+                    "Verificámos que podes publicar o evento que estás a organizar no feed de Eventos da Universe!",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontSize: 15
@@ -287,13 +287,12 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                                 if (image != null) {
                                   File img = File(image.path);
                                   var f = await image.readAsBytes();
-                                  if(f.lengthInBytes > 5000000) {
-                                    print("REACHED!!!!!!!");
+                                  if(f.lengthInBytes > 8000000) {
                                     showDialog(context: context,
                                         builder: (BuildContext context) {
                                           return CustomDialogBox(
                                             title: "Ups!",
-                                            descriptions: "A imagem excede o tamanho máximo permitido de 5 MB.",
+                                            descriptions: "A imagem excede o tamanho máximo permitido de 8 MB.",
                                             text: "OK",
                                           );
                                         }
@@ -336,7 +335,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                                       ),
                                     )
                                         : Text(
-                                      "Adciona a thumnail do evento aqui",
+                                      "Adiciona a thumbnail do evento aqui (max 8 MB)",
                                       style: TextStyle(
                                           color: cDarkBlueColor
                                       ),

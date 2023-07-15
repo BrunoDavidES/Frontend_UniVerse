@@ -17,7 +17,6 @@ class PersonalWebCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     String name = UniverseUser.getName();
     String role = UniverseUser.friendlyRole;
-    String job = UniverseUser.getJob();
     Color color;
     if (UniverseUser.isVerified()) {
       if (UniverseUser.isActive())
@@ -83,7 +82,7 @@ class PersonalWebCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 18),
               child: Text(
                 UniverseUser.isVerified()
-                    ? job
+                    ? ""
                     : "CONTA NÃO VERIFICADA",
                 textAlign: TextAlign.start,
                 style: TextStyle(

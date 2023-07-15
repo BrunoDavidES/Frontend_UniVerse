@@ -80,6 +80,7 @@ class _MyChatPageState extends State<ChatPageApp> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 500), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     Size size = MediaQuery
         .of(context)
         .size;

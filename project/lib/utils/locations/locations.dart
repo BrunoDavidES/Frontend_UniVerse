@@ -70,9 +70,15 @@ class Locations {
   final List<Place> places;
 }
 
-Future<Locations> getFCTplaces() async {
+Future<Locations> getFCTplaces(simple) async {
   // Fallback for when the above HTTP request fails.
-  return Locations.fromJson(
+  if(simple)
+    return Locations.fromJson(
+      json.decode(
+        await rootBundle.loadString('assets/locations/locations_simple.json'),
+      ) as Map<String, dynamic>,
+    );
+  else return Locations.fromJson(
     json.decode(
       await rootBundle.loadString('assets/locations/locations.json'),
     ) as Map<String, dynamic>,

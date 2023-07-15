@@ -43,9 +43,9 @@ class Authentication {
     } on FirebaseAuthException catch (e) {
       if(e=='internal-error') {
         return 500;
-      } else {
-        return 401;
-      }
+      } else if(e=='ERROR_USER_DISABLED'){
+        return 403;
+      } else return 401;
       }
     }
 

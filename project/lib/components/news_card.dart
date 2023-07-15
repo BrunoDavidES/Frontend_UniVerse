@@ -68,66 +68,77 @@ class NewsCardState extends State<NewsCard> {
         padding: EdgeInsets.all(2),
         height: sizeHeight,
         decoration: BoxDecoration(
-          color: cDirtyWhiteColor,
-          borderRadius: BorderRadius.circular(15),
+            color: cDirtyWhiteColor,
+            borderRadius: BorderRadius.circular(15),
             border: Border.all(
                 color: toRandom[cindex],
                 width: 2
             ),
-          boxShadow: [ BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 3,
-            blurRadius: 7,
-            offset: const Offset(0,0),
-          ),
-          ]
+            boxShadow: [ BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 3,
+              blurRadius: 7,
+              offset: const Offset(0,0),
+            ),
+            ]
         ),
         child: Column(
           children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 190,
-                      child: FutureBuilder<Uint8List>(
-                        future: fetchImageFile(widget.data.id.toString()),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error fetching image: ${snapshot.error}');
-                          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return Image.memory(
-                              snapshot.data!,
-                              fit: BoxFit.contain,
-                            );
-                          } else {
-                            return Text('Image not found');
-                          }
-                        },
-                      ),
+            Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20)
                     ),
-                    Container(
-                      height: sizeHeight-40,
-                      child: Column(
-                        children: [
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(left:10, bottom: 5),
-                            child: Text(
-                              widget.data.title!.toUpperCase(),
-                              style: TextStyle(
+                    width: double.infinity,
+                    height: sizeHeight-40,
+                    child: FutureBuilder<Uint8List>(
+                      future: fetchImageFile(widget.data.id.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: MemoryImage(
+                                  snapshot.data!,
+                                )
+                              )
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: cHeavyGrey.withOpacity(0.5)
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: sizeHeight-40,
+                    child: Column(
+                      children: [
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(left:10, bottom: 5),
+                          child: Text(
+                            widget.data.title!.toUpperCase(),
+                            style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 color: cDirtyWhiteColor
-                              ),
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                  ]
-                ),
+                        ),
+                      ],
+                    ),
+                  )
+                ]
+            ),
             Padding(
               padding: const EdgeInsets.only(top:5, left: 10, right: 10),
               child: Row(

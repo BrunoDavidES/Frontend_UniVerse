@@ -154,7 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 builder: (BuildContext context) {
                   return CustomDialogBox(
                     title: "Ups!",
-                    descriptions: "Ocorreu um erro inesperado. Tenta novamente, por favor.",
+                    descriptions: "Parece que o e-mail que indicaste já foi registado.",
                     text: "OK",
                   );
                 }

@@ -70,7 +70,7 @@ class FindPageBodyApp extends StatelessWidget {
                     );
                   }
                   else if(item.text=="Transportes")
-                    launchUrl(Uri.parse("https://moovitapp.com/index/pt/transportes_p%C3%BAblicos-FCT_UNL_Faculdade_de_Ci%C3%AAncias_e_Tecnologia_da_Universidade_Nova_de_Lisboa-Lisboa-site_20129427-2460"));
+                    launchUrl(Uri.parse("https://moovitapp.com/index/pt/transportes_p%C3%BAblicos-FCT_UNL_Faculdade_de_Ci%C3%AAncias_e_Tecnologia_da_Universidade_Nova_de_Lisboa-Lisboa-site_20129427-2460"), mode: LaunchMode.externalApplication);
                    else if(item.text=="Pessoas" && !Authentication.userIsLoggedIn) {
                     showDialog(context: context,
                         builder: (BuildContext context){

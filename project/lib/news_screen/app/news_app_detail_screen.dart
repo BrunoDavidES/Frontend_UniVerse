@@ -77,17 +77,25 @@ class NewsDetailScreen extends StatelessWidget {
                     child: FutureBuilder<Uint8List>(
                       future: fetchImageFile(data.id.toString()),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error fetching image: ${snapshot.error}');
-                        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                          return Image.memory(
-                            snapshot.data!,
-                            fit: BoxFit.contain,
+                       if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: MemoryImage(
+                                      snapshot.data!,
+                                    )
+                                )
+                            ),
                           );
                         } else {
-                          return Text('Image not found');
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: cHeavyGrey.withOpacity(0.5)
+                            ),
+                          );
                         }
                       },
                     ),

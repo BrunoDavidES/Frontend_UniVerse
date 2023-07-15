@@ -22,13 +22,19 @@ class EventsState extends State<EventsFeed> {
   final scrollController = ScrollController();
   bool isLoadingMore = false;
   bool hasMore = true;
+  late Future<int> fetchDone;
 
   @override
   void initState() {
     scrollController.addListener(scrollListener);
-    if(Event.events.isEmpty)
-    Event.fetchEvents(3, Event.cursor, {});
+   fetchDone = initialize();
     super.initState();
+  }
+
+  Future<int> initialize() async {
+    if(Event.events.isEmpty)
+      return Event.fetchEvents(3, Event.cursor, {});
+    else return 200;
   }
 
   Future<void> scrollListener() async {
@@ -61,41 +67,75 @@ class EventsState extends State<EventsFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        controller: scrollController,
-        itemCount: Event.events.length+1,
-        itemBuilder: (context, index) {
-          if(index<Event.events.length) {
-            return EventsCard(Event.events[index]);
-          } else {
-            return Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, left: 10, right: 10, bottom: 80),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if(isLoadingMore)
-                    LinearProgressIndicator(
-                      color: cPrimaryOverLightColor,
-                      minHeight: 10,
-                      backgroundColor: cPrimaryLightColor,),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      hasMore
-                          ? "A CARREGAR EVENTOS"
-                          : "VISTE TODOS OS EVENTOS!",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: cPrimaryLightColor
-                      ),
+    return FutureBuilder(
+        future: fetchDone,
+        builder: (context, snaphot) {
+      if(snaphot.hasData) {
+        if (snaphot.data == 500)
+          return Error500();
+        else {
+          return ListView.builder(
+              controller: scrollController,
+              itemCount: Event.events.length + 1,
+              itemBuilder: (context, index) {
+                if (index < Event.events.length) {
+                  return EventsCard(Event.events[index]);
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 10, right: 10, bottom: 80),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if(isLoadingMore)
+                          LinearProgressIndicator(
+                            color: cPrimaryOverLightColor,
+                            minHeight: 10,
+                            backgroundColor: cPrimaryLightColor,),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            hasMore
+                                ? "A CARREGAR EVENTOS"
+                                : "VISTE TODOS OS EVENTOS!",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: cPrimaryLightColor
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            );
-          }
+                  );
+                }
+              }
+          );
         }
+      }
+          return Padding(
+            padding: const EdgeInsets.only(
+                top: 10, left: 10, right: 10, bottom: 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                LinearProgressIndicator(
+                  color: cPrimaryOverLightColor,
+                  minHeight: 10,
+                  backgroundColor: cPrimaryLightColor,),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "A CARREGAR EVENTOS",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: cPrimaryLightColor
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
     );
     //),
     // );

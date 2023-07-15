@@ -102,6 +102,19 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             isLoading = false;
           });
+        } else if (response==403) {
+          showDialog(context: context,
+              builder: (BuildContext context){
+                return const CustomDialogBox(
+                  title: "Ups!",
+                  descriptions: "A tua conta encontra-se suspensa.",
+                  text: "OK",
+                );
+              }
+          );
+          setState(() {
+            isLoading = false;
+          });
         } else {
           if(kIsWeb)
             context.go("/error");

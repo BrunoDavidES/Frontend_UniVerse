@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:UniVerse/utils/locations/locations.dart' as locations;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../consts/color_consts.dart';
 
@@ -21,7 +22,7 @@ class _MapsAppState extends State<MapApp> {
   );
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final fctplaces = await locations.getFCTplaces();
+    final fctplaces = await locations.getFCTplaces(true);
     setState(() {
       _markers.clear();
       for (final place in fctplaces.places) {
@@ -32,6 +33,9 @@ class _MapsAppState extends State<MapApp> {
           infoWindow: InfoWindow(
             title: place.name,
             snippet: place.address,
+              onTap: () {
+                launchUrl(Uri.parse("https://www.google.com/maps?saddr=My+Location&daddr=43.12345,-76.12345"), mode: LaunchMode.externalApplication);
+              }
           ),
         );
         _markers[place.name] = marker;
@@ -57,7 +61,8 @@ class _MapsAppState extends State<MapApp> {
 
   /*void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(20, 30)), "assets/images/marker.png")
+        const ImageConfiguration(size: Size(10, 20)),
+        "assets/images/marker.png")
         .then(
           (icon) {
         setState(() {

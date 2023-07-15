@@ -231,73 +231,108 @@ class PhotoRole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Uint8List?>(
-      future: fetchImageFile(user.username),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return SizedBox(); // Display nothing while loading
-        }
-        if (snapshot.hasError || snapshot.data == null) {
-          // Display a placeholder image or an error message
-          return Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Icon(
-              Icons.person,
-              size: 50,
-              color: Colors.white,
-            ),
-          );
-        }
-        final image = MemoryImage(snapshot.data!);
-        return Expanded(
-          child: Row(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FutureBuilder<Uint8List>(
+          future: fetchImageFile(user.username),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              return Container(
+                margin: EdgeInsets.all(5),
                 decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: MemoryImage(
+                            snapshot.data!
+                        ),
+                      fit: BoxFit.fill
+                    )
+                ),
+                width: 140, height: 140,
+              );
+            }
+            return Container(
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: image,
-                    fit: BoxFit.cover,
-                  ),
+                      image: AssetImage("assets/images/person.png")
+                  )
+              ),
+              width: 140, height: 140,
+            );
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                UniverseUser.friendlyRole,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
               ),
-              SizedBox(width: 5),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      user.role,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      user.job,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white.withOpacity(0.8),
-                      ),
-                    ),
-                  ],
+              SizedBox(height: 5),
+              Text(
+                user.job,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white.withOpacity(0.8),
                 ),
-              )
+              ),
             ],
           ),
+        )
+      ],
+    );
+       /* final image = MemoryImage(snapshot.data!);
+        return Row(
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(width: 5),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    user.role,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    user.job,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
         );
       },
-    );
+    );*/
   }
 }
 
@@ -308,63 +343,62 @@ class BasicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 145),
-                Text(
-                  user.name,
+    return Row(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 145),
+              Text(
+                user.name,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                user.username,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: cHeavyGrey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Spacer(),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 80),
+              Padding(
+                padding: EdgeInsets.only(bottom: 5),
+                child: Text(
+                  "Conta Ativa".toUpperCase(),
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  user.username,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: cHeavyGrey,
-                  ),
+              ),
+              Text(
+                "Na UniVerse desde\n${user.creation}",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: cHeavyGrey.withOpacity(0.5),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(width: 25),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: 80),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Text(
-                    "Conta Ativa".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  "Na UniVerse desde ${user.creation}",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: cHeavyGrey.withOpacity(0.5),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+        Spacer()
+      ],
     );
   }
 }

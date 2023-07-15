@@ -35,33 +35,18 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
     }
   }
 
-  Future<String> fetchTextFile(news) async {
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref('/News/' + news + '.txt');
-      final response = await ref.getData();
-      return utf8.decode(response as List<int>);
-    } catch (e) {
-      print('Error fetching text file: $e');
-      return '';
-    }
-  }
-
   Widget build(BuildContext context) {
     Random random = Random();
     int cindex = random.nextInt(toRandom.length);
-    bool isHovering = false;
     return InkWell(
       onTap: () => context.go(
           "/news/full/${widget.data.id}",
           extra: widget.data),
-      onHover: (hovering) {
-        setState(() => isHovering = hovering);
-      },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           width: widget.width/4,
           padding: const EdgeInsets.all(5),
-          height: widget.height-230,
+          height: widget.height-300,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -87,9 +72,20 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                   future: fetchImageFile(widget.data.id),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error fetching image: ${snapshot.error}');
+                      return Column(
+                        children: [
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10, bottom: 80),
+                            child:
+                            LinearProgressIndicator(
+                            color: cPrimaryOverLightColor,
+                            minHeight: 10,
+                            backgroundColor: cPrimaryLightColor,)),
+                          Spacer()
+                        ],
+                      );
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return Image.memory(
                         snapshot.data!,
@@ -123,26 +119,6 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                   ),
                   maxLines: 4,
                 ),
-              ),
-              FutureBuilder<String>(
-                future: fetchTextFile(widget.data.id),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error fetching file');
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
-                      child: Text(
-                        snapshot.data ?? '',
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  }
-                },
               ),
               Spacer(),
               Row(

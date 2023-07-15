@@ -42,6 +42,7 @@ class CoursesScreenApp extends StatelessWidget {
                   StretchMode.zoomBackground,
                 ],
                 background: Image(
+                    opacity: AlwaysStoppedAnimation(0.5),
                     image: AssetImage("assets/images/photo_8.jpg"),
                     fit: BoxFit.fill
                 ),
@@ -55,7 +56,7 @@ class CoursesScreenApp extends StatelessWidget {
                     return ListButtonSimple(tobeBold: true,
                         text: item.keys.first,
                         press: () {
-                          launchUrl(Uri.parse(item.values.first));
+                          launchUrl(Uri.parse(item.values.first), mode: LaunchMode.externalApplication);
                         });
                   }
               ),

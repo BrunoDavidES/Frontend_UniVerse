@@ -8,6 +8,7 @@ import 'package:UniVerse/services/firebase_messaging_service.dart';
 import 'package:UniVerse/services/notification_service.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/news_screen/news_web.dart';
+import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -47,11 +48,12 @@ Future main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  if(FirebaseAuth.instance.currentUser!=null)
-    Authentication.userIsLoggedIn=true;
-  //Authentication.getTokenID();
-  //String token = await Authentication.getTokenID();
-  //Authentication.role = JwtDecoder.decode(token)['role'];*/
+  if(FirebaseAuth.instance.currentUser!=null) {
+    Authentication.userIsLoggedIn = true;
+    String token = await Authentication.getTokenID();
+    Authentication.role = JwtDecoder.decode(token)['role'];
+    Authentication.assignUserFriendlyText();
+  }
   runApp(
     MultiProvider(
       providers: [

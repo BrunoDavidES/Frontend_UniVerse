@@ -109,14 +109,14 @@ class _MyCalendarPageState extends State<CalendarScreenApp> {
                           focusedDay = focusDay;
                           selectedDayString = selectDay.day.toString();
                           selectedMonthString = monthsInText[selectedDay.month-1];
-                          dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
                           String month = DateTime.now().month.toString();
                           if(month.length==1)
                             month = "0$month";
-                          if(CalendarEvent.fetchedMonths.contains(month)){
+                          if(!CalendarEvent.fetchedMonths.contains(month)){
                           String year = DateTime.now().year.toString();
                           CalendarEvent.fetchEvents(month, year);
                           }
+                          dateString =  DateFormat('dd-MM-yyyy').format(focusedDay);
                         });
                       },
                       calendarFormat: format,

@@ -33,7 +33,7 @@ class WebHomePage extends StatelessWidget {
               children: <Widget>[
                 WelcomeArea(size: size, yourScrollController: yourScrollController),
                 Container(                //Zona das noticias
-                  height: 700,
+                  height: 630,
                   width: size.width,
                   color: cDirtyWhite,
                   child: MainNews(width: size.width, height: size.height/1.15,),

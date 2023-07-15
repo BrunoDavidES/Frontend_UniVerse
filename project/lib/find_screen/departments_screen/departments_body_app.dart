@@ -38,6 +38,7 @@ class DepartmentsBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
+                opacity: AlwaysStoppedAnimation(0.5),
                 image: AssetImage("assets/images/photo_7.jpg"),
                 fit: BoxFit.fill
             ),

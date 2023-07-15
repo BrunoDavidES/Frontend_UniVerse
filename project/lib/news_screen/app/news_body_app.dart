@@ -23,13 +23,21 @@ class NewsState extends State<NewsFeed> {
   final scrollController = ScrollController();
   bool isLoadingMore = false;
   bool hasMore = true;
+  late Future<int> fetchDone;
 
   @override
   void initState() {
     scrollController.addListener(scrollListener);
-    if(Article.news.isEmpty)
-    Article.fetchNews(3, Article.cursor, {});
+    //if(Article.news.isEmpty)
+    fetchDone = initialize();//Article.fetchNews(3, Article.cursor, {});
+
     super.initState();
+  }
+
+  Future<int> initialize() async {
+    if(Article.news.isEmpty)
+      return Article.fetchNews(3, Article.cursor, {});
+    else return 200;
   }
 
   Future<void> scrollListener() async {
@@ -62,41 +70,75 @@ class NewsState extends State<NewsFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        controller: scrollController,
-        itemCount: Article.news.length+1,
-        itemBuilder: (context, index) {
-          if(index<Article.news.length) {
-            return NewsCard(Article.news[index]);
-          } else {
-            return Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, left: 10, right: 10, bottom: 80),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if(isLoadingMore)
-                    LinearProgressIndicator(
-                      color: cPrimaryOverLightColor,
-                      minHeight: 10,
-                      backgroundColor: cPrimaryLightColor,),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      hasMore
-                          ? "A CARREGAR NOTÍCIAS"
-                          : "VISTE TODAS AS NOTÍCIAS!",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: cPrimaryLightColor
-                      ),
+    return FutureBuilder(
+      future: fetchDone,
+      builder: (context, snaphot) {
+        if(snaphot.hasData) {
+          if(snaphot.data == 500)
+            return Error500();
+          else {
+            return ListView.builder(
+              controller: scrollController,
+              itemCount: Article.news.length+1,
+              itemBuilder: (context, index) {
+                if(index<Article.news.length) {
+                  return NewsCard(Article.news[index]);
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 10, right: 10, bottom: 80),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if(isLoadingMore)
+                          LinearProgressIndicator(
+                            color: cPrimaryOverLightColor,
+                            minHeight: 10,
+                            backgroundColor: cPrimaryLightColor,),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            hasMore
+                                ? "A CARREGAR NOTÍCIAS"
+                                : "VISTE TODAS AS NOTÍCIAS!",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: cPrimaryLightColor
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            );
+                  );
+                }
+              }
+          );
           }
         }
+        return Padding(
+          padding: const EdgeInsets.only(
+              top: 10, left: 10, right: 10, bottom: 80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                LinearProgressIndicator(
+                  color: cPrimaryOverLightColor,
+                  minHeight: 10,
+                  backgroundColor: cPrimaryLightColor,),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "A CARREGAR NOTÍCIAS",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: cPrimaryLightColor
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
     //),
     // );

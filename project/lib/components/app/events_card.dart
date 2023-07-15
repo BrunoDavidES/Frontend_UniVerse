@@ -1,6 +1,7 @@
 
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:UniVerse/components/500.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/events/event_data.dart';
@@ -11,6 +12,8 @@ import '../../events_screen/events_app_detail_screen.dart';
 import '../../utils/events/personal_event_data.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:http/http.dart' as http;
+
+import '../simple_dialog_box.dart';
 
 class EventsCard extends StatefulWidget {
   EventsCard(this.data, {super.key});
@@ -65,7 +68,7 @@ class EventsCardState extends State<EventsCard> {
         width: double.infinity,
         margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 20),
         padding: EdgeInsets.all(2),
-        height: 235,
+        height: 215,
         decoration: BoxDecoration(
             color: cDirtyWhiteColor,
             borderRadius: BorderRadius.circular(15),
@@ -84,22 +87,33 @@ class EventsCardState extends State<EventsCard> {
         child: Column(
           children: [
             Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20)
+              ),
               width: double.infinity,
-              height: sizeHeight-40,
+              height: 170,
               child: FutureBuilder<Uint8List>(
                 future: fetchImageFile(widget.data.id.toString()),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error fetching image: ${snapshot.error}');
-                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    return Image.memory(
-                      snapshot.data!,
-                      fit: BoxFit.contain,
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: MemoryImage(
+                                snapshot.data!,
+                              )
+                          )
+                      ),
                     );
                   } else {
-                    return Text('Image not found');
+                    return Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: cHeavyGrey.withOpacity(0.5)
+                      ),
+                    );
                   }
                 },
               ),
@@ -117,14 +131,41 @@ class EventsCardState extends State<EventsCard> {
                   ),
                   Spacer(),
                   Authentication.userIsLoggedIn
-                  ?IconButton(icon: Icon(Icons.bookmark_outline), onPressed: () {
-                    CalendarEvent.add(widget.data.planner, widget.data.title, widget.data.department, widget.data.location, widget.data.startDate, "");
-                  },)
+                  ?InkWell(
+                    child:Icon(Icons.bookmark_outline), onTap: () async {
+                    var response = await CalendarEvent.add(widget.data.planner, widget.data.title, widget.data.department, widget.data.location, widget.data.startDate, "");
+                    if(response == 200) {
+                      showDialog(context: context,
+                          builder: (BuildContext context){
+                            return const CustomDialogBox(
+                              title: "Sucesso",
+                              descriptions: "Já guardámos este evento no teu calendário!",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    } else if(response == 500)
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Error500()));
+                    else {
+                      showDialog(context: context,
+                          builder: (BuildContext context){
+                            return const CustomDialogBox(
+                              title: "Ups!",
+                              descriptions: "Não conseguimos guardar este evento no teu calendário. Tenta novamente, por favor.",
+                              text: "OK",
+                            );
+                          }
+                      );
+                    }
+                  },
+                  )
                   :SizedBox(),
-                  IconButton(icon: Icon(Icons.share_outlined), onPressed: () {
-                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/news/full/${widget.data.id.toString()}";
+                  InkWell(
+                    child: Icon(Icons.share_outlined), onTap: () {
+                    final urlPreview = "https://universe-fct.oa.r.appspot.com/#/events/full/${widget.data.id.toString()}";
                     Share.share("${widget.data.title.toString()} | UniVerse ּ FCT NOVA\n\n${urlPreview}", subject: "Um evento na FCT | UniVerse ּ  FCT NOVA");
-                  },),
+                  },
+                  ),
                 ],
               ),
             ),

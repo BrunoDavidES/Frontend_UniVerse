@@ -64,57 +64,60 @@ class _EventScreenState extends State<PersonalEventScreen> {
           return ConfirmDialogBox(
             descriptions: "Tens a certeza que pretendes eliminar este evento?",
             press: () {
-              Navigator.pop(context);
-              final response = CalendarEvent.delete(widget.data.id!, widget.data.date!);
-              if (response == 200) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomDialogBox(
-                      title: "Sucesso!",
-                      descriptions: "O evento foi eliminado",
-                      text: "OK",
-                    );
-                  },
-                );
-              } else if (response == 401) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomDialogBox(
-                      title: "Ups!",
-                      descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
-                      text: "OK",
-                      press: () {
-                        if (kIsWeb) {
-                          context.go("/home");
-                        } else {
-                          Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => const LoginPageApp(),
-                          ));
-                        }
-                      },
-                    );
-                  },
-                );
-              } else if (response == 400) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomDialogBox(
-                      title: "Ups!",
-                      descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
-                      text: "OK",
-                    );
-                  },
-                );
+            Navigator.pop(context);
+            final response = CalendarEvent.delete(
+                widget.data.id!, widget.data.date!);
+            if (response == 200) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Sucesso!",
+                    descriptions: "O evento foi eliminado",
+                    text: "OK",
+                  );
+                },
+              );
+            } else if (response == 401) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "Parece que a tua sessão expirou. Inicia sessão novamente, por favor.",
+                    text: "OK",
+                    press: () {
+                      if (kIsWeb) {
+                        context.go("/home");
+                      } else {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => const LoginPageApp(),
+                        ));
+                      }
+                    },
+                  );
+                },
+              );
+            } else if (response == 400) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: "Ups!",
+                    descriptions: "Aconteceu um erro inesperado! Por favor, tenta novamente.",
+                    text: "OK",
+                  );
+                },
+              );
+            } else {
+              if (kIsWeb) {
+                context.go("/error");
               } else {
-                if (kIsWeb) {
-                  context.go("/error");
-                } else {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-                }
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Error500()));
               }
+            }
             },
           );
         },

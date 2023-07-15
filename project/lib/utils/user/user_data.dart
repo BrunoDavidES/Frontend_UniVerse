@@ -123,23 +123,23 @@ class UniverseUser {
   }
 
   UniverseUser.fromEntityJson(Map<String, dynamic> json ) {
-      // Extract the properties
-      var properties = json['properties'];
+    // Extract the properties
+    var properties = json['properties'];
 
-      // Assign values to the properties
-      username = '';
-      department = properties['department']['value'];
-      job = properties['department_job']['value'];
-      phone = properties['phone']['value'];
-      linkedin = properties['linkedin']['value'];
-      isPublic = properties['privacy']['value'];
-      email = properties['email']['value'];
-      license_plate = properties['license_plate']['value'];
-      name = properties['name']['value'];
-      organization = properties['nucleus']['value'];
-      office = properties['office']['value'];
-      status = properties['status']['value'];
-      //creation = properties['time_creation']['value']['seconds'] as String;
+    // Assign values to the properties
+    username = '';
+    department = properties['department']['value'];
+    job = properties['department_job']['value'];
+    phone = properties['phone']['value'];
+    linkedin = properties['linkedin']['value'];
+    isPublic = properties['privacy']['value'];
+    email = properties['email']['value'];
+    license_plate = properties['license_plate']['value'];
+    name = properties['name']['value'];
+    organization = properties['nucleus']['value'];
+    office = properties['office']['value'];
+    status = properties['status']['value'];
+    //creation = properties['time_creation']['value']['seconds'] as String;
   }
 
   UniverseUser.emptyUser() {
@@ -167,31 +167,31 @@ class UniverseUser {
       return user;
     }
     else {*/
-      String token = await Authentication.getTokenID();
-      if (token.isEmpty) {
-        Authentication.userIsLoggedIn = false;
-        var user = UniverseUser.emptyUser();
-        return user;
-      }
-      String username = getUsername();
-      String url = '$baseUrl/profile/$username';
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Authorization': token,
-        },
-      );
-      if (response.statusCode == 200) {
-       // cache.write("user", response.body);
-        var decoded = json.decode(response.body);
-        var user = UniverseUser.fromJson(decoded);
-        return user;
-      } else if (response.statusCode == 401) {
-        Authentication.userIsLoggedIn = false;
-        Authentication.revoke();
-      }
-      return UniverseUser.emptyUser();
-   // }
+    String token = await Authentication.getTokenID();
+    if (token.isEmpty) {
+      Authentication.userIsLoggedIn = false;
+      var user = UniverseUser.emptyUser();
+      return user;
+    }
+    String username = getUsername();
+    String url = '$baseUrl/profile/$username';
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': token,
+      },
+    );
+    if (response.statusCode == 200) {
+      // cache.write("user", response.body);
+      var decoded = json.decode(response.body);
+      var user = UniverseUser.fromJson(decoded);
+      return user;
+    } else if (response.statusCode == 401) {
+      Authentication.userIsLoggedIn = false;
+      Authentication.revoke();
+    }
+    return UniverseUser.emptyUser();
+    // }
   }
 
   static Future<int> update(name, phone, linkedin, office, license_plate, privacy, Uint8List? image) async {
@@ -271,22 +271,22 @@ class UniverseUser {
     };
     final Uri uri = Uri.parse(apiUrl).replace(queryParameters: queryParams);
     final http.Response response = await http.post(
-          uri,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token,
-          }
-      );
-      if (response.statusCode == 200) {
-        var decoded = json.decode(response.body);
-        print(response.body);
-        List<dynamic> responseData = json.decode(response.body)['results'];
-        //cursor = decoded
-        for (var user in responseData) {
-          usersList.add(UniverseUser.fromEntityJson(user));
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
         }
-        return 200;
+    );
+    if (response.statusCode == 200) {
+      var decoded = json.decode(response.body);
+      print(response.body);
+      List<dynamic> responseData = json.decode(response.body)['results'];
+      //cursor = decoded
+      for (var user in responseData) {
+        usersList.add(UniverseUser.fromEntityJson(user));
       }
-      return response.statusCode;
+      return 200;
+    }
+    return response.statusCode;
   }
 }

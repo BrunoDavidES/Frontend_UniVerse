@@ -5,6 +5,7 @@ import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/profile_edit_screen/profile_edit_page_web.dart';
 import 'package:UniVerse/profile_screen/profile_photo.dart';
 import 'package:UniVerse/profile_screen/read_only_field.dart';
+import 'package:UniVerse/utils/authentication/auth.dart';
 import 'package:UniVerse/utils/user/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -79,26 +80,32 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Spacer(),
-                            Container(
-                              width: 140,
-                              height: 140,
-                              child: FutureBuilder<Uint8List>(
-                                future: fetchImageFile(user.username),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error fetching image: ${snapshot.error}');
-                                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                                    return Image.memory(
-                                      snapshot.data!,
-                                      fit: BoxFit.contain,
-                                    );
-                                  } else {
-                                    return Text('Image not found');
-                                  }
-                                },
-                              ),
+                            FutureBuilder<Uint8List>(
+                              future: fetchImageFile(user.username),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: MemoryImage(
+                                              snapshot.data!
+                                            )
+                                        )
+                                    ),
+                                    width: 140, height: 140,
+                                  );
+                                }
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/images/person.png")
+                                    )
+                                  ),
+                                    width: 140, height: 140,
+                              );
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top:30),
@@ -123,7 +130,7 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
 
                              Padding(
                                padding: const EdgeInsets.only(top: 40),
-                               child: Text(user.role,
+                               child: Text(UniverseUser.friendlyRole,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),

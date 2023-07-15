@@ -42,7 +42,7 @@ class PersonalPageBodyApp extends StatelessWidget {
               var response = Authentication.revoke();
               if(response==500)
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Error500()));
-              else Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPageApp()));
+              else Navigator.of(context).popUntil((route) => route.isFirst);
             },
             child:Center(
               child: Padding(
@@ -216,7 +216,7 @@ class Menu extends StatelessWidget {
             ),
           ),
           Container(
-            height: size.height / 2.5,
+            height: size.height-390,
             width: size.width - 30,
             decoration: BoxDecoration(
                 color: cDirtyWhiteColor,

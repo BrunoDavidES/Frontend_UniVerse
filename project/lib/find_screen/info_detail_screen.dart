@@ -135,7 +135,7 @@ final String? link;
                     if(link!=null && link!.isNotEmpty)
                       InkWell(
                         onTap: () {
-                          launchUrl(Uri.parse(link!));
+                          launchUrl(Uri.parse(link!), mode: LaunchMode.externalApplication);
                         },
                         child: Text.rich(
                           TextSpan(

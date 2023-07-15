@@ -35,7 +35,7 @@ List<Map<String, String>> links = [
 
 List<Map<String, String>>  courses= [
   {"Biologia Celular e Molecular": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-biologia-celular-e-molecular"},
-  {"LBioquímica": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-bioquimica"},
+  {"Bioquímica": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-bioquimica"},
   {"Conservação-Restauro": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-conservacao-restauro"},
   {"Engenharia do Ambiente": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-engenharia-do-ambiente"},
   {"Engenharia Biomédica": "https://www.fct.unl.pt/ensino/curso/licenciatura-em-engenharia-biomedica"},

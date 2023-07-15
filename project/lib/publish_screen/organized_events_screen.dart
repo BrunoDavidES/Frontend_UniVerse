@@ -27,45 +27,50 @@ class OrganizedEventsFeed extends StatefulWidget {
 }
 
 class EventsState extends State<OrganizedEventsFeed> {
+  final scrollController = ScrollController();
+  bool isLoadingMore = false;
+  bool hasMore = true;
   late Future<int> fetchDone;
-  late ScrollController controller;
-  late int offset;
-  late bool hasMore = true;
 
   @override
   void initState() {
-    offset = 0;
-    fetchDone = Event.fetchEvents(5, Event.cursor, {});
-    controller = ScrollController()
-      ..addListener(handleScrolling);
+    scrollController.addListener(scrollListener);
+    fetchDone = initialize();
     super.initState();
+  }
+
+  Future<int> initialize() async {
+    if(Event.events.isEmpty)
+      return Event.fetchEvents(3, Event.cursor, {});
+    else return 200;
+  }
+
+  Future<void> scrollListener() async {
+    if(isLoadingMore) return;
+    if(scrollController.position.pixels==scrollController.position.maxScrollExtent) {
+      if (Event.events.length == Event.numEvents)
+        setState(() {
+          hasMore = false;
+          isLoadingMore = false;
+        });
+      else {
+        setState(() {
+          isLoadingMore = true;
+        });
+        await Event.fetchEvents(3, Event.cursor, {});
+        setState(() {
+          isLoadingMore = false;
+          if (Event.events.length == Event.numEvents)
+            hasMore = false;
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
-    controller.removeListener(handleScrolling);
+    scrollController.removeListener(scrollListener);
     super.dispose();
-  }
-
-  void handleScrolling() {
-    if (controller.offset == controller.position.maxScrollExtent) {
-      setState(() {
-        offset = offset + 3;
-        if (Article.news.length == Event.numEvents)
-          hasMore = false;
-        else
-          Event.fetchEvents(5, Event.cursor, {});
-      });
-    }
-  }
-
-  Future refresh() async {
-    setState(() {
-      hasMore = true;
-      offset = 0;
-      Event.events.clear();
-    });
-    Event.fetchEvents(5, Event.cursor, {});
   }
 
   @override
@@ -96,7 +101,7 @@ width: width,
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: FutureBuilder(
-                  future: Event.fetchEvents(5, Event.cursor, {}),
+                  future: fetchDone,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data == 500) {

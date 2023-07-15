@@ -22,7 +22,7 @@ class ServicesBodyApp extends StatelessWidget {
       slivers: [
         SliverAppBar(
           backgroundColor: cDirtyWhiteColor,
-          title: Image.asset("assets/titles/services.png", scale: 6),
+          title: Image.asset("assets/titles/services.png", scale: 6, ),
           leading: Builder(
               builder: (context) {
                 return IconButton(
@@ -41,6 +41,7 @@ class ServicesBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
+              opacity: AlwaysStoppedAnimation(0.5),
                 image: AssetImage("assets/images/photo_3.jpg",),
                 colorBlendMode: BlendMode.lighten,
                 fit: BoxFit.fill

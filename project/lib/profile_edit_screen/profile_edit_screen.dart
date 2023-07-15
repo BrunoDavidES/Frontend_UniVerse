@@ -99,7 +99,6 @@ class _ProfileEditState extends State<ProfileEditScreen> {
                           press: () {
                             if(kIsWeb) {
                               Navigator.pop(context);
-                              context.go("/personal");
                             } else {
                               Navigator.pop(context);
                               Navigator.pop(context);

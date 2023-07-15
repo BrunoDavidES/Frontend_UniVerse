@@ -185,7 +185,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, top:15),
               child: Text(
-                "Por seres $job, podes publicar o evento que estás a organizar no feed de Eventos da Universe!",
+                "Verificámos que podes publicar o evento que estás a organizar no feed de Eventos da Universe!",
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -341,7 +341,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
                         ),
                       )
                           : Text(
-                        "Adciona a thumnail do evento aqui (max 8 MB)",
+                        "Adiciona a thumbnail do evento aqui\n(max 8 MB)",
                         style: TextStyle(
                             color: cDarkBlueColor
                         ),

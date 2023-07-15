@@ -16,8 +16,8 @@ class MapIdLocation extends StatefulWidget {
 }
 
 class _MapsState extends State<MapIdLocation> {
-  double lat = 0;
-  double lng = 0;
+  late double lat;
+  late double lng;
   final Map<String, Marker> _markers = {};
   GoogleMapController? controller;
   LatLngBounds mapBounds = LatLngBounds(
@@ -26,7 +26,7 @@ class _MapsState extends State<MapIdLocation> {
   );
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final fctplaces = await locations.getFCTplaces();
+    final fctplaces = await locations.getFCTplaces(false);
     setState(() {
       _markers.clear();
         var place = fctplaces.places.where((element) => element.id == widget.id!).first;
@@ -39,17 +39,6 @@ class _MapsState extends State<MapIdLocation> {
           infoWindow: InfoWindow(
             title: place.name,
             snippet: kIsWeb ?"${place.address}\nInstala a aplicação para obteres direções a partir do local em que te encontras!" :place.address,
-            onTap: () {
-              showDialog(context: context,
-                  builder: (BuildContext context){
-                    return const CustomDialogBox(
-                      title: "Ups!",
-                      descriptions: "O email e/ou password estão incorretos. Tenta novamente.",
-                      text: "OK",
-                    );
-                  }
-              );
-            }
           ),
         );
         _markers[place.name] = marker;
@@ -91,8 +80,8 @@ class _MapsState extends State<MapIdLocation> {
         extendBodyBehindAppBar: true,
         body:GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(38.660992, -9.205782),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(lat, lng),
             zoom: 17,
           ),
           markers: _markers.values.toSet(),

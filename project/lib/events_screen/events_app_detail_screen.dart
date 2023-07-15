@@ -78,17 +78,25 @@ class EventsDetailScreen extends StatelessWidget {
                     child: FutureBuilder<Uint8List>(
                       future: fetchImageFile(data.id.toString()),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error fetching image: ${snapshot.error}');
-                        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                          return Image.memory(
-                            snapshot.data!,
-                            fit: BoxFit.contain,
+                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: MemoryImage(
+                                      snapshot.data!,
+                                    )
+                                )
+                            ),
                           );
                         } else {
-                          return Text('Image not found');
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: cHeavyGrey.withOpacity(0.5)
+                            ),
+                          );
                         }
                       },
                     ),
@@ -137,21 +145,6 @@ class EventsDetailScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top:15, left: 10, right: 10),
                           child: Row(
                             children: [
-                              Icon(Icons.location_on_outlined, color: cHeavyGrey),
-                              Text(
-                                data.location!,
-                                style: TextStyle(
-                                    color: cHeavyGrey
-                                ),
-                              ),
-
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top:15, left: 10, right: 10),
-                          child: Row(
-                            children: [
                               Icon(Icons.people, color: cHeavyGrey),
                               Text(
                                 data.capacity!,
@@ -169,6 +162,22 @@ class EventsDetailScreen extends StatelessWidget {
                           ),
 
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
+                      child: Row(
+                        children: [
+                          Icon(Icons.location_on_outlined, color: cHeavyGrey),
+                          Text(
+                            data.location!,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: cHeavyGrey
+                            ),
+                          ),
+
+                        ],
+                      ),
                     ),
                     FutureBuilder(
                       future: fetchTextFile(),

@@ -116,6 +116,7 @@ flutter:
 
   assets:
     - assets/images/welcome_photo.jpg
+    - assets/images/person.png
     - assets/images/photo_1.jpg
     - assets/images/photo_2.jpg
     - assets/images/photo_3.jpg
@@ -174,6 +175,7 @@ flutter:
     - assets/web/android.png
     - assets/web/ios.png
     - assets/locations/locations.json
+    - assets/locations/locations_simple.json
 
 
     - assets/web/icon.ico

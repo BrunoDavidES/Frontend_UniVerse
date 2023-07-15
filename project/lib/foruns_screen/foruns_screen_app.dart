@@ -249,7 +249,7 @@ class ForumCard extends StatelessWidget {
                           ConfirmDialogBox(
                               descriptions: "Tens a certeza que pretendes sair do fórum $forumName?",
                               press: () async {
-                                var response = await Chat.delete(forumID);
+                                var response = await Chat.leave(forumID);
                                 if (response == 200) {
                                   Navigator.pop(context);
                                   showDialog(context: context,
@@ -261,8 +261,7 @@ class ForumCard extends StatelessWidget {
                                         );
                                       }
                                   );
-                                }
-                                if (response == 401) {
+                                } else if (response == 401) {
                                   showDialog(context: context,
                                       builder: (BuildContext context) {
                                         return CustomDialogBox(

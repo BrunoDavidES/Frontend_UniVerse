@@ -40,6 +40,7 @@ class BuildingsBodyApp extends StatelessWidget {
               StretchMode.zoomBackground,
             ],
             background: Image(
+                opacity: AlwaysStoppedAnimation(0.5),
                 image: AssetImage("assets/images/photo_4.jpg"),
                 fit: BoxFit.fill
             ),

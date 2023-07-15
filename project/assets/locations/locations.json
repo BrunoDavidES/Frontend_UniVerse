@@ -101,8 +101,8 @@
     {
       "id":"div-qualidade",
       "address":"Campus da Faculdade Ciências e Tecnologia, 2829-516 Caparica",
-      "lat": 38.663200,
-      "lng": -9.263200,
+      "lat": 38.663213,
+      "lng": -9.207048,
       "name": "Divisão de Planeamento e Gestão da Qualidade"
     },
     {
@@ -349,7 +349,62 @@
       "lat": 38.662933,
       "lng": -9.206665,
       "name": "Biblioteca"
+    },
+    {
+      "id": "casa-pessoal",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.661758,
+      "lng": -9.205445,
+      "name":"Casa do Pessoal"
+    },
+    {
+      "id": "tanto-faz",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.661577,
+      "lng": -9.206804,
+      "name": "Tanto Faz"
+    },
+    {
+      "id": "tia",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.661374,
+      "lng": -9.204845,
+      "name": "A tia"
+    },
+    {
+      "id": "campus.come",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.661732,
+      "lng": -9.205101,
+      "name": "C@ampus.come"
+    },
+    {
+      "id": "ed-biblioteca",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.662663,
+      "lng": -9.205244,
+      "name": "C@ampus - Ed.Biblioteca"
+    },
+    {
+      "id": "alquimia",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.661944,
+      "lng": -9.207859,
+      "name": "Nova Alquímia"
+    },
+    {
+      "id": "my-spot",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.660498,
+      "lng": -9.205622,
+      "name": "My Spot Bar"
+    },
+    {
+      "id": "sport",
+      "address": "Campus de Faculdade de Ciências e Tecnologias , 2829-516 Caparica",
+      "lat": 38.658762,
+      "lng": -9.203999,
+      "name": "SportBar"
     }
-
   ]
 }

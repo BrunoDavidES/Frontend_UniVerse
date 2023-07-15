@@ -165,8 +165,6 @@ class _MembersPageState extends State<MembersPageApp> {
                           children: children.entries.map((entry) {
                             var memberID = entry.key;
                             var memberData = entry.value;
-                            var memberName = memberData['name'];
-                            var memberRole = memberData['role'];
 
                             return MemberCard(id: widget.forumID, data: memberData, username: memberID);
                           }).toList(),
@@ -260,7 +258,7 @@ class MemberCard extends StatelessWidget {
               ),
             ],
           ),
-          if(memberRole!='A')
+          if(memberRole!='A' && username.replaceAll("-", ".")!=UniverseUser.getUsername())
           Row(
             children: [
               Spacer(),
