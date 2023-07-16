@@ -207,7 +207,6 @@ class _ReportScreenState extends State<ReportScreenApp> {
                           File img = File(Report.imagePath!);
                           var f = await img.readAsBytes();
                           if(f.lengthInBytes > 5000000) {
-                            print("REACHED!!!!!!!");
                             showDialog(context: context,
                                 builder: (BuildContext context) {
                                   return CustomDialogBox(

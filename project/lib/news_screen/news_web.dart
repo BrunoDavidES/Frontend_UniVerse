@@ -31,7 +31,6 @@ class _NewsWebPageState extends State<NewsWebPage> {
 
   @override
   void initState() {
-    print(Article.numNews);
     fetchNews();
     super.initState();
   }
@@ -53,7 +52,6 @@ class _NewsWebPageState extends State<NewsWebPage> {
         final byteData = await ref.getData();
         return byteData!.buffer.asUint8List();
       } catch (e) {
-        print('Error fetching file: $e');
         return Uint8List(0);
       }
     }
@@ -64,7 +62,6 @@ class _NewsWebPageState extends State<NewsWebPage> {
         final response = await ref.getData();
         return utf8.decode(response as List<int>);
       } catch (e) {
-        print('Error fetching text file: $e');
         return '';
       }
     }
@@ -145,19 +142,27 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                 width: size.width /3.5,
                                                 height: 250,
                                                 child: FutureBuilder<Uint8List>(
-                                                  future: fetchImageFile(Article.news[index].id),
+                                                  future: fetchImageFile(item.id.toString()),
                                                   builder: (context, snapshot) {
-                                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                                      return CircularProgressIndicator();
-                                                    } else if (snapshot.hasError) {
-                                                      return Text('Error fetching image: ${snapshot.error}');
-                                                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                                                      return Image.memory(
-                                                        snapshot.data!,
-                                                        fit: BoxFit.contain,
+                                                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                                      return Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            image: DecorationImage(
+                                                                fit: BoxFit.fill,
+                                                                image: MemoryImage(
+                                                                  snapshot.data!,
+                                                                )
+                                                            )
+                                                        ),
                                                       );
                                                     } else {
-                                                      return Text('Image not found');
+                                                      return Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            color: cHeavyGrey.withOpacity(0.5)
+                                                        ),
+                                                      );
                                                     }
                                                   },
                                                 ),
@@ -193,10 +198,8 @@ class _NewsWebPageState extends State<NewsWebPage> {
                                                     FutureBuilder<String>(
                                                       future: fetchTextFile(Article.news[index].id),
                                                       builder: (context, snapshot) {
-                                                        if (snapshot.connectionState == ConnectionState.waiting) {
-                                                          return CircularProgressIndicator();
-                                                        } else if (snapshot.hasError) {
-                                                          return Text('Error fetching file');
+                                                       if (snapshot.hasError) {
+                                                          return Text('Ocorreu um erro.');
                                                         } else {
                                                           return Padding(
                                                             padding: const EdgeInsets.only(left: 25, top: 10, right: 25),

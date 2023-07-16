@@ -164,12 +164,10 @@ flutter:
     - assets/titles/restaurants.png
     - assets/titles/report.png
     - assets/titles/services.png
-    - assets/capi.png
-    - assets/man.png
+    - assets/web/qr.png
     - assets/img.png
     - assets/bill.jpg
     - assets/web/logo.png
-    - assets/web/qr.png
     - assets/web/profile-title.png
     - assets/web/logoNova.png
     - assets/web/android.png

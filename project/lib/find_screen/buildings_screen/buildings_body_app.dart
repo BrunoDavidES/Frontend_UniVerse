@@ -55,7 +55,7 @@ class BuildingsBodyApp extends StatelessWidget {
                 return ListButtonSimple(tobeBold: true,
                     text: item.values.first,
                     press: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreenWithList(text: item.values.first, divisions: divisions,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreenWithList(text: item.values.first, divisions: divisions, image: AssetImage("assets/images/photo_4.jpg"),)));
                     });
               }
           ),

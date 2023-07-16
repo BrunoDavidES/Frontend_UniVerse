@@ -3,6 +3,7 @@ import 'package:UniVerse/components/simple_dialog_box.dart';
 import 'package:UniVerse/consts/color_consts.dart';
 import 'package:UniVerse/consts/list_consts.dart';
 import 'package:UniVerse/find_screen/info_detail_screen.dart';
+import 'package:UniVerse/find_screen/organizations_screen/organization_info_detail_screen.dart';
 import 'package:UniVerse/utils/news/article_data.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,8 @@ class OrganizationsScreenApp extends StatelessWidget {
                   StretchMode.zoomBackground,
                 ],
                 background: Image(
-                    image: AssetImage("assets/images/photo_1.jpg"),
+                  opacity: AlwaysStoppedAnimation(0.5),
+                    image: AssetImage("assets/images/photo_5.jpg"),
                     fit: BoxFit.fill
                 ),
               ),
@@ -54,7 +56,7 @@ class OrganizationsScreenApp extends StatelessWidget {
                     return ListButtonSimple(tobeBold: true,
                         text: item.values.first[0],
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], id: item.keys.first, link: item.values.first[1],)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => OrganizationDetailScreen(text: item.values.first[0], link: item.values.first[2], image: AssetImage("assets/images/photo_5.jpg"), logo: item.values.first[1],)));
                         });
                   }
               ),

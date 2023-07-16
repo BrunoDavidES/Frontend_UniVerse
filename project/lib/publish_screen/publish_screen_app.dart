@@ -189,7 +189,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
                 textAlign: TextAlign.justify,
               ),
             ),
-            Row(
+            /*Row(
               children: [
                 Spacer(),
                 DefaultButtonSimple(
@@ -211,7 +211,7 @@ class _PublishScreenState extends State<PublishScreenApp> {
                     },
                     height: 5),
               ],
-            ),
+            ),*/
             MyTextField(controller: titleController, hintText: 'Introduz um título', obscureText: false, label: 'Título', icon: Icons.title,),
             MyTextField(controller: locationController, hintText: 'Onde vai acontecer o evento?', obscureText: false, label: 'Localização', icon: Icons.location_on_outlined,),
             MyTextField(controller: capacityController, hintText: 'Qual é a capacidade do evento?', obscureText: false, label: 'Capacidade', icon: Icons.people,),

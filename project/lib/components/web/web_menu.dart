@@ -192,7 +192,7 @@ class QRPopUp extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Spacer(),
-          Image.asset("assets/web/Example.png", scale: 10,),
+          Image.asset("assets/web/qr.png", scale: 1.5,),
           Text("Digitaliza o código QR para instalares a aplicação.",
             style: TextStyle(
                 color: cHeavyGrey

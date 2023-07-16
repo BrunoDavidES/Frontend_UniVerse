@@ -30,7 +30,6 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
       final byteData = await ref.getData();
       return byteData!.buffer.asUint8List();
     } catch (e) {
-      print('Error fetching file: $e');
       return Uint8List(0);
     }
   }
@@ -69,30 +68,27 @@ class NewsCardStateWeb extends State<NewsCardWeb> {
                 width: double.infinity,
                 height: widget.height/3,
                 child: FutureBuilder<Uint8List>(
-                  future: fetchImageFile(widget.data.id),
+                  future: fetchImageFile(widget.data.id.toString()),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Column(
-                        children: [
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 10, right: 10, bottom: 80),
-                            child:
-                            LinearProgressIndicator(
-                            color: cPrimaryOverLightColor,
-                            minHeight: 10,
-                            backgroundColor: cPrimaryLightColor,)),
-                          Spacer()
-                        ],
-                      );
-                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      return Image.memory(
-                        snapshot.data!,
-                        fit: BoxFit.contain,
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: MemoryImage(
+                                  snapshot.data!,
+                                )
+                            )
+                        ),
                       );
                     } else {
-                      return Text('Image not found');
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: cHeavyGrey.withOpacity(0.5)
+                        ),
+                      );
                     }
                   },
                 ),

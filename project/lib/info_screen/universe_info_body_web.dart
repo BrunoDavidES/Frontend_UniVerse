@@ -61,7 +61,8 @@ class UniverseInfoBodyWeb extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Image.asset("assets/web/android.png", scale: 12),
-                              )
+                              ),
+                              Image.asset("assets/web/qr.png", scale: 5.5),
                             ],
                           ),
                         ),

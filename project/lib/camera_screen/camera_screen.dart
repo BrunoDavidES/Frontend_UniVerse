@@ -31,10 +31,8 @@ void initState(){
       if(e is CameraException) {
         switch(e.code) {
           case 'CameraAccessDenied':
-            print("denied");
             break;
           default:
-            print(e.description);
             break;
         }
       }

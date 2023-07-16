@@ -74,7 +74,7 @@ class InfoWithListWeb extends StatelessWidget {
                                         Radius.circular(10.0),
                                       ),
                                     ),
-                                    content: MapsPageWeb(),
+                                    content: MapsPageWeb(isMain: false,),
                                   ),
                                 );
                               },
@@ -110,7 +110,7 @@ class InfoWithListWeb extends StatelessWidget {
                 width: containerWidth/3.5-15,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/welcome_photo.jpg"),
+                      image: image,
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(15),
                 ),

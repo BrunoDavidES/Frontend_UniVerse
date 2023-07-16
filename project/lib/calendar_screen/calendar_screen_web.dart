@@ -48,8 +48,6 @@ class CalendarScreenState extends State<CalendarScreenWeb> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(DateTime.now());
-    print(size.height);
     return Row(
           children: [
             WebMenu(width: size.width/9, height: size.height/1.75,),

@@ -90,7 +90,7 @@ class OrganizationsInfoWeb extends StatelessWidget {
                 width: containerWidth/3.5-15,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/welcome_photo.jpg"),
+                      image: NetworkImage(info[1]),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(15),
                 ),

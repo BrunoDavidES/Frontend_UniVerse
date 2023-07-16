@@ -173,7 +173,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                     ),
                   ),
                 ),
-                Row(
+               /* Row(
                   children: [
                     SizedBox(width:size.width/1.5),
                     DefaultButtonSimple(
@@ -196,7 +196,7 @@ class _PublishEventScreenState extends State<PublishEventScreenWeb> {
                         },
                         height: 5),
                   ],
-                ),
+                ),*/
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

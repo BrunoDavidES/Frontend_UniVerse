@@ -28,7 +28,6 @@ class LocalDB {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    print('onCreate');
     await db.transaction((txn) async {
       await txn.execute('CREATE TABLE users (id TEXT PRIMARY KEY, name TEXT, role TEXT, lastLogin INTEGER)');
     });
@@ -50,7 +49,6 @@ class LocalDB {
   Future<int> countUsers() async {
     final db = await initDB();
     List<Map> list = await db.rawQuery('SELECT * FROM users');
-    print("Number of users: ${list.length}");
 
     return list.length;
   }
@@ -58,7 +56,6 @@ class LocalDB {
   Future<void> listAllTables() async {
     final db = await initDB();
     final tables = await db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;');
-    print(tables);
   }
 
   Future<List<Map>> fetchUserData(final String id) async {

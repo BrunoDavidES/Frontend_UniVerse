@@ -12,7 +12,8 @@ class InfoDetailScreen extends StatelessWidget {
 final String text;
 final String id;
 final String? link;
-  InfoDetailScreen( {super.key,required this.text, this.link, required this.id});
+final AssetImage image;
+  InfoDetailScreen( {super.key,required this.text, this.link, required this.id, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,8 @@ final String? link;
           ],
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage("assets/images/welcome_photo.jpg"),
+              image: image,
+              colorFilter: ColorFilter.mode(cHeavyGrey.withOpacity(0.5), BlendMode.darken),
               fit: BoxFit.cover),
           color: cDirtyWhiteColor
         ),

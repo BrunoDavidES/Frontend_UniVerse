@@ -93,7 +93,7 @@ class _RightSideState extends State<RightSide> {
                 color: cPrimaryLightColor,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Center(child: MapsPageWeb()),
+              child: Center(child: MapsPageWeb(isMain: false,)),
               ),
 
             /*child: Container(

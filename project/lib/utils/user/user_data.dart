@@ -102,7 +102,6 @@ class UniverseUser {
   }
 
   UniverseUser.fromJson(Map<String, dynamic> json ) {
-    print(json);
     username = json['username'] ?? '';
     department = json['department'] ?? '';
     job = json['department_job'] ?? '';
@@ -279,7 +278,6 @@ class UniverseUser {
     );
     if (response.statusCode == 200) {
       var decoded = json.decode(response.body);
-      print(response.body);
       List<dynamic> responseData = json.decode(response.body)['results'];
       //cursor = decoded
       for (var user in responseData) {

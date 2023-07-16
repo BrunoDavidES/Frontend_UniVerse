@@ -29,7 +29,6 @@ class EventsDetailScreen extends StatelessWidget {
           throw Exception('Failed to fetch image file.');
         }
       } catch (e) {
-        print('Error fetching file: $e');
         throw Exception('Failed to fetch image file.');
       }
     }
@@ -40,7 +39,6 @@ class EventsDetailScreen extends StatelessWidget {
         final response = await ref.getData();
         return utf8.decode(response as List<int>);
       } catch (e) {
-        print('Error fetching text file: $e');
         return '';
       }
     }

@@ -27,7 +27,6 @@ class EventsDetailScreenWeb extends StatelessWidget {
         final byteData = await ref.getData();
         return byteData!.buffer.asUint8List();
       } catch (e) {
-        print('Error fetching file: $e');
         return Uint8List(0);
       }
     }
@@ -38,7 +37,6 @@ class EventsDetailScreenWeb extends StatelessWidget {
         final response = await ref.getData();
         return utf8.decode(response as List<int>);
       } catch (e) {
-        print('Error fetching text file: $e');
         return '';
       }
     }
@@ -79,7 +77,7 @@ class EventsDetailScreenWeb extends StatelessWidget {
                         padding: const EdgeInsets.only(left:50, top: 20, bottom: 30),
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Image.asset("assets/titles/events.png", scale: 4,)
+                            child: Image.asset("assets/titles/events.png", scale: 4.5,)
                         ),
                       ),
                       Row(
@@ -89,26 +87,33 @@ class EventsDetailScreenWeb extends StatelessWidget {
                               width: size.width/3.5,
                               height: size.height/2.5,
                             child: FutureBuilder<Uint8List>(
-                              future: fetchImageFile(data.id),
+                              future: fetchImageFile(data.id.toString()),
                               builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                } else if (snapshot.hasError) {
-                                  return Text('Error fetching image: ${snapshot.error}');
-                                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                                  return Image.memory(
-                                    snapshot.data!,
-                                    fit: BoxFit.contain,
+                                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: MemoryImage(
+                                              snapshot.data!,
+                                            )
+                                        )
+                                    ),
                                   );
                                 } else {
-                                  return Text('Image not found');
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: cHeavyGrey.withOpacity(0.5)
+                                    ),
+                                  );
                                 }
                               },
                             ),
                           ),
                           Container(
                             width: size.width-size.width/2.75,
-                            height: size.height-size.height/2,
                             decoration: BoxDecoration(
                               color: cDirtyWhiteColor,
                               borderRadius: BorderRadius.circular(10)
@@ -176,10 +181,8 @@ class EventsDetailScreenWeb extends StatelessWidget {
                                 FutureBuilder<String>(
                                   future: fetchTextFile(data.id),
                                   builder: (context, snapshot) {
-                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text('Error fetching file');
+                                    if (snapshot.hasError) {
+                                      return Text('Ocorreu um erro.');
                                     } else {
                                       return Padding(
                                         padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
@@ -188,14 +191,13 @@ class EventsDetailScreenWeb extends StatelessWidget {
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 20,
+                                            fontSize: 15,
                                           ),
                                         ),
                                       );
                                     }
                                   },
                                 ),
-                                Spacer(),
                                 Row(
                                   children: [
                                     Padding(
@@ -215,24 +217,13 @@ class EventsDetailScreenWeb extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Spacer(),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top:20, bottom: 60),
-                child: Icon(Icons.arrow_back_ios_new_outlined, size: 50, color: cPrimaryColor),
-              ),
-            ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 60),
+                            padding: EdgeInsets.only(left: size.width/2-100, top: 20, bottom: 60),
                             child: DefaultButton(
                                 text: "Página Anterior",
                                 press: () {
                                   Navigator.pop(context); }),
                           ),
-                          Spacer()
                         ],
                       ),
                       BottomAbout(size: size),

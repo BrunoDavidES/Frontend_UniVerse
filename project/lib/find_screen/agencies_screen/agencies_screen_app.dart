@@ -55,7 +55,7 @@ class AgenciesBodyApp extends StatelessWidget {
                     return ListButtonSimple(tobeBold: true,
                         text: item.values.first[0],
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], id: item.keys.first,link: item.values.first[1],)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first[0], id: item.keys.first,link: item.values.first[1], image: AssetImage("assets/images/photo_1.jpg"),)));
                         });
                   }
               ),

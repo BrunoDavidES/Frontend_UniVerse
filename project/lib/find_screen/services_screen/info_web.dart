@@ -111,23 +111,6 @@ class InfoWeb extends StatelessWidget {
                         ),
                       ),
                       //texto da info
-                      if(link!=null && link!.isNotEmpty)
-                        InkWell(
-                          onTap: () {
-                            launchUrl(Uri.parse(link!));
-                          },
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Sabe mais ",
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'aqui.',
-                                  style: TextStyle(decoration: TextDecoration.underline),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                       FutureBuilder(
                           future: fetchTextFile(),
                           builder: (context, snapshot) {

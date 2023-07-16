@@ -20,7 +20,7 @@ import '../../utils/news/article_data.dart';
 import '../components/default_button_2.dart';
 import 'organized_events_info_screen.dart';
 
-class OrganizedEventsFeed extends StatefulWidget {
+/*class OrganizedEventsFeed extends StatefulWidget {
 
 
   const OrganizedEventsFeed({super.key});
@@ -44,8 +44,11 @@ class EventsState extends State<OrganizedEventsFeed> {
 
   Future<int> initialize() async {
     if(Event.events.isEmpty) {
-        return Event.fetchEvents(5, Event.userCursor, {'authorName':UniverseUser.getUsername()});
+      String? author = FirebaseAuth.instance.currentUser?.uid;
+      if (UniverseUser.g != null) {
+        return Event.fetchEvents(5, Event.cursor, {'authorName': author});
       }
+    }
     else return 200;
   }
 
@@ -61,7 +64,7 @@ class EventsState extends State<OrganizedEventsFeed> {
         setState(() {
           isLoadingMore = true;
         });
-        await Event.fetchEvents(5, Event.userCursor, {'authorName':UniverseUser.getUsername()});
+        await Event.fetchEvents(3, Event.cursor, {});
         setState(() {
           isLoadingMore = false;
           if (Event.events.length == Event.numEvents)
@@ -77,6 +80,46 @@ class EventsState extends State<OrganizedEventsFeed> {
     super.dispose();
   }
 
+<<<<<<< HEAD
+=======
+  void handleScrolling() {
+    if (controller.offset == controller.position.maxScrollExtent) {
+      setState(() {
+        offset = offset + 3;
+        if (Article.news.length == Event.numEvents)
+          hasMore = false;
+        else {
+          String? author = FirebaseAuth.instance.currentUser?.uid;
+          if (author != null) {
+            fetchDone =
+                Event.fetchEvents(5, Event.cursor, {'authorName': author});
+          }
+        }
+      });
+    }
+  }
+
+  Future<int> fetchOrganizedEvents() {
+    String? author = FirebaseAuth.instance.currentUser?.uid;
+    if(author != null) {
+      fetchDone = Event.fetchEvents(5, Event.cursor, {'authorName': author});
+    }
+    return fetchDone;
+  }
+
+  Future refresh() async {
+    setState(() {
+      hasMore = true;
+      offset = 0;
+      Event.events.clear();
+    });
+    String? author = FirebaseAuth.instance.currentUser?.uid;
+    if(author != null) {
+      fetchDone = Event.fetchEvents(5, Event.cursor, {'authorName': author});
+    }
+  }
+
+>>>>>>> 1b966c073307f8b3e32b2352a9c12c6cd6a4525b
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -105,7 +148,11 @@ width: width,
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: FutureBuilder(
+<<<<<<< HEAD
                   future: fetchDone,
+=======
+                  future: fetchOrganizedEvents(),
+>>>>>>> 1b966c073307f8b3e32b2352a9c12c6cd6a4525b
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data == 500) {
@@ -264,4 +311,4 @@ width: width,
           );
     }
 }*/*/
-}
+}*/

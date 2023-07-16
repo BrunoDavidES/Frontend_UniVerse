@@ -59,10 +59,6 @@ class Event {
     //date = 'Teste Data';//json['properties']['time_creation']['value'].toString();
     urlToImage = images[Random().nextInt(images.length)];
     description="Olá";
-    print(id);
-    print(title);
-    print(planner);
-    print("OLÁ");
   }
 
   static Future<int> fetchEvents(int limit, int offset, Map<String, String> filters) async {

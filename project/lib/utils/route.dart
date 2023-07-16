@@ -67,7 +67,7 @@ class Routing {
                   final found = departments.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link:found.first.values.first[1], id: found.first.keys.first, toShowMap: true, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first[0], link:found.first.values.first[1], id: found.first.keys.first, toShowMap: true, image: AssetImage("assets/images/photo_7.jpg"),));
                 },
               ),
               GoRoute(
@@ -78,7 +78,7 @@ class Routing {
                   if(found.isEmpty)
                     return PageNotFound();
                   final divisions = buildingsWithDivisions.where((element) => element.keys.first==id).first.values.first;
-                  return FindWebPage(rightSide: InfoWithListWeb(name: found.first.values.first, id:found.first.keys.first, divisions: divisions, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  return FindWebPage(rightSide: InfoWithListWeb(name: found.first.values.first, id:found.first.keys.first, divisions: divisions, image: AssetImage("assets/images/photo_4.jpg"),));
                 },
               ),
               GoRoute(
@@ -88,7 +88,7 @@ class Routing {
                   final found = restaurants.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, toShowMap:true, id: found.first.keys.first, image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide: InfoWeb(name: found.first.values.first, toShowMap:true, id: found.first.keys.first, image: AssetImage("assets/images/photo_6.jpg"),));
                 },
               ),
               GoRoute(
@@ -108,7 +108,7 @@ class Routing {
                   final found = fctAgencies.where((element) => element.keys.first==id);
                   if(found.isEmpty)
                     return PageNotFound();
-                  else return FindWebPage(rightSide:InfoWeb(name: found.first.values.first[0], toShowMap:false, id: found.first.keys.first, link: found.first.values.first[1], image: AssetImage("assets/images/welcome_photo.jpg"),));
+                  else return FindWebPage(rightSide:InfoWeb(name: found.first.values.first[0], toShowMap:false, id: found.first.keys.first, link: found.first.values.first[1], image: AssetImage("assets/images/photo_1.jpg"),));
                 },
               ),
               /* redirect: (BuildContext context, GoRouterState state) {

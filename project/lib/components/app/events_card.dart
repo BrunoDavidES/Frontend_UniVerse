@@ -37,7 +37,6 @@ class EventsCardState extends State<EventsCard> {
           throw Exception('Failed to fetch image file.');
         }
       } catch (e) {
-        print('Error fetching file: $e');
         throw Exception('Failed to fetch image file.');
       }
     }

@@ -16,8 +16,8 @@ class MapIdLocation extends StatefulWidget {
 }
 
 class _MapsState extends State<MapIdLocation> {
-  late double lat;
-  late double lng;
+  late double lat =0;
+  late double lng = 0;
   final Map<String, Marker> _markers = {};
   GoogleMapController? controller;
   LatLngBounds mapBounds = LatLngBounds(
@@ -81,8 +81,8 @@ class _MapsState extends State<MapIdLocation> {
         body:GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
-            target: LatLng(lat, lng),
-            zoom: 17,
+            target:LatLng(38.660992, -9.205782),
+            zoom: 16.5,
           ),
           markers: _markers.values.toSet(),
           onCameraMove: (CameraPosition position) {

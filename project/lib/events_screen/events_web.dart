@@ -54,7 +54,6 @@ class _EventsWebPageState extends State<EventsWebPage> {
         final byteData = await ref.getData();
         return byteData!.buffer.asUint8List();
       } catch (e) {
-        print('Error fetching file: $e');
         return Uint8List(0);
       }
     }
@@ -65,7 +64,6 @@ class _EventsWebPageState extends State<EventsWebPage> {
         final response = await ref.getData();
         return utf8.decode(response as List<int>);
       } catch (e) {
-        print('Error fetching text file: $e');
         return '';
       }
     }
@@ -162,22 +160,30 @@ class _EventsWebPageState extends State<EventsWebPage> {
                                                   width: size.width / 3.5,
                                                   height: 250,
                                                   child: FutureBuilder<Uint8List>(
-                                                      future: fetchImageFile(Event.events[index].id),
-                                                      builder: (context, snapshot) {
-                                                        if (snapshot.connectionState == ConnectionState.waiting) {
-                                                          return CircularProgressIndicator();
-                                                        } else if (snapshot.hasError) {
-                                                          return Text('Error fetching image: ${snapshot.error}');
-                                                        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                                                          return Image.memory(
-                                                            snapshot.data!,
-                                                            fit: BoxFit.contain,
-                                                          );
-                                                        } else {
-                                                          return Text('Image not found');
-                                                        }
-                                                      },
-                                                    ),
+                                                    future: fetchImageFile(event.id.toString()),
+                                                    builder: (context, snapshot) {
+                                                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.fill,
+                                                                  image: MemoryImage(
+                                                                    snapshot.data!,
+                                                                  )
+                                                              )
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              color: cHeavyGrey.withOpacity(0.5)
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  ),
                                                 ),
                                                 SizedBox(width: 15),
                                                 Container(

@@ -181,12 +181,10 @@ class _EventCreationScreenState extends State<PersonalEventCreationScreen> {
                       //DateTime.now() - not to allow to choose before today.
                       lastDate: DateTime(2030));
                   if (pickedDate != null) {
-                    print(
-                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  //pickedDate output format => 2021-03-10 00:00:00.000
                     String formattedDate =
                     DateFormat('dd-MM-yyyy').format(pickedDate);
-                    print(
-                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    //formatted date output using intl package =>  2021-03-16
                     setState(() {
                       dateController.text =
                           formattedDate; //set output date to TextField value.

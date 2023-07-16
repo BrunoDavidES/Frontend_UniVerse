@@ -67,12 +67,11 @@ class Article {
 
       if(response.statusCode==200) {
         numNews = json.decode(response.body);
-        print(numNews);
       }
       else return 500;
     }
     newsUrl = '/feed/query/News?limit=$limit&offset=$offset';
-    print(newsUrl);
+    if(filters.isEmpty)
     response = await http.post(
         Uri.parse(baseUrl + newsUrl),
         headers: <String, String>{
@@ -80,6 +79,14 @@ class Article {
           'Authorization': token,
         },
         body: "{}"
+    );
+    else  response = await http.post(
+        Uri.parse(baseUrl + newsUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+        body: jsonEncode({"filters": filters})
     );
     if(response.statusCode==200) {
       Map<String, dynamic> decodedJson = json.decode(response.body);

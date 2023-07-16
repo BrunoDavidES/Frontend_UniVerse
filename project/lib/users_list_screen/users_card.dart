@@ -24,7 +24,6 @@ class UserCard extends StatelessWidget {
         final byteData = await ref.getData();
         return byteData!.buffer.asUint8List();
       } catch (e) {
-        print('Error fetching file: $e');
         return Uint8List(0);
       }
     }
@@ -35,7 +34,6 @@ class UserCard extends StatelessWidget {
         final response = await ref.getData();
         return utf8.decode(response as List<int>);
       } catch (e) {
-        print('Error fetching text file: $e');
         return '';
       }
     }

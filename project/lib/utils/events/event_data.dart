@@ -12,7 +12,6 @@ class Event {
   static Map<String, Event> organizedEvents = Map<String, Event>();
   static int numEvents = 0;
   static String cursor = "EMPTY";
-  static String userCursor = "EMPTY";
   String? id;
   String? title;
   String? location;
@@ -71,28 +70,34 @@ class Event {
           'Content-Type': 'application/json',
           'Authorization': token,
         },
-          body: filters
+          body: "{}"
       );
       if(response.statusCode==200) {
         numEvents = json.decode(response.body);
-        print(numEvents);
       }
       else return 500;
     }
     eventsUrl = '/feed/query/Event?limit=$limit&offset=$offset';
+    if(filters.isEmpty)
     response = await http.post(
       Uri.parse(baseUrl + eventsUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': token,
       },
-      body: filters,
+      body: "{}",
+    );
+    else response = await http.post(
+      Uri.parse(baseUrl + eventsUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: jsonEncode({"filters":filters}),
     );
     if(response.statusCode==200) {
       Map<String, dynamic> decodedJson = json.decode(response.body);
-      if(filters.isNotEmpty)
-        userCursor = decodedJson['cursor'];
-      else cursor = decodedJson['cursor'];
+      cursor = decodedJson['cursor'];
       var decodedEvents = decodedJson['results'];
       for (var decoded in decodedEvents) {
         events.add(Event.fromJson(decoded));

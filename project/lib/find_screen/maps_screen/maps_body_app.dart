@@ -34,7 +34,7 @@ class _MapsAppState extends State<MapApp> {
             title: place.name,
             snippet: place.address,
               onTap: () {
-                launchUrl(Uri.parse("https://www.google.com/maps?saddr=My+Location&daddr=43.12345,-76.12345"), mode: LaunchMode.externalApplication);
+                launchUrl(Uri.parse("https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}"), mode: LaunchMode.externalApplication);
               }
           ),
         );

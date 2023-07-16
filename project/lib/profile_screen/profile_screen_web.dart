@@ -34,7 +34,6 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
         user = retrievedUser;
       });
     } catch (e) {
-      print('Error retrieving user: $e');
     }
   }
 
@@ -47,7 +46,6 @@ class _ProfileScreenWebState extends State<ProfileScreenWeb> {
         final byteData = await ref.getData();
         return byteData!.buffer.asUint8List();
       } catch (e) {
-        print('Error fetching file: $e');
         return Uint8List(0);
       }
     }

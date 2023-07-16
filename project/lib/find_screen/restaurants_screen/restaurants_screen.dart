@@ -41,7 +41,8 @@ class RestaurantsScreen extends StatelessWidget {
                   StretchMode.zoomBackground,
                 ],
                 background: Image(
-                    image: AssetImage("assets/web/FCT-NOVA.jpg"),
+                  opacity: AlwaysStoppedAnimation(0.5),
+                    image: AssetImage("assets/images/photo_6.jpg",),
                     fit: BoxFit.fill
                 ),
               ),
@@ -54,7 +55,7 @@ class RestaurantsScreen extends StatelessWidget {
                     return ListButtonSimple(tobeBold: true,
                         text: item.values.first,
                         press: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,id: item.keys.first,)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => InfoDetailScreen(text: item.values.first,id: item.keys.first, image: AssetImage("assets/images/photo_6.jpg"),)));
                         });
                   }
               ),

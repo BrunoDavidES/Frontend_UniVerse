@@ -34,7 +34,6 @@ class Chat {
     if(response.statusCode == 200)
       idCreated = response.body;
 
-    print(response.statusCode);
 
     return response.statusCode;
   }
@@ -79,7 +78,6 @@ class Chat {
 
       );
 
-      print(response.statusCode);
 
       return response.statusCode;
   }
@@ -121,13 +119,8 @@ class Chat {
         headers: headers,
       );
 
-      if (response.statusCode == 200) {
-        print('Message sent successfully');
-      } else {
-        print('Failed to send message. Status code: ${response.statusCode}');
-      }
+
     } catch (error) {
-      print('Error sending message: $error');
     }
   }
 

@@ -16,8 +16,6 @@ class WebHomePage extends StatelessWidget {
   bool showbtn = false;
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.height);
-    print(size.width);
     return Scaffold(
       backgroundColor: cDirtyWhite,
       body: Scrollbar(
@@ -151,7 +149,7 @@ class WebHomePage extends StatelessWidget {
                           const Spacer(),
                           Image.asset("assets/images/icon_no_white.png", scale: 4),
                           const SizedBox(width: 10),
-                          Image.asset("assets/web/qr.png", scale: 25),
+                          Image.asset("assets/web/qr.png", scale:3.5),
                           const Spacer(),
                         ],
                       ),
